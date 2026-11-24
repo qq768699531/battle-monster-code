@@ -1,0 +1,45 @@
+# --- Godot ---
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+*.translation
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# --- 本地状态与构建产物 ---
+.beads/
+.dolt/
+.tmp/
+build/
+dist/
+out/
+*.log
+*.db
+
+# --- 原版游戏包 ---
+*.apk
+*.xapk
+*.obb
+
+# --- 密钥与个人配置 ---
+.env
+.env.*
+*.key
+*.pem
+secrets/
+
+# --- 操作系统与编辑器 ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
