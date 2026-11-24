@@ -343,3 +343,21 @@ maps/objects/obj_f_01  obj_f_02  obj_f_03  obj_f_04  obj_f_07  obj_f_89  obj_f_9
 - 每个目录里的 `.tscn` 是**待实现的交互对象场景**，暂无人实例化，属于未完成功能，
   不要当成死资源删除。
 - `obj/obj_f_89` 是 `obj_f_02` / `obj_f_04` 共用的帧包。
+
+## 字体导入参数（本地，不入库）
+
+`core/theme/*.ttf.import` 按约定不入库（`**/*.import`），但它的参数**决定点阵字形的渲染**。
+新环境首次导入后，必须把 `core/theme/boutique-bitmap-regular-proportional-10px-round.ttf.import`
+的 `[params]` 改成与原版一致：
+
+```ini
+antialiasing=0
+hinting=0
+subpixel_positioning=0
+oversampling=1.0
+allow_system_fallback=false
+disable_embedded_bitmaps=true
+compress=true
+```
+
+否则字体走矢量抗锯齿路径，表现为"变粗、变大、字形走样"。改完删除 `.godot/` 重新导入即可。

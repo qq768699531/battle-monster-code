@@ -48,8 +48,6 @@ desktop.ini
 /audio/**/*.ogg
 /ui/theme/*.ttf
 /assets/**/*.import
-# 字体的导入参数决定点阵字形的渲染，必须入库
-!/core/theme/*.ttf.import
 
 
 # --- 原版美术资源（图集/贴图）不入库，由本地补齐；场景用 AtlasTexture 引用 ---
@@ -58,14 +56,10 @@ desktop.ini
 **/*.jpg
 **/*.jpeg
 /audio/**/*.import
-# 字体的导入参数决定点阵字形的渲染，必须入库
-!/core/theme/*.ttf.import
 /ui/theme/*.import
 
 
 **/*.import
-# 字体的导入参数决定点阵字形的渲染，必须入库
-!/core/theme/*.ttf.import
 
 # --- Godot UID 附属文件（引擎生成，不入库）---
 **/*.uid
