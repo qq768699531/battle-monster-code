@@ -31,7 +31,7 @@ core/theme/
 | `core/` 下的组件目录 | 通用界面组件（窗框、数字、标签、消息栈等），每个目录内场景+脚本+图集同层 |
 | `battle/` `field/` `menu/` `prime/` `main/` | 各自功能的场景、脚本、数据 |
 | `actors/` `monsters/` `maps/` | 按对象/地图组存放的角色、怪物、地图 |
-| `audio/` | 音频三位一体：`audio_manager.tscn` + `audio_manager.gd` + `default_bus_layout.tres` + 本地 `ogg/` |
+| `audio/` | 音频管理器：`audio_manager.tscn` + `audio_manager.gd` + 本地 `ogg/`（总线布局在项目根目录） |
 
 脚本与场景同级：共享脚本也有同名目录（`core/story/story.gd`）。
 
@@ -143,7 +143,7 @@ godot --headless --path . --import
 | 怪物表 `monsters` / 合成表 / 精灵原点 / 名称表 | `core/monster_animation/` |
 | 遭遇表 `encounters` / NPC 定义 `npcs` | `field/field_runtime/`、`field/field_actors/` |
 | 食谱 / 商店 / 造型 / 世界地图 | `field/food_shop/`、`field/shop_goods/`、`battle/actor/`、`menu/world_map/` |
-| 音频总线布局 | `audio/default_bus_layout.tres`（与 `audio_manager` 场景同级） |
+| 音频总线布局 | `default_bus_layout.tres`（项目根目录） |
 
 地图 TileSet（125 个）仍留在 `maps/mN/`：同目录有地图场景与地形场景，但没有脚本——它们是编辑器资源，
 给每个 TileSet 配一个脚本只会产生空壳。

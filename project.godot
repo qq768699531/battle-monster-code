@@ -18,7 +18,7 @@ config/icon="uid://b20ukqkf5ogsq"
 
 [audio]
 
-buses/default_bus_layout="res://audio/audio_manager/default_bus_layout.tres"
+buses/default_bus_layout="res://default_bus_layout.tres"
 
 [autoload]
 
