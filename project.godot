@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Battle Monster Reconstruction"
 config/description="Resource-managed Godot reconstruction of Battle Monster."
-run/main_scene="res://core/main/main.tscn"
+run/main_scene="res://main/main/main.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://b20ukqkf5ogsq"
 
