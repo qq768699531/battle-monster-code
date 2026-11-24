@@ -67,10 +67,10 @@ static func _normalize_scene(packed: PackedScene) -> void:
 ## 或 `prime/`。查过的结果缓存，避免每次实例化都拼串。
 static var _scene_paths: Dictionary = {}
 
-## 少数对象的场景文件名与 identity 不同：`obj/f_emoticon` 是野外 NPC 头顶的任务图标，
-## 重组后与 `field/emotion/emotion.tscn` 合并（同一张图集，动画已转换）。
+## 少数对象的场景文件名与 identity 不同：`obj/f_emoticon` 是野外 NPC 头顶的任务图标
+## 与表情层，目录名去了 `obj/` 前缀，图集引用改指向 `emotion.webp`。
 const SCENE_ALIASES := {
-	"obj/f_emoticon": "res://game/field/actors/emotion/emotion.tscn",
+	"obj/f_emoticon": "res://game/field/actors/f_emoticon/f_emoticon.tscn",
 }
 
 
@@ -100,10 +100,10 @@ static func scene_path(identity: String) -> String:
 			elif name.begins_with("b_"):
 				dir = "res://content/monsters/" + name + "/"
 			else:
-				dir = "res://game/prime/" + name + "/"
+				dir = "res://game/prime/title/" + name + "/"
 		_:
-			# 标题页的 ANI（`obj/title`、`ktf/elogo`、`touch/ui_touch` 等）都在 `prime/`。
-			dir = "res://game/prime/" + name + "/"
+			# 标题页的 ANI（`obj/title`、`ktf/elogo`、`touch/ui_touch` 等）都在 `prime/title/` 分组里。
+			dir = "res://game/prime/title/" + name + "/"
 	var path := dir + name + ".tscn"
 	_scene_paths[identity] = path
 	return path
