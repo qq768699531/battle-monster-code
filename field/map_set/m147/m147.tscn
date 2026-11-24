@@ -1,0 +1,19 @@
+[gd_scene format=4]
+[ext_resource type="Script" path="res://field/map/map.gd" id="MapRoot"]
+
+[ext_resource type="PackedScene" path="res://field/map_set/m5/t5_19.tscn" id="1_sw8na"]
+
+[node name="Map_147" type="Node2D" unique_id=860258046]
+script = ExtResource("MapRoot")
+metadata/map_id = 147
+metadata/map_group = 5
+metadata/map_index = 19
+metadata/map_size_tiles = Vector2i(11, 10)
+metadata/map_palette_indices = PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0)
+metadata/map_objects = PackedInt32Array()
+
+[node name="Terrain" type="Node2D" parent="." unique_id=599627739 instance=ExtResource("1_sw8na")]
+texture_filter = 1
+metadata/source_layout = "mdt/m5_19"
+metadata/map_size_tiles = Vector2i(11, 10)
+metadata/map_cell_flags = PackedByteArray("AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAAAAAAEBAQEBAAAAAAEBAAEBAQEBAAAAAQEAAQEBAQEAAAAAAAABAQEBAQAAAAEBAQEBAQEBAQEBAQEBAQE=")

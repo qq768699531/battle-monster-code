@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="QuestTable" format=3]
+
+[ext_resource type="Script" path="res://field/quests_def/quests.gd" id="1_qw7sx"]
+
+[resource]
+script = ExtResource("1_qw7sx")
+entries = Array[Dictionary]([{
+"event_high": 0,
+"event_low": 0,
+"goal_count": 1,
+"goal_kind": 1,
+"goal_target": 17,
+"guild_rank": 38,
+"id": 18,
+"npc": 46,
+"prereq2_kind": 0,
+"prereq2_quest": 0,
+"prereq_kind": 0,
+"prereq_quest": 0,
+"repeatable": 0,
+"reward_experience": 62465,
+"reward_item": 0,
+"reward_item_count": 0,
+"reward_money": 9000
+}])

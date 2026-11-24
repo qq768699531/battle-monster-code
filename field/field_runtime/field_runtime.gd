@@ -59,8 +59,8 @@ const PSEUDO_OBTAINED_LABELS := {
 const MESSAGE_HIGHLIGHT_CODE := "#C5"
 ## 事件指令 21 的文本源（`Evt_stdQUEST@0x7EA90:11` 的 `EFC_fsLoadRES("evt/evtlist.fxt")`）。
 const EVENT_QUEST_TEXT_SOURCE := "evt/evtlist.fxt"
-## 任务表（`QuestTable`）的唯一加载路径：任务门禁与头顶任务图标共用。
-const QUEST_TABLE_PATH := "res://field/quest_detail/quests.tres"
+## 任务表按 id 从 `field/quest_set/qN/quest.tres` 合并；任务门禁与头顶任务图标共用。
+const QuestSetLoader = preload("res://field/quest_set/quest_set.gd")
 const MessageStack = preload("res://core/message_stack/message_stack.gd")
 const MapNameView = preload("res://field/map_name_view/map_name_view.gd")
 const TILE := 16.0
@@ -1063,7 +1063,7 @@ func _quest_icon_code(npc_id: int, step: Dictionary) -> int:
 	if log == null:
 		return -1
 	if _quests == null:
-		_quests = load(QUEST_TABLE_PATH) as QuestTable
+		_quests = QuestSetLoader.load_table()
 		if _quests == null:
 			return -1
 	return log.status(_quests, npc_id, _quest_context())
@@ -1657,9 +1657,9 @@ func _quest_context() -> Dictionary:
 
 func _quest_table_resource() -> QuestTable:
 	if _quests == null:
-		_quests = load(QUEST_TABLE_PATH) as QuestTable
+		_quests = QuestSetLoader.load_table()
 		if _quests == null:
-			_stop("任务表 assets/quests.tres 缺失；无法判定任务状态。")
+			_stop("任务目录 field/quest_set 缺失；无法判定任务状态。")
 	return _quests
 
 

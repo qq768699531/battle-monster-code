@@ -1,0 +1,42 @@
+[gd_scene format=4]
+[ext_resource type="Script" path="res://field/map/map.gd" id="MapRoot"]
+
+[ext_resource type="PackedScene" path="res://field/map_set/m5/t5_11.tscn" id="1_xhghx"]
+
+[node name="Map_133" type="Node2D" unique_id=172436867]
+script = ExtResource("MapRoot")
+metadata/map_id = 133
+metadata/map_group = 5
+metadata/map_index = 11
+metadata/map_size_tiles = Vector2i(11, 10)
+metadata/map_palette_indices = PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
+metadata/map_objects = PackedInt32Array()
+
+[node name="Warps" type="Node2D" parent="." unique_id=723889474]
+
+[node name="Warp_0" type="Marker2D" parent="Warps" unique_id=501389612]
+position = Vector2(56, 136)
+metadata/map_warp = {
+"target_map_id": 45,
+"target_tile": Vector2i(17, 20)
+}
+
+[node name="Warp_1" type="Marker2D" parent="Warps" unique_id=1849489696]
+position = Vector2(72, 136)
+metadata/map_warp = {
+"target_map_id": 45,
+"target_tile": Vector2i(17, 20)
+}
+
+[node name="Warp_2" type="Marker2D" parent="Warps" unique_id=845313875]
+position = Vector2(88, 136)
+metadata/map_warp = {
+"target_map_id": 45,
+"target_tile": Vector2i(17, 20)
+}
+
+[node name="Terrain" type="Node2D" parent="." unique_id=1255941697 instance=ExtResource("1_xhghx")]
+texture_filter = 1
+metadata/source_layout = "mdt/m5_11"
+metadata/map_size_tiles = Vector2i(11, 10)
+metadata/map_cell_flags = PackedByteArray("AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAAQEBAQEBAQEAAAABAQEBAQEBAQAAAAABAQEBAQEAAAAAAAEBAQEBAQAAAAEBAQEBAQEBAQEBAQEBAQE=")

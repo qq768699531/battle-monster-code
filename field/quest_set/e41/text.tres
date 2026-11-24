@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TextTables" format=3]
+
+[ext_resource type="Script" path="res://core/text_tables/text_tables.gd" id="1_ecfvx"]
+
+[resource]
+script = ExtResource("1_ecfvx")
+payloads = {
+"evt/evtlist.fxt": {
+"format": "battlemonster.fxt",
+"record_count": 1.0,
+"records": [{
+"index": 41.0,
+"text": "",
+"text_status": "verified-mapping"
+}],
+"version": 2.0
+}
+}

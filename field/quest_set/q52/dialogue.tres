@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="TextTables" format=3]
+
+[ext_resource type="Script" path="res://core/text_tables/text_tables.gd" id="1_4tqig"]
+
+[resource]
+script = ExtResource("1_4tqig")
+payloads = {
+"qst/qst0052.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 43.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 43.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 43.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+}
+}

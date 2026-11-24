@@ -1,0 +1,63 @@
+[gd_scene format=4]
+[ext_resource type="Script" path="res://field/map/map.gd" id="MapRoot"]
+
+[ext_resource type="PackedScene" path="res://field/map_set/m0/t0_24.tscn" id="1_r0lwb"]
+
+[node name="Map_76" type="Node2D" unique_id=423607900]
+script = ExtResource("MapRoot")
+metadata/map_id = 76
+metadata/map_group = 0
+metadata/map_index = 24
+metadata/map_size_tiles = Vector2i(30, 35)
+metadata/map_palette_indices = PackedInt32Array(0, 0, 0, 0, 0, 0)
+metadata/map_objects = PackedInt32Array(141, 0, 0, 141, 1, 1, 141, 0, 2, 141, 3, 3, 100, 14, 2, 103, 15, 3, 100, 2, 8, 105, 0, 10, 141, 7, 10, 101, 9, 10, 141, 12, 6, 129, 18, 10, 103, 26, 7, 10, 29, 7, 105, 25, 4, 141, 26, 3, 101, 28, 3, 101, 29, 11, 100, 24, 12, 141, 26, 12, 5, 28, 16, 104, 25, 19, 121, 23, 18, 0, 19, 21, 100, 20, 22, 103, 15, 23, 141, 16, 26, 141, 17, 27, 10, 29, 23, 0, 28, 28, 103, 26, 29, 100, 26, 33, 10, 22, 34, 0, 24, 32, 5, 18, 33, 0, 22, 30, 0, 23, 27, 102, 13, 30, 112, 14, 32, 116, 15, 31, 122, 8, 33, 115, 8, 30, 131, 8, 28, 5, 7, 27, 112, 4, 33, 112, 5, 32, 113, 3, 32, 10, 1, 34, 100, 2, 34, 0, 0, 32, 0, 2, 27, 0, 3, 24, 164, 10, 1, 108, 18, 28, 23, 6, 31, 152, 25, 8, 152, 3, 4, 152, 23, 20, 152, 24, 22, 152, 18, 24, 152, 19, 23, 176, 15, 10)
+
+[node name="Warps" type="Node2D" parent="." unique_id=235199172]
+
+[node name="Warp_0" type="Marker2D" parent="Warps" unique_id=1635709759]
+position = Vector2(152, 24)
+metadata/map_warp = {
+"target_map_id": 74,
+"target_tile": Vector2i(15, 23)
+}
+
+[node name="Warp_1" type="Marker2D" parent="Warps" unique_id=64652942]
+position = Vector2(168, 24)
+metadata/map_warp = {
+"target_map_id": 74,
+"target_tile": Vector2i(16, 23)
+}
+
+[node name="Warp_2" type="Marker2D" parent="Warps" unique_id=263152902]
+position = Vector2(184, 24)
+metadata/map_warp = {
+"target_map_id": 74,
+"target_tile": Vector2i(17, 23)
+}
+
+[node name="Warp_3" type="Marker2D" parent="Warps" unique_id=994282973]
+position = Vector2(104, 488)
+metadata/map_warp = {
+"target_map_id": 145,
+"target_tile": Vector2i(4, 7)
+}
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1304867086]
+
+[node name="Spawn_0" type="Marker2D" parent="Spawns" unique_id=1117171386]
+position = Vector2(88, 232)
+metadata/map_spawn = {}
+
+[node name="Spawn_1" type="Marker2D" parent="Spawns" unique_id=540810080]
+position = Vector2(328, 200)
+metadata/map_spawn = {}
+
+[node name="Spawn_2" type="Marker2D" parent="Spawns" unique_id=257836891]
+position = Vector2(200, 440)
+metadata/map_spawn = {}
+
+[node name="Terrain" type="Node2D" parent="." unique_id=19076056 instance=ExtResource("1_r0lwb")]
+texture_filter = 1
+metadata/source_layout = "mdt/m0_24"
+metadata/map_size_tiles = Vector2i(30, 35)
+metadata/map_cell_flags = PackedByteArray("AQEBAQEBAQEBAAAAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAAAAAQEBAQEBAQEAAAAAAAABAQEBAQEBAQEBAQAAAAAAAAABAQEBAQAAAAAAAAAAAQEBAQEBAQEAAQEAAAAAAAAAAQEAAAAAAAAAAAABAQEBAQEBAAAAAAAAAAAAAAAAAAAAAQEAAAAAAAEBAQEBAQEBAQEAAAAAAAEBAQEAAAAAAAAAAAAAAAABAAEBAQEBAQAAAAAAAQAAAQEBAAAAAAAAAAAAAAAAAAEBAQEBAQAAAAAAAQAAAAABAAAAAAAAAAAAAAABAQEBAQEBAAAAAAAAAQAAAAAAAQEBAAAAAAAAAAAAAQEBAQEBAAAAAAAAAQEBAAAAAAAAAQAAAAABAQEBAQEBAQEBAAAAAAEBAQEBAAAAAAAAAQAAAAAAAQEBAQEBAQEBAAAAAAAAAQEAAAAAAAAAAQAAAAAAAQEBAQEBAQEBAAAAAAABAAAAAAABAQEBAQAAAAABAQEBAQEBAQEAAAAAAAABAAAAAAABAQEBAAAAAAEBAQEBAQEBAQEAAAAAAAABAAAAAAABAAAAAAAAAAEBAQEBAQEBAQEBAQAAAAABAQAAAAEBAQEAAAAAAAEBAQEBAQEBAQEBAQAAAAAAAQAAAAEAAAAAAAAAAAEBAQEBAQEBAQEBAQEAAAAAAAAAAAAAAAAAAAAAAAEBAQEBAQEBAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAABAQEBAQEBAQEAAAEBAAAAAAAAAAAAAAAAAAAAAAAAAAEBAQEBAQEAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEBAQEBAQEBAAAAAQEBAQAAAAAAAAABAQEBAAAAAAABAQEBAQEBAAAAAAAAAAEAAAABAQEBAQABAQAAAAABAQEBAQEBAAAAAAAAAAEAAAAAAQEAAAAAAAAAAAAAAQEBAQEBAQEAAAAAAQAAAAEAAAABAAAAAAAAAAABAQEBAQEBAQEAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEBAQEBAQEBAQAAAAEAAAABAQEBAAAAAAAAAAABAAEBAQEBAQEBAQEBAQEAAAAAAAEBAQAAAAEBAQEBAQEBAQEBAQEBAQEBAQEAAAAAAAEBAAAAAAAAAAEBAQEBAQEBAQEBAQEBAQAAAAEBAQAAAAAAAAAAAAEBAQEBAQEBAQEBAAEBAQAAAAEBAQAAAAAAAQEBAAEBAQEBAQEBAQEBAAAAAAAAAAAAAQAAAAAAAAAAAAABAQEBAQEBAQEBAAABAAEBAQEBAAAAAAAAAAABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB")

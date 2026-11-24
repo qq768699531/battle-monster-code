@@ -9,8 +9,8 @@ monsters/mon1/m_f_000/
 field/food_shop/
   food_shop.tscn    场景
   food_shop.gd      该场景的脚本
-maps/m0/
-  m0.tscn           地图场景（挂 scripts maps/map.gd 的 BattleMap 基类）
+field/map_set/m0/
+  m0.tscn           地图场景（挂 field/map/map.gd 的 BattleMap 基类）
   t0_0.tscn         地形层
   m0_0.tres         TileSet（普通 Texture2D 引用，不能用 AtlasTexture）
   m0_0.webp         地图图层
@@ -30,7 +30,7 @@ core/theme/
 | `data/` | 跨功能数据类型定义（`ItemDefinition`、`MonsterDefinition` 等 Resource 脚本） |
 | `core/` 下的组件目录 | 通用界面组件（窗框、数字、标签、消息栈等），每个目录内场景+脚本+图集同层 |
 | `battle/` `field/` `menu/` `prime/` `main/` | 各自功能的场景、脚本、数据 |
-| `actors/` `monsters/` `maps/` | 按对象/地图组存放的角色、怪物、地图 |
+| `actors/` `monsters/` | 按对象/怪物组存放的角色、怪物 |
 | `audio/` | 音频管理器：`audio_manager.tscn` + `audio_manager.gd` + 本地 `ogg/`（总线布局在项目根目录） |
 
 脚本与场景同级：共享脚本也有同名目录（`core/story/story.gd`）。
@@ -79,18 +79,40 @@ godot --headless --path . --import
 
 ## 文本表
 
-正文按来源前缀拆到使用方目录。启动时只加载来源清单 `core/text_sources.gd`（149 个 id，
-不含正文），正文在第一次取用时才载入对应文件：
+正文按来源前缀懒加载。`qst`/`evt` 由 `field/quest_set/` 的切片合并，其余按单文件登记；
+启动只加载来源清单 `core/text_sources.gd`（149 个 id，不含正文）：
 
 | 来源前缀 | 文件 | 体量 |
 | --- | --- | --- |
-| `evt/` | `field/text/evt.tres` | 83 条 / 396 KB |
-| `npc/` | `field/text/npc.tres` | 27 条 / 14 KB |
-| `qst/` | `field/text/qst.tres` | 18 条 / 16 KB |
-| `common/` | `core/text/common.tres` | 11 条 / 262 KB |
-| `skt/` `ktf/` `lgt/` … | `monsters/text/creature_names.tres` | 10 条 / 39 KB |
+| `qst/` | `field/quest_set/qN/text.tres`（55 条 `qstlist.fxt`）+ `qN/dialogue.tres`（17 条 `qstNNNN.cht`） | 55 + 17 条 |
+| `evt/` | `field/quest_set/eN/text.tres`（62 条 `evtlist.fxt`）+ `field/quest_detail/event_text.tres`（82 条 `evtNNNN.cht`） | 62 + 82 条 |
+| `npc/` | `field/dialogue_window/npc.tres` | 27 条 / 14 KB |
+| `common/` | `core/message_stack/common.tres` | 11 条 / 262 KB |
+| `skt/` `ktf/` `lgt/` … | `core/monster_animation/creature_names.tres` | 10 条 / 39 KB |
 
-拆表前后 149 条正文逐条比对 sha1 一致。
+`QuestSet.build_text(prefix)` 在首次取用某前缀时把切片合并回一份 `TextTables`，
+`ResourceCatalog.text_message(source, id)` 接口不变；翻译键仍是
+`qst/qstlist.fxt:<任务号>`、`evt/evtlist.fxt:<事件任务号>`、`qst/qstNNNN.cht:组/记录`。
+正文继续在 `core/message_stack/zh_CN.tres`，拆表时 149 条逐条比对 sha1 一致。
+
+## quest_set：任务数据目录化
+
+任务定义与任务文本按任务号拆到 `field/quest_set/`，与 `map_set` 同构：
+
+```text
+field/quest_set/
+  quest_set.gd            合并加载器（QuestSet extends QuestTable）
+  qN/                     QuestTable 任务（N = 0–54）
+    quest.tres            单条任务定义（QuestTable.entries 一条）
+    text.tres             qst/qstlist.fxt 的第 N 条记录
+    dialogue.tres         仅 N = 38–54：qst/qstNNNN.cht 对话结构
+  eN/                     事件任务（N = 0–61，evt/evtlist.fxt 第 N 条）
+    text.tres             evt/evtlist.fxt 的第 N 条记录
+```
+
+`field_runtime` 不再加载整份 `quests.tres`，而是 `QuestSet.load_table()` 合并
+`qN/quest.tres`；`ResourceCatalog` 对 `qst`/`evt` 前缀调用 `QuestSet.build_text()`。
+`event_text.tres` 只保留 82 条 `evtNNNN.cht` 事件旁白；`qst.tres`、`quests.tres` 已删除。
 
 ## 窗框图集的拆分
 
@@ -132,8 +154,8 @@ godot --headless --path . --import
 
 | 数据表 | 现在的位置 |
 | --- | --- |
-| 任务 / 任务文本 | `field/quest_detail/` |
-| 事件文本 | `field/quest_detail/evt.tres` |
+| 任务定义 / 任务文本 | `field/quest_set/`（每任务一个 `qN/`） |
+| 事件任务文本 / 事件旁白 | `field/quest_set/eN/`、`field/quest_detail/event_text.tres` |
 | NPC 文本 | `field/dialogue_window/npc.tres` |
 | 通用文本 / 翻译 | `core/message_stack/` |
 | 主题 | `core/native_label/ui_theme.tres` |
@@ -145,7 +167,7 @@ godot --headless --path . --import
 | 食谱 / 商店 / 造型 / 世界地图 | `field/food_shop/`、`field/shop_goods/`、`battle/actor/`、`menu/world_map/` |
 | 音频总线布局 | `default_bus_layout.tres`（项目根目录） |
 
-地图 TileSet（125 个）仍留在 `maps/mN/`：同目录有地图场景与地形场景，但没有脚本——它们是编辑器资源，
+地图 TileSet（125 个）仍留在 `field/map_set/mN/`：同目录有地图场景与地形场景，但没有脚本——它们是编辑器资源，
 给每个 TileSet 配一个脚本只会产生空壳。
 
 ## 逐对象资源（monsters）
@@ -205,7 +227,7 @@ battle/
 - 模块只有一张图时，文件名 = 模块目录名（`menu/items/items.webp`、`battle/castle_back/castle_back.webp`）
 - 模块有多张图时，以模块名作前缀：`core/window_frame/window_frame_box2.webp`、
   `core/window_frame/frames/window_frame_016.webp`、`main/main/main_title-0.webp`
-- 地图是例外：一个地图组目录下有多张图层（`maps/m0/m0_0.webp` …），各自的 TileSet 直接引用，
+- 地图是例外：一个地图组目录下有多张图层（`field/map_set/m0/m0_0.webp` …），各自的 TileSet 直接引用，
   无法合成单张图（TileSet 不接受 AtlasTexture），因此保留 `mN_K` 命名
 
 ## 目录只有两种角色
@@ -230,7 +252,7 @@ battle/
 - `menu/status_skill/status_skill.webp`：状态页标题条、空图鉴位、锁标记，场景内用 `AtlasTexture`
 - `core/window_frame/window_frame.webp`：窗框 box2/box4 与 13 个原生帧
 
-地图排除：`maps/mN/` 下每张图层仍是独立文件，TileSet 不接受 `AtlasTexture`。
+地图排除：`field/map_set/mN/` 下每张图层仍是独立文件，TileSet 不接受 `AtlasTexture`。
 平台图标（`main/platform-images/`）也保持独立，运行时按相对路径取。
 
 ## 四位一体：着色器跟着模块走
@@ -241,7 +263,7 @@ battle/
 | --- | --- |
 | `encounter_zoom` | `field/encounter_transition/` |
 | `item_cell_frame` | `menu/item_cell/` |
-| `map_blend` | `field/map_effect/` |
+| `map_blend` | `field/map/` |
 | `map_filter` | `field/field_runtime/` |
 | `menu_map_blur` | `core/screen_shade/` |
 | `prime_screen` | `main/title_visual/` |
@@ -250,6 +272,23 @@ battle/
 | `ani_brightness` | `core/monster_animation/` |
 | `native_number_palette` | `core/number/` |
 | `native_touch_blend` | `core/touch_button/`（391 个精灵共用） |
+
+## 地图三块：map 实现、map_set 地图、map_actor 物件
+
+`field/map/` 放地图实现；具体地图与地图物件分别放 `field/map_set/`、`field/map_actor/`：
+
+```text
+field/map/            map.gd（BattleMap：通行、传送、占格规则）
+                      map_renderer.tscn + map_renderer.gd
+                      map_effect.tscn + map_effect_view.gd + map_effect.gd + map_blend.gdshader
+field/map_set/mN/     mN.tscn + 地形层 + TileSet + 图层（根节点挂 field/map/map.gd）
+field/map_actor/      obj_f_XX.tscn + 贴图（地图可交互物件）
+```
+
+`field/map/` 是独立的地图实现模块；`field_runtime.tscn`
+直接实例化 `field/map/map_renderer.tscn` 与 `field/map/map_effect.tscn`。
+`field/map/map_renderer.gd` 按 id 加载 `field/map_set/m%d/m%d.tscn`。
+地图 HUD（`map_name_view`、`minimap`）仍留在 `field/`，它们属于野外 HUD，不是地图渲染。
 
 ## 标题闪光用 native_menu_brightness
 
@@ -328,12 +367,12 @@ menu/status_portrait/status_portrait_effect.tscn + .webp
 
 `obj/ui_eff` 的 5 条精灵索引一并移除。
 
-## 地图物件贴图归入 maps
+## 地图物件贴图归入 field/map_actor
 
-`actors/objects/` 已删除，7 个物件移到 `maps/objects/`：
+`actors/objects/` 已删除，7 个物件移到 `field/map_actor/`：
 
 ```text
-maps/objects/obj_f_01  obj_f_02  obj_f_03  obj_f_04  obj_f_07  obj_f_89  obj_f_99
+field/map_actor/obj_f_01  obj_f_02  obj_f_03  obj_f_04  obj_f_07  obj_f_89  obj_f_99
 ```
 
 这些是**地图上的可交互物品**（宝箱、告示牌等），不是纯装饰：

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TextTables" format=3]
+
+[ext_resource type="Script" path="res://core/text_tables/text_tables.gd" id="1_r3j6i"]
+
+[resource]
+script = ExtResource("1_r3j6i")
+payloads = {
+"qst/qstlist.fxt": {
+"format": "battlemonster.fxt",
+"record_count": 1.0,
+"records": [{
+"index": 44.0,
+"text": "",
+"text_status": "verified-mapping"
+}],
+"version": 2.0
+}
+}

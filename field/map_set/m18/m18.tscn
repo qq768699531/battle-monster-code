@@ -1,0 +1,81 @@
+[gd_scene format=4]
+[ext_resource type="Script" path="res://field/map/map.gd" id="MapRoot"]
+
+[ext_resource type="PackedScene" path="res://field/map_set/m3/t3_7.tscn" id="1_kaah8"]
+
+[node name="Map_18" type="Node2D" unique_id=637997195]
+script = ExtResource("MapRoot")
+metadata/map_id = 18
+metadata/map_group = 3
+metadata/map_index = 7
+metadata/map_size_tiles = Vector2i(30, 35)
+metadata/map_palette_indices = PackedInt32Array(0, 0, 0, 0, 0)
+metadata/map_objects = PackedInt32Array(100, 12, 0, 141, 9, 1, 105, 28, 1, 141, 16, 13, 141, 14, 25, 141, 24, 22, 105, 27, 26, 28, 8, 8, 28, 21, 1, 29, 16, 2, 28, 21, 34, 11, 8, 22, 11, 19, 17, 11, 24, 31, 11, 28, 24, 1, 8, 6, 1, 26, 2, 6, 23, 2, 16, 17, 23, 1, 22, 32, 1, 29, 32, 21, 29, 26, 23, 9, 23, 23, 7, 7, 23, 27, 25, 23, 29, 6, 106, 25, 1, 164, 16, 34, 164, 18, 1, 11, 15, 5, 24, 15, 6, 1, 29, 14, 16, 8, 5, 16, 25, 3, 16, 29, 15, 6, 17, 24, 6, 11, 20, 22, 24, 33, 6, 28, 33, 176, 4, 4)
+
+[node name="Warps" type="Node2D" parent="." unique_id=2019891652]
+
+[node name="Warp_0" type="Marker2D" parent="Warps" unique_id=171048586]
+position = Vector2(248, 552)
+metadata/map_warp = {
+"target_map_id": 17,
+"target_tile": Vector2i(28, 2)
+}
+
+[node name="Warp_1" type="Marker2D" parent="Warps" unique_id=1861452832]
+position = Vector2(264, 552)
+metadata/map_warp = {
+"target_map_id": 17,
+"target_tile": Vector2i(29, 2)
+}
+
+[node name="Warp_2" type="Marker2D" parent="Warps" unique_id=160027513]
+position = Vector2(280, 552)
+metadata/map_warp = {
+"target_map_id": 17,
+"target_tile": Vector2i(30, 2)
+}
+
+[node name="Warp_3" type="Marker2D" parent="Warps" unique_id=1345347886]
+position = Vector2(280, 24)
+metadata/map_warp = {
+"target_map_id": 19,
+"target_tile": Vector2i(11, 33)
+}
+
+[node name="Warp_4" type="Marker2D" parent="Warps" unique_id=461937121]
+position = Vector2(296, 24)
+metadata/map_warp = {
+"target_map_id": 19,
+"target_tile": Vector2i(12, 33)
+}
+
+[node name="Warp_5" type="Marker2D" parent="Warps" unique_id=1910280844]
+position = Vector2(312, 24)
+metadata/map_warp = {
+"target_map_id": 19,
+"target_tile": Vector2i(13, 33)
+}
+
+[node name="Spawns" type="Node2D" parent="." unique_id=937293003]
+
+[node name="Spawn_0" type="Marker2D" parent="Spawns" unique_id=333162735]
+position = Vector2(200, 136)
+metadata/map_spawn = {}
+
+[node name="Spawn_1" type="Marker2D" parent="Spawns" unique_id=266905000]
+position = Vector2(328, 152)
+metadata/map_spawn = {}
+
+[node name="Spawn_2" type="Marker2D" parent="Spawns" unique_id=191318745]
+position = Vector2(232, 344)
+metadata/map_spawn = {}
+
+[node name="Spawn_3" type="Marker2D" parent="Spawns" unique_id=963946282]
+position = Vector2(168, 456)
+metadata/map_spawn = {}
+
+[node name="Terrain" type="Node2D" parent="." unique_id=815724904 instance=ExtResource("1_kaah8")]
+texture_filter = 1
+metadata/source_layout = "mdt/m3_7"
+metadata/map_size_tiles = Vector2i(30, 35)
+metadata/map_cell_flags = PackedByteArray("AQEBAQEBAQEBAQEBAQEBAQEAAAABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAAAABAQEBAQEBAQEBAQEBAQAAAAEAAQAAAAABAAAAAAAAAAEBAAABAAABAQEBAAEAAAEAAAAAAAABAAAAAAAAAAEBAQEAAAABAQEBAAAAAQEBAAAAAAEBAAAAAAAAAAAAAAAAAAABAQEBAAAAAAEBAQAAAAEAAQEAAAAAAAAAAAAAAAABAQEBAQEAAAEBAQAAAAABAAEAAAABAQAAAAAAAAABAQEBAAEAAAABAQAAAAAAAQEBAAABAQEAAAAAAAEBAQEBAAEBAAABAQEAAAAAAAAAAQAAAAAAAAAAAAEBAQEBAQAAAAAAAQAAAAAAAAAAAQAAAAAAAQAAAAABAQEBAQEAAAAAAQAAAAAAAAAAAQAAAAAAAQAAAAABAQEBAQEBAAAAAQEAAAAAAAEBAQAAAAAAAQAAAAABAQEBAQEBAAAAAQAAAAAAAQEBAAAAAAAAAQAAAAABAQEBAQEBAAAAAQEAAAABAQEBAAAAAAABAAAAAQEBAQEBAQEAAAAAAAEAAAABAAEAAAAAAAABAAAAAQEBAQEBAQEAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQEBAQEBAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAQEBAAABAAAAAAAAAAAAAAEBAQEBAAAAAAAAAAEBAQEBAAEBAAAAAAAAAAAAAAAAAAEAAAAAAQEAAAEBAQEBAAEBAAAAAAAAAAAAAAAAAAAAAAAAAQEAAQABAQEAAAAAAAAAAAEBAAAAAAAAAAAAAAAAAAEBAAABAQEAAAAAAAAAAAEAAAAAAAAAAAAAAAABAQAAAAABAQEAAAAAAQEBAAEAAAAAAAABAAAAAAABAQEAAAABAQEAAAAAAAAAAQEAAAAAAQEBAQAAAAABAAAAAAABAQEAAQAAAAAAAAABAQEBAQEBAAAAAAABAAAAAQEBAQEAAAEAAAAAAAAAAQEBAQABAAAAAAABAAAAAQEBAQEBAAAAAAAAAAAAAAAAAAABAQAAAAEAAAAAAQEBAQEBAAAAAAAAAAAAAAAAAAAAAQEBAQAAAAAAAAABAQEBAAABAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQEBAQAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAABAQEBAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQEBAQEBAQEBAAAAAAAAAAAAAAAAAAABAQAAAAABAQEBAQEBAQEBAQEBAAAAAAAAAAAAAAAAAAAAAAABAQEBAQEBAQEBAQEBAQAAAAAAAAAAAAEBAAAAAQEBAQEBAQEBAQEBAQEBAQEBAAAAAQEBAQEBAQEBAQEB")

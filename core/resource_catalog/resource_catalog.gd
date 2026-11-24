@@ -6,11 +6,11 @@ const GameplayData = preload("res://core/gameplay_data/gameplay_data.gd")
 const WorldMapData = preload("res://menu/world_map_data/world_map_data.gd")
 const SpriteOrigins = preload("res://core/sprite_origins/sprite_origins.gd")
 const TextTables = preload("res://core/text_tables/text_tables.gd")
+const QuestSet = preload("res://field/quest_set/quest_set.gd")
 ## 文本表按来源前缀拆到各功能目录：只有第一次查某个来源时才加载对应文件。
+## `qst`/`evt` 由 `QuestSet` 从 `field/quest_set/` 的切片合并；其余在这里登记单文件。
 const TEXT_TABLE_FILES := {
-	"evt": "res://field/quest_detail/event_text.tres",
 	"npc": "res://field/dialogue_window/npc.tres",
-	"qst": "res://field/quest_detail/qst.tres",
 	"common": "res://core/message_stack/common.tres",
 }
 const TEXT_TABLE_FALLBACK := "res://core/monster_animation/creature_names.tres"
@@ -46,7 +46,7 @@ const TEXT_TRANSLATION: Translation = preload("res://core/message_stack/zh_CN.tr
 ## 地图实体节点放在格子中心，position / 16 还原成格子坐标。
 const CELL := 16.0
 ## 地图 Scene 目录：`m<地图id>.tscn`，地形在 `terrain/t<组>_<号>.tscn`。
-const MAP_SCENE_DIR := "res://maps"
+const MAP_SCENE_DIR := "res://field/map_set"
 
 var _origins: Dictionary = {}
 var _text_tables: Dictionary = {}
@@ -63,7 +63,7 @@ var _text_ids: Dictionary = {}
 ## 资源路径全部由标识按约定推出，不再维护生成式清单：
 ## 精灵 `assets/sprite/<id>.webp`、精灵原点 `assets/sprite-origins.tres`、
 ## 动画全部是 `scenes/monsters`、`scenes/actors`、`scenes/ani` 下的动画 Scene、
-## 文本按来源前缀拆在 `field/text`、`ui/text`、`monsters/text`（颜色与换行随正文保存在翻译资源里）、
+## 文本按来源前缀拆在 `field/quest_set`、`field/dialogue_window`、`core/message_stack`（颜色与换行随正文保存在翻译资源里）、
 ## 玩法 `core/gameplay.tres`（typed `GameplayData`）、平台图标 `main/platform-images/<path>`、
 ## 音频按编号扫 `audio/ogg`。
 func _ready() -> void:
@@ -195,7 +195,7 @@ func item_icon(icon_id: int) -> Texture2D:
 
 
 func load_map(map_id: int) -> Variant:
-	var path := "res://maps/m%d/m%d.tscn" % [map_id, map_id]
+	var path := "res://field/map_set/m%d/m%d.tscn" % [map_id, map_id]
 	if not ResourceLoader.exists(path):
 		_report_error("Map scene is not registered: %d" % map_id)
 		return null
@@ -255,7 +255,7 @@ func load_map(map_id: int) -> Variant:
 
 ## 地图 Scene 里实例化的地形子场景；不实例化地图本身。
 func _terrain_packed(map_id: int) -> Variant:
-	var path := "res://maps/m%d/m%d.tscn" % [map_id, map_id]
+	var path := "res://field/map_set/m%d/m%d.tscn" % [map_id, map_id]
 	if not ResourceLoader.exists(path):
 		_report_error("Map scene is missing: %s" % path)
 		return null
@@ -491,10 +491,14 @@ func load_text(source_id: String) -> Variant:
 func _text_table(prefix: String) -> Variant:
 	if _text_tables.has(prefix):
 		return _text_tables[prefix]
-	var path: String = TEXT_TABLE_FILES.get(prefix, TEXT_TABLE_FALLBACK)
-	var table: Variant = load(path)
-	if table == null:
-		_report_error("Text table could not be loaded: %s" % path)
+	var table: Variant
+	if prefix == "qst" or prefix == "evt":
+		table = QuestSet.build_text(prefix)
+	else:
+		var path: String = TEXT_TABLE_FILES.get(prefix, TEXT_TABLE_FALLBACK)
+		table = load(path)
+		if table == null:
+			_report_error("Text table could not be loaded: %s" % path)
 	_text_tables[prefix] = table
 	return table
 

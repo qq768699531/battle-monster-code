@@ -39,7 +39,7 @@ const GROUP_AUDIO := "res://audio/ogg"
 const GROUP_BATTLE_UI := "res://battle"
 const GROUP_MENU := "res://menu"
 const GROUP_FIELD := "res://field"
-const GROUP_MAPS := "res://maps"
+const GROUP_MAPS := "res://field/map_set"
 const GROUP_ACTORS := "res://actors"
 const GROUP_MONSTERS := "res://monsters"
 

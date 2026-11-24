@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="QuestTable" format=3]
+
+[ext_resource type="Script" path="res://field/quests_def/quests.gd" id="1_srofr"]
+
+[resource]
+script = ExtResource("1_srofr")
+entries = Array[Dictionary]([{
+"event_high": 0,
+"event_low": 0,
+"goal_count": 5,
+"goal_kind": 0,
+"goal_target": 25,
+"guild_rank": 84,
+"id": 4,
+"npc": 46,
+"prereq2_kind": 0,
+"prereq2_quest": 0,
+"prereq_kind": 0,
+"prereq_quest": 0,
+"repeatable": 0,
+"reward_experience": 4696,
+"reward_item": 0,
+"reward_item_count": 0,
+"reward_money": 1500
+}])
