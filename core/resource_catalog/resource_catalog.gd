@@ -21,11 +21,11 @@ const SPRITE_ORIGINS: SpriteOrigins = preload("res://core/monster_animation/spri
 ## 逐对象存放的表：每个对象一个 `<对象名>.tres`，放在它自己的场景目录里。
 const GAMEPLAY_OBJECT_DIRS := {
 	"monsters": "res://monsters",
-	"passives": "res://battle/battle/passives",
 	"npcs": "res://actors/npc/objects",
 }
 
 const GAMEPLAY_PARTS := {
+	"passives": "res://battle/battle/passives.tres",
 	"items": "res://menu/items/items.tres",
 	"encounters": "res://field/field_runtime/encounters.tres",
 	"script_battles": "res://battle/battle/script_battles.tres",

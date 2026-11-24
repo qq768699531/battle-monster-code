@@ -1,0 +1,1178 @@
+[gd_resource type="Resource" script_class="GameplayData" format=3]
+[ext_resource type="Script" path="res://data/gameplay_data/gameplay_data.gd" id="data_script"]
+[ext_resource type="Script" uid="uid://d21nisecxjdmi" path="res://data/passive_definition/passive_definition.gd" id="6_g0pew"]
+[sub_resource type="Resource" id="Resource_uegbp"]
+script = ExtResource("6_g0pew")
+base = 10
+increment = 1
+
+[sub_resource type="Resource" id="Resource_m5yfl"]
+script = ExtResource("6_g0pew")
+id = 1
+base = 20
+increment = 1
+
+[sub_resource type="Resource" id="Resource_bv5qy"]
+script = ExtResource("6_g0pew")
+id = 2
+base = 30
+increment = 1
+
+[sub_resource type="Resource" id="Resource_ny54m"]
+script = ExtResource("6_g0pew")
+id = 3
+base = 10
+effect = 1
+increment = 1
+
+[sub_resource type="Resource" id="Resource_ahd5p"]
+script = ExtResource("6_g0pew")
+id = 4
+base = 20
+effect = 1
+increment = 1
+
+[sub_resource type="Resource" id="Resource_3kf11"]
+script = ExtResource("6_g0pew")
+id = 5
+base = 30
+effect = 1
+increment = 1
+
+[sub_resource type="Resource" id="Resource_t5sfe"]
+script = ExtResource("6_g0pew")
+id = 6
+base = 10
+effect = 2
+increment = 1
+
+[sub_resource type="Resource" id="Resource_hsk3j"]
+script = ExtResource("6_g0pew")
+id = 7
+base = 20
+effect = 2
+increment = 1
+
+[sub_resource type="Resource" id="Resource_m2n5v"]
+script = ExtResource("6_g0pew")
+id = 8
+base = 30
+effect = 2
+increment = 1
+
+[sub_resource type="Resource" id="Resource_8l754"]
+script = ExtResource("6_g0pew")
+id = 9
+base = 10
+effect = 3
+increment = 1
+
+[sub_resource type="Resource" id="Resource_ftruq"]
+script = ExtResource("6_g0pew")
+id = 10
+base = 15
+effect = 3
+increment = 1
+
+[sub_resource type="Resource" id="Resource_50r1b"]
+script = ExtResource("6_g0pew")
+id = 11
+base = 20
+effect = 3
+increment = 1
+
+[sub_resource type="Resource" id="Resource_1pbat"]
+script = ExtResource("6_g0pew")
+id = 12
+base = 10
+effect = 4
+increment = 1
+
+[sub_resource type="Resource" id="Resource_0vb7y"]
+script = ExtResource("6_g0pew")
+id = 13
+base = 20
+effect = 4
+increment = 1
+
+[sub_resource type="Resource" id="Resource_cywr3"]
+script = ExtResource("6_g0pew")
+id = 14
+base = 30
+effect = 4
+increment = 1
+
+[sub_resource type="Resource" id="Resource_3ejr6"]
+script = ExtResource("6_g0pew")
+id = 15
+base = 10
+effect = 5
+increment = 1
+
+[sub_resource type="Resource" id="Resource_vajaf"]
+script = ExtResource("6_g0pew")
+id = 16
+base = 20
+effect = 5
+increment = 1
+
+[sub_resource type="Resource" id="Resource_ctuwl"]
+script = ExtResource("6_g0pew")
+id = 17
+base = 30
+effect = 5
+increment = 1
+
+[sub_resource type="Resource" id="Resource_7w0hx"]
+script = ExtResource("6_g0pew")
+id = 18
+base = 10
+effect = 6
+increment = 1
+
+[sub_resource type="Resource" id="Resource_hkghb"]
+script = ExtResource("6_g0pew")
+id = 19
+base = 20
+effect = 6
+increment = 1
+
+[sub_resource type="Resource" id="Resource_db2sj"]
+script = ExtResource("6_g0pew")
+id = 20
+base = 30
+effect = 6
+increment = 1
+
+[sub_resource type="Resource" id="Resource_h2rgb"]
+script = ExtResource("6_g0pew")
+id = 21
+base = 10
+effect = 7
+increment = 1
+
+[sub_resource type="Resource" id="Resource_mfvhm"]
+script = ExtResource("6_g0pew")
+id = 22
+base = 15
+effect = 7
+increment = 1
+
+[sub_resource type="Resource" id="Resource_5lvat"]
+script = ExtResource("6_g0pew")
+id = 23
+base = 20
+effect = 7
+increment = 1
+
+[sub_resource type="Resource" id="Resource_3kbfq"]
+script = ExtResource("6_g0pew")
+id = 24
+base = 30
+effect = 8
+increment = 1
+
+[sub_resource type="Resource" id="Resource_lbbd1"]
+script = ExtResource("6_g0pew")
+id = 25
+base = 40
+effect = 8
+increment = 1
+
+[sub_resource type="Resource" id="Resource_cdiup"]
+script = ExtResource("6_g0pew")
+id = 26
+base = 50
+effect = 8
+increment = 1
+
+[sub_resource type="Resource" id="Resource_bamhr"]
+script = ExtResource("6_g0pew")
+id = 27
+base = 30
+effect = 9
+increment = 1
+
+[sub_resource type="Resource" id="Resource_jve5v"]
+script = ExtResource("6_g0pew")
+id = 28
+base = 40
+effect = 9
+increment = 1
+
+[sub_resource type="Resource" id="Resource_lnrdi"]
+script = ExtResource("6_g0pew")
+id = 29
+base = 50
+effect = 9
+increment = 1
+
+[sub_resource type="Resource" id="Resource_8406t"]
+script = ExtResource("6_g0pew")
+id = 30
+base = 30
+effect = 10
+increment = 1
+
+[sub_resource type="Resource" id="Resource_8307n"]
+script = ExtResource("6_g0pew")
+id = 31
+base = 40
+effect = 10
+increment = 1
+
+[sub_resource type="Resource" id="Resource_yv4i8"]
+script = ExtResource("6_g0pew")
+id = 32
+base = 50
+effect = 10
+increment = 1
+
+[sub_resource type="Resource" id="Resource_k6i0k"]
+script = ExtResource("6_g0pew")
+id = 33
+base = 30
+effect = 11
+increment = 1
+
+[sub_resource type="Resource" id="Resource_juyu2"]
+script = ExtResource("6_g0pew")
+id = 34
+base = 40
+effect = 11
+increment = 1
+
+[sub_resource type="Resource" id="Resource_yxgpb"]
+script = ExtResource("6_g0pew")
+id = 35
+base = 50
+effect = 11
+increment = 1
+
+[sub_resource type="Resource" id="Resource_06bjg"]
+script = ExtResource("6_g0pew")
+id = 36
+base = 10
+effect = 12
+increment = 1
+
+[sub_resource type="Resource" id="Resource_35uw4"]
+script = ExtResource("6_g0pew")
+id = 37
+base = 20
+effect = 12
+increment = 1
+
+[sub_resource type="Resource" id="Resource_u17wn"]
+script = ExtResource("6_g0pew")
+id = 38
+base = 30
+effect = 12
+increment = 1
+
+[sub_resource type="Resource" id="Resource_0ywqy"]
+script = ExtResource("6_g0pew")
+id = 39
+base = 10
+effect = 13
+increment = 1
+
+[sub_resource type="Resource" id="Resource_5uef4"]
+script = ExtResource("6_g0pew")
+id = 40
+base = 20
+effect = 13
+increment = 1
+
+[sub_resource type="Resource" id="Resource_vh01d"]
+script = ExtResource("6_g0pew")
+id = 41
+base = 30
+effect = 13
+increment = 1
+
+[sub_resource type="Resource" id="Resource_j6per"]
+script = ExtResource("6_g0pew")
+id = 42
+base = 10
+effect = 14
+increment = 1
+
+[sub_resource type="Resource" id="Resource_8jnpa"]
+script = ExtResource("6_g0pew")
+id = 43
+base = 20
+effect = 14
+increment = 1
+
+[sub_resource type="Resource" id="Resource_4m4cn"]
+script = ExtResource("6_g0pew")
+id = 44
+base = 30
+effect = 14
+increment = 1
+
+[sub_resource type="Resource" id="Resource_v62hd"]
+script = ExtResource("6_g0pew")
+id = 45
+base = 10
+effect = 15
+increment = 1
+
+[sub_resource type="Resource" id="Resource_tikye"]
+script = ExtResource("6_g0pew")
+id = 46
+base = 20
+effect = 15
+increment = 1
+
+[sub_resource type="Resource" id="Resource_cu7kj"]
+script = ExtResource("6_g0pew")
+id = 47
+base = 30
+effect = 15
+increment = 1
+
+[sub_resource type="Resource" id="Resource_4sv51"]
+script = ExtResource("6_g0pew")
+id = 48
+base = 10
+effect = 16
+increment = 1
+
+[sub_resource type="Resource" id="Resource_rpnl2"]
+script = ExtResource("6_g0pew")
+id = 49
+base = 20
+effect = 16
+increment = 1
+
+[sub_resource type="Resource" id="Resource_y4d6p"]
+script = ExtResource("6_g0pew")
+id = 50
+base = 30
+effect = 16
+increment = 1
+
+[sub_resource type="Resource" id="Resource_8afiw"]
+script = ExtResource("6_g0pew")
+id = 51
+base = 10
+effect = 17
+increment = 1
+
+[sub_resource type="Resource" id="Resource_stu4g"]
+script = ExtResource("6_g0pew")
+id = 52
+base = 20
+effect = 17
+increment = 1
+
+[sub_resource type="Resource" id="Resource_5138k"]
+script = ExtResource("6_g0pew")
+id = 53
+base = 30
+effect = 17
+increment = 1
+
+[sub_resource type="Resource" id="Resource_x2e6o"]
+script = ExtResource("6_g0pew")
+id = 54
+base = 10
+effect = 18
+increment = 1
+
+[sub_resource type="Resource" id="Resource_r8jmd"]
+script = ExtResource("6_g0pew")
+id = 55
+base = 20
+effect = 18
+increment = 1
+
+[sub_resource type="Resource" id="Resource_5nkcb"]
+script = ExtResource("6_g0pew")
+id = 56
+base = 30
+effect = 18
+increment = 1
+
+[sub_resource type="Resource" id="Resource_fvire"]
+script = ExtResource("6_g0pew")
+id = 57
+base = 10
+effect = 19
+increment = 1
+
+[sub_resource type="Resource" id="Resource_eg1yu"]
+script = ExtResource("6_g0pew")
+id = 58
+base = 20
+effect = 19
+increment = 1
+
+[sub_resource type="Resource" id="Resource_1x3oq"]
+script = ExtResource("6_g0pew")
+id = 59
+base = 30
+effect = 19
+increment = 1
+
+[sub_resource type="Resource" id="Resource_dy6k7"]
+script = ExtResource("6_g0pew")
+id = 60
+base = 5
+effect = 20
+increment = 1
+
+[sub_resource type="Resource" id="Resource_cfsb3"]
+script = ExtResource("6_g0pew")
+id = 61
+base = 10
+effect = 20
+increment = 1
+
+[sub_resource type="Resource" id="Resource_tv803"]
+script = ExtResource("6_g0pew")
+id = 62
+base = 15
+effect = 20
+increment = 1
+
+[sub_resource type="Resource" id="Resource_v7fkr"]
+script = ExtResource("6_g0pew")
+id = 63
+base = 1
+effect = 21
+increment = 1
+
+[sub_resource type="Resource" id="Resource_jmky6"]
+script = ExtResource("6_g0pew")
+id = 64
+base = 5
+effect = 21
+increment = 1
+
+[sub_resource type="Resource" id="Resource_arixd"]
+script = ExtResource("6_g0pew")
+id = 65
+base = 9
+effect = 21
+increment = 1
+
+[sub_resource type="Resource" id="Resource_v8yku"]
+script = ExtResource("6_g0pew")
+id = 66
+base = 1
+effect = 22
+increment = 1
+
+[sub_resource type="Resource" id="Resource_066ab"]
+script = ExtResource("6_g0pew")
+id = 67
+base = 5
+effect = 23
+increment = 1
+
+[sub_resource type="Resource" id="Resource_t0dbj"]
+script = ExtResource("6_g0pew")
+id = 68
+base = 10
+effect = 23
+increment = 1
+
+[sub_resource type="Resource" id="Resource_t061i"]
+script = ExtResource("6_g0pew")
+id = 69
+base = 15
+effect = 23
+increment = 1
+
+[sub_resource type="Resource" id="Resource_nh17c"]
+script = ExtResource("6_g0pew")
+id = 70
+base = 1
+effect = 24
+increment = 1
+
+[sub_resource type="Resource" id="Resource_tat33"]
+script = ExtResource("6_g0pew")
+id = 71
+base = 3
+effect = 24
+increment = 1
+
+[sub_resource type="Resource" id="Resource_a24aj"]
+script = ExtResource("6_g0pew")
+id = 72
+base = 5
+effect = 24
+increment = 1
+
+[sub_resource type="Resource" id="Resource_7mdki"]
+script = ExtResource("6_g0pew")
+id = 73
+base = 30
+effect = 25
+increment = 1
+
+[sub_resource type="Resource" id="Resource_ty7p8"]
+script = ExtResource("6_g0pew")
+id = 74
+base = 40
+effect = 25
+increment = 1
+
+[sub_resource type="Resource" id="Resource_2sapd"]
+script = ExtResource("6_g0pew")
+id = 75
+base = 50
+effect = 25
+increment = 1
+
+[sub_resource type="Resource" id="Resource_oa5yu"]
+script = ExtResource("6_g0pew")
+id = 76
+base = 30
+effect = 26
+increment = 1
+
+[sub_resource type="Resource" id="Resource_t4fuj"]
+script = ExtResource("6_g0pew")
+id = 77
+base = 40
+effect = 26
+increment = 1
+
+[sub_resource type="Resource" id="Resource_f3s3f"]
+script = ExtResource("6_g0pew")
+id = 78
+base = 50
+effect = 26
+increment = 1
+
+[sub_resource type="Resource" id="Resource_nu4dj"]
+script = ExtResource("6_g0pew")
+id = 79
+base = 30
+effect = 27
+increment = 1
+
+[sub_resource type="Resource" id="Resource_n13ru"]
+script = ExtResource("6_g0pew")
+id = 80
+base = 40
+effect = 27
+increment = 1
+
+[sub_resource type="Resource" id="Resource_bwjhg"]
+script = ExtResource("6_g0pew")
+id = 81
+base = 50
+effect = 27
+increment = 1
+
+[sub_resource type="Resource" id="Resource_77oxb"]
+script = ExtResource("6_g0pew")
+id = 82
+base = 30
+effect = 28
+increment = 1
+
+[sub_resource type="Resource" id="Resource_ye43k"]
+script = ExtResource("6_g0pew")
+id = 83
+base = 40
+effect = 28
+increment = 1
+
+[sub_resource type="Resource" id="Resource_dyvjr"]
+script = ExtResource("6_g0pew")
+id = 84
+base = 50
+effect = 28
+increment = 1
+
+[sub_resource type="Resource" id="Resource_x2jpn"]
+script = ExtResource("6_g0pew")
+id = 85
+base = 30
+effect = 29
+increment = 1
+
+[sub_resource type="Resource" id="Resource_b4e58"]
+script = ExtResource("6_g0pew")
+id = 86
+base = 40
+effect = 29
+increment = 1
+
+[sub_resource type="Resource" id="Resource_8mjno"]
+script = ExtResource("6_g0pew")
+id = 87
+base = 50
+effect = 29
+increment = 1
+
+[sub_resource type="Resource" id="Resource_t5fl6"]
+script = ExtResource("6_g0pew")
+id = 88
+base = 40
+effect = 30
+increment = 1
+
+[sub_resource type="Resource" id="Resource_adk34"]
+script = ExtResource("6_g0pew")
+id = 89
+base = 50
+effect = 30
+increment = 1
+
+[sub_resource type="Resource" id="Resource_0ibt7"]
+script = ExtResource("6_g0pew")
+id = 90
+base = 60
+effect = 30
+increment = 1
+
+[sub_resource type="Resource" id="Resource_an47f"]
+script = ExtResource("6_g0pew")
+id = 91
+base = 40
+effect = 31
+increment = 1
+
+[sub_resource type="Resource" id="Resource_wdmks"]
+script = ExtResource("6_g0pew")
+id = 92
+base = 50
+effect = 31
+increment = 1
+
+[sub_resource type="Resource" id="Resource_hsp24"]
+script = ExtResource("6_g0pew")
+id = 93
+base = 60
+effect = 31
+increment = 1
+
+[sub_resource type="Resource" id="Resource_24kuk"]
+script = ExtResource("6_g0pew")
+id = 94
+base = 40
+effect = 32
+increment = 1
+
+[sub_resource type="Resource" id="Resource_chv2y"]
+script = ExtResource("6_g0pew")
+id = 95
+base = 50
+effect = 32
+increment = 1
+
+[sub_resource type="Resource" id="Resource_bbu26"]
+script = ExtResource("6_g0pew")
+id = 96
+base = 60
+effect = 32
+increment = 1
+
+[sub_resource type="Resource" id="Resource_bhos5"]
+script = ExtResource("6_g0pew")
+id = 97
+base = 40
+effect = 33
+increment = 1
+
+[sub_resource type="Resource" id="Resource_e4rfi"]
+script = ExtResource("6_g0pew")
+id = 98
+base = 50
+effect = 33
+increment = 1
+
+[sub_resource type="Resource" id="Resource_r5shm"]
+script = ExtResource("6_g0pew")
+id = 99
+base = 60
+effect = 33
+increment = 1
+
+[sub_resource type="Resource" id="Resource_pv28i"]
+script = ExtResource("6_g0pew")
+id = 100
+base = 40
+effect = 34
+increment = 1
+
+[sub_resource type="Resource" id="Resource_4x8aq"]
+script = ExtResource("6_g0pew")
+id = 101
+base = 50
+effect = 34
+increment = 1
+
+[sub_resource type="Resource" id="Resource_m048x"]
+script = ExtResource("6_g0pew")
+id = 102
+base = 60
+effect = 34
+increment = 1
+
+[sub_resource type="Resource" id="Resource_a83b5"]
+script = ExtResource("6_g0pew")
+id = 103
+base = 40
+effect = 35
+increment = 1
+
+[sub_resource type="Resource" id="Resource_5ti27"]
+script = ExtResource("6_g0pew")
+id = 104
+base = 50
+effect = 35
+increment = 1
+
+[sub_resource type="Resource" id="Resource_axdmc"]
+script = ExtResource("6_g0pew")
+id = 105
+base = 60
+effect = 35
+increment = 1
+
+[sub_resource type="Resource" id="Resource_fjmfr"]
+script = ExtResource("6_g0pew")
+id = 106
+base = 40
+effect = 36
+increment = 1
+
+[sub_resource type="Resource" id="Resource_cdn3r"]
+script = ExtResource("6_g0pew")
+id = 107
+base = 50
+effect = 36
+increment = 1
+
+[sub_resource type="Resource" id="Resource_jnd6k"]
+script = ExtResource("6_g0pew")
+id = 108
+base = 60
+effect = 36
+increment = 1
+
+[sub_resource type="Resource" id="Resource_4keit"]
+script = ExtResource("6_g0pew")
+id = 109
+base = 10
+effect = 37
+increment = 1
+
+[sub_resource type="Resource" id="Resource_hu837"]
+script = ExtResource("6_g0pew")
+id = 110
+base = 20
+effect = 37
+increment = 1
+
+[sub_resource type="Resource" id="Resource_8o3e1"]
+script = ExtResource("6_g0pew")
+id = 111
+base = 30
+effect = 37
+increment = 1
+
+[sub_resource type="Resource" id="Resource_m0wbp"]
+script = ExtResource("6_g0pew")
+id = 112
+base = 10
+effect = 38
+increment = 1
+
+[sub_resource type="Resource" id="Resource_yehbg"]
+script = ExtResource("6_g0pew")
+id = 113
+base = 20
+effect = 38
+increment = 1
+
+[sub_resource type="Resource" id="Resource_o4wku"]
+script = ExtResource("6_g0pew")
+id = 114
+base = 30
+effect = 38
+increment = 1
+
+[sub_resource type="Resource" id="Resource_2aoju"]
+script = ExtResource("6_g0pew")
+id = 115
+base = 10
+effect = 39
+increment = 1
+
+[sub_resource type="Resource" id="Resource_xm8bp"]
+script = ExtResource("6_g0pew")
+id = 116
+base = 20
+effect = 39
+increment = 1
+
+[sub_resource type="Resource" id="Resource_uqc2q"]
+script = ExtResource("6_g0pew")
+id = 117
+base = 30
+effect = 39
+increment = 1
+
+[sub_resource type="Resource" id="Resource_ocbo6"]
+script = ExtResource("6_g0pew")
+id = 118
+base = 40
+effect = 40
+increment = 1
+
+[sub_resource type="Resource" id="Resource_1808q"]
+script = ExtResource("6_g0pew")
+id = 119
+base = 50
+effect = 40
+increment = 1
+
+[sub_resource type="Resource" id="Resource_ojcwh"]
+script = ExtResource("6_g0pew")
+id = 120
+base = 60
+effect = 40
+increment = 1
+
+[sub_resource type="Resource" id="Resource_vuh5l"]
+script = ExtResource("6_g0pew")
+id = 121
+base = 40
+effect = 41
+increment = 1
+
+[sub_resource type="Resource" id="Resource_esexj"]
+script = ExtResource("6_g0pew")
+id = 122
+base = 50
+effect = 41
+increment = 1
+
+[sub_resource type="Resource" id="Resource_mydsx"]
+script = ExtResource("6_g0pew")
+id = 123
+base = 60
+effect = 41
+increment = 1
+
+[sub_resource type="Resource" id="Resource_dmlqg"]
+script = ExtResource("6_g0pew")
+id = 124
+base = 40
+effect = 42
+increment = 1
+
+[sub_resource type="Resource" id="Resource_pvh4w"]
+script = ExtResource("6_g0pew")
+id = 125
+base = 50
+effect = 42
+increment = 1
+
+[sub_resource type="Resource" id="Resource_dloxj"]
+script = ExtResource("6_g0pew")
+id = 126
+base = 60
+effect = 42
+increment = 1
+
+[sub_resource type="Resource" id="Resource_au8qn"]
+script = ExtResource("6_g0pew")
+id = 127
+base = 40
+effect = 43
+increment = 1
+
+[sub_resource type="Resource" id="Resource_dkoby"]
+script = ExtResource("6_g0pew")
+id = 128
+base = 50
+effect = 43
+increment = 1
+
+[sub_resource type="Resource" id="Resource_wl6eb"]
+script = ExtResource("6_g0pew")
+id = 129
+base = 60
+effect = 43
+increment = 1
+
+[sub_resource type="Resource" id="Resource_a5w8k"]
+script = ExtResource("6_g0pew")
+id = 130
+base = 40
+effect = 44
+increment = 1
+
+[sub_resource type="Resource" id="Resource_8igep"]
+script = ExtResource("6_g0pew")
+id = 131
+base = 50
+effect = 44
+increment = 1
+
+[sub_resource type="Resource" id="Resource_5akp7"]
+script = ExtResource("6_g0pew")
+id = 132
+base = 60
+effect = 44
+increment = 1
+
+[sub_resource type="Resource" id="Resource_1nbpf"]
+script = ExtResource("6_g0pew")
+id = 133
+base = 40
+effect = 45
+increment = 1
+
+[sub_resource type="Resource" id="Resource_1v5q7"]
+script = ExtResource("6_g0pew")
+id = 134
+base = 50
+effect = 45
+increment = 1
+
+[sub_resource type="Resource" id="Resource_i5dkg"]
+script = ExtResource("6_g0pew")
+id = 135
+base = 60
+effect = 45
+increment = 1
+
+[sub_resource type="Resource" id="Resource_2xn3h"]
+script = ExtResource("6_g0pew")
+id = 136
+base = 60
+effect = 46
+increment = 1
+
+[sub_resource type="Resource" id="Resource_entjg"]
+script = ExtResource("6_g0pew")
+id = 137
+base = 60
+effect = 47
+increment = 1
+
+[sub_resource type="Resource" id="Resource_jqgx5"]
+script = ExtResource("6_g0pew")
+id = 138
+base = 60
+effect = 48
+increment = 1
+
+[sub_resource type="Resource" id="Resource_7a6cw"]
+script = ExtResource("6_g0pew")
+id = 139
+base = 60
+effect = 49
+increment = 1
+
+[sub_resource type="Resource" id="Resource_dvkdj"]
+script = ExtResource("6_g0pew")
+id = 140
+base = 60
+effect = 50
+increment = 1
+
+[sub_resource type="Resource" id="Resource_dct4v"]
+script = ExtResource("6_g0pew")
+id = 141
+base = 60
+effect = 51
+increment = 1
+
+[sub_resource type="Resource" id="Resource_qlqj0"]
+script = ExtResource("6_g0pew")
+id = 142
+base = 60
+effect = 52
+increment = 1
+
+[sub_resource type="Resource" id="Resource_hd2l4"]
+script = ExtResource("6_g0pew")
+id = 143
+base = 60
+effect = 53
+increment = 1
+
+[sub_resource type="Resource" id="Resource_3r5x4"]
+script = ExtResource("6_g0pew")
+id = 144
+base = 60
+effect = 54
+increment = 1
+
+[sub_resource type="Resource" id="Resource_gtueo"]
+script = ExtResource("6_g0pew")
+id = 145
+base = 60
+effect = 55
+increment = 1
+
+[sub_resource type="Resource" id="Resource_g5vkk"]
+script = ExtResource("6_g0pew")
+id = 146
+base = 15
+effect = 56
+increment = 1
+
+[sub_resource type="Resource" id="Resource_rtxqb"]
+script = ExtResource("6_g0pew")
+id = 147
+base = 20
+effect = 56
+increment = 1
+
+[sub_resource type="Resource" id="Resource_02mgh"]
+script = ExtResource("6_g0pew")
+id = 148
+base = 25
+effect = 56
+increment = 1
+
+[sub_resource type="Resource" id="Resource_vnwuf"]
+script = ExtResource("6_g0pew")
+id = 149
+base = 5
+effect = 57
+increment = 1
+
+[sub_resource type="Resource" id="Resource_lvc1h"]
+script = ExtResource("6_g0pew")
+id = 150
+base = 10
+effect = 57
+increment = 1
+
+[sub_resource type="Resource" id="Resource_04bqj"]
+script = ExtResource("6_g0pew")
+id = 151
+base = 15
+effect = 57
+increment = 1
+
+[sub_resource type="Resource" id="Resource_rumj7"]
+script = ExtResource("6_g0pew")
+id = 152
+base = 20
+effect = 58
+increment = 1
+
+[sub_resource type="Resource" id="Resource_svlxv"]
+script = ExtResource("6_g0pew")
+id = 153
+base = 25
+effect = 58
+increment = 1
+
+[sub_resource type="Resource" id="Resource_nevbr"]
+script = ExtResource("6_g0pew")
+id = 154
+base = 30
+effect = 58
+increment = 1
+
+[sub_resource type="Resource" id="Resource_5lay5"]
+script = ExtResource("6_g0pew")
+id = 155
+base = 70
+effect = 59
+increment = 1
+
+[sub_resource type="Resource" id="Resource_x0h8b"]
+script = ExtResource("6_g0pew")
+id = 156
+base = 15
+effect = 60
+increment = 1
+
+[sub_resource type="Resource" id="Resource_ewtjx"]
+script = ExtResource("6_g0pew")
+id = 157
+base = 50
+effect = 61
+increment = 5
+
+[sub_resource type="Resource" id="Resource_gop06"]
+script = ExtResource("6_g0pew")
+id = 158
+base = 70
+effect = 62
+increment = 1
+
+[sub_resource type="Resource" id="Resource_no1b7"]
+script = ExtResource("6_g0pew")
+id = 159
+base = 80
+effect = 62
+increment = 1
+
+[sub_resource type="Resource" id="Resource_niryl"]
+script = ExtResource("6_g0pew")
+id = 160
+base = 90
+effect = 62
+increment = 1
+
+[sub_resource type="Resource" id="Resource_ajq37"]
+script = ExtResource("6_g0pew")
+id = 161
+base = 50
+effect = 63
+increment = 5
+
+[sub_resource type="Resource" id="Resource_r8sa3"]
+script = ExtResource("6_g0pew")
+id = 162
+base = 30
+effect = 64
+increment = 1
+
+[sub_resource type="Resource" id="Resource_lfyn3"]
+script = ExtResource("6_g0pew")
+id = 163
+base = 40
+effect = 64
+increment = 1
+
+[sub_resource type="Resource" id="Resource_krqfo"]
+script = ExtResource("6_g0pew")
+id = 164
+base = 50
+effect = 64
+increment = 1
+
+[sub_resource type="Resource" id="Resource_adnl5"]
+script = ExtResource("6_g0pew")
+id = 165
+base = 30
+effect = 65
+increment = 1
+
+[sub_resource type="Resource" id="Resource_y76p8"]
+script = ExtResource("6_g0pew")
+id = 166
+base = 40
+effect = 65
+increment = 1
+
+[sub_resource type="Resource" id="Resource_a3dyk"]
+script = ExtResource("6_g0pew")
+id = 167
+base = 50
+effect = 65
+increment = 1
+
+[resource]
+script = ExtResource("data_script")
+passives = Array[ExtResource("6_g0pew")]([SubResource("Resource_uegbp"), SubResource("Resource_m5yfl"), SubResource("Resource_bv5qy"), SubResource("Resource_ny54m"), SubResource("Resource_ahd5p"), SubResource("Resource_3kf11"), SubResource("Resource_t5sfe"), SubResource("Resource_hsk3j"), SubResource("Resource_m2n5v"), SubResource("Resource_8l754"), SubResource("Resource_ftruq"), SubResource("Resource_50r1b"), SubResource("Resource_1pbat"), SubResource("Resource_0vb7y"), SubResource("Resource_cywr3"), SubResource("Resource_3ejr6"), SubResource("Resource_vajaf"), SubResource("Resource_ctuwl"), SubResource("Resource_7w0hx"), SubResource("Resource_hkghb"), SubResource("Resource_db2sj"), SubResource("Resource_h2rgb"), SubResource("Resource_mfvhm"), SubResource("Resource_5lvat"), SubResource("Resource_3kbfq"), SubResource("Resource_lbbd1"), SubResource("Resource_cdiup"), SubResource("Resource_bamhr"), SubResource("Resource_jve5v"), SubResource("Resource_lnrdi"), SubResource("Resource_8406t"), SubResource("Resource_8307n"), SubResource("Resource_yv4i8"), SubResource("Resource_k6i0k"), SubResource("Resource_juyu2"), SubResource("Resource_yxgpb"), SubResource("Resource_06bjg"), SubResource("Resource_35uw4"), SubResource("Resource_u17wn"), SubResource("Resource_0ywqy"), SubResource("Resource_5uef4"), SubResource("Resource_vh01d"), SubResource("Resource_j6per"), SubResource("Resource_8jnpa"), SubResource("Resource_4m4cn"), SubResource("Resource_v62hd"), SubResource("Resource_tikye"), SubResource("Resource_cu7kj"), SubResource("Resource_4sv51"), SubResource("Resource_rpnl2"), SubResource("Resource_y4d6p"), SubResource("Resource_8afiw"), SubResource("Resource_stu4g"), SubResource("Resource_5138k"), SubResource("Resource_x2e6o"), SubResource("Resource_r8jmd"), SubResource("Resource_5nkcb"), SubResource("Resource_fvire"), SubResource("Resource_eg1yu"), SubResource("Resource_1x3oq"), SubResource("Resource_dy6k7"), SubResource("Resource_cfsb3"), SubResource("Resource_tv803"), SubResource("Resource_v7fkr"), SubResource("Resource_jmky6"), SubResource("Resource_arixd"), SubResource("Resource_v8yku"), SubResource("Resource_066ab"), SubResource("Resource_t0dbj"), SubResource("Resource_t061i"), SubResource("Resource_nh17c"), SubResource("Resource_tat33"), SubResource("Resource_a24aj"), SubResource("Resource_7mdki"), SubResource("Resource_ty7p8"), SubResource("Resource_2sapd"), SubResource("Resource_oa5yu"), SubResource("Resource_t4fuj"), SubResource("Resource_f3s3f"), SubResource("Resource_nu4dj"), SubResource("Resource_n13ru"), SubResource("Resource_bwjhg"), SubResource("Resource_77oxb"), SubResource("Resource_ye43k"), SubResource("Resource_dyvjr"), SubResource("Resource_x2jpn"), SubResource("Resource_b4e58"), SubResource("Resource_8mjno"), SubResource("Resource_t5fl6"), SubResource("Resource_adk34"), SubResource("Resource_0ibt7"), SubResource("Resource_an47f"), SubResource("Resource_wdmks"), SubResource("Resource_hsp24"), SubResource("Resource_24kuk"), SubResource("Resource_chv2y"), SubResource("Resource_bbu26"), SubResource("Resource_bhos5"), SubResource("Resource_e4rfi"), SubResource("Resource_r5shm"), SubResource("Resource_pv28i"), SubResource("Resource_4x8aq"), SubResource("Resource_m048x"), SubResource("Resource_a83b5"), SubResource("Resource_5ti27"), SubResource("Resource_axdmc"), SubResource("Resource_fjmfr"), SubResource("Resource_cdn3r"), SubResource("Resource_jnd6k"), SubResource("Resource_4keit"), SubResource("Resource_hu837"), SubResource("Resource_8o3e1"), SubResource("Resource_m0wbp"), SubResource("Resource_yehbg"), SubResource("Resource_o4wku"), SubResource("Resource_2aoju"), SubResource("Resource_xm8bp"), SubResource("Resource_uqc2q"), SubResource("Resource_ocbo6"), SubResource("Resource_1808q"), SubResource("Resource_ojcwh"), SubResource("Resource_vuh5l"), SubResource("Resource_esexj"), SubResource("Resource_mydsx"), SubResource("Resource_dmlqg"), SubResource("Resource_pvh4w"), SubResource("Resource_dloxj"), SubResource("Resource_au8qn"), SubResource("Resource_dkoby"), SubResource("Resource_wl6eb"), SubResource("Resource_a5w8k"), SubResource("Resource_8igep"), SubResource("Resource_5akp7"), SubResource("Resource_1nbpf"), SubResource("Resource_1v5q7"), SubResource("Resource_i5dkg"), SubResource("Resource_2xn3h"), SubResource("Resource_entjg"), SubResource("Resource_jqgx5"), SubResource("Resource_7a6cw"), SubResource("Resource_dvkdj"), SubResource("Resource_dct4v"), SubResource("Resource_qlqj0"), SubResource("Resource_hd2l4"), SubResource("Resource_3r5x4"), SubResource("Resource_gtueo"), SubResource("Resource_g5vkk"), SubResource("Resource_rtxqb"), SubResource("Resource_02mgh"), SubResource("Resource_vnwuf"), SubResource("Resource_lvc1h"), SubResource("Resource_04bqj"), SubResource("Resource_rumj7"), SubResource("Resource_svlxv"), SubResource("Resource_nevbr"), SubResource("Resource_5lay5"), SubResource("Resource_x0h8b"), SubResource("Resource_ewtjx"), SubResource("Resource_gop06"), SubResource("Resource_no1b7"), SubResource("Resource_niryl"), SubResource("Resource_ajq37"), SubResource("Resource_r8sa3"), SubResource("Resource_lfyn3"), SubResource("Resource_krqfo"), SubResource("Resource_adnl5"), SubResource("Resource_y76p8"), SubResource("Resource_a3dyk")])

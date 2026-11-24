@@ -162,14 +162,17 @@ monsters/mon2/m_b_001_1/
 `ResourceCatalog` 递归扫描 `res://monsters` 收集这些对象并按 `id` 排序，`catalog.monster(id)` 不变。
 原表里有一条没有 `id` 的空记录（`fcfde`），拆表时已丢弃。
 
-## 逐对象资源（passives / npcs）
+## 被动表（passives）不拆
 
-被动与 NPC 同样改为一个对象一个文件：
+`PassiveDefinition` 是被动技能的效果数值（`base` / `effect` / `increment`，效果编号 0–65），
+不是图标也不是逐个对象，没有对应的场景。因此它保持为一张表，放在消费它的战斗场景同级：
 
 ```text
-battle/battle/passives/<id>/<id>.tres   # PassiveDefinition，168 个
-actors/npc/objects/<id>/<id>.tres       # NpcDefinition，52 个
+battle/battle/passives.tres   与 battle.tscn / battle.gd 同级
 ```
 
-`ResourceCatalog.GAMEPLAY_OBJECT_DIRS` 统一按"目录树递归扫描 + 按 id 排序"装载，
-`catalog.passive(id)` / `catalog.npc(id)` 接口不变。
+NPC 表（52 条 `NpcDefinition`）仍是一个对象一个文件：
+
+```text
+actors/npc/objects/<id>/<id>.tres
+```
