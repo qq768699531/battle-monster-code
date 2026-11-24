@@ -286,3 +286,15 @@ main.tscn                    入口（project.godot 的 run/main_scene）
 prime/entry/entry.gd         入口逻辑
 prime/title_visual/          标题可视层、标题图、闪光
 ```
+
+## NPC 数据就近存放
+
+52 条 `NpcDefinition` 不再集中在 `objects/`，而是放进各自角色场景目录（三位一体）：
+
+```text
+actors/npc/n_f_04/    n_f_04.tscn + n_f_04.webp + 4.tres
+actors/hero/h_f_01/   h_f_01.tscn + h_f_01.webp + 0.tres   （NPC 0 用主角正面）
+actors/hero/h_b_01/   h_b_01.tscn + h_b_01.webp + 1.tres   （NPC 1 用主角背面）
+```
+
+`ResourceCatalog.GAMEPLAY_OBJECT_DIRS["npcs"]` 改为递归扫描 `res://actors`。
