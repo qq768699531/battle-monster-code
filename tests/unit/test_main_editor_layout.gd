@@ -34,7 +34,14 @@ func _run() -> void:
 	image.position += Vector2(3, 0)
 	label.size.x += 8
 	title.present(paint)
-	assert_true(item.position == Vector2(212, 56)
+	# 刷新要回到设计位置：设计位置 = 场景里摆的 (212,56) + 这一帧的展开／闪光位移。
+	var selected_paint: Dictionary = {}
+	for candidate: Dictionary in paint.items:
+		if int(candidate.index) == 0:
+			selected_paint = candidate
+	var expected := Vector2(212, 56) + Vector2(float(selected_paint.x) - 200.0,
+		float(selected_paint.y) - 52.0)
+	assert_true(item.position == expected
 		and image.position == original_image_at + Vector2(3, 0)
 		and label.size.x == original_label_rect.size.x + 8,
 		"title refresh preserves edited item, image and label layout")

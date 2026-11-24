@@ -45,13 +45,16 @@ static func title_layout(selection: int, opening: int, highlight: int) -> Dictio
 		if opening != 2:
 			center_y += int(float(spread * (63 + 28 * index - 120)) / 100.0)
 		var active := interactive and selection == index
+		# 原生 `Prime_Title_DrawMenu` 里 `n2 = v38 & 3`：选中项的闪光帧是 0..3 循环，
+		# 不是播一遍就停；四档对应左侧箭头（0／1）与右侧箭头（2／3）两套贴片。
+		var phase := highlight & 3
 		var offset := 11
 		if active:
-			match highlight:
+			match phase:
 				0: offset = 8
 				1: offset = 12
 				2: offset = 10
-				3: offset = 12
+				_: offset = 12
 		var y := center_y - offset
 		items.append({
 			"x": 200,
@@ -60,8 +63,8 @@ static func title_layout(selection: int, opening: int, highlight: int) -> Dictio
 			"selected": active,
 			"text_id": C.TITLE_TEXT_IDS[index],
 			"opacity": 0.5 if opening == 2 else 1.0,
-			"image": 0 if active and highlight >= 2 else 1,
-			"flash_phase": highlight if active and highlight < 4 else -1,
+			"image": 0 if active and phase >= 2 else 1,
+			"flash_phase": phase if active else -1,
 		})
 		if interactive:
 			var key: int = TouchCode.Key.OK if index == selection else (
