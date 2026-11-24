@@ -12,7 +12,7 @@ const Battle = preload("res://battle/combat/battle.gd")
 const BattleSettlementModel = preload("res://battle/battle_settlement/battle_settlement.gd")
 const Book = preload("res://menu/book_model/book_model.gd")
 const MapEffectCatalog = preload("res://maps/map_effect/map_effect.gd")
-const MonsterAttribute = preload("res://core/monster_animation/monster_attribute/monster_attribute.gd")
+const MonsterAttribute = preload("res://core/monster_attribute/monster_attribute.gd")
 const QuestLogModel = preload("res://field/quest_log/quest_log.gd")
 ## 事件记录的等待、淡入淡出、闪光与抖动都按帧计数（`Evt_stdPROC` 的 `step_count`），
 ## 折成秒一律乘 `FramePacing.NATIVE_FRAME_SECONDS`（原生默认档 50 ms/帧，

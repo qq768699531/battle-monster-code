@@ -3,9 +3,9 @@ extends Node
 ## 启动时注册 zh_CN 翻译资源，退出时移除。
 
 const GameplayData = preload("res://core/gameplay_data/gameplay_data.gd")
-const WorldMapData = preload("res://menu/world_map/world_map_data/world_map_data.gd")
-const SpriteOrigins = preload("res://core/monster_animation/sprite_origins/sprite_origins.gd")
-const TextTables = preload("res://core/message_stack/text_tables/text_tables.gd")
+const WorldMapData = preload("res://menu/world_map_data/world_map_data.gd")
+const SpriteOrigins = preload("res://core/sprite_origins/sprite_origins.gd")
+const TextTables = preload("res://core/text_tables/text_tables.gd")
 ## 文本表按来源前缀拆到各功能目录：只有第一次查某个来源时才加载对应文件。
 const TEXT_TABLE_FILES := {
 	"evt": "res://field/quest_detail/event_text.tres",
@@ -14,7 +14,7 @@ const TEXT_TABLE_FILES := {
 	"common": "res://core/message_stack/common.tres",
 }
 const TEXT_TABLE_FALLBACK := "res://core/monster_animation/creature_names.tres"
-const TextSources = preload("res://core/text_sources.gd")
+const TextSources = preload("res://core/resource_catalog/text_sources.gd")
 const TEXT_SOURCES: Dictionary = TextSources.IDS
 const SPRITE_ORIGINS: SpriteOrigins = preload("res://core/monster_animation/sprite-origins.tres")
 ## 玩法数值按功能拆成六份，各自放在使用它的功能目录；这里只在首次访问时拼回一个门面对象。

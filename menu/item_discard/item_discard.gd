@@ -1,7 +1,7 @@
 extends Control
 ## 道具页的丢弃窗口（原生 `Field_Item_DrawSelect`：先选数量，再确认）。
 
-const SlotFrame = preload("res://menu/items/slot_frame/slot_frame.gd")
+const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 
 var host: Control
 

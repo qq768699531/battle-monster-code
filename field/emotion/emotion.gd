@@ -7,7 +7,7 @@ extends Node2D
 ## NPC 头顶任务图标码（`Qst_icoGET` 的返回，`Qst_icoSET` 写进对象 +275）的枚举
 ## 只有一份：`scripts/data/quest_mark.gd`（HUD 色块也按它选色，生产端同样是 `field_runtime`
 ## 写进 actor 的 `quest_status`）。0 是「无」，1 原生不产出、与 0 一样不画。
-const QuestMark = preload("res://field/quest_detail/quest_mark/quest_mark.gd")
+const QuestMark = preload("res://field/quest_mark/quest_mark.gd")
 
 @onready var _talking: Node2D = $Talking
 @onready var _scripted: Node2D = $Scripted

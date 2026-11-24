@@ -1,5 +1,5 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3]
-[ext_resource type="Texture2D" path="res://core/window_frame/frames/window_frame_016.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://core/window_frame/window_frame_016.webp" id="Sheet_common_ui_window"]
 
 
 [sub_resource type="AtlasTexture" id="Atlas_1_sheet"]

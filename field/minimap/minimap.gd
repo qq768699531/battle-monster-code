@@ -15,7 +15,7 @@ const SLIDE_TRACK := 0
 
 ## NPC 头顶任务码的枚举只有一份：`scripts/data/quest_mark.gd`（`Qst_icoGET` 的结果，
 ## 由 field_runtime 落到 actor 的 `quest_status`；头顶图标与 HUD 色块共用）。
-const QuestMark = preload("res://field/quest_detail/quest_mark/quest_mark.gd")
+const QuestMark = preload("res://field/quest_mark/quest_mark.gd")
 
 @export var terrain_opacity := 0.625
 @export var player_color := Color.GREEN

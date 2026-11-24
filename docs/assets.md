@@ -207,3 +207,17 @@ battle/
   `core/window_frame/frames/window_frame_016.webp`、`main/main/main_title-0.webp`
 - 地图是例外：一个地图组目录下有多张图层（`maps/m0/m0_0.webp` …），各自的 TileSet 直接引用，
   无法合成单张图（TileSet 不接受 AtlasTexture），因此保留 `mN_K` 命名
+
+## 目录只有两种角色
+
+- **分类层**：只放子目录，不放任何 `.gd` / `.tscn` / `.tres`（如 `battle/`、`core/`、`field/`）
+- **模块**：只放自己的场景、脚本、数据与图集，不再嵌套其他模块
+
+原先嵌在业务模块里的定义已全部提到分类层：`core/msg`、`core/text_tables`、
+`core/ani_action`、`core/monster_attribute`、`core/monster_growth`、`core/monster_mix`、
+`core/monster_mix_table`、`core/sprite_origins`、`core/touch_code`、`field/encounter_entry`、
+`field/field_action`、`field/food_recipes`、`field/quest_goals`、`field/quest_mark`、
+`field/quests_def`、`field/shop_table`、`main/event_scripts`、`menu/item_kind`、
+`menu/slot_frame`、`menu/slot_frames`、`menu/slot_grade`、`menu/world_map_data`。
+`audio/` 的散落文件收进 `audio/audio_manager/`，`core/text_sources.gd` 并入
+`core/resource_catalog/`，`core/window_frame/frames/` 的图片平铺回模块根。

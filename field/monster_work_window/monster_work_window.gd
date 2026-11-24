@@ -10,7 +10,7 @@ extends "res://field/field_window/field_window.gd"
 
 const MessageStack = preload("res://core/message_stack/message_stack.gd")
 const Menu = preload("res://menu/menu_model/menu_model.gd")
-const SlotFrame = preload("res://menu/items/slot_frame/slot_frame.gd")
+const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 
 ## `Game_Monster_DrawList` 的 6 列 × 1 行；子状态 2 的换页也是这个宽度
 ## （`_mKeyPressed` 的 `% v7`、`v7 = 6 * ((数量 + 5) / 6)`）。
