@@ -6,7 +6,16 @@ const GameplayData = preload("res://data/gameplay_data/gameplay_data.gd")
 const WorldMapData = preload("res://data/world_map_data/world_map_data.gd")
 const SpriteOrigins = preload("res://data/sprite_origins/sprite_origins.gd")
 const TextTables = preload("res://data/text_tables/text_tables.gd")
-const TEXT_TABLES: TextTables = preload("res://ui/text-tables.tres")
+## 文本表按来源前缀拆到各功能目录：只有第一次查某个来源时才加载对应文件。
+const TEXT_TABLE_FILES := {
+	"evt": "res://field/text/evt.tres",
+	"npc": "res://field/text/npc.tres",
+	"qst": "res://field/text/qst.tres",
+	"common": "res://ui/text/common.tres",
+}
+const TEXT_TABLE_FALLBACK := "res://monsters/text/creature_names.tres"
+const TextSources = preload("res://core/text_sources.gd")
+const TEXT_SOURCES: Dictionary = TextSources.IDS
 const SPRITE_ORIGINS: SpriteOrigins = preload("res://monsters/sprite-origins.tres")
 const GAMEPLAY_DATA: GameplayData = preload("res://core/gameplay.tres")
 const WORLD_MAP_DATA: WorldMapData = preload("res://maps/world-map.tres")
@@ -28,6 +37,7 @@ const CELL := 16.0
 const MAP_SCENE_DIR := "res://maps"
 
 var _origins: Dictionary = {}
+var _text_tables: Dictionary = {}
 var _audio_ids: Dictionary = {}
 var _gameplay_data: GameplayData
 var _data_cache: Dictionary = {}
@@ -41,7 +51,7 @@ var _text_ids: Dictionary = {}
 ## 资源路径全部由标识按约定推出，不再维护生成式清单：
 ## 精灵 `assets/sprite/<id>.webp`、精灵原点 `assets/sprite-origins.tres`、
 ## 动画全部是 `scenes/monsters`、`scenes/actors`、`scenes/ani` 下的动画 Scene、
-## 文本 `assets/text-tables.tres`（颜色与换行随正文保存在翻译资源里）、
+## 文本按来源前缀拆在 `field/text`、`ui/text`、`monsters/text`（颜色与换行随正文保存在翻译资源里）、
 ## 玩法 `core/gameplay.tres`（typed `GameplayData`）、平台图标 `main/platform-images/<path>`、
 ## 音频按编号扫 `audio/ogg`。
 func _ready() -> void:
@@ -52,7 +62,7 @@ func _ready() -> void:
 			_report_error("Translation key must be source:record_id: %s" % key)
 			return
 		# 这里不能用 has_text()：_text_ids 正在本循环里逐条构建。
-		var kind_ok := TEXT_TABLES.payloads.has(parts[0]) or \
+		var kind_ok := _has_text_payload(parts[0]) or \
 			EXTERNAL_TEXT_SOURCES.has(parts[0]) or parts[0].begins_with("map/")
 		if not kind_ok:
 			_report_error("Translation key references an unregistered text source: %s" % key)
@@ -113,7 +123,7 @@ func sprite_exists(sprite_id: String) -> bool:
 ## 文本源是否存在：有结构 payload，或者翻译资源里有它的记录。
 func has_text(source_id: String) -> bool:
 	return _is_safe_source_id(source_id) and \
-		(TEXT_TABLES.payloads.has(source_id) or _text_ids.has(source_id))
+		(_has_text_payload(source_id) or _text_ids.has(source_id))
 
 
 ## 已登记的全部正文源标识（来自翻译资源）。
@@ -435,8 +445,27 @@ func load_text(source_id: String) -> Variant:
 
 
 ## 文本资源本体：结构在 `assets/text-tables.tres` 的总表里。
+func _text_table(prefix: String) -> Variant:
+	if _text_tables.has(prefix):
+		return _text_tables[prefix]
+	var path: String = TEXT_TABLE_FILES.get(prefix, TEXT_TABLE_FALLBACK)
+	var table: Variant = load(path)
+	if table == null:
+		_report_error("Text table could not be loaded: %s" % path)
+	_text_tables[prefix] = table
+	return table
+
+
 func _text_payload(source_id: String) -> Variant:
-	return TEXT_TABLES.payloads.get(source_id)
+	var table: Variant = _text_table(source_id.get_slice("/", 0))
+	if table == null:
+		return null
+	return table.payloads.get(source_id)
+
+
+func _has_text_payload(source_id: String) -> bool:
+	# 启动期只查来源清单，不加载正文表；正文在第一次取用时才载入。
+	return TEXT_SOURCES.has(source_id)
 
 
 func load_platform_image(relative_path: String) -> Texture2D:

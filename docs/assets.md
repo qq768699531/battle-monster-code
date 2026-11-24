@@ -53,7 +53,7 @@ ui/theme/
 - **地图图层例外**：每层本来就是单帧整图，直接 `<对象名>.webp`，TileSet 用普通
   `Texture2D`——`AtlasTexture` 会让 Godot 拒绝创建任何 tile。
 - 运行时按 id 取帧走 `core/sprite_index.gd`：`对象/frame-NNN` → `[图集路径, 帧矩形]`，
-  共 5,835 帧；`ResourceCatalog.load_sprite()` 据此切 `AtlasTexture`。
+  共 6,038 帧；`ResourceCatalog.load_sprite()` 据此切 `AtlasTexture`。
 - 通用组件自带图集（如 `ui/number/number_*.tscn`），其余场景实例化组件，而不是各自引用贴图。
 
 ## 本地补齐二进制资源
@@ -76,3 +76,18 @@ godot --headless --path . --import
 
 缺图集或字体时启动会打印 `Failed loading resource: res://...`，场景仍可加载，对应视觉元素为空。
 这不是代码缺陷。
+
+## 文本表
+
+正文按来源前缀拆到使用方目录。启动时只加载来源清单 `core/text_sources.gd`（149 个 id，
+不含正文），正文在第一次取用时才载入对应文件：
+
+| 来源前缀 | 文件 | 体量 |
+| --- | --- | --- |
+| `evt/` | `field/text/evt.tres` | 83 条 / 396 KB |
+| `npc/` | `field/text/npc.tres` | 27 条 / 14 KB |
+| `qst/` | `field/text/qst.tres` | 18 条 / 16 KB |
+| `common/` | `ui/text/common.tres` | 11 条 / 262 KB |
+| `skt/` `ktf/` `lgt/` … | `monsters/text/creature_names.tres` | 10 条 / 39 KB |
+
+拆表前后 149 条正文逐条比对 sha1 一致。

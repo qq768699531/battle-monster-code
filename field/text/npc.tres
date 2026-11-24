@@ -1,0 +1,683 @@
+[gd_resource type="Resource" script_class="TextTables" format=3]
+
+[ext_resource type="Script" path="res://data/text_tables/text_tables.gd" id="1_text"]
+
+[resource]
+script = ExtResource("1_text")
+payloads = {
+"npc/npc0025.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 25.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 25.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0026.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 26.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 26.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0027.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 27.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 27.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0028.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 28.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 28.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0029.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 29.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 29.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0030.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 30.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 30.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0031.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 31.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 31.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0032.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 32.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 32.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0033.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 33.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 33.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0034.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 34.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 34.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0035.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 35.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 35.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0036.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 36.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 36.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0037.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 37.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 37.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0038.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 38.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 38.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0039.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 39.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 39.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0040.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 40.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 40.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0041.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 41.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 41.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0042.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 42.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 42.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0043.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 43.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 43.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0044.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 44.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 44.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0045.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 45.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 45.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0046.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 46.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 46.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0047.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 47.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 47.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0048.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 48.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 48.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0049.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 49.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 49.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0050.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 50.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 50.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+},
+"npc/npc0051.cht": {
+"format": "cht",
+"groups": [{
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 51.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}, {
+"records": [{
+"flags": 1.0,
+"portrait_animation_1based": 1.0,
+"portrait_id": 51.0,
+"text": "",
+"text_status": "verified-mapping",
+"unknown_byte_2": 0.0,
+"unknown_bytes_5_6": [0.0, 0.0]
+}]
+}],
+"schema": "battlemonster.cht.runtime.v1"
+}
+}
