@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dkkm4um34f8dk" path="res://main/title_visual/title_visual.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://prime/prime_view/prime_view.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://main/boundary/boundary.tscn" id="7"]
-[ext_resource type="Resource" path="res://main/main/events.tres" id="8"]
+[ext_resource type="Resource" path="res://main/main/event_scripts.tres" id="8"]
 [ext_resource type="PackedScene" path="res://core/message_stack/message_stack.tscn" id="9"]
 
 [node name="Main" type="Node2D" unique_id=234776110]

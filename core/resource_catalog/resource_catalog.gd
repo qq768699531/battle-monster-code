@@ -8,7 +8,7 @@ const SpriteOrigins = preload("res://data/sprite_origins/sprite_origins.gd")
 const TextTables = preload("res://data/text_tables/text_tables.gd")
 ## 文本表按来源前缀拆到各功能目录：只有第一次查某个来源时才加载对应文件。
 const TEXT_TABLE_FILES := {
-	"evt": "res://field/quest_detail/evt.tres",
+	"evt": "res://field/quest_detail/event_text.tres",
 	"npc": "res://field/dialogue_window/npc.tres",
 	"qst": "res://field/quest_detail/qst.tres",
 	"common": "res://core/message_stack/common.tres",
