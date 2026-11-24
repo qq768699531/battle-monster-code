@@ -7,7 +7,8 @@ GUT 9.6.1（`addons/gut`，MIT）＋ `tests/unit/` 下的用例，从旧仓库 `
 ```powershell
 .\tests\run_tests.ps1                                    # 关键项（默认，约 3 秒）
 .\tests\run_tests.ps1 -Tests test_battle,test_world_map   # 本轮改动覆盖的用例（一次最多 3 个）
-.\tests\run_tests.ps1 -All                               # 全量回归基线（约 35 秒）
+.\tests\run_tests.ps1 -All                               # 全量（6 进程并行，约 12 秒）
+.\tests\run_tests.ps1 -All -Jobs 1                       # 全量串行（约 35 秒，排查用）
 .\tests\run_tests.ps1 -List                              # 只列用例文件名
 ```
 
@@ -41,7 +42,14 @@ GUT 9.6.1（`addons/gut`，MIT）＋ `tests/unit/` 下的用例，从旧仓库 `
 
 ## 全量档
 
-57 个脚本、109 项、约 31 秒（Godot 实测），只在发布前或大改后跑。
+57 个脚本、109 项。**默认 6 个 Godot 进程并行**，实测 12.2–12.5 秒（串行 31 秒）。
+进程按「实测耗时」做 LPT 摊派（`$Weights` 表，新增重用例时补一行）；会抢同一份 `user://`
+或固定端口的用例（`local_service_*`、`prime_settings_store`、`menu_map_blur`、`menu_scene_render`）
+固定在 0 号进程串行跑。
+
+注意：分片会改变同进程内的用例顺序，个别用例依赖前序用例留下的全局状态时会翻车
+（`-Jobs 8` 时 `test_warp_world` 曾因前序用例残留的模糊层失败）。遇到这种情况把该用例加进
+`$serial`，别靠调小并行数掩盖。
 
 迁移方式见 `tests/tools/migrate_from_legacy.py`：旧用例的 `res://scripts/<名>.gd`、`res://scenes/**/<名>.tscn`
 按 basename 改写为新目录，格式串与目录引用留人工处理。

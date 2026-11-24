@@ -23,8 +23,10 @@ param(
 	[switch]$List,
 	## 只跑关键项（默认）：约 5 秒，覆盖战斗结算／战斗核心／存档／事件任务／提示栈／任务数据／数据完整性。
 	[switch]$Key,
-	## 全量回归基线：57 个脚本、109 项，约 30 秒。只在发布前或大改后跑。
+	## 全量回归基线：57 个脚本、109 项。默认拆成 6 个 Godot 进程并行跑（约 12 秒）。
 	[switch]$All,
+	## 并行进程数；1 表示串行（调试用）。
+	[int]$Jobs = 6,
 	[switch]$Full,
 	[string]$Godot = ""
 )
@@ -69,7 +71,7 @@ if (-not $Godot) {
 $targets = ""
 $useKey = $Key -or (-not $All -and (-not $Tests -or $Tests.Count -eq 0))
 if ($All) {
-	Write-Host "=== 全量回归基线：tests/unit（约 30 秒）==="
+	Write-Host "=== 全量回归基线：tests/unit（6 进程并行，约 12 秒）==="
 } elseif ($useKey) {
 	$Tests = $KeyTests
 	$targets = ($Tests | ForEach-Object { "res://tests/unit/$_.gd" }) -join ","
@@ -93,6 +95,92 @@ if ($All) {
 	$targets = ($Tests | ForEach-Object { "res://tests/unit/$_.gd" }) -join ","
 	Write-Host "=== $($Tests -join ', ')（一次启动）==="
 }
+
+## 全量并行：按实测耗时把用例摊到 $Jobs 个 Godot 进程。
+## 会抢同一份 `user://` 或固定端口的用例单独放在 0 号进程，避免互相踩。
+if ($All -and $Jobs -gt 1) {
+	$serial = @("test_local_service_autostart", "test_local_service_client",
+		"test_prime_settings_store", "test_menu_map_blur", "test_menu_scene_render")
+	$weights = @{
+		"test_ui_scene_ownership" = 9.2
+		"test_monster_mix" = 3.8
+		"test_book" = 3.0
+		"test_field_runtime" = 2.9
+		"test_main_editor_layout" = 2.4
+		"test_battle_view" = 1.8
+		"test_world_map" = 1.7
+		"test_prime_pages" = 0.8
+		"test_message_stack" = 0.65
+	}
+	$defaultWeight = 0.6
+
+	$everyTest = @(Get-ChildItem $unit -Filter "test_*.gd" | Sort-Object Name | ForEach-Object { $_.BaseName })
+	$chunks = @()
+	$loads = @()
+	for ($i = 0; $i -lt $Jobs; $i++) { $chunks += ,@(); $loads += 0.0 }
+	foreach ($name in ($serial | Where-Object { $everyTest -contains $_ })) {
+		$chunks[0] += $name
+		$loads[0] += 1.0
+	}
+	$rest = $everyTest | Where-Object { $serial -notcontains $_ } | ForEach-Object {
+		[pscustomobject]@{ Name = $_; Weight = $(if ($weights.ContainsKey($_)) { $weights[$_] } else { $defaultWeight }) }
+	} | Sort-Object Weight -Descending
+	foreach ($item in $rest) {
+		$target = 0
+		for ($i = 1; $i -lt $Jobs; $i++) { if ($loads[$i] -lt $loads[$target]) { $target = $i } }
+		$chunks[$target] += $item.Name
+		$loads[$target] += $item.Weight
+	}
+
+	$chunkLogs = @()
+	$procs = @()
+	$sw = [System.Diagnostics.Stopwatch]::StartNew()
+	for ($i = 0; $i -lt $Jobs; $i++) {
+		$testList = ($chunks[$i] | ForEach-Object { "res://tests/unit/$_.gd" }) -join ","
+		$log = Join-Path ([System.IO.Path]::GetTempPath()) ("gut-par-$i-" + [guid]::NewGuid().ToString("N") + ".log")
+		$chunkLogs += $log
+		$procs += Start-Process -FilePath $Godot -PassThru -NoNewWindow `
+			-ArgumentList @("--path", $project, "-s", "addons/gut/gut_cmdln.gd", "-gdir=", "-gtest=$testList", "-gexit") `
+			-RedirectStandardOutput $log -RedirectStandardError "$log.err"
+	}
+	$procs | ForEach-Object { $_.WaitForExit() }
+	$sw.Stop()
+
+	$totalPass = 0
+	$totalFail = 0
+	$totalScripts = 0
+	$broken = @()
+	for ($i = 0; $i -lt $Jobs; $i++) {
+		$raw = if (Test-Path $chunkLogs[$i]) { Get-Content $chunkLogs[$i] -Raw } else { "" }
+		$p = [regex]::Match($raw, 'Passing Tests\s+(none|\d+)')
+		$f = [regex]::Match($raw, 'Failing Tests\s+(none|\d+)')
+		$s = [regex]::Match($raw, 'Scripts\s+(\d+)')
+		if (-not $p.Success) {
+			$broken += $i
+			Write-Host ("进程 {0}：没拿到汇总行（{1} 个文件）" -f $i, $chunks[$i].Count)
+			continue
+		}
+		$pc = if ($p.Groups[1].Value -eq 'none') { 0 } else { [int]$p.Groups[1].Value }
+		$fc = if ($f.Success -and $f.Groups[1].Value -ne 'none') { [int]$f.Groups[1].Value } else { 0 }
+		$sc = if ($s.Success) { [int]$s.Groups[1].Value } else { 0 }
+		$totalPass += $pc
+		$totalFail += $fc
+		$totalScripts += $sc
+		Write-Host ("进程 {0}：{1} 个脚本，通过 {2}，失败 {3}" -f $i, $sc, $pc, $fc)
+		if ($fc -gt 0) {
+			Write-Host (@($raw -split "\r?\n") | Where-Object { $_ -match '\[Failed\]|^res://tests/unit/' } | Select-Object -First 12)
+		}
+	}
+	$chunkLogs | ForEach-Object { Remove-Item $_, "$_.err" -ErrorAction SilentlyContinue }
+	Write-Host ("=== 合计：{0} 个脚本、通过 {1}、失败 {2}、墙钟 {3:N1}s（{4} 进程）===" -f $totalScripts, $totalPass, $totalFail, $sw.Elapsed.TotalSeconds, $Jobs)
+	if ($broken.Count -gt 0 -or $totalFail -gt 0 -or $totalPass -le 0) {
+		Write-Host "FAILED"
+		exit 1
+	}
+	Write-Host "OK: 全量（并行 $Jobs）"
+	exit 0
+}
+
 
 $outFile = Join-Path ([System.IO.Path]::GetTempPath()) ("gut-" + [guid]::NewGuid().ToString("N") + ".log")
 $errFile = "$outFile.err"
