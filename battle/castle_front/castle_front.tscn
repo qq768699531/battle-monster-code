@@ -1,5 +1,5 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://battle/castle_front/map3_c_1.webp" id="Sheet_obj_map3_c_1"]
+[ext_resource type="Texture2D" path="res://battle/castle_front/castle_front.webp" id="Sheet_obj_map3_c_1"]
 
 
 [sub_resource type="AtlasTexture" id="Atlas_Texture0"]

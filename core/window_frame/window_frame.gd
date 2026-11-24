@@ -3,8 +3,8 @@ extends NinePatchRect
 ## 界面场景实例化本场景切换 `frame` 即可，不再引用整张大图集。
 
 const FRAMES := {
-	"box4": "res://core/window_frame/box4.webp",
-	"box2": "res://core/window_frame/box2.webp",
+	"box4": "res://core/window_frame/window_frame_box4.webp",
+	"box2": "res://core/window_frame/window_frame_box2.webp",
 }
 
 @export var frame := "box4":

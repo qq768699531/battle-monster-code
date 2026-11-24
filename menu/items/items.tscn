@@ -1,5 +1,5 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
+[ext_resource type="Texture2D" path="res://core/number/number.webp" id="Sheet_common_ui_number"]
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 [ext_resource type="Script" path="res://menu/items/items.gd" id="1"]
 [ext_resource type="PackedScene" path="res://menu/item_cell/item_cell.tscn" id="2"]

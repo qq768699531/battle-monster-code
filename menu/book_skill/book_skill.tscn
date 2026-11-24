@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3]
 [ext_resource type="Texture2D" path="res://core/gold_icon/gold_icon.webp" id="part_gold_icon"]
-[ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
+[ext_resource type="Texture2D" path="res://core/number/number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://menu/book_skill/book_skill.gd" id="script"]
 [ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="window"]

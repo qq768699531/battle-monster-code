@@ -1,5 +1,5 @@
 [gd_scene format=3 uid="uid://dkkm4um34f8dk"]
-[ext_resource type="Texture2D" path="res://main/title_visual/ui_grade.webp" id="Sheet_common_ui_grade"]
+[ext_resource type="Texture2D" path="res://main/title_visual/title_visual.webp" id="Sheet_common_ui_grade"]
 
 [ext_resource type="Script" uid="uid://qgw48kxhkey5" path="res://main/title_visual/title_visual.gd" id="1"]
 [ext_resource type="PackedScene" path="res://core/native_panel/native_panel.tscn" id="2"]

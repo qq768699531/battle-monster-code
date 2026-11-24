@@ -197,3 +197,13 @@ battle/
 
 被动逻辑（66 项效果折算）从 `battle.gd` 抽到 `passives.gd`，`battle.gd` 只保留
 `Passives.effect_table(catalog, slot_table)` 的调用。
+
+## 精灵图命名
+
+图集文件名跟模块名一致：
+
+- 模块只有一张图时，文件名 = 模块目录名（`menu/items/items.webp`、`battle/castle_back/castle_back.webp`）
+- 模块有多张图时，以模块名作前缀：`core/window_frame/window_frame_box2.webp`、
+  `core/window_frame/frames/window_frame_016.webp`、`main/main/main_title-0.webp`
+- 地图是例外：一个地图组目录下有多张图层（`maps/m0/m0_0.webp` …），各自的 TileSet 直接引用，
+  无法合成单张图（TileSet 不接受 AtlasTexture），因此保留 `mN_K` 命名
