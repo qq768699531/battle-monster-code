@@ -8,7 +8,7 @@ class_name StoryRuntime
 ## with complete_effect(id); camera pans with complete_camera(id); battle effects
 ## with complete_battle(id).
 ## Call advance(_process delta in seconds). Paused/external waits accrue no time.
-const Battle = preload("res://battle/battle/battle.gd")
+const Battle = preload("res://battle/combat/battle.gd")
 const BattleSettlementModel = preload("res://battle/battle_settlement/battle_settlement.gd")
 const Book = preload("res://menu/book_model/book_model.gd")
 const MapEffectCatalog = preload("res://maps/map_effect/map_effect.gd")

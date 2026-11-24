@@ -20,7 +20,7 @@ signal items_reached
 
 const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
 const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
-const Battle = preload("res://battle/battle/battle.gd")
+const Battle = preload("res://battle/combat/battle.gd")
 
 ## 原生 `Battle_Win_mRun` 返回 500（单位未取证）；这里与战斗其它步进一致用 0.05 秒一帧，
 ## 剩余量由 `BattleSettlement.GAIN_FRAMES`（20 帧 = 1 秒）均摊。

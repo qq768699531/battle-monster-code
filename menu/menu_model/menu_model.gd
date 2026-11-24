@@ -4,7 +4,7 @@ class_name MenuModel
 ## Pure menu projections over native progress/catalog dictionaries, without scene dependencies.
 ## Invalid operations return {ok: false, error: ...} instead of throwing.
 ## Member projections never mutate progress or invent missing individual/resource values.
-const Battle = preload("res://battle/battle/battle.gd")
+const Battle = preload("res://battle/combat/battle.gd")
 const Story = preload("res://core/story/story.gd")
 const Book = preload("res://menu/book_model/book_model.gd")
 const MonsterAttribute = preload("res://core/monster_animation/monster_attribute/monster_attribute.gd")

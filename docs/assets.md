@@ -176,3 +176,24 @@ NPC 表（52 条 `NpcDefinition`）仍是一个对象一个文件：
 ```text
 actors/npc/objects/<id>/<id>.tres
 ```
+
+## battle 的模块划分
+
+`battle/` 只是分类层，不放文件；里面的每个模块各自一个目录：
+
+```text
+battle/
+  combat/                 战斗主场景：battle.tscn + battle.gd + script_battles.tres + battle-species.tres
+  passives/               被动：passives.gd + passives.tscn + passives.tres + passive_definition/
+  battle_poses/           战斗定位表：battle_poses.gd + battle-poses.tres
+  battle_side/            （原 battle/battle 的子模块，已平铺到这一级）
+  battle_species/
+  frame_pacing/
+  item_effect/
+  script_battle_definition/
+  status_effect/
+  actor/ battle_view/ field/ …（其余模块）
+```
+
+被动逻辑（66 项效果折算）从 `battle.gd` 抽到 `passives.gd`，`battle.gd` 只保留
+`Passives.effect_table(catalog, slot_table)` 的调用。

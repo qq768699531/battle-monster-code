@@ -1,7 +1,7 @@
 extends RefCounted
 ## 野外遭遇：野怪移动/接触判定与遭遇池的纯逻辑。
 
-const Battle = preload("res://battle/battle/battle.gd")
+const Battle = preload("res://battle/combat/battle.gd")
 const MenuModel = preload("res://menu/menu_model/menu_model.gd")
 const TILE := 16.0
 const CONTACT_SQUARED := 600.0

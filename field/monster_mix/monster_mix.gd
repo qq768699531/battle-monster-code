@@ -29,7 +29,7 @@ extends "res://field/monster_work_window/monster_work_window.gd"
 signal completed
 
 const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
-const Battle = preload("res://battle/battle/battle.gd")
+const Battle = preload("res://battle/combat/battle.gd")
 
 ## `GameData.current_state_index_bits + 1`（原生 `current_state_index_bits[1]`）的六个子状态。
 enum Phase {

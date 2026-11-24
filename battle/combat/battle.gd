@@ -3,6 +3,8 @@ class_name BattleModel
 ## Battle60 战斗模型（纯逻辑）：出战队伍、行动、伤害与胜负判定。
 ## 不持有任何视图；界面由 battle_view 消费这里的结果。
 
+const Passives = preload("res://battle/passives/passives.gd")
+
 ## 战斗里真正会被读到的被动效果编号。原生把效果号当 `extended_state + 468 + 编号` 的字节下标
 ## （`Param_passiveSet` 一次写 66 字节），读取点：
 ##   `Param_atk1PASSIVE`（普攻加成）：0／1 = 目标属性 0／1、2 = 自身 HP < 30%、
@@ -276,23 +278,6 @@ static func passive_slot_table(args: Array, slots: Array) -> Array:
 
 
 ## `Param_passiveSet`：把 0–5 槽重算成 66 项效果表，只算等级 > 0 的槽，同效果累加。
-static func passive_effect_table(catalog: GameplayData, slots: Array) -> Array[int]:
-	var passives: Array[int] = []
-	passives.resize(66)
-	passives.fill(0)
-	for entry: Array in slots:
-		var level := int(entry[1])
-		if level <= 0:
-			continue
-		var found: PassiveDefinition = catalog.passive(int(entry[0]))
-		assert(found != null)
-		var effect := found.effect
-		assert(effect >= 0 and effect < passives.size())
-		passives[effect] = (passives[effect] + found.base +
-			(level - 1) * found.increment) & 255
-	return passives
-
-
 static func make_ball(catalog: GameplayData, args: Array, nickname: int,
 		passive_slots: Array = []) -> Dictionary:
 	assert(args.size() == 10 and args.all(func(value: Variant) -> bool: return value is int))
@@ -318,7 +303,7 @@ static func make_ball(catalog: GameplayData, args: Array, nickname: int,
 	var attributes: Array = species.attribute_inputs
 	var nickname_values: Array = nickname_bias_row(nickname)
 	var slot_table := passive_slot_table(args, passive_slots)
-	var passives := passive_effect_table(catalog, slot_table)
+	var passives := Passives.effect_table(catalog, slot_table)
 
 	var awakening := 3 * awakened
 	var extra := int(awakening_value / 100) if awakening == 3 else 0

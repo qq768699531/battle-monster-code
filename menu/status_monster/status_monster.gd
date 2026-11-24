@@ -1,7 +1,7 @@
 extends Control
 ## 怪物资料页：数值、技能与装备显示切换。
 
-const Battle = preload("res://battle/battle/battle.gd")
+const Battle = preload("res://battle/combat/battle.gd")
 const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
 const Settlement = preload("res://battle/battle_settlement/battle_settlement.gd")
 

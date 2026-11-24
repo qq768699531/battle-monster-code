@@ -11,7 +11,7 @@ const DamageNumberScene = preload("res://battle/damage_number/damage_number.tscn
 const HitEffectScene = preload("res://battle/hit_effect/hit_effect.tscn")
 const HitEffect = preload("res://battle/hit_effect/hit_effect.gd")
 const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
-const ItemEffect = preload("res://battle/battle/item_effect/item_effect.gd")
+const ItemEffect = preload("res://battle/item_effect/item_effect.gd")
 const BattlePoses = preload("res://battle/battle_poses/battle-poses.tres")
 const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
 ## 原生站位表 `Battle_objGetPosition` 的 10 个世界坐标槽（rodata 0x97864），
