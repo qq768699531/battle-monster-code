@@ -12,6 +12,9 @@ const GAMEPLAY_DATA: GameplayData = preload("res://core/gameplay.tres")
 const WORLD_MAP_DATA: WorldMapData = preload("res://maps/world-map.tres")
 const ASSET_ROOT := "res://assets/"
 const SPRITE_ROOT := ASSET_ROOT + "sprite/"
+## 精灵帧索引：图集合并后，`对象/frame-NNN` → [图集路径, 帧矩形]。
+const SpriteIndex = preload("res://core/sprite_index.gd")
+const SPRITE_FRAMES: Dictionary = SpriteIndex.FRAMES
 const AUDIO_ROOT := ASSET_ROOT + "audio/"
 const AUDIO_OGG_ROOT := "ogg/"
 ## 记录号是整数的文本源：翻译键的后半段必须是规范整数。
@@ -102,6 +105,8 @@ func text_message(source_id: String, record_id: Variant) -> String:
 func sprite_exists(sprite_id: String) -> bool:
 	if not _is_safe_relative_path(sprite_id):
 		return false
+	if SPRITE_FRAMES.has(sprite_id):
+		return true
 	return ResourceLoader.exists(SPRITE_ROOT + sprite_id + ".webp")
 
 
@@ -137,7 +142,23 @@ func load_sprite(sprite_id: String) -> Texture2D:
 		_report_error("Unsafe sprite identity: %s" % sprite_id)
 		return null
 	var path: String = SPRITE_ROOT + sprite_id + ".webp"
-	var texture: Variant = load(path)
+	var texture: Variant
+	if SPRITE_FRAMES.has(sprite_id):
+		# 图集合并后，一帧就是图集上的一个矩形：按索引取图集再切区域。
+		var entry: Array = SPRITE_FRAMES[sprite_id]
+		var sheet: Variant = load(entry[0])
+		if not sheet is Texture2D:
+			_report_error("Sprite sheet could not be loaded: %s" % entry[0])
+			return null
+		var atlas := AtlasTexture.new()
+		atlas.atlas = sheet
+		atlas.region = entry[1]
+		texture = atlas
+	else:
+		if not ResourceLoader.exists(path):
+			_report_error("Sprite frame missing: %s" % sprite_id)
+			return null
+		texture = load(path)
 	if not texture is Texture2D:
 		_report_error("Sprite source texture could not be loaded: %s" % path)
 		return null
