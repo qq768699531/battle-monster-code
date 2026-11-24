@@ -32,7 +32,7 @@ const Presentation = preload("res://battle/presentation/presentation.gd")
 const Settlement = preload("res://battle/battle_settlement/battle_settlement.gd")
 const Menu = preload("res://menu/menu_model/menu_model.gd")
 const HitEffect = preload("res://battle/hit_effect/hit_effect.gd")
-const BattlePoses = preload("res://battle/battle-poses.tres")
+const BattlePoses = preload("res://battle/actor/battle-poses.tres")
 const STEP_SECONDS := 0.05
 ## 用了道具之后原生状态 21 ITEM2 空跑 16 帧（`Battle_Item2_mRun` 的 `run_counter > 15`）。
 const ITEM_FRAMES := 16

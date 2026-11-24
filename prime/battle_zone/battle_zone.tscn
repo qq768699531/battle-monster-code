@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://prime/battle_stat_row/battle_stat_row.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://prime/native_button/native_button.tscn" id="5"]
-[ext_resource type="Theme" path="res://core/theme/ui_theme.tres" id="6"]
+[ext_resource type="Theme" path="res://core/native_label/ui_theme.tres" id="6"]
 [ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="7"]
 
 [node name="BattleZone" type="Control" unique_id=1203890205]

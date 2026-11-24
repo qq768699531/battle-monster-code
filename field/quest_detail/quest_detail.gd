@@ -33,7 +33,7 @@ signal accepted(quest_id: int, slot: int)
 
 const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
 const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
-const UI_THEME = preload("res://core/theme/ui_theme.tres")
+const UI_THEME = preload("res://core/native_label/ui_theme.tres")
 
 ## 任务正文走 `TextTables.QUEST_SOURCE`（`qst/qstlist.fxt:<任务号>`），payload 是
 ## 「标题 \t 说明 \t 目标 \t 关联地域号 \t 目标地域号 \t 地域名」六段（尾段可能整体缺失）。

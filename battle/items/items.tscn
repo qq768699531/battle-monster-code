@@ -3,8 +3,8 @@
 
 [ext_resource type="PackedScene" path="res://menu/party_equipment/party_equipment.tscn" id="layout"]
 [ext_resource type="Script" path="res://battle/items/items.gd" id="script"]
-[ext_resource type="Texture2D" path="res://core/window_frame/slot/filled.tres" id="normal_frame"]
-[ext_resource type="Texture2D" path="res://core/window_frame/slot/filled_focused.tres" id="selected_frame"]
+[ext_resource type="Texture2D" path="res://core/window_frame/slot_filled.tres" id="normal_frame"]
+[ext_resource type="Texture2D" path="res://core/window_frame/slot_filled_focused.tres" id="selected_frame"]
 [ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://core/screen_shade/screen_shade.tscn" id="shade"]
 

@@ -24,7 +24,7 @@ class_name BattleSpeciesTable
 ## 附哪个状态、取哪个受方被动做反弹）；符号化的物种取该物种 `_procSkill` 的返回值。
 
 ## 数据文件；与 `battle-poses.tres` 一样是生成物。
-const TABLE_PATH := "res://monsters/battle-species.tres"
+const TABLE_PATH := "res://battle/battle/battle-species.tres"
 ## 觉醒／进化物种号在基础物种号上加 1000（`Ball_stdFeel` 的 `definition_id += 1000`），
 ## 这些变体共用基础物种的动作回调（`Battle_Monster_00NN_procCurr`），所以查表时取模。
 const VARIANT_OFFSET := 1000

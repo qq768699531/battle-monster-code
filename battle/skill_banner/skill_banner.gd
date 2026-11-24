@@ -15,7 +15,7 @@ extends Control
 
 const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
 const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
-const UI_THEME = preload("res://core/theme/ui_theme.tres")
+const UI_THEME = preload("res://core/native_label/ui_theme.tres")
 
 ## `JC_grpSetMODE(GRP_MODE_ALPHA, 128)`：`JC_grpSetMODE` 的 alpha 分量是按 256 计的
 ## （`PixelData.mode_*_component_256`），128 ⇒ 50% 黑。

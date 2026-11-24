@@ -13,7 +13,7 @@ class_name MonsterMixTable
 ## 判定树是**设计表**，不是公式：同一行里 0/1 的两格取值可以不同（`(2, 4)` 的和 0 取候选 1）。
 
 ## 数据文件；与 `battle-poses.tres` 一样是生成物。
-const TABLE_PATH := "res://monsters/monster-mix.tres"
+const TABLE_PATH := "res://core/monster_animation/monster-mix.tres"
 
 ## `kind_specific_84_bits`（记录第 132 字节，`Ball_stdBasic` 用它取属性组内记录）的取值范围，
 ## 即品级：`Game_Monster_Mix_mKeyPressed` 对 `== 5` 的精灵直接弹 `msg 117`「不能合成」，

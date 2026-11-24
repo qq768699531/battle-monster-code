@@ -60,7 +60,7 @@ const MESSAGE_HIGHLIGHT_CODE := "#C5"
 ## 事件指令 21 的文本源（`Evt_stdQUEST@0x7EA90:11` 的 `EFC_fsLoadRES("evt/evtlist.fxt")`）。
 const EVENT_QUEST_TEXT_SOURCE := "evt/evtlist.fxt"
 ## 任务表（`QuestTable`）的唯一加载路径：任务门禁与头顶任务图标共用。
-const QUEST_TABLE_PATH := "res://field/quests.tres"
+const QUEST_TABLE_PATH := "res://field/quest_detail/quests.tres"
 const MessageStack = preload("res://core/message_stack/message_stack.gd")
 const MapNameView = preload("res://field/map_name_view/map_name_view.gd")
 const TILE := 16.0

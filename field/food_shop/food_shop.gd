@@ -37,7 +37,7 @@ const PRODUCT_KIND := 1
 const INSUFFICIENT_COLOR := Color("#ff00ff")
 ## `item_food.dat` 的 12 条食谱（`assets/food-recipes.tres`，由 `script\export_food_recipes.py`
 ## 从原字节导出）；取不到就报错，不在脚本里留第二份表。
-const RECIPE_PATH := "res://field/food-recipes.tres"
+const RECIPE_PATH := "res://field/food_shop/food-recipes.tres"
 
 ## 食谱资源缺失／空表时的原因；非空串时显示在详情面板的提示行。
 var load_error := ""

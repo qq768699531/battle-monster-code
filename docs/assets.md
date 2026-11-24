@@ -125,3 +125,25 @@ godot --headless --path . --import
 
 `ResourceCatalog.load_gameplay_catalog()` 在首次访问时把六份拼回一个 `GameplayData` 门面对象，
 所以 `catalog.monster(id)`、`catalog.item(id)` 等调用点与传入 `GameplayData` 的 40 多处签名都不用改。
+
+## 数据表归属
+
+数据表不再单独躺在功能根目录，而是移入使用它的场景目录（该目录同时有 `.tscn` 和 `.gd`）：
+
+| 数据表 | 现在的位置 |
+| --- | --- |
+| 任务 / 任务文本 | `field/quest_detail/` |
+| 事件文本 | `field/quest_detail/evt.tres` |
+| NPC 文本 | `field/dialogue_window/npc.tres` |
+| 通用文本 / 翻译 | `core/message_stack/` |
+| 主题 | `core/native_label/ui_theme.tres` |
+| 事件脚本表 | `main/main/events.tres` |
+| 物品表 | `menu/items/gameplay_items.tres` |
+| 被动 / 脚本战斗 / 物种 | `battle/battle/` |
+| 怪物表 / 合成表 / 精灵原点 / 名称表 | `core/monster_animation/` |
+| 遭遇表 / NPC 定义 | `field/field_runtime/`、`field/field_actors/` |
+| 食谱 / 商店 / 造型 / 世界地图 | `field/food_shop/`、`field/shop_goods/`、`battle/actor/`、`menu/world_map/` |
+| 音频总线布局 | `audio/default_bus_layout.tres`（与 `audio_manager` 场景同级） |
+
+地图 TileSet（125 个）仍留在 `maps/mN/`：同目录有地图场景与地形场景，但没有脚本——它们是编辑器资源，
+给每个 TileSet 配一个脚本只会产生空壳。
