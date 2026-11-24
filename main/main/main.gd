@@ -95,6 +95,9 @@ var _title_flash: Node2D:
 var _title_flash_sprite: Sprite2D:
 	get: return _title._title_flash_sprite
 	set(value): _title._title_flash_sprite = value
+var _title_flash_texture: Texture2D:
+	get: return _title._title_flash_texture
+	set(value): _title._title_flash_texture = value
 var _title_flash_phase: int:
 	get: return _title._title_flash_phase
 	set(value): _title._title_flash_phase = value
@@ -294,6 +297,13 @@ func _load_resources() -> void:
 		atlas.atlas = sheet
 		atlas.region = region
 		_title_textures.append(atlas)
+	var flash := AtlasTexture.new()
+	flash.atlas = sheet
+	flash.region = Rect2(0, 23, 28, 21)
+	_title_flash_texture = flash
+	if _title_flash_texture == null:
+		_startup_error = "Prime title flash sprite is unavailable."
+		return
 
 
 func _load_prime_pages() -> void:

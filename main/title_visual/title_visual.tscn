@@ -3,7 +3,7 @@
 
 [ext_resource type="Script" uid="uid://qgw48kxhkey5" path="res://main/title_visual/title_visual.gd" id="1"]
 [ext_resource type="PackedScene" path="res://core/native_panel/native_panel.tscn" id="2"]
-[ext_resource type="Shader" path="res://main/title_visual/flash_glow.gdshader" id="3"]
+[ext_resource type="Shader" path="res://menu/menu/native_menu_brightness.gdshader" id="3"]
 [ext_resource type="PackedScene" path="res://main/title_item/title_item.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://main/elogo/elogo.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://main/ensony/ensony.tscn" id="6"]
@@ -343,10 +343,8 @@ border_width = 0
 
 [node name="Copy" type="BackBufferCopy" parent="Flash" unique_id=1934150397]
 
-[node name="Sprite" type="ColorRect" parent="Flash" unique_id=2079219385]
-offset_right = 28.0
-offset_bottom = 21.0
-mouse_filter = 2
-color = Color(1, 1, 1, 1)
+[node name="Sprite" type="Sprite2D" parent="Flash" unique_id=2079219385]
+texture_filter = 1
 material = SubResource("Material")
+centered = false
 
