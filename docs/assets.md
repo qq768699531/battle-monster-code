@@ -1,49 +1,62 @@
-# 资源目录约定
+# 目录与资源约定
 
-仓库按**用途**分目录，不按文件类型分层：一个对象的场景、脚本、数据与贴图放在同一个目录里。
+仓库按**用途**分目录，不按文件类型分层。一个对象的场景、脚本、数据与贴图放在一起：
 
 ```text
 monsters/mon1/m_f_000/
   m_f_000.tscn      场景
-  m_f_000.webp      该对象的整张精灵图（无损 WebP）
+  m_f_000.webp      该对象整张精灵图（无损 WebP）
 maps/m0/
-  m0.tscn           地图场景
+  m0.tscn           地图场景（脚本 maps/map.gd，BattleMap 基类）
   t0_0.tscn         地形层
-  m0_0.tres         TileSet
+  m0_0.tres         TileSet（普通 Texture2D 引用，不能用 AtlasTexture）
   m0_0.webp         地图图层
+ui/window_transition/
+  window_transition.tscn  通用窗框组件，被 19 个界面场景实例化
 ```
+
+## 顶层目录
+
+| 目录 | 用途 |
+| --- | --- |
+| `core/` | 跨功能的运行时与共享资源：`story`、`save_store`、`world_resources`、`resource_catalog`、`gameplay.tres`、`shaders/` |
+| `data/` | 跨功能的数据类型定义（`ItemDefinition`、`MonsterDefinition` 等 Resource 脚本） |
+| `ui/` | 通用界面组件、字体主题、文案表、数字与窗框图集 |
+| `battle/` `field/` `menu/` `prime/` `main/` | 各自功能的场景、脚本、数据 |
+| `actors/` `monsters/` `maps/` | 按对象/地图组存放的角色、怪物、地图 |
+| `assets/` | 只放本地二进制资源（音频、字体、未使用的原版贴图），不入库 |
 
 ## 入库范围
 
 | 路径 | 入库 | 说明 |
 | --- | --- | --- |
 | `**/*.tscn` `**/*.gd` `**/*.tres` `**/*.gdshader` | 是 | 场景、脚本、数据表、着色器 |
-| `**/*.webp`（`.tscn` 引用的图集） | 否 | 原版美术资源，版权归原开发方，本地补齐 |
-| `assets/audio/**` | 否 | 原版音频 |
-| `assets/fonts/*.ttf` | 否 | 原版字体 |
+| `**/*.webp` `**/*.png` `**/*.jpg` | 否 | 原版美术，版权归原开发方，本地补齐 |
+| `assets/audio/**` `assets/fonts/*.ttf` | 否 | 原版音频与字体 |
 | `**/*.import` | 否 | Godot 导入缓存 |
 
 ## 精灵图约定
 
-- 一个对象一张图集：该对象的所有动画帧合并成 `<对象名>.webp`，网格排布、无损编码。
-- 场景用 `AtlasTexture` 引用图集中的帧：`atlas` 指向图集，`region` 是该帧在原图中的矩形。
-  这样每帧的尺寸与原点都不变，动画轨道的 `values` 也从 `ExtResource` 换成 `SubResource`。
-- 地图图层例外：每个图层本来就是单帧整图，直接是 `<对象名>.webp`，TileSet 用普通
-  `Texture2D` 引用——`AtlasTexture` 会让 Godot 拒绝创建任何 tile。
-- 多个场景共用的贴图簇（`ui/window/`、`ui/number/`、`battle/hud/`、`ui/touch_button/`）
-  后续由各自的通用场景持有，不再让每个场景重复引用。
+- **一个对象一张图集**：该对象的动画帧合并成 `<对象名>.webp`，网格排布、无损编码。
+  （有损 WebP 重编码会让像素画掉色，最坏单通道差 218/255，必须 `lossless=True`。）
+- 场景用 `AtlasTexture` 引用帧：`atlas` 指向图集，`region` 是该帧矩形；动画轨道
+  `values` 从 `ExtResource` 换成 `SubResource`。
+- **地图图层例外**：每层本来就是单帧整图，直接 `<对象名>.webp`，TileSet 用普通
+  `Texture2D`——`AtlasTexture` 会让 Godot 拒绝创建任何 tile。
+- 多场景共用的贴图放在对应**通用场景**的目录里（如 `ui/window_transition/`），
+  由该组件拥有，其余场景实例化组件，而不是各自引用贴图。
 
 ## 本地补齐二进制资源
 
-克隆后只有场景/脚本/数据，运行前把原版资源按下列位置放回（`res://` 相对路径保持不变）：
+克隆后只有场景/脚本/数据，运行前把原版资源按原相对路径放回：
 
 ```text
-assets/sprite/<对象>/<对象>.webp     # 各功能目录下的图集
+<各功能目录>/<对象>/<对象>.webp
 assets/audio/**/*.ogg
 assets/fonts/*.ttf
 ```
 
-放好后执行一次导入：
+放好后导入一次：
 
 ```powershell
 godot --headless --path . --import
@@ -51,5 +64,5 @@ godot --headless --path . --import
 
 ## 缺资源时的表现
 
-缺图集或字体时启动会打印 `Failed loading resource: res://...`，场景仍可加载，但对应视觉元素为空。
+缺图集或字体时启动会打印 `Failed loading resource: res://...`，场景仍可加载，对应视觉元素为空。
 这不是代码缺陷。
