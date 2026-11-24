@@ -1,18 +1,38 @@
 [gd_scene format=3]
+[ext_resource type="Texture2D" path="res://actors/hero/c_b_shadow/c_b_shadow.webp" id="Sheet_hero_c_b_shadow"]
+[ext_resource type="Texture2D" path="res://actors/hero/c_b_effect/c_b_effect.webp" id="Sheet_hero_c_b_effect"]
 [ext_resource type="Texture2D" path="res://monsters/mon2/m_b_108_2/m_b_108_2.webp" id="Sheet_mon2_m_b_108_2"]
 [ext_resource type="Texture2D" path="res://monsters/mon2/m_b_108_1/m_b_108_1.webp" id="Sheet_mon2_m_b_108_1"]
 
-[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_shadow/frame-007.webp" id="Texture0"]
-[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_effect/frame-013.webp" id="Texture30"]
-[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_effect/frame-005.webp" id="Texture32"]
-[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_effect/frame-006.webp" id="Texture36"]
-[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_effect/frame-007.webp" id="Texture37"]
-[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_effect/frame-008.webp" id="Texture38"]
-[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_effect/frame-009.webp" id="Texture39"]
-[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_shadow/frame-006.webp" id="Texture43"]
-[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_shadow/frame-005.webp" id="Texture45"]
 [ext_resource type="Shader" path="res://shaders/native_touch_blend.gdshader" id="BlendShader"]
 
+[sub_resource type="AtlasTexture" id="Atlas_Texture0"]
+atlas = ExtResource("Sheet_hero_c_b_shadow")
+region = Rect2(72, 60, 62, 28)
+[sub_resource type="AtlasTexture" id="Atlas_Texture30"]
+atlas = ExtResource("Sheet_hero_c_b_effect")
+region = Rect2(356, 76, 9, 8)
+[sub_resource type="AtlasTexture" id="Atlas_Texture32"]
+atlas = ExtResource("Sheet_hero_c_b_effect")
+region = Rect2(445, 0, 20, 20)
+[sub_resource type="AtlasTexture" id="Atlas_Texture36"]
+atlas = ExtResource("Sheet_hero_c_b_effect")
+region = Rect2(534, 0, 40, 40)
+[sub_resource type="AtlasTexture" id="Atlas_Texture37"]
+atlas = ExtResource("Sheet_hero_c_b_effect")
+region = Rect2(623, 0, 42, 42)
+[sub_resource type="AtlasTexture" id="Atlas_Texture38"]
+atlas = ExtResource("Sheet_hero_c_b_effect")
+region = Rect2(712, 0, 44, 44)
+[sub_resource type="AtlasTexture" id="Atlas_Texture39"]
+atlas = ExtResource("Sheet_hero_c_b_effect")
+region = Rect2(0, 76, 44, 44)
+[sub_resource type="AtlasTexture" id="Atlas_Texture43"]
+atlas = ExtResource("Sheet_hero_c_b_shadow")
+region = Rect2(0, 60, 56, 26)
+[sub_resource type="AtlasTexture" id="Atlas_Texture45"]
+atlas = ExtResource("Sheet_hero_c_b_shadow")
+region = Rect2(144, 30, 48, 26)
 [sub_resource type="AtlasTexture" id="Atlas_Texture1"]
 atlas = ExtResource("Sheet_mon2_m_b_108_2")
 region = Rect2(0, 0, 24, 15)
@@ -185,7 +205,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("Texture0")]
+"values": [SubResource("Atlas_Texture0")]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Layer000:transform")
@@ -1147,7 +1167,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("Texture0")]
+"values": [SubResource("Atlas_Texture0")]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Layer000:transform")
@@ -2109,7 +2129,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("Texture0")]
+"values": [SubResource("Atlas_Texture0")]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Layer000:transform")
@@ -2649,7 +2669,7 @@ tracks/61/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("Texture30")]
+"values": [SubResource("Atlas_Texture30")]
 }
 tracks/62/type = "value"
 tracks/62/path = NodePath("Layer012:transform")
@@ -3071,7 +3091,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("Texture0")]
+"values": [SubResource("Atlas_Texture0")]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Layer000:transform")
@@ -4033,7 +4053,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("Texture0")]
+"values": [SubResource("Atlas_Texture0")]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Layer000:transform")
@@ -4168,7 +4188,7 @@ tracks/16/keys = {
 "times": PackedFloat32Array(0, 0.4, 0.6, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [SubResource("Atlas_Texture21"), SubResource("Atlas_Texture33"), ExtResource("Texture32"), SubResource("Atlas_Texture33")]
+"values": [SubResource("Atlas_Texture21"), SubResource("Atlas_Texture33"), SubResource("Atlas_Texture32"), SubResource("Atlas_Texture33")]
 }
 tracks/17/type = "value"
 tracks/17/path = NodePath("Layer003:transform")
@@ -4213,7 +4233,7 @@ tracks/21/keys = {
 "times": PackedFloat32Array(0, 0.4, 0.6, 0.7, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [SubResource("Atlas_Texture22"), SubResource("Atlas_Texture34"), SubResource("Atlas_Texture21"), ExtResource("Texture32"), SubResource("Atlas_Texture34")]
+"values": [SubResource("Atlas_Texture22"), SubResource("Atlas_Texture34"), SubResource("Atlas_Texture21"), SubResource("Atlas_Texture32"), SubResource("Atlas_Texture34")]
 }
 tracks/22/type = "value"
 tracks/22/path = NodePath("Layer004:transform")
@@ -4483,7 +4503,7 @@ tracks/51/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.7, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null, ExtResource("Texture32"), SubResource("Atlas_Texture14"), SubResource("Atlas_Texture35"), SubResource("Atlas_Texture27"), SubResource("Atlas_Texture14")]
+"values": [null, SubResource("Atlas_Texture32"), SubResource("Atlas_Texture14"), SubResource("Atlas_Texture35"), SubResource("Atlas_Texture27"), SubResource("Atlas_Texture14")]
 }
 tracks/52/type = "value"
 tracks/52/path = NodePath("Layer010:transform")
@@ -4528,7 +4548,7 @@ tracks/56/keys = {
 "times": PackedFloat32Array(0, 0.3, 0.4, 0.6, 0.7, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null, ExtResource("Texture32"), SubResource("Atlas_Texture15"), SubResource("Atlas_Texture31"), SubResource("Atlas_Texture35"), SubResource("Atlas_Texture15")]
+"values": [null, SubResource("Atlas_Texture32"), SubResource("Atlas_Texture15"), SubResource("Atlas_Texture31"), SubResource("Atlas_Texture35"), SubResource("Atlas_Texture15")]
 }
 tracks/57/type = "value"
 tracks/57/path = NodePath("Layer011:transform")
@@ -4663,7 +4683,7 @@ tracks/71/keys = {
 "times": PackedFloat32Array(0, 0.4, 0.45, 0.5, 0.55, 0.6, 0.8, 0.85, 0.9, 0.95, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null, ExtResource("Texture36"), ExtResource("Texture37"), ExtResource("Texture38"), ExtResource("Texture39"), null, ExtResource("Texture36"), ExtResource("Texture37"), ExtResource("Texture38"), ExtResource("Texture39"), null]
+"values": [null, SubResource("Atlas_Texture36"), SubResource("Atlas_Texture37"), SubResource("Atlas_Texture38"), SubResource("Atlas_Texture39"), null, SubResource("Atlas_Texture36"), SubResource("Atlas_Texture37"), SubResource("Atlas_Texture38"), SubResource("Atlas_Texture39"), null]
 }
 tracks/72/type = "value"
 tracks/72/path = NodePath("Layer014:transform")
@@ -4995,7 +5015,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.3, 0.35, 0.5, 0.55),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("Texture0"), ExtResource("Texture43"), ExtResource("Texture45"), ExtResource("Texture43"), ExtResource("Texture0")]
+"values": [SubResource("Atlas_Texture0"), SubResource("Atlas_Texture43"), SubResource("Atlas_Texture45"), SubResource("Atlas_Texture43"), SubResource("Atlas_Texture0")]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Layer000:transform")
@@ -5895,7 +5915,7 @@ tracks/101/keys = {
 "times": PackedFloat32Array(0, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null, ExtResource("Texture32"), ExtResource("Texture36"), ExtResource("Texture37"), ExtResource("Texture38"), ExtResource("Texture39"), null]
+"values": [null, SubResource("Atlas_Texture32"), SubResource("Atlas_Texture36"), SubResource("Atlas_Texture37"), SubResource("Atlas_Texture38"), SubResource("Atlas_Texture39"), null]
 }
 tracks/102/type = "value"
 tracks/102/path = NodePath("Layer020:transform")
@@ -8842,7 +8862,7 @@ copy_mode = 2
 
 [node name="Layer000" type="Sprite2D" parent="."]
 centered = false
-texture = ExtResource("Texture0")
+texture = SubResource("Atlas_Texture0")
 transform = Transform2D(1, 0, 0, 1, -31, -14)
 visible = true
 material = SubResource("Blend4")

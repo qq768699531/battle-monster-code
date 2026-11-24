@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/menu/world_map_canvas.gd" id="script"]
-[ext_resource type="PackedScene" path="res://scenes/actors/hero/h_f_01.tscn" id="marker"]
+[ext_resource type="PackedScene" path="res://actors/hero/h_f_01/h_f_01.tscn" id="marker"]
 
 [node name="WorldMapCanvas" type="Control"]
 offset_right = 196.0

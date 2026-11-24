@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/field/encounter_transition.gd" id="script"]
 [ext_resource type="Shader" path="res://shaders/encounter_zoom.gdshader" id="zoom"]
-[ext_resource type="PackedScene" path="res://scenes/actors/hero/h_f_01.tscn" id="hero"]
+[ext_resource type="PackedScene" path="res://actors/hero/h_f_01/h_f_01.tscn" id="hero"]
 [ext_resource type="PackedScene" path="res://scenes/field/encounter_art/obj/title.tscn" id="loading"]
 
 [sub_resource type="ShaderMaterial" id="Zoom"]

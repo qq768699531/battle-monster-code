@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" path="res://assets/sprite/common/ui_battle/frame-010.webp" id="title"]
 [ext_resource type="PackedScene" path="res://scenes/components/native_label.tscn" id="label"]
 [ext_resource type="Texture2D" path="res://assets/sprite/obj/ui_world/frame-007.webp" id="disabled_icon"]
-[ext_resource type="PackedScene" path="res://scenes/actors/hero/h_f_01.tscn" id="marker"]
+[ext_resource type="PackedScene" path="res://actors/hero/h_f_01/h_f_01.tscn" id="marker"]
 [ext_resource type="PackedScene" path="res://scenes/field/warp_confirm.tscn" id="confirm"]
 [ext_resource type="Shader" path="res://shaders/ani_brightness.gdshader" id="gray_shader"]
 
