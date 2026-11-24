@@ -116,12 +116,12 @@ godot --headless --path . --import
 
 | 表 | 文件 | 记录数 | 体量 |
 | --- | --- | --- | --- |
-| `items` | `core/gameplay_items.tres` | 367 | 125 KB |
-| `monsters` | `monsters/gameplay_monsters.tres` | 132 | 50 KB |
-| `passives` | `battle/gameplay_passives.tres` | 168 | 26 KB |
-| `encounters` | `field/gameplay_encounters.tres` | 149 | 73 KB |
-| `script_battles` | `battle/gameplay_script_battles.tres` | 98 | 32 KB |
-| `npcs` | `field/gameplay_npcs.tres` | 52 | 8 KB |
+| `items` | `menu/items/items.tres` | 367 | 125 KB |
+| `monsters` | `core/monster_animation/monsters.tres` | 132 | 50 KB |
+| `passives` | `battle/battle/passives.tres` | 168 | 26 KB |
+| `encounters` | `field/field_runtime/encounters.tres` | 149 | 73 KB |
+| `script_battles` | `battle/battle/script_battles.tres` | 98 | 32 KB |
+| `npcs` | `field/field_actors/npcs.tres` | 52 | 8 KB |
 
 `ResourceCatalog.load_gameplay_catalog()` 在首次访问时把六份拼回一个 `GameplayData` 门面对象，
 所以 `catalog.monster(id)`、`catalog.item(id)` 等调用点与传入 `GameplayData` 的 40 多处签名都不用改。
@@ -138,10 +138,10 @@ godot --headless --path . --import
 | 通用文本 / 翻译 | `core/message_stack/` |
 | 主题 | `core/native_label/ui_theme.tres` |
 | 事件脚本表 | `main/main/events.tres` |
-| 物品表 | `menu/items/gameplay_items.tres` |
-| 被动 / 脚本战斗 / 物种 | `battle/battle/` |
-| 怪物表 / 合成表 / 精灵原点 / 名称表 | `core/monster_animation/` |
-| 遭遇表 / NPC 定义 | `field/field_runtime/`、`field/field_actors/` |
+| 物品表 | `menu/items/items.tres` |
+| 被动 `passives` / 脚本战斗 `script_battles` / 物种 | `battle/battle/` |
+| 怪物表 `monsters` / 合成表 / 精灵原点 / 名称表 | `core/monster_animation/` |
+| 遭遇表 `encounters` / NPC 定义 `npcs` | `field/field_runtime/`、`field/field_actors/` |
 | 食谱 / 商店 / 造型 / 世界地图 | `field/food_shop/`、`field/shop_goods/`、`battle/actor/`、`menu/world_map/` |
 | 音频总线布局 | `audio/default_bus_layout.tres`（与 `audio_manager` 场景同级） |
 

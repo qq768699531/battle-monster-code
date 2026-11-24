@@ -19,12 +19,12 @@ const TEXT_SOURCES: Dictionary = TextSources.IDS
 const SPRITE_ORIGINS: SpriteOrigins = preload("res://core/monster_animation/sprite-origins.tres")
 ## 玩法数值按功能拆成六份，各自放在使用它的功能目录；这里只在首次访问时拼回一个门面对象。
 const GAMEPLAY_PARTS := {
-	"items": "res://menu/items/gameplay_items.tres",
-	"monsters": "res://core/monster_animation/gameplay_monsters.tres",
-	"passives": "res://battle/battle/gameplay_passives.tres",
-	"encounters": "res://field/field_runtime/gameplay_encounters.tres",
-	"script_battles": "res://battle/battle/gameplay_script_battles.tres",
-	"npcs": "res://field/field_actors/gameplay_npcs.tres",
+	"items": "res://menu/items/items.tres",
+	"monsters": "res://core/monster_animation/monsters.tres",
+	"passives": "res://battle/battle/passives.tres",
+	"encounters": "res://field/field_runtime/encounters.tres",
+	"script_battles": "res://battle/battle/script_battles.tres",
+	"npcs": "res://field/field_actors/npcs.tres",
 }
 const WORLD_MAP_DATA: WorldMapData = preload("res://menu/world_map/world-map.tres")
 const ASSET_ROOT := "res://assets/"
