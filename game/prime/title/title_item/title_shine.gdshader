@@ -1,23 +1,42 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-// 标题菜单选中项的闪光：原版录屏（Downloads/untitled.gif 第 29–33 帧）显示的是
-// 一块白色从按钮左边缘铺开、右边界是斜线，几帧内扫满整条按钮后消失。
-// 相位沿用原版 `*p_n2` 的 0..3 帧：白块右边界按相位推进，第 4 帧起关闭。
+// 标题菜单选中项的闪光。`common/ui_title2.fbm` 第 2 帧（28×21）本身就是一张斜向渐变贴片
+// （左下 → 右上的斜带，边缘柔和），原版四帧把它按不同位置/裁切画在按钮上：
+//
+//   n2=0: CLIP(x-39, v8+1, 20, 21, 8, 0)   → 目标 (1,1) 20×21，源 (8,0)
+//   n2=1: SPRITE(x-15, v8+1)               → 目标 (25,1) 28×21
+//   n2=2: SPRITE(x+15, v8+22)              → 目标 (55,1) 28×21
+//   n2=3: CLIP(x+19, v8+1, 20, 21, 8, 0)   → 目标 (59,1) 20×21，源 (8,0)
+//
+// 贴片是“同一方向的斜块”，四帧只改位置，不翻转、不旋转；取它的 alpha 当白色遮罩。
 
-uniform float progress = -1.0;      // <0 关闭；0..1 白色推进到的位置
-uniform float edge_slant = 0.16;    // 斜边倾斜量（UV.x 比例）
-uniform vec3 shine_color : source_color = vec3(1.0, 1.0, 1.0);
+uniform sampler2D gleam_tex : filter_linear, repeat_disable;
+uniform int phase = -1;
+uniform vec2 bar_px = vec2(80.0, 23.0);
+uniform vec2 gleam_px = vec2(28.0, 21.0);
 
 void fragment() {
 	vec4 base = texture(TEXTURE, UV);
-	float cover = 0.0;
-	if (progress >= 0.0) {
-		// 斜边：同一列上，y 越靠下边界越靠左，形成 "/" 斜线。
-		float slant = (UV.y - 0.5) * edge_slant;
-		float boundary = progress * (1.0 + edge_slant) - edge_slant * 0.5 + slant;
-		cover = step(UV.x, boundary);
+	vec3 lit = base.rgb;
+	if (phase >= 0 && phase <= 3) {
+		vec2 px = UV * bar_px;
+
+		vec2 dest; vec2 size_px; vec2 source;
+		if (phase == 0) {
+			dest = vec2(1.0, 1.0);  size_px = vec2(20.0, 21.0); source = vec2(8.0, 0.0);
+		} else if (phase == 1) {
+			dest = vec2(25.0, 1.0); size_px = vec2(28.0, 21.0); source = vec2(0.0, 0.0);
+		} else if (phase == 2) {
+			dest = vec2(55.0, 1.0); size_px = vec2(28.0, 21.0); source = vec2(0.0, 0.0);
+		} else {
+			dest = vec2(59.0, 1.0); size_px = vec2(20.0, 21.0); source = vec2(8.0, 0.0);
+		}
+		vec2 local = px - dest;
+		if (local.x >= 0.0 && local.y >= 0.0 && local.x < size_px.x && local.y < size_px.y) {
+			float band = texture(gleam_tex, (local + source) / gleam_px).a;
+			lit = mix(lit, vec3(1.0), band);
+		}
 	}
-	vec3 lit = mix(base.rgb, shine_color, cover);
 	COLOR = vec4(lit, base.a);
 }

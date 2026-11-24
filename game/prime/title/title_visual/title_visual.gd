@@ -83,8 +83,11 @@ func present(paint: Dictionary) -> void:
 		_shown_frame = int(paint.frame)
 	if menu_open:
 		_settle_title()
-		# 白闪由 Scene 里的 Player 动画控制（Fade:color 从白淡出）；这里不再压一层黑。
-		# 以前这里用 16 * opening_frame 叠 50% 黑，菜单一开背景就永久变暗（整屏发灰）。
+		# 源码 `Prime_Title_mPaint@0x69E5C`：菜单打开期间每帧压一层黑罩，
+		# `JC_grpSetMODE(GRP_MODE_ALPHA, 16 * frame)`，上限 128（=50%）。
+		var overlay_alpha := mini(16 * int(paint.opening_frame), 128) / 256.0
+		_fade_overlay.color = Color(0, 0, 0, overlay_alpha)
+		_fade_overlay.visible = true
 	_render_menu(paint.items)
 	_shown_frame = int(paint.frame)
 
