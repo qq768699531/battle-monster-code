@@ -147,3 +147,17 @@ godot --headless --path . --import
 
 地图 TileSet（125 个）仍留在 `maps/mN/`：同目录有地图场景与地形场景，但没有脚本——它们是编辑器资源，
 给每个 TileSet 配一个脚本只会产生空壳。
+
+## 逐对象资源（monsters）
+
+131 个怪物对象各自放在它的动画目录里，和场景、图集同级：
+
+```text
+monsters/mon2/m_b_001_1/
+  m_b_001_1.tres    MonsterDefinition
+  m_b_001_1.tscn    ANI 场景
+  m_b_001_1.webp    图集
+```
+
+`ResourceCatalog` 递归扫描 `res://monsters` 收集这些对象并按 `id` 排序，`catalog.monster(id)` 不变。
+原表里有一条没有 `id` 的空记录（`fcfde`），拆表时已丢弃。

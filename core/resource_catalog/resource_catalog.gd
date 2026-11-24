@@ -18,9 +18,13 @@ const TextSources = preload("res://core/text_sources.gd")
 const TEXT_SOURCES: Dictionary = TextSources.IDS
 const SPRITE_ORIGINS: SpriteOrigins = preload("res://core/monster_animation/sprite-origins.tres")
 ## 玩法数值按功能拆成六份，各自放在使用它的功能目录；这里只在首次访问时拼回一个门面对象。
+## 逐对象存放的表：每个对象一个 `<对象名>.tres`，放在它自己的场景目录里。
+const GAMEPLAY_OBJECT_DIRS := {
+	"monsters": "res://monsters",
+}
+
 const GAMEPLAY_PARTS := {
 	"items": "res://menu/items/items.tres",
-	"monsters": "res://core/monster_animation/monsters.tres",
 	"passives": "res://battle/battle/passives.tres",
 	"encounters": "res://field/field_runtime/encounters.tres",
 	"script_battles": "res://battle/battle/script_battles.tres",
@@ -399,9 +403,35 @@ func _grid_from_state(terrain_state: SceneState) -> Variant:
 	return {"width_tiles": width, "height_tiles": height, "cell_flags": grid}
 
 
+
+## 递归扫描目录树，收集同类对象（按 `id` 排序）。用于"一对象一 tres、放在各自场景目录"的表。
+func _scan_object_tree(dir_path: String, collector: Array = []) -> Array:
+	var dir := DirAccess.open(dir_path)
+	if dir == null:
+		return collector
+	for file_name: String in dir.get_files():
+		if not file_name.ends_with(".tres"):
+			continue
+		var record: Variant = load(dir_path.path_join(file_name))
+		if record != null and record.get("id") != null:
+			collector.append(record)
+	for sub: String in dir.get_directories():
+		_scan_object_tree(dir_path.path_join(sub), collector)
+	collector.sort_custom(func(a: Object, b: Object) -> bool: return a.get("id") < b.get("id"))
+	return collector
+
+
 func load_gameplay_catalog() -> GameplayData:
 	if _gameplay_data == null:
 		var data := GameplayData.new()
+		for key: String in GAMEPLAY_OBJECT_DIRS:
+			var records := _scan_object_tree(GAMEPLAY_OBJECT_DIRS[key])
+			if records.is_empty():
+				_report_error("Gameplay object tree is empty: %s" % GAMEPLAY_OBJECT_DIRS[key])
+				return null
+			var target: Array = data.get(key)
+			for record: Variant in records:
+				target.append(record)
 		for key: String in GAMEPLAY_PARTS:
 			var path: String = GAMEPLAY_PARTS[key]
 			var part: Variant = load(path)

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://data/monster_definition/monster_definition.gd" id="1_object"]
+
+[resource]
+script = ExtResource("1_object")
+id = 38
+attribute_group = 2
+attribute_entry = 3
+ability_inputs = Array[int]([36, 36, 34, 34, 32, 31])
+attribute_inputs = Array[int]([22, 8, 26, 6, 9, 8])
+name_record = "item_mon.group.38.name"
+prime_portrait_position = 1242
+idle_frames = 8
