@@ -17,6 +17,7 @@ var _menu_text: Array[String] = []
 var _title_textures: Array[Texture2D] = []
 var _title_flash_texture: Texture2D
 var _title_flash_phase := -1
+var _flash_selection := -1
 var _capture_viewport: SubViewport
 var _captured_background: Texture2D
 var _last_title_frame := 17
@@ -28,7 +29,7 @@ var _shown_frame := 0
 @onready var _fade_overlay: ColorRect = $Fade
 @onready var _title_flash: Node2D = $Flash
 @onready var _title_flash_sprite: Sprite2D = $Flash/Sprite
-@onready var _title_flash_plate: Panel = $Flash/Plate
+@onready var _flash_player: AnimationPlayer = $Flash/Shine
 @onready var _player: AnimationPlayer = $Player
 @onready var _logo: Node2D = $Logo
 @onready var _title_group: Node2D = $TitleGroup
@@ -38,9 +39,15 @@ func _ready() -> void:
 		_title_sprites.append(item.get_node("Image"))
 		_menu_labels.append(item.get_node("Label"))
 	_stop_ani_players()
+	_ready_shine()
 
 
 ## 子 ANI 的 AnimationPlayer 自带 autoplay，先停住，等 Scene 动画在指定时刻把它们叫起来。
+func _ready_shine() -> void:
+	_flash_player.animation_finished.connect(func(_name: StringName) -> void:
+		_title_flash.visible = false)
+
+
 func _stop_ani_players() -> void:
 	for path: String in ANI_PLAYERS:
 		(get_node(path) as AnimationPlayer).stop()
@@ -61,6 +68,7 @@ func reset() -> void:
 	_fade_overlay.visible = false
 	_title_flash.visible = false
 	_title_flash_phase = -1
+	_flash_selection = -1
 
 
 func present(paint: Dictionary) -> void:
@@ -158,10 +166,11 @@ func _freeze_title_capture(viewport: SubViewport) -> void:
 
 
 func _render_menu(items: Array) -> void:
-	_title_flash.visible = false
-	_title_flash_phase = -1
 	if not _menu_open:
+		_title_flash.visible = false
+		_flash_selection = -1
 		return
+	var selected := -1
 	for item_value: Variant in items:
 		if not item_value is Dictionary:
 			continue
@@ -169,38 +178,28 @@ func _render_menu(items: Array) -> void:
 		var index := int(item.index)
 		if index < 0 or index >= _menu_labels.size():
 			continue
-		var image_index := int(item.image)
 		var display := $Menu.get_child(index)
-		display.present(item, _menu_text[index], _title_textures[image_index])
-		var phase := int(item.get("flash_phase", -1))
-		if phase >= 0:
-			_title_flash_phase = phase
-			_title_flash.position = display.position
-			_title_flash.visible = true
-			var phase_marker := $Flash/Phases.get_child(phase)
-			# 第 1/2 帧是白圆角块（原生 `JC_grpFillRoundRECT`），斜光只用于第 0/3 帧的裁切。
-			var plated := phase in [1, 2]
-			_title_flash_plate.visible = plated
-			_title_flash_plate.position = Vector2(-39, 1) if phase == 1 else Vector2(14, 1)
-			_title_flash_sprite.visible = not plated
-			var texture: Texture2D = _title_flash_texture
-			if phase in [0, 3]:
-				# 闪光图可能已经是图集里的一块区域：二次裁切要用绝对坐标，
-				# 否则 region 会被当成相对整张图集的位置，取到别的控件。
-				var crop := AtlasTexture.new()
-				if _title_flash_texture is AtlasTexture:
-					var base: AtlasTexture = _title_flash_texture
-					crop.atlas = base.atlas
-					crop.region = Rect2(base.region.position + Vector2(8, 0), Vector2(20, 21))
-				else:
-					crop.atlas = _title_flash_texture
-					crop.region = Rect2(8, 0, 20, 21)
-				texture = crop
-			_title_flash_sprite.texture = texture
-			_title_flash_sprite.position = _title_flash.to_local(phase_marker.global_position)
-			_title_flash_sprite.flip_h = phase >= 2
-			_title_flash_sprite.flip_v = phase >= 2
+		display.present(item, _menu_text[index], _title_textures[int(item.image)])
+		if bool(item.selected):
+			selected = index
+	# 换选时重播一次扫光：斜光从按钮左边滑到右边，动画在 Scene 的 AnimationPlayer 里。
+	if selected != _flash_selection:
+		_flash_selection = selected
+		_play_shine(selected)
 
+
+func _play_shine(index: int) -> void:
+	if index < 0 or index >= $Menu.get_child_count():
+		_title_flash.visible = false
+		return
+	var display: Node2D = $Menu.get_child(index)
+	_title_flash.position = display.position
+	_title_flash.visible = true
+	_title_flash_sprite.texture = _title_flash_texture
+	_title_flash_sprite.flip_h = false
+	_title_flash_sprite.flip_v = false
+	_flash_player.stop()
+	_flash_player.play("shine")
 
 func menu_regions(selection: int, coordinate_space: Node2D = null) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
