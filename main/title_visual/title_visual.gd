@@ -15,7 +15,6 @@ var _title_sprites: Array[Sprite2D] = []
 var _menu_labels: Array[Label] = []
 var _menu_text: Array[String] = []
 var _title_textures: Array[Texture2D] = []
-var _title_flash_texture: Texture2D
 var _title_flash_phase := -1
 var _capture_viewport: SubViewport
 var _captured_background: Texture2D
@@ -28,7 +27,7 @@ var _shown_frame := 0
 @onready var _fade_overlay: ColorRect = $Fade
 @onready var _title_flash: Node2D = $Flash
 @onready var _flash_backing: Control = $Flash/Backing
-@onready var _title_flash_sprite: Sprite2D = $Flash/Sprite
+@onready var _title_flash_sprite: ColorRect = $Flash/Sprite
 @onready var _player: AnimationPlayer = $Player
 @onready var _logo: Node2D = $Logo
 @onready var _title_group: Node2D = $TitleGroup
@@ -180,23 +179,12 @@ func _render_menu(items: Array) -> void:
 			_flash_backing.visible = phase in [1, 2]
 			var phase_marker := $Flash/Phases.get_child(phase)
 			_flash_backing.position = _title_flash.to_local(phase_marker.get_node("Backing").global_position)
-			var texture: Texture2D = _title_flash_texture
-			if phase in [0, 3]:
-				# 闪光图可能已经是图集里的一块区域：二次裁切要用绝对坐标，
-				# 否则 region 会被当成相对整张图集的位置，取到别的控件。
-				var crop := AtlasTexture.new()
-				if _title_flash_texture is AtlasTexture:
-					var base: AtlasTexture = _title_flash_texture
-					crop.atlas = base.atlas
-					crop.region = Rect2(base.region.position + Vector2(8, 0), Vector2(20, 21))
-				else:
-					crop.atlas = _title_flash_texture
-					crop.region = Rect2(8, 0, 20, 21)
-				texture = crop
-			_title_flash_sprite.texture = texture
+			# 闪光形状由 shader 生成：这里只决定尺寸与翻转。
+			var flash_size := Vector2(20, 21) if phase in [0, 3] else Vector2(28, 21)
+			_title_flash_sprite.size = flash_size
 			_title_flash_sprite.position = _title_flash.to_local(phase_marker.global_position)
-			_title_flash_sprite.flip_h = phase >= 2
-			_title_flash_sprite.flip_v = phase >= 2
+			var flip := -1.0 if phase >= 2 else 1.0
+			_title_flash_sprite.scale = Vector2(flip, flip)
 
 
 func menu_regions(selection: int, coordinate_space: Node2D = null) -> Array[Dictionary]:

@@ -250,3 +250,14 @@ battle/
 | `ani_brightness` | `core/monster_animation/` |
 | `native_number_palette` | `core/number/` |
 | `native_touch_blend` | `core/touch_button/`（391 个精灵共用） |
+
+## 标题闪光改为程序化生成
+
+闪光不再需要贴图：`main/title_visual/flash_glow.gdshader` 用 UV + TIME 生成横向光带，
+再与屏幕做原生量化混合；`Flash/Sprite` 从 `Sprite2D` 改成 `ColorRect`，由相位决定尺寸与翻转。
+
+因此清理掉的资源：
+
+- `main.webp` 里的闪光区域（现在只剩两张标题图 80×23）
+- `common/ui_title2/*` 的 4 条精灵索引
+- `prime_screen.gdshader`（只被旧闪光材质使用，已删除）
