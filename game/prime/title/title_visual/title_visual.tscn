@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dkkm4um34f8dk"]
+[gd_scene load_steps=14 format=3 uid="uid://dkkm4um34f8dk"]
 [ext_resource type="Texture2D" path="res://game/prime/title/title_visual/title_visual.webp" id="Sheet_common_ui_grade"]
 
 [ext_resource type="Script" uid="uid://qgw48kxhkey5" path="res://game/prime/title/title_visual/title_visual.gd" id="1"]
@@ -207,6 +207,16 @@ _data = {
 &"title": SubResource("Animation_title")
 }
 
+[sub_resource type="CanvasItemMaterial" id="AddBlend"]
+blend_mode = 1
+
+[sub_resource type="StyleBoxFlat" id="PlateStyle"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
 [node name="Title" type="Node2D" unique_id=776554764]
 script = ExtResource("1")
 
@@ -303,7 +313,7 @@ mouse_filter = 2
 
 [node name="Flash" type="Node2D" parent="." unique_id=1921460183]
 visible = false
-z_index = 450
+z_index = 350
 
 [node name="Phases" type="Node2D" parent="Flash" unique_id=2096622451]
 
@@ -319,7 +329,15 @@ position = Vector2(15, 1)
 [node name="Phase3" type="Marker2D" parent="Flash/Phases" unique_id=1873680140]
 position = Vector2(19, 1)
 
+[node name="Plate" type="Panel" parent="Flash"]
+visible = false
+offset_right = 25.0
+offset_bottom = 21.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("PlateStyle")
+
 [node name="Sprite" type="Sprite2D" parent="Flash" unique_id=2079219385]
 texture_filter = 1
+material = SubResource("AddBlend")
 centered = false
 

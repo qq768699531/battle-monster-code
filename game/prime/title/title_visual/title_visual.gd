@@ -28,6 +28,7 @@ var _shown_frame := 0
 @onready var _fade_overlay: ColorRect = $Fade
 @onready var _title_flash: Node2D = $Flash
 @onready var _title_flash_sprite: Sprite2D = $Flash/Sprite
+@onready var _title_flash_plate: Panel = $Flash/Plate
 @onready var _player: AnimationPlayer = $Player
 @onready var _logo: Node2D = $Logo
 @onready var _title_group: Node2D = $TitleGroup
@@ -89,8 +90,8 @@ func present(paint: Dictionary) -> void:
 		_shown_frame = int(paint.frame)
 	if menu_open:
 		_settle_title()
-		_fade_overlay.color = Color(0, 0, 0, mini(16 * int(paint.opening_frame), 128) / 256.0)
-		_fade_overlay.visible = true
+		# 白闪由 Scene 里的 Player 动画控制（Fade:color 从白淡出）；这里不再压一层黑。
+		# 以前这里用 16 * opening_frame 叠 50% 黑，菜单一开背景就永久变暗（整屏发灰）。
 	_render_menu(paint.items)
 	_shown_frame = int(paint.frame)
 
@@ -177,6 +178,11 @@ func _render_menu(items: Array) -> void:
 			_title_flash.position = display.position
 			_title_flash.visible = true
 			var phase_marker := $Flash/Phases.get_child(phase)
+			# 第 1/2 帧是白圆角块（原生 `JC_grpFillRoundRECT`），斜光只用于第 0/3 帧的裁切。
+			var plated := phase in [1, 2]
+			_title_flash_plate.visible = plated
+			_title_flash_plate.position = Vector2(-39, 1) if phase == 1 else Vector2(14, 1)
+			_title_flash_sprite.visible = not plated
 			var texture: Texture2D = _title_flash_texture
 			if phase in [0, 3]:
 				# 闪光图可能已经是图集里的一块区域：二次裁切要用绝对坐标，

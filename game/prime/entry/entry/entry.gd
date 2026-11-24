@@ -288,16 +288,15 @@ func _load_resources() -> void:
 	for text_id: int in [383, 384, 385, 386, 387]:
 		_menu_text.append(AssetCatalog.text_message(Msg.SOURCE, text_id))
 
-	var sheet: Variant = load("res://game/prime/title/title_visual/title_visual.webp")
-	if not sheet is Texture2D:
-		_startup_error = "Title menu sheet could not be loaded."
-		return
-	for region: Rect2 in [Rect2(0, 87, 80, 23),
-			Rect2(80, 87, 80, 23)]:
-		var atlas := AtlasTexture.new()
-		atlas.atlas = sheet
-		atlas.region = region
-		_title_textures.append(atlas)
+	# 菜单底条用原版 `ui_title2.fbm` 的两帧（各 80×23）：拼进 title_visual.webp 时右边被裁了 2px，
+	# 再从图集切会少一条边（按钮右边看起来消失了），所以这里直接读独立贴图。
+	for bar_path: String in ["res://game/prime/title/title_visual/title_bar_0.webp",
+			"res://game/prime/title/title_visual/title_bar_1.webp"]:
+		var bar: Variant = load(bar_path)
+		if not bar is Texture2D:
+			push_warning("标题菜单底条贴图缺失：%s" % bar_path)
+			continue
+		_title_textures.append(bar)
 	# 斜光是原版 common/ui_title2.fbm 的第 2 帧（28×21），不是标题图集里的菜单底条：
 	# 图集只装了评级徽标和两条底条。缺这个本地资源时高亮画不出来，但不阻断启动。
 	var flash: Variant = load("res://game/prime/title/title_visual/title_flash.webp")
