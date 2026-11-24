@@ -287,19 +287,19 @@ func _load_resources() -> void:
 	for text_id: int in [383, 384, 385, 386, 387]:
 		_menu_text.append(AssetCatalog.text_message(Msg.SOURCE, text_id))
 
-	var sheet: Variant = load("res://main/main/main.webp")
+	var sheet: Variant = load("res://prime/title_visual/title_visual.webp")
 	if not sheet is Texture2D:
 		_startup_error = "Title menu sheet could not be loaded."
 		return
-	for region: Rect2 in [Rect2(0, 0, 80, 23),
-			Rect2(80, 0, 80, 23)]:
+	for region: Rect2 in [Rect2(0, 87, 80, 23),
+			Rect2(80, 87, 80, 23)]:
 		var atlas := AtlasTexture.new()
 		atlas.atlas = sheet
 		atlas.region = region
 		_title_textures.append(atlas)
 	var flash := AtlasTexture.new()
 	flash.atlas = sheet
-	flash.region = Rect2(0, 23, 28, 21)
+	flash.region = Rect2(0, 87, 28, 21)
 	_title_flash_texture = flash
 	if _title_flash_texture == null:
 		_startup_error = "Prime title flash sprite is unavailable."

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dgbq1degp7yg"]
 
-[ext_resource type="Script" uid="uid://candvvvgv6la4" path="res://main/main/main.gd" id="1"]
+[ext_resource type="Script" path="res://prime/entry/entry.gd" id="1"]
 [ext_resource type="PackedScene" path="res://prime/background/background.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://dkkm4um34f8dk" path="res://prime/title_visual/title_visual.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://prime/prime_view/prime_view.tscn" id="6"]

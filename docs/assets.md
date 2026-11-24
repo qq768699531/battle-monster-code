@@ -275,3 +275,14 @@ main/main/
 `ensony`、`loading`、`platform-images`、`title`、`title_item`、`title_visual`、
 `ui_select`、`ui_touch`。标题闪光仍在 `prime/title_visual/`，材质用
 `menu/menu/native_menu_brightness.gdshader`。
+
+## 入口只有根目录的 main.tscn
+
+`main/` 目录已删除：入口场景是仓库根的 `main.tscn`，它的控制器在 `prime/entry/entry.gd`
+（类名 `Main`），标题图并入 `prime/title_visual/title_visual.webp` 的底部两格。
+
+```text
+main.tscn                    入口（project.godot 的 run/main_scene）
+prime/entry/entry.gd         入口逻辑
+prime/title_visual/          标题可视层、标题图、闪光
+```
