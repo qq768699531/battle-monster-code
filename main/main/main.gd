@@ -288,7 +288,7 @@ func _load_resources() -> void:
 		_menu_text.append(AssetCatalog.text_message(Msg.SOURCE, text_id))
 
 	for index in range(2):
-		var path := "res://assets/sprite/prime/title-%d.webp" % index
+		var path := "res://main/main/title-%d.webp" % index
 		var texture: Variant = load(path)
 		if not texture is Texture2D:
 			_startup_error = "Title menu texture could not be loaded: %s" % path

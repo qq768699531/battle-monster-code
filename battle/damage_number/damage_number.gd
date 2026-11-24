@@ -7,7 +7,7 @@ extends Control
 ## 每位以帧内 `(宽/2, 高/2)` 为中心绘制，落点为 `(槽位中心, 基准 y - 上升量)`。
 
 ## 原生图集每帧一个独立文件，数字组固定为 0／10／20，MISS 固定 30–32。
-const SPRITE_PATH := "res://assets/sprite/obj/b_number/frame-%03d.webp"
+const SPRITE_IDENTITY := "obj/b_number/frame-%03d"
 const GROUP_OFFSET := {&"damage": 0, &"critical": 10, &"heal": 20}
 const MISS_FRAMES: Array[int] = [30, 31, 32, 32]
 ## `n12 = 6 * (group & 1) + 12`：暴击组步距 18，普通／治疗组 12。
@@ -86,5 +86,5 @@ func _frames_for(display_kind: StringName, amount: int) -> Array[int]:
 func _frame_texture(frame: int) -> Texture2D:
 	if _frames_cache.is_empty():
 		for index in 33:
-			_frames_cache.append(load(SPRITE_PATH % index))
+			_frames_cache.append(AssetCatalog.load_sprite(SPRITE_IDENTITY % index))
 	return _frames_cache[frame]

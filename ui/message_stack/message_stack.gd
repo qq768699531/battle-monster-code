@@ -181,7 +181,6 @@ const PALETTE_BYTE_MASK := 0xFF
 const UI_THEME = preload("res://ui/theme/ui_theme.tres")
 ## 原生 `ItemRes.item_ui_resource` 就是 `common/ui_item`（`Item_Initialize:20`），帧号即图标号。
 const ICON_IDENTITY := "common/ui_item/frame-%03d"
-const ICON_PATH := "res://assets/sprite/common/ui_item/frame-%03d.webp"
 
 var _slots: Array[Dictionary] = []
 var _head := 0
@@ -528,10 +527,6 @@ func _icon_texture(frame: int) -> Texture2D:
 	var texture: Texture2D = null
 	if _catalog != null:
 		texture = _catalog.load_sprite(ICON_IDENTITY % frame)
-	else:
-		var path := ICON_PATH % frame
-		if ResourceLoader.exists(path):
-			texture = load(path)
 	_icons[frame] = texture
 	return texture
 
