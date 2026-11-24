@@ -2,10 +2,10 @@ extends Node
 ## 资源目录（autoload AssetCatalog）：图片、音频、玩法数据与统一文本的唯一入口。
 ## 启动时注册 zh_CN 翻译资源，退出时移除。
 
-const GameplayData = preload("res://data/gameplay_data/gameplay_data.gd")
-const WorldMapData = preload("res://data/world_map_data/world_map_data.gd")
-const SpriteOrigins = preload("res://data/sprite_origins/sprite_origins.gd")
-const TextTables = preload("res://data/text_tables/text_tables.gd")
+const GameplayData = preload("res://core/gameplay_data/gameplay_data.gd")
+const WorldMapData = preload("res://menu/world_map/world_map_data/world_map_data.gd")
+const SpriteOrigins = preload("res://core/monster_animation/sprite_origins/sprite_origins.gd")
+const TextTables = preload("res://core/message_stack/text_tables/text_tables.gd")
 ## 文本表按来源前缀拆到各功能目录：只有第一次查某个来源时才加载对应文件。
 const TEXT_TABLE_FILES := {
 	"evt": "res://field/quest_detail/event_text.tres",

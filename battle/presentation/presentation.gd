@@ -2,7 +2,7 @@ extends RefCounted
 ## 战斗表现步骤的编排（纯计算，不直接绘制）。
 
 const Menu = preload("res://menu/menu_model/menu_model.gd")
-const SlotGrade = preload("res://data/slot_grade/slot_grade.gd")
+const SlotGrade = preload("res://menu/items/slot_grade/slot_grade.gd")
 
 var assets: Node
 var catalog: GameplayData

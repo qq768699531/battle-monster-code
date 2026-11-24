@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ShopTable" format=3]
 
-[ext_resource type="Script" path="res://data/shop_table/shop_table.gd" id="1_shop_table"]
+[ext_resource type="Script" path="res://field/shop_goods/shop_table/shop_table.gd" id="1_shop_table"]
 
 [resource]
 script = ExtResource("1_shop_table")

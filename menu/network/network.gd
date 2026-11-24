@@ -1,6 +1,6 @@
 extends Control
 
-const SlotFrame = preload("res://data/slot_frame/slot_frame.gd")
+const SlotFrame = preload("res://menu/items/slot_frame/slot_frame.gd")
 
 var host: Control
 var _offers: Array[Dictionary]

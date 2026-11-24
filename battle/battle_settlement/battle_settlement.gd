@@ -17,7 +17,7 @@ class_name BattleSettlement
 const Battle = preload("res://battle/battle/battle.gd")
 const Book = preload("res://menu/book_model/book_model.gd")
 const MenuModel = preload("res://menu/menu_model/menu_model.gd")
-const MonsterAttribute = preload("res://data/monster_attribute/monster_attribute.gd")
+const MonsterAttribute = preload("res://core/monster_animation/monster_attribute/monster_attribute.gd")
 
 ## `Param_expINIT`：主角 `65 × 等级²`；`Ball_stdEXPS`：队员同一条公式。
 const EXPERIENCE_PER_LEVEL := 65

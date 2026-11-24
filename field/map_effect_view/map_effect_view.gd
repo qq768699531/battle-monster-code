@@ -9,7 +9,7 @@ extends Node2D
 
 signal settled(effect_id: int)
 
-const Catalog = preload("res://data/map_effect/map_effect.gd")
+const Catalog = preload("res://maps/map_effect/map_effect.gd")
 
 @onready var _blend: ColorRect = $Blend
 @onready var _player: AnimationPlayer = $AnimationPlayer

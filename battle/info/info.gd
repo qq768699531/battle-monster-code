@@ -7,7 +7,7 @@ const Menu = preload("res://menu/menu_model/menu_model.gd")
 const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
 const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
 const Battle = preload("res://battle/battle/battle.gd")
-const ItemEffect = preload("res://data/item_effect/item_effect.gd")
+const ItemEffect = preload("res://battle/battle/item_effect/item_effect.gd")
 
 var selected_skill := 0
 var equipment_open := false

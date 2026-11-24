@@ -14,9 +14,9 @@ signal back_requested
 
 const Book = preload("res://menu/book_model/book_model.gd")
 const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
-const SlotFrame = preload("res://data/slot_frame/slot_frame.gd")
-const SlotFrames = preload("res://data/slot_frames/slot_frames.gd")
-const SlotGrade = preload("res://data/slot_grade/slot_grade.gd")
+const SlotFrame = preload("res://menu/items/slot_frame/slot_frame.gd")
+const SlotFrames = preload("res://menu/items/slot_frames/slot_frames.gd")
+const SlotGrade = preload("res://menu/items/slot_grade/slot_grade.gd")
 const SKILL_TEXT_SOURCE := "common/item_skill.dat"
 const CELL_COLUMNS := 6
 const CELL_ROWS := 4

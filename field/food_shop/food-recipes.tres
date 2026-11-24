@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FoodRecipes" format=3]
 
-[ext_resource type="Script" path="res://data/food_recipes/food_recipes.gd" id="1_food_recipes"]
+[ext_resource type="Script" path="res://field/food_shop/food_recipes/food_recipes.gd" id="1_food_recipes"]
 
 [resource]
 script = ExtResource("1_food_recipes")
