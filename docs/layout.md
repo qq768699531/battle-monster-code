@@ -26,6 +26,15 @@ docs/            文档：结构、资源约定、wiki、对账记录
 addons/          GUT 9.6.1（vendored，MIT）
 ```
 
+## 全局单例（autoload）
+
+| 名字 | 资源 | 作用 |
+| --- | --- | --- |
+| AssetCatalog | ngine/data/resource_catalog/resource_catalog.gd | 贴图/音频/数据/文本的唯一入口 |
+| AudioManager | content/audio/audio_manager/audio_manager.tscn | 音频播放与总线 |
+| NativeTouchFeedback | game/field/runtime/native_touch_feedback/native_touch_feedback.tscn | 触控反馈 |
+| Messages | ngine/ui/message_stack/message_stack.tscn | 原生 Game_infoDraw 提示栈：全局浮层，任何脚本用 MessageStack.say* 静态入口推送，不再从主场景下发节点 |
+
 ## 三条约定
 
 1. **分层看依赖方向**：`content ← game ← engine`。`engine` 不引用 `game`/`content` 的场景；

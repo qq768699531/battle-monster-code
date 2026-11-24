@@ -394,8 +394,6 @@ const SERVICE_PAGES := {
 ## 宿主（`main.gd`）在加入场景后挂上提示栈：原生 `Game_infoDraw` 画在 `GameCanvas` 顶层。
 func set_messages(node: Control) -> void:
 	messages = node
-	if messages != null and messages.has_method("configure") and _assets != null:
-		messages.call("configure", _assets)
 	_sync_message_state()
 
 

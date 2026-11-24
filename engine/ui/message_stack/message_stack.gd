@@ -188,7 +188,6 @@ var _slots: Array[Dictionary] = []
 var _head := 0
 var _serial := 0
 var _pending := 0.0
-var _catalog: Object
 var _icons: Dictionary = {}
 
 
@@ -201,14 +200,6 @@ func _ready() -> void:
 	mouse_filter = MOUSE_FILTER_IGNORE
 
 
-## 图标走 `ResourceCatalog.load_sprite()`；宿主没接 catalog 时直接读同一份贴图路径，
-## 免得消息栈因为少一行接线就整块看不见图标。
-func configure(catalog: Object) -> void:
-	_catalog = catalog
-	_icons.clear()
-	queue_redraw()
-
-
 func _enter_tree() -> void:
 	active = self
 	var deferred: Array = _deferred
@@ -218,8 +209,12 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
-	if active == self:
-		active = null
+	if active != self:
+		return
+	# 全局浮层是 autoload `Messages`：临时实例（用例、独立预览）退出后把发送权还回去。
+	var tree := get_tree()
+	var autoload: Variant = tree.root.get_node_or_null("Messages") if tree != null else null
+	active = autoload if autoload is Control and autoload != self else null
 
 
 ## 按画面状态切 `y` 基准。原生 `Game_infoDraw` 每帧重算 `v13`；本移植的页面状态由宿主持有，
@@ -527,19 +522,16 @@ func _icon_texture(frame: int) -> Texture2D:
 	if _icons.has(frame):
 		return _icons[frame]
 	var identity := ICON_IDENTITY % frame
+	# 图标帧直接查精灵索引：栈是全局浮层，不再接受实例级 catalog 注入。
 	var texture: Texture2D = null
-	if _catalog != null:
-		texture = _catalog.load_sprite(identity)
-	else:
-		# 没接 catalog（单元测试、独立预览）时按同一份精灵索引切片，不整块吞掉图标。
-		var entry: Variant = SpriteIndex.FRAMES.get(identity)
-		if entry is Array and (entry as Array).size() == 2:
-			var sheet: Variant = load(entry[0])
-			if sheet is Texture2D:
-				var atlas := AtlasTexture.new()
-				atlas.atlas = sheet
-				atlas.region = entry[1]
-				texture = atlas
+	var entry: Variant = SpriteIndex.FRAMES.get(identity)
+	if entry is Array and (entry as Array).size() == 2:
+		var sheet: Variant = load(entry[0])
+		if sheet is Texture2D:
+			var atlas := AtlasTexture.new()
+			atlas.atlas = sheet
+			atlas.region = entry[1]
+			texture = atlas
 	_icons[frame] = texture
 	return texture
 

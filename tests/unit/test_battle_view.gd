@@ -539,10 +539,14 @@ func test_legacy_suite() -> void:
 	auto_view.free()
 	# 伤害信息进栈消息：原生 `Param_dmg2BASIC` 的 `0x79056` 在本次伤害 > 0、相性有利／
 	# 不利时推 `JC_fxt2Return(407／408)`（「属性相克导致技能伤害上升／下降」）。
+	# 消息栈现在是 autoload：先确认全局那份在战斗推送前就挂好了，再换成用例自己的实例。
+	var global_stack: Control = get_node_or_null("/root/Messages") as Control
+	assert_true(global_stack != null and global_stack.count() > 0,
+		"the message stack mounts before the battle pushes anything")
+	global_stack.clear_all()
 	var stack: Control = StackScene.instantiate()
 	add_child_autofree(stack)
 	stack.set_process(false)
-	assert_true(stack.count() > 0, "the message stack mounts before the battle pushes anything")
 	# 只有技能推这条：`Param_dmg2BASIC` 的唯一调用点是 `Battle_Skill_init`，
 	# 普攻走 `Param_dmg1BASIC`，一条都不推。物种 49 的普攻正好有两段命中帧
 	# （`battle-species.tres`：第 5 帧 50%／第 9 帧 100%），以前每段推一条，玩家看到的就是

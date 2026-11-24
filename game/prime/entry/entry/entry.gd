@@ -37,7 +37,8 @@ const DEBUG_STARTUP_PAGE_KEY := KEY_F9
 @onready var _background = $Background
 @onready var _overlay: ColorRect = $Boundary
 @onready var _prime_view: Node2D = $PrimeView
-@onready var _messages: Control = $MessageStack
+## 消息栈是 autoload（`Messages`）：全局唯一浮层，这里只取引用传给野外运行时。
+@onready var _messages: Control = get_node_or_null("/root/Messages") as Control
 @onready var _audio: Node = get_node("/root/AudioManager")
 
 var _runtime: PrimeTitleRuntime
@@ -750,9 +751,8 @@ func _enter_field(effect: Dictionary) -> bool:
 	_runtime.dismiss_boundary()
 	_audio.stop_all(self)
 	for child in get_children():
-		# 消息提示栈不算 Prime 图层：原生 `GameCanvas_mPaint` 在所有页面回调之后才调
-		# `Game_infoDraw`，它是盖在 Field／Battle／Game 之上的浮层，跟着一起收起就一条都看不见。
-		if child is CanvasItem and child != _messages:
+		# 只收起 Prime 自己的图层；消息栈是 autoload 浮层（`Game_infoDraw`），不在这里。
+		if child is CanvasItem:
 			child.visible = false
 	_field = FIELD_SCENE.instantiate()
 	add_child(_field)
