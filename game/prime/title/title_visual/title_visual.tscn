@@ -1,9 +1,8 @@
-[gd_scene format=3 uid="uid://dkkm4um34f8dk"]
+[gd_scene load_steps=13 format=3 uid="uid://dkkm4um34f8dk"]
 [ext_resource type="Texture2D" path="res://game/prime/title/title_visual/title_visual.webp" id="Sheet_common_ui_grade"]
 
+[ext_resource type="PackedScene" path="res://game/prime/title/title_visual/title_flash.tscn" id="flash_scene"]
 [ext_resource type="Script" uid="uid://qgw48kxhkey5" path="res://game/prime/title/title_visual/title_visual.gd" id="1"]
-[ext_resource type="PackedScene" path="res://engine/ui/native_panel/native_panel.tscn" id="2"]
-[ext_resource type="Shader" path="res://game/menu/screen/menu/native_menu_brightness.gdshader" id="3"]
 [ext_resource type="PackedScene" path="res://game/prime/title/title_item/title_item.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://game/prime/title/elogo/elogo.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://game/prime/title/ensony/ensony.tscn" id="6"]
@@ -209,9 +208,6 @@ _data = {
 &"title": SubResource("Animation_title")
 }
 
-[sub_resource type="ShaderMaterial" id="Material"]
-shader = ExtResource("3")
-
 [node name="Title" type="Node2D" unique_id=776554764]
 script = ExtResource("1")
 
@@ -306,45 +302,4 @@ offset_right = 400.0
 offset_bottom = 240.0
 mouse_filter = 2
 
-[node name="Flash" type="Node2D" parent="." unique_id=1921460183]
-visible = false
-z_index = 450
-
-[node name="Phases" type="Node2D" parent="Flash" unique_id=2096622451]
-
-[node name="Phase0" type="Marker2D" parent="Flash/Phases" unique_id=581559654]
-position = Vector2(-39, 1)
-
-[node name="Backing" type="Marker2D" parent="Flash/Phases/Phase0" unique_id=1368274951]
-
-[node name="Phase1" type="Marker2D" parent="Flash/Phases" unique_id=1335661354]
-position = Vector2(-15, 1)
-
-[node name="Backing" type="Marker2D" parent="Flash/Phases/Phase1" unique_id=1694915712]
-position = Vector2(-24, 0)
-
-[node name="Phase2" type="Marker2D" parent="Flash/Phases" unique_id=857288470]
-position = Vector2(-13, 1)
-
-[node name="Backing" type="Marker2D" parent="Flash/Phases/Phase2" unique_id=1872918759]
-position = Vector2(27, 0)
-
-[node name="Phase3" type="Marker2D" parent="Flash/Phases" unique_id=1873680140]
-position = Vector2(19, 1)
-
-[node name="Backing" type="Marker2D" parent="Flash/Phases/Phase3" unique_id=605913733]
-
-[node name="Backing" parent="Flash" unique_id=2050524931 instance=ExtResource("2")]
-offset_right = 25.0
-offset_bottom = 21.0
-border_colors = PackedColorArray()
-background_color = Color(1, 1, 1, 1)
-border_width = 0
-
-[node name="Copy" type="BackBufferCopy" parent="Flash" unique_id=1934150397]
-
-[node name="Sprite" type="Sprite2D" parent="Flash" unique_id=2079219385]
-texture_filter = 1
-material = SubResource("Material")
-centered = false
-
+[node name="Flash" parent="." instance=ExtResource("flash_scene")]

@@ -47,7 +47,7 @@ static func title_layout(selection: int, opening: int, highlight: int) -> Dictio
 		var active := interactive and selection == index
 		# 原生 `Prime_Title_DrawMenu` 里 `n2 = v38 & 3`：选中项的闪光帧是 0..3 循环，
 		# 不是播一遍就停；四档对应左侧箭头（0／1）与右侧箭头（2／3）两套贴片。
-		var phase := highlight & 3
+		var phase := highlight
 		var offset := 11
 		if active:
 			match phase:
