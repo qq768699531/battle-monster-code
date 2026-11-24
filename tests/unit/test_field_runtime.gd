@@ -700,9 +700,15 @@ func test_mastery_touch() -> void:
 	assert_true(starter.get_node("Confirm").visible,
 		"第 5 格是第一只候选：OK 打开 fxt 101 确认框")
 	field.submit_mastery()
+	# 入队后事件门要等脚本走位收尾才关：移动按原生速度（7.5 px/秒），得多推几帧。
+	for _frame in range(300):
+		if field.mastery.is_empty():
+			break
+		field.advance(0.1)
+		await get_tree().process_frame
 	assert_true(field.story.progress["monsters"].size() == 3 and
 		field.story.progress["partyOrder"] == [0, 1, 2] and field.mastery.is_empty(),
-		"两级确认后入队三只并关掉事件门")
+		"两级确认后入队三只并关掉事件门：monsters=%d party=%s mastery=%s boundary=%s" % [field.story.progress["monsters"].size(), str(field.story.progress["partyOrder"]), str(field.mastery), field.boundary])
 	field.free()
 	_cleanup()
 
