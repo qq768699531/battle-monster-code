@@ -42,7 +42,7 @@ var _text_ids: Dictionary = {}
 ## 精灵 `assets/sprite/<id>.webp`、精灵原点 `assets/sprite-origins.tres`、
 ## 动画全部是 `scenes/monsters`、`scenes/actors`、`scenes/ani` 下的动画 Scene、
 ## 文本 `assets/text-tables.tres`（颜色与换行随正文保存在翻译资源里）、
-## 玩法 `assets/gameplay.tres`（typed `GameplayData`）、平台图标 `assets/sprite/platform-images/<path>`、
+## 玩法 `core/gameplay.tres`（typed `GameplayData`）、平台图标 `main/platform-images/<path>`、
 ## 音频按编号扫 `audio/ogg`。
 func _ready() -> void:
 	_load_origins()
@@ -443,7 +443,7 @@ func load_platform_image(relative_path: String) -> Texture2D:
 	if not relative_path.ends_with(".webp") or not _is_safe_relative_path(relative_path):
 		_report_error("Platform image is not registered: %s" % relative_path)
 		return null
-	var path: String = SPRITE_ROOT.path_join("platform-images").path_join(relative_path)
+	var path: String = "res://main/platform-images/".path_join(relative_path)
 	if not ResourceLoader.exists(path):
 		_report_error("Platform image is not registered: %s" % relative_path)
 		return null
