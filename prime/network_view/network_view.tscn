@@ -1,5 +1,5 @@
 [gd_scene load_steps=5 format=3]
-[ext_resource type="Script" path="res://prime/network_view.gd" id="1"]
+[ext_resource type="Script" path="res://prime/network_view/network_view.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/native_button/native_button.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://ui/network_detail/network_detail.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://ui/network_message/network_message.tscn" id="4"]

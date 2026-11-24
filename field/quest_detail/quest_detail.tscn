@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3]
 
-[ext_resource type="Script" path="res://field/quest_detail.gd" id="script"]
+[ext_resource type="Script" path="res://field/quest_detail/quest_detail.gd" id="script"]
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://ui/menu_list_button/menu_list_button.tscn" id="button"]

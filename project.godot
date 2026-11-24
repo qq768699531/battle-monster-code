@@ -22,7 +22,7 @@ buses/default_bus_layout="res://core/default_bus_layout.tres"
 
 [autoload]
 
-AssetCatalog="*res://core/resource_catalog.gd"
+AssetCatalog="*res://core/resource_catalog/resource_catalog.gd"
 AudioManager="*res://ui/audio_manager/audio_manager.tscn"
 NativeTouchFeedback="*res://field/native_touch_feedback/native_touch_feedback.tscn"
 

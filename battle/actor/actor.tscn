@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://battle/actor.gd" id="script"]
+[ext_resource type="Script" path="res://battle/actor/actor.gd" id="script"]
 [ext_resource type="PackedScene" path="res://battle/pose/pose.tscn" id="pose"]
 [ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="effect"]
 

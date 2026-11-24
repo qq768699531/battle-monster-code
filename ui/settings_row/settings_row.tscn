@@ -1,5 +1,5 @@
 [gd_scene load_steps=4 format=3]
-[ext_resource type="Script" path="res://ui/settings_row.gd" id="1"]
+[ext_resource type="Script" path="res://ui/settings_row/settings_row.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://ui/settings_content/settings_content.tscn" id="3"]
 [node name="Row" type="Node2D"]

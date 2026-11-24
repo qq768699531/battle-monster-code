@@ -1,5 +1,5 @@
 [gd_scene load_steps=6 format=3]
-[ext_resource type="Script" path="res://menu/quest.gd" id="1"]
+[ext_resource type="Script" path="res://menu/quest/quest.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/dotted_line/dotted_line.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://menu/quest_row/quest_row.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://menu/scrollbar/scrollbar.tscn" id="4"]

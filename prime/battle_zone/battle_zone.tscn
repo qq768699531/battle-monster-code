@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bkhy3jjmh34og"]
 
-[ext_resource type="Script" uid="uid://dyx0o860aga8a" path="res://prime/battle_zone_scene.gd" id="1"]
+[ext_resource type="Script" uid="uid://dyx0o860aga8a" path="res://prime/battle_zone_scene/battle_zone_scene.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://ui/battle_stat_row/battle_stat_row.tscn" id="4"]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dkkm4um34f8dk"]
 [ext_resource type="Texture2D" path="res://main/title_visual/ui_grade.webp" id="Sheet_common_ui_grade"]
 
-[ext_resource type="Script" uid="uid://qgw48kxhkey5" path="res://main/title_visual.gd" id="1"]
+[ext_resource type="Script" uid="uid://qgw48kxhkey5" path="res://main/title_visual/title_visual.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="2"]
 [ext_resource type="Shader" uid="uid://d25u12r1vph71" path="res://core/shaders/prime_screen.gdshader" id="3"]
 [ext_resource type="PackedScene" path="res://main/title_item/title_item.tscn" id="4"]

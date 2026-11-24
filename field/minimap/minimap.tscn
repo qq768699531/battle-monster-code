@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Script" path="res://field/minimap.gd" id="1"]
+[ext_resource type="Script" path="res://field/minimap/minimap.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="panel"]
 
 [sub_resource type="Animation" id="Animation_slide"]

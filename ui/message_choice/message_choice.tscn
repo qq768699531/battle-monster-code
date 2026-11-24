@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3]
 
-[ext_resource type="Script" path="res://ui/message_choice.gd" id="1"]
+[ext_resource type="Script" path="res://ui/message_choice/message_choice.gd" id="1"]
 
 [ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="2"]
 

@@ -1,7 +1,7 @@
 [gd_scene format=3]
 [ext_resource type="Texture2D" path="res://ui/touch_button/ui_button.webp" id="Sheet_touch_ui_button"]
 
-[ext_resource type="Script" path="res://menu/menu_view.gd" id="1"]
+[ext_resource type="Script" path="res://menu/menu_view/menu_view.gd" id="1"]
 [ext_resource type="PackedScene" path="res://menu/status/status.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://menu/status_confirmation/status_confirmation.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://menu/items/items.tscn" id="4"]

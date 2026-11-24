@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3]
 [ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
 
-[ext_resource type="Script" path="res://field/monster_enchant.gd" id="script"]
+[ext_resource type="Script" path="res://field/monster_enchant/monster_enchant.gd" id="script"]
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://menu/party_ball/party_ball.tscn" id="ball"]
 [ext_resource type="PackedScene" path="res://ui/item_cell/item_cell.tscn" id="cell"]

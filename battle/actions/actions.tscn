@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://battle/actions.gd" id="script"]
+[ext_resource type="Script" path="res://battle/actions/actions.gd" id="script"]
 [ext_resource type="PackedScene" path="res://battle/b_icon2/b_icon2.tscn" id="icons"]
 
 [sub_resource type="StyleBoxEmpty" id="Empty"]

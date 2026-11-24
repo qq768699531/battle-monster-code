@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://ui/window_title.gd" id="1"]
+[ext_resource type="Script" path="res://ui/window_title/window_title.gd" id="1"]
 [ext_resource type="Shader" path="res://core/shaders/prime_title.gdshader" id="2"]
 
 [sub_resource type="ShaderMaterial" id="TitleMaterial"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://battle/hit_effect.gd" id="script"]
+[ext_resource type="Script" path="res://battle/hit_effect/hit_effect.gd" id="script"]
 [ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="ani"]
 
 [node name="HitEffect" type="Node2D"]

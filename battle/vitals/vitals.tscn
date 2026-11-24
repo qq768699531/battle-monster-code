@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 [ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
 
-[ext_resource type="Script" path="res://battle/vitals.gd" id="script"]
+[ext_resource type="Script" path="res://battle/vitals/vitals.gd" id="script"]
 [ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
 [ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 

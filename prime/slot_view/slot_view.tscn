@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://prime/slot_view.gd" id="1"]
+[ext_resource type="Script" path="res://prime/slot_view/slot_view.gd" id="1"]
 
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="2"]
 

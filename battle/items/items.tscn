@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://ui/window/ui_window.webp" id="Sheet_common_ui_window"]
 
 [ext_resource type="PackedScene" path="res://menu/party_equipment/party_equipment.tscn" id="layout"]
-[ext_resource type="Script" path="res://battle/items.gd" id="script"]
+[ext_resource type="Script" path="res://battle/items/items.gd" id="script"]
 [ext_resource type="Texture2D" path="res://ui/slot/filled.tres" id="normal_frame"]
 [ext_resource type="Texture2D" path="res://ui/slot/filled_focused.tres" id="selected_frame"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]

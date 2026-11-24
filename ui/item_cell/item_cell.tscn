@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" path="res://ui/item_icon/item_icon.tscn" id="icon"]
 [ext_resource type="Shader" uid="uid://c5dfk0re6q1e1" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 [ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
-[ext_resource type="Script" uid="uid://cxwur0rad6fqp" path="res://ui/item_cell.gd" id="script"]
+[ext_resource type="Script" uid="uid://cxwur0rad6fqp" path="res://ui/item_cell/item_cell.gd" id="script"]
 
 [sub_resource type="AtlasTexture" id="Atlas_digits"]
 atlas = ExtResource("Sheet_common_ui_number")

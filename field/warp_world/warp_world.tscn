@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 [ext_resource type="Texture2D" path="res://field/warp_world/ui_world.webp" id="Sheet_obj_ui_world"]
 
-[ext_resource type="Script" path="res://field/warp_world.gd" id="script"]
+[ext_resource type="Script" path="res://field/warp_world/warp_world.gd" id="script"]
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://actors/hero/h_f_01/h_f_01.tscn" id="marker"]

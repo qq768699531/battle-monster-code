@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3]
 
-[ext_resource type="Script" path="res://ui/slot_card.gd" id="1"]
+[ext_resource type="Script" path="res://ui/slot_card/slot_card.gd" id="1"]
 
 [ext_resource type="Shader" path="res://core/shaders/ani_brightness.gdshader" id="2"]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3]
 [ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
 
-[ext_resource type="Script" path="res://field/field_runtime.gd" id="1"]
+[ext_resource type="Script" path="res://field/field_runtime/field_runtime.gd" id="1"]
 [ext_resource type="PackedScene" path="res://field/map_renderer/map_renderer.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://field/field_actors/field_actors.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://field/chat_view/chat_view.tscn" id="4"]

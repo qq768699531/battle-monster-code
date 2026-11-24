@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Script" path="res://ui/battle_stat_row.gd" id="1"]
+[ext_resource type="Script" path="res://ui/battle_stat_row/battle_stat_row.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://ui/native_gradient/native_gradient.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://ui/native_stat_cell/native_stat_cell.tscn" id="4"]

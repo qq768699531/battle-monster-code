@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
 [ext_resource type="Texture2D" path="res://ui/window/ui_window.webp" id="Sheet_common_ui_window"]
 
-[ext_resource type="Script" path="res://menu/party_discard.gd" id="1"]
+[ext_resource type="Script" path="res://menu/party_discard/party_discard.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://ui/item_cell/item_cell.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://ui/message_choice/message_choice.tscn" id="4"]

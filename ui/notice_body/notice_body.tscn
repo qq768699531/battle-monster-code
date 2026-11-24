@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Script" path="res://ui/notice_body.gd" id="1"]
+[ext_resource type="Script" path="res://ui/notice_body/notice_body.gd" id="1"]
 
 [ext_resource type="PackedScene" path="res://ui/plain_label/plain_label.tscn" id="2"]
 

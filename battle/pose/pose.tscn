@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://battle/pose.gd" id="1"]
+[ext_resource type="Script" path="res://battle/pose/pose.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="2"]
 
 [node name="Pose" type="Control"]

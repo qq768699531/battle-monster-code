@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3]
 
-[ext_resource type="Script" path="res://ui/startup_footer.gd" id="1"]
+[ext_resource type="Script" path="res://ui/startup_footer/startup_footer.gd" id="1"]
 
 [ext_resource type="PackedScene" path="res://ui/dotted_line/dotted_line.tscn" id="2"]
 

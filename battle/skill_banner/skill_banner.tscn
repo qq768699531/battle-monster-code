@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3]
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 
-[ext_resource type="Script" path="res://battle/skill_banner.gd" id="script"]
+[ext_resource type="Script" path="res://battle/skill_banner/skill_banner.gd" id="script"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="portrait"]
 

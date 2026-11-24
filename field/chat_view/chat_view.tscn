@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 [ext_resource type="Texture2D" path="res://ui/touch_button/ui_button.webp" id="Sheet_touch_ui_button"]
 
-[ext_resource type="Script" path="res://field/chat_view.gd" id="1"]
+[ext_resource type="Script" path="res://field/chat_view/chat_view.gd" id="1"]
 [ext_resource type="PackedScene" path="res://field/dialogue_button/dialogue_button.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://field/dialogue_window/dialogue_window.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://field/dialogue_text/dialogue_text.tscn" id="4"]
