@@ -103,11 +103,14 @@ static func _scan(catalog: GameplayData, target_group: int, target_grade: int,
 	var secondary_group := attribute_index(secondary)
 	var primary_grade := int(primary.attribute_entry)
 	var secondary_grade := int(secondary.attribute_entry)
-	var definition_id := 0
-	while definition_id < DEFINITION_LIMIT:
-		var species := catalog.monster(definition_id)
-		if species == null:
+	# 原生从定义号 0 连号扫到 199，遇第一条不存在的记录就停；本仓库的怪物表 id 从 1 起，
+	# 用 `monster(0)` 探测会第一条就断（合成永远落到物种 0）。改按表的顺序扫，表本身按定义号升序。
+	var scanned := 0
+	for species: MonsterDefinition in catalog.monsters:
+		if scanned >= DEFINITION_LIMIT:
 			break
+		scanned += 1
+		var definition_id := int(species.id)
 		var group := attribute_index(species)
 		var grade := int(species.attribute_entry)
 		if group == target_group and grade == target_grade and \
@@ -121,6 +124,5 @@ static func _scan(catalog: GameplayData, target_group: int, target_grade: int,
 			if definition_id == int(secondary.id):
 				secondary_position = secondary_count
 			secondary_count += 1
-		definition_id += 1
 	return {"candidates": candidates, "family_count": family_count,
 		"total": primary_position + secondary_position}

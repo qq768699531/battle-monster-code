@@ -179,6 +179,8 @@ const PALETTE_RED_SHIFT := 16
 const PALETTE_GREEN_SHIFT := 8
 const PALETTE_BYTE_MASK := 0xFF
 const UI_THEME = preload("res://engine/ui/native_label/ui_theme.tres")
+## 图标帧索引：没有接 catalog 时按同一份索引自己切图。
+const SpriteIndex = preload("res://engine/data/sprite_index/sprite_index.gd")
 ## 原生 `ItemRes.item_ui_resource` 就是 `common/ui_item`（`Item_Initialize:20`），帧号即图标号。
 const ICON_IDENTITY := "common/ui_item/frame-%03d"
 
@@ -524,9 +526,20 @@ func _ordered() -> Array[int]:
 func _icon_texture(frame: int) -> Texture2D:
 	if _icons.has(frame):
 		return _icons[frame]
+	var identity := ICON_IDENTITY % frame
 	var texture: Texture2D = null
 	if _catalog != null:
-		texture = _catalog.load_sprite(ICON_IDENTITY % frame)
+		texture = _catalog.load_sprite(identity)
+	else:
+		# 没接 catalog（单元测试、独立预览）时按同一份精灵索引切片，不整块吞掉图标。
+		var entry: Variant = SpriteIndex.FRAMES.get(identity)
+		if entry is Array and (entry as Array).size() == 2:
+			var sheet: Variant = load(entry[0])
+			if sheet is Texture2D:
+				var atlas := AtlasTexture.new()
+				atlas.atlas = sheet
+				atlas.region = entry[1]
+				texture = atlas
 	_icons[frame] = texture
 	return texture
 
