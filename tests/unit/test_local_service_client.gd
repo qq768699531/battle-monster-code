@@ -35,7 +35,7 @@ func _start_local_service(client: Node) -> bool:
 		_service.port = port
 		_service.data_dir = ProjectSettings.globalize_path(TEST_DATA_DIR)
 		error = _service.start(ProjectSettings.globalize_path(
-			"res://../script/local_service/local_server.py"))
+			"res://tools/local_service/local_server.py"))
 	if error != OK:
 		printerr("Local service could not start: ", _service.last_error)
 		return false
@@ -68,7 +68,7 @@ func _run() -> void:
 		client.base_url = args[0]
 	elif not await _start_local_service(client):
 		_stop_local_service()
-		pending("本地服务不可用；先跑 python script/local_service/local_server.py 再验回环集成。")
+		pending("本地服务不可用；先跑 python tools/local_service/local_server.py 再验回环集成。")
 		return
 	client.request_json("network-time", HTTPClient.METHOD_GET, "/time")
 	var time_response: Array = await client.response_received

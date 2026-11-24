@@ -38,7 +38,7 @@ func _run() -> void:
 	assert_true(supervisor.configure() == OK and supervisor.port == port and supervisor.data_dir == data_dir,
 		"The role environment configures the spawned service.")
 	var script_path := ProjectSettings.globalize_path(
-		"res://../script/local_service/local_server.py")
+		"res://tools/local_service/local_server.py")
 	assert_true(supervisor.start(script_path) == OK and supervisor.process_id > 0 and
 		OS.is_process_running(supervisor.process_id),
 		"Prime starts the bundled local service process: %s" % supervisor.last_error)

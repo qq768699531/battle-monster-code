@@ -523,10 +523,9 @@ func _start_local_service() -> void:
 		return
 	if _local_service_process.process_id <= 0 or \
 			not OS.is_process_running(_local_service_process.process_id):
-		# 本地服务脚本不在本仓库内，由开发者放在项目根目录上一级的 `script/local_service/`。
-		# `res://../` 会被引擎归一化掉，这里显式从项目目录拼绝对路径。
+		# 本地服务脚本随仓库走：`tools/` 带 `.gdignore`，不会被引擎当资源扫描。
 		var project_dir := ProjectSettings.globalize_path("res://")
-		var script_path := project_dir.path_join("../script/local_service/local_server.py").simplify_path()
+		var script_path := project_dir.path_join("tools/local_service/local_server.py").simplify_path()
 		var start_error: int = _local_service_process.start(script_path)
 		if start_error == ERR_FILE_NOT_FOUND:
 			_finish_local_service_error("service_script_missing",
