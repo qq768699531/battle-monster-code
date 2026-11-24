@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Runtime = preload("res://prime/prime_title_runtime/prime_title_runtime.gd")
+const Runtime = preload("res://game/prime/title/prime_title_runtime/prime_title_runtime.gd")
 const MainScript = preload("res://scripts/main.gd")
 const TouchControls = preload("res://game/field/runtime/touch_controls/touch_controls.gd")
 

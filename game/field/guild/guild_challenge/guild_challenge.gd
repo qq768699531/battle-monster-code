@@ -30,7 +30,7 @@ signal started(constructors: Array)
 signal closed
 
 const GuildBattle = preload("res://game/field/guild/guild_battle/guild_battle.gd")
-const Layout = preload("res://prime/layout/layout.gd")
+const Layout = preload("res://game/prime/ui/layout/layout.gd")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
 ## `FieldData+0x08`：0 = 本页、1 = 确认框。

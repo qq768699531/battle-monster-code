@@ -17,7 +17,7 @@ extends Control
 signal transition_finished(opened: bool)
 signal phase_changed(value: int)
 
-const Layout = preload("res://prime/layout/layout.gd")
+const Layout = preload("res://game/prime/ui/layout/layout.gd")
 
 ## 窗框种类：原生 `Menu_win_Box4_DrawWindow@0x4F82C`（带头部白条／标题／页脚，正文窗）与
 ## `Menu_win_Box2_DrawWindow@0x4ADE8`（只有 `Menu_win_Box2_Draw@0x4AD78` 三层描边＋填充的

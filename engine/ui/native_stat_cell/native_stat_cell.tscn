@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="PackedScene" path="res://prime/native_gradient/native_gradient.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://game/prime/ui/native_gradient/native_gradient.tscn" id="2"]
 
 [node name="NativeStatCell" type="Control"]
 offset_right = 57.0

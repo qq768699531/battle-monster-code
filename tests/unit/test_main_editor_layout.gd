@@ -1,11 +1,11 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Runtime = preload("res://prime/prime_title_runtime/prime_title_runtime.gd")
+const Runtime = preload("res://game/prime/title/prime_title_runtime/prime_title_runtime.gd")
 
 
 func _run() -> void:
 	var assets := get_tree().root.get_node("AssetCatalog")
-	var title: Node2D = load("res://prime/title_visual/title_visual.tscn").instantiate()
+	var title: Node2D = load("res://game/prime/title/title_visual/title_visual.tscn").instantiate()
 	get_tree().root.add_child(title)
 	title._menu_text.assign(["Start", "Settings", "Help", "Info", "Network"])
 	title._title_textures.assign([

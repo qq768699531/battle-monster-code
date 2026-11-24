@@ -2,7 +2,7 @@ extends Control
 ## 用原数字图集拼接数值文本，保持原生字距与符号。
 
 const Glyph = preload("res://engine/ui/atlas_glyph/atlas_glyph.tscn")
-const UI = preload("res://prime/layout/layout.gd")
+const UI = preload("res://game/prime/ui/layout/layout.gd")
 const SYMBOL_DIGITS := {".": 10, "/": 10, "%": 11, "+": 12, "-": 13, ":": 14, "X": 15}
 @export var sprite_id := "common/ui_number/frame-000"
 @export var source_y := 14

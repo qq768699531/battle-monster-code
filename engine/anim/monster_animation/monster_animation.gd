@@ -100,10 +100,10 @@ static func scene_path(identity: String) -> String:
 			elif name.begins_with("b_"):
 				dir = "res://monsters/" + name + "/"
 			else:
-				dir = "res://prime/" + name + "/"
+				dir = "res://game/prime/" + name + "/"
 		_:
 			# 标题页的 ANI（`obj/title`、`ktf/elogo`、`touch/ui_touch` 等）都在 `prime/`。
-			dir = "res://prime/" + name + "/"
+			dir = "res://game/prime/" + name + "/"
 	var path := dir + name + ".tscn"
 	_scene_paths[identity] = path
 	return path

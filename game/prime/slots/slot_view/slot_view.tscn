@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://game/prime/slots/slot_view/slot_view.gd" id="1"]
+
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="2"]
+
+[ext_resource type="PackedScene" path="res://game/prime/slots/slot_card/slot_card.tscn" id="3"]
+
+[ext_resource type="PackedScene" path="res://game/prime/title/window_title/window_title.tscn" id="4"]
+
+[ext_resource type="PackedScene" path="res://game/prime/slots/slot_names/slot_names.tscn" id="5"]
+
+[ext_resource type="PackedScene" path="res://engine/ui/window_footer/window_footer.tscn" id="6"]
+
+[node name="Slots" type="Node2D"]
+script = ExtResource("1")
+visible = false
+
+[node name="Window" parent="." instance=ExtResource("2")]
+window_size = Vector2i(228, 212)
+z_index = -200
+
+[node name="Card0" parent="." instance=ExtResource("3")]
+position = Vector2(95, 37)
+mouse_filter = 2
+
+[node name="Card1" parent="." instance=ExtResource("3")]
+position = Vector2(95, 124)
+mouse_filter = 2
+
+[node name="Title" parent="." instance=ExtResource("4")]
+offset_left = 200.0
+offset_top = 25.0
+z_index = 4
+
+[node name="Names" parent="." instance=ExtResource("5")]
+mouse_filter = 2
+
+[node name="Accept" parent="." instance=ExtResource("6")]
+offset_left = 90
+offset_top = 211.0
+offset_right = 132
+offset_bottom = 223.0
+
+[node name="Back" parent="." instance=ExtResource("6")]
+offset_left = 268
+offset_top = 211.0
+offset_right = 310
+offset_bottom = 223.0
+
+[node name="Extra" parent="." instance=ExtResource("6")]
+offset_left = 179
+offset_top = 211.0
+offset_right = 221
+offset_bottom = 223.0

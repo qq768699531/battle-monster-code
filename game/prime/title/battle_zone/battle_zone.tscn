@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://bkhy3jjmh34og"]
+
+[ext_resource type="Script" uid="uid://dyx0o860aga8a" path="res://game/prime/title/battle_zone_scene/battle_zone_scene.gd" id="1"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_panel/native_panel.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://game/prime/title/battle_stat_row/battle_stat_row.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://game/prime/ui/native_button/native_button.tscn" id="5"]
+[ext_resource type="Theme" path="res://engine/ui/native_label/ui_theme.tres" id="6"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="7"]
+
+[node name="BattleZone" type="Control" unique_id=1203890205]
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+theme = ExtResource("6")
+script = ExtResource("1")
+
+[node name="FramePreview" parent="." unique_id=1995960042 instance=ExtResource("7")]
+window_size = Vector2i(228, 212)
+
+[node name="TitlePreview" parent="." unique_id=629122429 instance=ExtResource("3")]
+offset_left = 90.0
+offset_top = 17.0
+offset_right = 310.0
+offset_bottom = 33.0
+text = "战斗区域"
+color = Color(0.12549, 0, 0.560784, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Statistics" parent="." unique_id=1288396729 instance=ExtResource("2")]
+offset_left = 96.0
+offset_top = 44.0
+offset_right = 216.0
+offset_bottom = 200.0
+
+[node name="Heading" parent="Statistics" unique_id=1393971491 instance=ExtResource("3")]
+offset_top = 5.0
+offset_right = 120.0
+offset_bottom = 15.0
+text = "我的排名"
+color = Color(1, 1, 0.678431, 1)
+horizontal_alignment = 1
+
+[node name="Rows" type="VBoxContainer" parent="Statistics" unique_id=1429058854]
+layout_mode = 0
+offset_top = 19.0
+offset_right = 120.0
+offset_bottom = 155.0
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Rank" parent="Statistics/Rows" unique_id=1793235487 instance=ExtResource("4")]
+layout_mode = 2
+heading_id = 251
+left_key = "rank"
+right_key = "rank_change"
+
+[node name="Heading" parent="Statistics/Rows/Rank" index="1"]
+text = "排名 变动"
+
+[node name="Unit" parent="Statistics/Rows/Rank/Left" index="2"]
+text = "位"
+
+[node name="Number" parent="Statistics/Rows/Rank/Right" index="1"]
+offset_right = 54.0
+
+[node name="Unit" parent="Statistics/Rows/Rank/Right" index="2"]
+visible = false
+
+[node name="Ranked" parent="Statistics/Rows" unique_id=864921287 instance=ExtResource("4")]
+layout_mode = 2
+heading_id = 253
+left_key = "ranked_wins"
+right_key = "ranked_losses"
+
+[node name="Heading" parent="Statistics/Rows/Ranked" index="1"]
+text = "排名战 战绩"
+
+[node name="Friendly" parent="Statistics/Rows" unique_id=1161725954 instance=ExtResource("4")]
+layout_mode = 2
+heading_id = 256
+left_key = "friendly_wins"
+right_key = "friendly_losses"
+
+[node name="Heading" parent="Statistics/Rows/Friendly" index="1"]
+text = "友谊战 战绩"
+
+[node name="Offline" parent="Statistics/Rows" unique_id=1105895434 instance=ExtResource("4")]
+layout_mode = 2
+heading_id = 257
+left_key = "offline_wins"
+right_key = "offline_losses"
+
+[node name="Heading" parent="Statistics/Rows/Offline" index="1"]
+text = "离线中 战斗 结果"
+
+[node name="Buttons" type="VBoxContainer" parent="." unique_id=573867861]
+layout_mode = 0
+offset_left = 222.0
+offset_top = 44.0
+offset_right = 302.0
+offset_bottom = 199.0
+mouse_filter = 2
+theme_override_constants/separation = 7
+
+[node name="Quick" parent="Buttons" unique_id=920398128 instance=ExtResource("5")]
+layout_mode = 2
+caption = "快速战斗"
+selected = true
+
+[node name="Ranked" parent="Buttons" unique_id=473450350 instance=ExtResource("5")]
+layout_mode = 2
+caption = "排名战"
+
+[node name="Friendly" parent="Buttons" unique_id=1069611411 instance=ExtResource("5")]
+layout_mode = 2
+caption = "友谊战"
+
+[node name="Challenge" parent="Buttons" unique_id=1042187015 instance=ExtResource("5")]
+layout_mode = 2
+caption = "挑战赛"
+
+[node name="Ranking" parent="Buttons" unique_id=696278493 instance=ExtResource("5")]
+layout_mode = 2
+caption = "排行"
+
+[node name="Log" parent="Buttons" unique_id=426068700 instance=ExtResource("5")]
+layout_mode = 2
+caption = "战斗记录"
+
+[editable path="Statistics/Rows/Rank"]
+[editable path="Statistics/Rows/Ranked"]
+[editable path="Statistics/Rows/Friendly"]
+[editable path="Statistics/Rows/Offline"]

@@ -1,0 +1,156 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://game/prime/ui/page_navigation/page_navigation.gd" id="1"]
+
+[ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="num_default"]
+
+[sub_resource type="AtlasTexture" id="Arrow"]
+resource_local_to_scene = true
+region = Rect2(13, 0, 8, 13)
+
+[sub_resource type="AtlasTexture" id="ScrollArrow"]
+resource_local_to_scene = true
+region = Rect2(0, 0, 13, 8)
+
+[node name="PageNavigation" type="Node2D"]
+script = ExtResource("1")
+metadata/visible_lines = 12
+
+[node name="Numbers" parent="." instance=ExtResource("num_default")]
+offset_left = 100.0
+offset_top = 40.0
+offset_right = 289.0
+offset_bottom = 47.0
+mouse_filter = 2
+use_parent_material = false
+
+[node name="LeftArrow" type="TextureRect" parent="."]
+offset_left = 99
+offset_top = 114
+offset_right = 107
+offset_bottom = 127
+texture = SubResource("Arrow")
+scale = Vector2(-1, 1)
+mouse_filter = 2
+
+[node name="RightArrow" type="TextureRect" parent="."]
+offset_left = 301
+offset_top = 114
+offset_right = 309
+offset_bottom = 127
+texture = SubResource("Arrow")
+mouse_filter = 2
+
+[node name="LeftHit" type="Control" parent="."]
+offset_left = 75
+offset_top = 100
+offset_right = 115
+offset_bottom = 140
+mouse_filter = 2
+
+[node name="RightHit" type="Control" parent="."]
+offset_left = 285
+offset_top = 100
+offset_right = 325
+offset_bottom = 140
+mouse_filter = 2
+
+[node name="MethodScroll" type="Control" parent="."]
+offset_left = 284
+offset_top = 61
+offset_right = 297
+offset_bottom = 203
+mouse_filter = 2
+
+[node name="Up" type="TextureRect" parent="MethodScroll"]
+offset_right = 13
+offset_bottom = 8
+texture = SubResource("ScrollArrow")
+mouse_filter = 2
+
+[node name="Down" type="TextureRect" parent="MethodScroll"]
+offset_top = 142
+offset_right = 13
+offset_bottom = 150
+texture = SubResource("ScrollArrow")
+scale = Vector2(1, -1)
+mouse_filter = 2
+
+[node name="Track" type="ColorRect" parent="MethodScroll"]
+offset_left = 5
+offset_top = 10
+offset_right = 8
+offset_bottom = 132
+color = Color(0.4666666666666667, 0.4666666666666667, 0.4666666666666667, 1)
+mouse_filter = 2
+
+[node name="Thumb" type="ColorRect" parent="MethodScroll/Track"]
+anchor_right = 1.0
+offset_bottom = 3.0
+custom_minimum_size = Vector2(3, 3)
+color = Color(0.07450980392156863, 0.4, 1.0, 1)
+mouse_filter = 2
+
+[node name="UpHit" type="Control" parent="MethodScroll"]
+offset_left = -13
+offset_top = -5
+offset_right = 27
+offset_bottom = 35
+mouse_filter = 2
+
+[node name="DownHit" type="Control" parent="MethodScroll"]
+offset_left = -13
+offset_top = 104
+offset_right = 27
+offset_bottom = 144
+mouse_filter = 2
+
+[node name="InfoScroll" type="Control" parent="."]
+offset_left = 291
+offset_top = 61
+offset_right = 304
+offset_bottom = 203
+mouse_filter = 2
+
+[node name="Up" type="TextureRect" parent="InfoScroll"]
+offset_right = 13
+offset_bottom = 8
+texture = SubResource("ScrollArrow")
+mouse_filter = 2
+
+[node name="Down" type="TextureRect" parent="InfoScroll"]
+offset_top = 142
+offset_right = 13
+offset_bottom = 150
+texture = SubResource("ScrollArrow")
+scale = Vector2(1, -1)
+mouse_filter = 2
+
+[node name="Track" type="ColorRect" parent="InfoScroll"]
+offset_left = 5
+offset_top = 10
+offset_right = 8
+offset_bottom = 132
+color = Color(0.4666666666666667, 0.4666666666666667, 0.4666666666666667, 1)
+mouse_filter = 2
+
+[node name="Thumb" type="ColorRect" parent="InfoScroll/Track"]
+anchor_right = 1.0
+offset_bottom = 3.0
+custom_minimum_size = Vector2(3, 3)
+color = Color(0.07450980392156863, 0.4, 1.0, 1)
+mouse_filter = 2
+
+[node name="UpHit" type="Control" parent="InfoScroll"]
+offset_left = -13
+offset_top = -5
+offset_right = 27
+offset_bottom = 35
+mouse_filter = 2
+
+[node name="DownHit" type="Control" parent="InfoScroll"]
+offset_left = -13
+offset_top = 104
+offset_right = 27
+offset_bottom = 144
+mouse_filter = 2

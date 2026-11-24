@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Store = preload("res://prime/prime_settings_store/prime_settings_store.gd")
+const Store = preload("res://game/prime/settings/prime_settings_store/prime_settings_store.gd")
 const TEST_PATH := "user://prime-settings-store-test.cfg"
 const DEFAULTS := {
 	"speed": 4,

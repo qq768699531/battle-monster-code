@@ -4,7 +4,7 @@
 
 [ext_resource type="PackedScene" path="res://engine/ui/native_panel/native_panel.tscn" id="2"]
 
-[ext_resource type="PackedScene" path="res://prime/plain_label/plain_label.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://game/prime/ui/plain_label/plain_label.tscn" id="3"]
 
 [node name="MessageChoice" type="Control"]
 script = ExtResource("1")

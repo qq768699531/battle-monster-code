@@ -17,7 +17,7 @@ signal touch_key_pressed(key: int)
 
 const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const TouchControls = preload("res://game/field/runtime/touch_controls/touch_controls.gd")
-const PrimeSettingsStore = preload("res://prime/prime_settings_store/prime_settings_store.gd")
+const PrimeSettingsStore = preload("res://game/prime/settings/prime_settings_store/prime_settings_store.gd")
 const FieldActors = preload("res://game/field/runtime/field_actors/field_actors.gd")
 const WorldResources = preload("res://engine/data/world_resources/world_resources.gd")
 const Box2Prompt = preload("res://game/field/runtime/box2_prompt/box2_prompt.gd")

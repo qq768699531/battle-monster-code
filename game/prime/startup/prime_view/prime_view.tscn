@@ -1,0 +1,54 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://game/prime/startup/prime_view/prime_view.gd" id="1"]
+[ext_resource type="PackedScene" path="res://game/prime/title/title_view/title_view.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://game/prime/startup/startup_view/startup_view.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://game/prime/settings/settings_view/settings_view.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://game/prime/network/dialog_view/dialog_view.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://game/prime/pages/text_page_view/text_page_view.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://game/prime/network/notice_view/notice_view.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://game/prime/network/network_message/network_message.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://game/prime/slots/slot_view/slot_view.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://game/prime/title/battle_zone/battle_zone.tscn" id="10"]
+[ext_resource type="PackedScene" path="res://game/prime/pages/info_view/info_view.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://game/prime/pages/market_view/market_view.tscn" id="12"]
+[ext_resource type="PackedScene" path="res://game/prime/pages/island_view/island_view.tscn" id="13"]
+[ext_resource type="PackedScene" path="res://game/prime/pages/mail_view/mail_view.tscn" id="14"]
+
+[node name="PrimeView" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Title" parent="." instance=ExtResource("2")]
+
+[node name="Startup" parent="." instance=ExtResource("3")]
+
+[node name="Settings" parent="." instance=ExtResource("4")]
+
+[node name="Dialogs" parent="." instance=ExtResource("5")]
+
+[node name="TextPage" parent="." instance=ExtResource("6")]
+
+[node name="Notice" parent="." instance=ExtResource("7")]
+
+[node name="Request" parent="." instance=ExtResource("8")]
+z_index = 2
+
+[node name="Slots" parent="." instance=ExtResource("9")]
+
+[node name="BattleZone" parent="." instance=ExtResource("10")]
+visible = false
+z_index = 1
+
+[node name="Info" parent="." instance=ExtResource("11")]
+
+[node name="Market" parent="." instance=ExtResource("12")]
+visible = false
+z_index = 1
+
+[node name="Island" parent="." instance=ExtResource("13")]
+visible = false
+z_index = 1
+
+[node name="Mail" parent="." instance=ExtResource("14")]
+visible = false
+z_index = 1

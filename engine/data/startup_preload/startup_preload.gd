@@ -37,7 +37,7 @@ const REQUEST_TIMEOUT_MS := 8000
 ## 已由各自的分组覆盖，这一组只负责 `core/`。
 const GROUP_COMPONENTS := "res://engine"
 ## 启动与标题 ANI：`d7d61df` 之后入口是根目录 `main.tscn`，展示与标题模块都在 `prime/`。
-const GROUP_ANI := "res://prime"
+const GROUP_ANI := "res://game/prime"
 const GROUP_AUDIO := "res://audio/ogg"
 const GROUP_BATTLE_UI := "res://game/battle"
 const GROUP_MENU := "res://game/menu"

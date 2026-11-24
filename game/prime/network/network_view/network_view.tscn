@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3]
+[ext_resource type="Script" path="res://game/prime/network/network_view/network_view.gd" id="1"]
+[ext_resource type="PackedScene" path="res://game/prime/ui/native_button/native_button.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://game/prime/network/network_detail/network_detail.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://game/prime/network/network_message/network_message.tscn" id="4"]
+
+[node name="Network" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Buttons" type="Node2D" parent="."]
+
+[node name="Battle" parent="Buttons" instance=ExtResource("2")]
+offset_left = 141.0
+offset_top = 61.0
+offset_right = 259.0
+offset_bottom = 81.0
+
+[node name="Mail" parent="Buttons" instance=ExtResource("2")]
+offset_left = 141.0
+offset_top = 95.0
+offset_right = 259.0
+offset_bottom = 115.0
+
+[node name="Market" parent="Buttons" instance=ExtResource("2")]
+offset_left = 141.0
+offset_top = 129.0
+offset_right = 259.0
+offset_bottom = 149.0
+
+[node name="Island" parent="Buttons" instance=ExtResource("2")]
+offset_left = 141.0
+offset_top = 163.0
+offset_right = 259.0
+offset_bottom = 183.0
+
+[node name="Detail" parent="." instance=ExtResource("3")]
+
+[node name="Message" parent="." instance=ExtResource("4")]

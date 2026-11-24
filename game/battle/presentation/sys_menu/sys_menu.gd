@@ -26,9 +26,9 @@ signal title_requested
 ## 落盘不在这里：CLR 才 `Param_setupSAVE()`。
 signal setting_changed(settings: Dictionary, key: String, previous_value: int)
 
-const Layout = preload("res://prime/layout/layout.gd")
-const PrimeConstants = preload("res://prime/runtime_constants/runtime_constants.gd")
-const SettingsStore = preload("res://prime/prime_settings_store/prime_settings_store.gd")
+const Layout = preload("res://game/prime/ui/layout/layout.gd")
+const PrimeConstants = preload("res://game/prime/data/runtime_constants/runtime_constants.gd")
+const SettingsStore = preload("res://game/prime/settings/prime_settings_store/prime_settings_store.gd")
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const BattleView = preload("res://game/battle/presentation/battle_view/battle_view.gd")
 ## 帮助页正文源（`Battle_Method_init` 的 `EFC_fsLoadRES("skt/method.fxt")`）。

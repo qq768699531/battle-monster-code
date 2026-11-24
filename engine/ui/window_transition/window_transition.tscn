@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://engine/ui/menu_outline/menu_outline.tscn" id="outline"]
-[ext_resource type="PackedScene" path="res://prime/dialog_panel/dialog_panel.tscn" id="dialog"]
+[ext_resource type="PackedScene" path="res://game/prime/network/dialog_panel/dialog_panel.tscn" id="dialog"]
 [ext_resource type="Script" uid="uid://cu6qykcrim1lg" path="res://engine/ui/window_transition/window_transition.gd" id="script"]
 
 [sub_resource type="StyleBoxFlat" id="BodyEdge"]

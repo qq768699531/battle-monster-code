@@ -40,7 +40,7 @@ func _check_directory(path: String) -> void:
 func test_legacy_suite() -> void:
 	_check_directory("res://scenes")
 	var unowned: Array[String] = []
-	for script in ["res://scripts/main.gd", "res://prime/prime_view/prime_view.gd",
+	for script in ["res://scripts/main.gd", "res://game/prime/startup/prime_view/prime_view.gd",
 			"res://game/menu/screen/menu_view/menu_view.gd", "res://game/battle/presentation/battle_view/battle_view.gd",
 			"res://game/field/dialogue/chat_view/chat_view.gd", "res://game/field/map/map/map_renderer.gd",
 			"res://game/field/runtime/field_actors/field_actors.gd", "res://game/field/runtime/touch_controls/touch_controls.gd",

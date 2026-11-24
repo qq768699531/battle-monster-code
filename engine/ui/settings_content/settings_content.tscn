@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3]
 [ext_resource type="Script" path="res://engine/ui/settings_content/settings_content.gd" id="1"]
-[ext_resource type="PackedScene" path="res://prime/plain_label/plain_label.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://game/prime/ui/plain_label/plain_label.tscn" id="2"]
 [node name="Content" type="Node2D"]
 script = ExtResource("1")
 

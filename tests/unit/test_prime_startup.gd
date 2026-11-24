@@ -1,9 +1,9 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Runtime = preload("res://prime/prime_title_runtime/prime_title_runtime.gd")
-const StartupRuntime = preload("res://prime/startup_runtime/startup_runtime.gd")
+const Runtime = preload("res://game/prime/title/prime_title_runtime/prime_title_runtime.gd")
+const StartupRuntime = preload("res://game/prime/startup/startup_runtime/startup_runtime.gd")
 const StartupPreload = preload("res://engine/data/startup_preload/startup_preload.gd")
-const StartupFooter = preload("res://prime/startup_footer/startup_footer.tscn")
+const StartupFooter = preload("res://game/prime/startup/startup_footer/startup_footer.tscn")
 const Store = preload("res://engine/data/save_store/save_store.gd")
 const TouchCode = preload("res://engine/ui/touch_code/touch_code.gd")
 const Story = preload("res://engine/data/story/story.gd")
