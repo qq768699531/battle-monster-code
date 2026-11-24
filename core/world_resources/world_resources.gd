@@ -4,7 +4,7 @@ extends RefCounted
 ## Loaders return null on failure; last_error contains the diagnostic (no timing or I/O here).
 
 const GameplayData = preload("res://core/gameplay_data/gameplay_data.gd")
-const NpcDefinition = preload("res://field/field_actors/npc_definition/npc_definition.gd")
+const NpcDefinition = preload("res://field/npc_definition/npc_definition.gd")
 
 var map_ids: Array[int] = []
 var event_ids: Array[int] = []

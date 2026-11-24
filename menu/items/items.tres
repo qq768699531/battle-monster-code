@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="GameplayData" format=3]
 [ext_resource type="Script" path="res://core/gameplay_data/gameplay_data.gd" id="data_script"]
-[ext_resource type="Script" uid="uid://ck0jppxuwr775" path="res://menu/items/item_definition/item_definition.gd" id="3_m2eon"]
+[ext_resource type="Script" uid="uid://ck0jppxuwr775" path="res://menu/item_definition/item_definition.gd" id="3_m2eon"]
 [sub_resource type="Resource" id="Resource_0e8ta"]
 script = ExtResource("3_m2eon")
 id = 1000
