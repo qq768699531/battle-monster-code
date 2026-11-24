@@ -21,7 +21,7 @@ const SPRITE_ORIGINS: SpriteOrigins = preload("res://core/monster_animation/spri
 ## 逐对象存放的表：每个对象一个 `<对象名>.tres`，放在它自己的场景目录里。
 const GAMEPLAY_OBJECT_DIRS := {
 	"monsters": "res://monsters",
-	"npcs": "res://actors/npc/objects",
+	"npcs": "res://actors",
 }
 
 const GAMEPLAY_PARTS := {
