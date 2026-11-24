@@ -312,3 +312,18 @@ actors/
   npc/n_f_02 … n_f_49          NPC
   shared/                      共用图集
 ```
+
+## 共用特效按消费方拆开
+
+`actors/effects/` 已删除：
+
+- `f_emoticon` 无任何引用（重复场景），删除；表情统一走 `field/emotion`。
+- `ui_eff` 两个消费方只用 `action_001` 的一帧（64×63），另外 4 帧与 4 段动画无人使用。
+  拆成各自模块的资源：
+
+```text
+menu/book_monster/book_monster_effect.tscn + .webp
+menu/status_portrait/status_portrait_effect.tscn + .webp
+```
+
+`obj/ui_eff` 的 5 条精灵索引一并移除。

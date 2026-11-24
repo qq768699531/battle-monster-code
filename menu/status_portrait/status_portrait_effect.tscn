@@ -1,23 +1,23 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://actors/effects/ui_eff/ui_eff.webp" id="Sheet_obj_ui_eff"]
+[ext_resource type="Texture2D" path="res://menu/status_portrait/status_portrait_effect.webp" id="Sheet_obj_ui_eff"]
 
 [ext_resource type="Shader" path="res://core/touch_button/native_touch_blend.gdshader" id="BlendShader"]
 
 [sub_resource type="AtlasTexture" id="Atlas_Texture0"]
 atlas = ExtResource("Sheet_obj_ui_eff")
-region = Rect2(0, 0, 88, 88)
+region = Rect2(0, 0, 64, 63)
 [sub_resource type="AtlasTexture" id="Atlas_Texture1"]
 atlas = ExtResource("Sheet_obj_ui_eff")
-region = Rect2(88, 0, 88, 88)
+region = Rect2(0, 0, 64, 63)
 [sub_resource type="AtlasTexture" id="Atlas_Texture2"]
 atlas = ExtResource("Sheet_obj_ui_eff")
-region = Rect2(176, 0, 88, 88)
+region = Rect2(0, 0, 64, 63)
 [sub_resource type="AtlasTexture" id="Atlas_Texture3"]
 atlas = ExtResource("Sheet_obj_ui_eff")
-region = Rect2(88, 88, 64, 63)
+region = Rect2(0, 0, 64, 63)
 [sub_resource type="AtlasTexture" id="Atlas_Texture4"]
 atlas = ExtResource("Sheet_obj_ui_eff")
-region = Rect2(0, 88, 23, 23)
+region = Rect2(0, 0, 64, 63)
 [sub_resource type="ShaderMaterial" id="Blend7"]
 shader = ExtResource("BlendShader")
 shader_parameter/native_mode = 22
