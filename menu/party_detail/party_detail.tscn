@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cv8i2uostdo35"]
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 
-[ext_resource type="Script" path="res://scripts/menu/party_detail.gd" id="script"]
+[ext_resource type="Script" path="res://menu/party_detail.gd" id="script"]
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://menu/status_monster/status_monster.tscn" id="monster"]
 [ext_resource type="PackedScene" path="res://menu/status_portrait/status_portrait.tscn" id="portrait"]

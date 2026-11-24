@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3]
 
-[ext_resource type="Script" path="res://scripts/components/screen_shade.gd" id="script"]
+[ext_resource type="Script" path="res://ui/screen_shade.gd" id="script"]
 [ext_resource type="Shader" path="res://shaders/menu_map_blur.gdshader" id="blur"]
 
 [sub_resource type="ShaderMaterial" id="ShadeMaterial"]

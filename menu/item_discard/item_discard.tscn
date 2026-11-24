@@ -2,13 +2,13 @@
 [ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
 [ext_resource type="Texture2D" path="res://ui/window/ui_window.webp" id="Sheet_common_ui_window"]
 
-[ext_resource type="Script" path="res://scripts/menu/item_discard.gd" id="1"]
+[ext_resource type="Script" path="res://menu/item_discard.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://ui/item_cell/item_cell.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://ui/message_choice/message_choice.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://ui/dotted_line/dotted_line.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="6"]
-[ext_resource type="Theme" path="res://assets/fonts/ui_theme.tres" id="9"]
+[ext_resource type="Theme" path="res://ui/ui_theme.tres" id="9"]
 
 [sub_resource type="AtlasTexture" id="Atlas_7"]
 atlas = ExtResource("Sheet_common_ui_number")

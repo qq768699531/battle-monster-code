@@ -1,7 +1,7 @@
 [gd_scene format=3]
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 
-[ext_resource type="Script" path="res://scripts/battle_ui/field.gd" id="script"]
+[ext_resource type="Script" path="res://battle/field.gd" id="script"]
 [ext_resource type="PackedScene" path="res://battle/actor/actor.tscn" id="actor"]
 [ext_resource type="PackedScene" path="res://battle/castle_back/castle_back.tscn" id="back"]
 [ext_resource type="PackedScene" path="res://battle/castle_ground/castle_ground.tscn" id="ground"]

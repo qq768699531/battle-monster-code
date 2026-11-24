@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3]
 
-[ext_resource type="Script" path="res://scripts/prime_view.gd" id="1"]
+[ext_resource type="Script" path="res://prime/prime_view.gd" id="1"]
 [ext_resource type="PackedScene" path="res://prime/title_view/title_view.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://prime/startup_view/startup_view.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://prime/settings_view/settings_view.tscn" id="4"]

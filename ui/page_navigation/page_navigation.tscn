@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Script" path="res://scripts/components/page_navigation.gd" id="1"]
+[ext_resource type="Script" path="res://ui/page_navigation.gd" id="1"]
 
 [ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="2"]
 

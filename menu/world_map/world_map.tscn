@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3]
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 
-[ext_resource type="Script" path="res://scripts/menu/world_map.gd" id="script"]
+[ext_resource type="Script" path="res://menu/world_map.gd" id="script"]
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://menu/world_map_canvas/world_map_canvas.tscn" id="canvas"]
 [ext_resource type="PackedScene" path="res://ui/window_footer/window_footer.tscn" id="footer"]

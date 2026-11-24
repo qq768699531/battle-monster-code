@@ -18,11 +18,11 @@ config/icon="uid://b20ukqkf5ogsq"
 
 [audio]
 
-buses/default_bus_layout="res://assets/audio/default_bus_layout.tres"
+buses/default_bus_layout="res://core/default_bus_layout.tres"
 
 [autoload]
 
-AssetCatalog="*res://scripts/resource_catalog.gd"
+AssetCatalog="*res://core/resource_catalog.gd"
 AudioManager="*res://ui/audio_manager/audio_manager.tscn"
 NativeTouchFeedback="*res://field/native_touch_feedback/native_touch_feedback.tscn"
 
@@ -35,7 +35,7 @@ window/stretch/mode="canvas_items"
 
 [gui]
 
-theme/custom="res://assets/fonts/ui_theme.tres"
+theme/custom="res://ui/ui_theme.tres"
 
 [internationalization]
 

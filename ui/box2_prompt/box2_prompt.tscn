@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3]
 
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="1"]
-[ext_resource type="Script" path="res://scripts/components/box2_prompt.gd" id="2"]
+[ext_resource type="Script" path="res://ui/box2_prompt.gd" id="2"]
 [ext_resource type="PackedScene" path="res://ui/text_line_list/text_line_list.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://ui/dotted_line/dotted_line.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://ui/message_choice/message_choice.tscn" id="5"]

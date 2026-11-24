@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3]
 
-[ext_resource type="Script" path="res://scripts/components/slot_names.gd" id="1"]
+[ext_resource type="Script" path="res://ui/slot_names.gd" id="1"]
 
 [sub_resource type="AtlasTexture" id="Name0"]
 resource_local_to_scene = true

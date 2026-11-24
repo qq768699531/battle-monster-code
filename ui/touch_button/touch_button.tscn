@@ -1,7 +1,7 @@
 [gd_scene format=3]
 [ext_resource type="Texture2D" path="res://ui/touch_button/ui_button.webp" id="Sheet_touch_ui_button"]
 
-[ext_resource type="Script" path="res://scripts/components/touch_button.gd" id="1"]
+[ext_resource type="Script" path="res://ui/touch_button.gd" id="1"]
 [ext_resource type="Shader" path="res://shaders/native_touch_blend.gdshader" id="4"]
 [ext_resource type="PackedScene" path="res://ui/ani_back_buffer/ani_back_buffer.tscn" id="5"]
 

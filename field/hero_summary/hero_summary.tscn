@@ -2,10 +2,10 @@
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 [ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
 
-[ext_resource type="Script" path="res://scripts/field/hero_summary.gd" id="1"]
+[ext_resource type="Script" path="res://field/hero_summary.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="panel"]
 [ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
-[ext_resource type="Theme" path="res://assets/fonts/ui_theme.tres" id="theme"]
+[ext_resource type="Theme" path="res://ui/ui_theme.tres" id="theme"]
 
 [sub_resource type="AtlasTexture" id="Atlas_portrait"]
 atlas = ExtResource("Sheet_common_ui_battle")

@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://ui/menu_outline/menu_outline.tscn" id="outline"]
 [ext_resource type="PackedScene" path="res://ui/dialog_panel/dialog_panel.tscn" id="dialog"]
-[ext_resource type="Script" uid="uid://cu6qykcrim1lg" path="res://scripts/components/window_transition.gd" id="script"]
+[ext_resource type="Script" uid="uid://cu6qykcrim1lg" path="res://ui/window_transition.gd" id="script"]
 
 [sub_resource type="StyleBoxFlat" id="BodyEdge"]
 draw_center = false

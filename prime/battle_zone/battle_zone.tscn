@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://bkhy3jjmh34og"]
 
-[ext_resource type="Script" uid="uid://dyx0o860aga8a" path="res://scripts/prime/battle_zone_scene.gd" id="1"]
+[ext_resource type="Script" uid="uid://dyx0o860aga8a" path="res://prime/battle_zone_scene.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://ui/battle_stat_row/battle_stat_row.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://ui/native_button/native_button.tscn" id="5"]
-[ext_resource type="Theme" path="res://assets/fonts/ui_theme.tres" id="6"]
+[ext_resource type="Theme" path="res://ui/ui_theme.tres" id="6"]
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="7"]
 
 [node name="BattleZone" type="Control" unique_id=1203890205]
