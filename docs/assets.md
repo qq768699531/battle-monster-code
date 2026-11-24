@@ -147,15 +147,3 @@ godot --headless --path . --import
 
 地图 TileSet（125 个）仍留在 `maps/mN/`：同目录有地图场景与地形场景，但没有脚本——它们是编辑器资源，
 给每个 TileSet 配一个脚本只会产生空壳。
-
-## 逐对象资源（items）
-
-`items` 不再是 367 条聚合数组，而是一个对象一个文件：
-
-```text
-menu/items/objects/<id>/<id>.tres     # 每个物品一份，script 是 ItemDefinition
-```
-
-`ResourceCatalog` 通过 `GAMEPLAY_OBJECT_DIRS` 扫描 `objects/` 目录并按 `id` 排序组装，
-`catalog.item(id)` 的调用方式不变。其余聚合表（monsters / passives / encounters /
-script_battles / npcs / quests / battle-species / battle-poses / 文本表）仍保持原样，待后续批次迁移。
