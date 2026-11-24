@@ -1,0 +1,12 @@
+[gd_resource type="Theme" load_steps=2 format=3]
+
+[ext_resource type="FontFile" path="res://engine/ui/theme/boutique-bitmap-regular-proportional-10px-round.ttf" id="1_font"]
+
+[resource]
+default_font = ExtResource("1_font")
+default_font_size = 10
+RichTextLabel/fonts/normal_font = ExtResource("1_font")
+RichTextLabel/fonts/bold_font = ExtResource("1_font")
+RichTextLabel/fonts/italics_font = ExtResource("1_font")
+RichTextLabel/fonts/bold_italics_font = ExtResource("1_font")
+RichTextLabel/fonts/mono_font = ExtResource("1_font")

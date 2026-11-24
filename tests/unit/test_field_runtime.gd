@@ -1,17 +1,17 @@
 extends "res://tests/unit/gut_case.gd"
 
 const Field = preload("res://field/field_runtime/field_runtime.gd")
-const Story = preload("res://core/story/story.gd")
+const Story = preload("res://engine/data/story/story.gd")
 const Book = preload("res://menu/book_model/book_model.gd")
-const Store = preload("res://core/save_store/save_store.gd")
-const World = preload("res://core/world_resources/world_resources.gd")
+const Store = preload("res://engine/data/save_store/save_store.gd")
+const World = preload("res://engine/data/world_resources/world_resources.gd")
 const NpcDefinition = preload("res://field/npc_definition/npc_definition.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 const MapEffectCatalog = preload("res://field/map/map_effect.gd")
-const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
+const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
 const MasteryScript = preload("res://field/mastery_view/mastery_view.gd")
 const Followers = preload("res://field/party_followers/party_followers.gd")
-const StackScene = preload("res://core/message_stack/message_stack.tscn")
+const StackScene = preload("res://engine/ui/message_stack/message_stack.tscn")
 ## `item_basic.dat` 第 6 组第 4 号（材料）在原生表里的 `ui_item` 帧号（记录第 133 字节，`gameplay.tres` 同值）。
 const MATERIAL_ICON_FRAME := 111
 ## `qst/qstlist.fxt:0`「捕捉阿软」：野外任务接取提示只读它的标题列。

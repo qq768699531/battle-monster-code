@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3]
 [ext_resource type="Texture2D" path="res://menu/quest_row/quest_row.webp" id="part_quest_row"]
 
-[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="1"]
 
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 

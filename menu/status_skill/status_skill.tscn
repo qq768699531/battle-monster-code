@@ -1,6 +1,6 @@
 [gd_scene format=3]
 [ext_resource type="Texture2D" path="res://menu/status_skill/status_skill.webp" id="sheet"]
-[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 [sub_resource type="AtlasTexture" id="Atlas_status_header"]
 atlas = ExtResource("sheet")
 region = Rect2(0, 0, 60, 30)

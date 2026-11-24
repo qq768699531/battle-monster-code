@@ -15,7 +15,7 @@ extends RefCounted
 
 const MenuModel = preload("res://menu/menu_model/menu_model.gd")
 const BattleSettlement = preload("res://battle/battle_settlement/battle_settlement.gd")
-const MonsterAttribute = preload("res://core/monster_attribute/monster_attribute.gd")
+const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
 
 ## 阈值、节奏与逐级升级都取 `BattleSettlement` 的同一份（`Battle_Win_mRun` 的两条路径共用）；
 ## 属性进度条的除数 `v2 / 10` 属于本页。

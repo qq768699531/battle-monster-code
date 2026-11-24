@@ -5,9 +5,9 @@ class_name MenuModel
 ## Invalid operations return {ok: false, error: ...} instead of throwing.
 ## Member projections never mutate progress or invent missing individual/resource values.
 const Battle = preload("res://battle/combat/battle.gd")
-const Story = preload("res://core/story/story.gd")
+const Story = preload("res://engine/data/story/story.gd")
 const Book = preload("res://menu/book_model/book_model.gd")
-const MonsterAttribute = preload("res://core/monster_attribute/monster_attribute.gd")
+const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
 const MENU_WINDOW := {"x": 86, "y": 0, "width": 228, "height": 240}
 const MENU_TABS := ["status", "items", "party", "quests", "options", "network"]
 const TAB_NATIVE_INDICES := [0, 1, 2, 3, 5, 4]

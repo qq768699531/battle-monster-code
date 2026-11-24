@@ -2,7 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const LocalServiceClient = preload("res://field/local_service_client/local_service_client.gd")
 const LocalServiceProcess = preload("res://field/local_service_process/local_service_process.gd")
-const Story = preload("res://core/story/story.gd")
+const Story = preload("res://engine/data/story/story.gd")
 
 ## 这套用例打的是真实回环服务（见 `script/local_service/README.md`）。没人在 8765 上跑着的时候，
 ## 用例自己拉起一份：临时空闲端口 + 独立数据目录，跑完由 `LocalServiceProcess` 停掉，

@@ -1,12 +1,12 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/tab_cell/tab_cell.webp" id="part_tab_cell"]
+[ext_resource type="Texture2D" path="res://engine/ui/tab_cell/tab_cell.webp" id="part_tab_cell"]
 
 [ext_resource type="PackedScene" path="res://menu/party_equipment/party_equipment.tscn" id="layout"]
 [ext_resource type="Script" path="res://battle/items/items.gd" id="script"]
-[ext_resource type="Texture2D" path="res://core/window_frame/slot_filled.tres" id="normal_frame"]
-[ext_resource type="Texture2D" path="res://core/window_frame/slot_filled_focused.tres" id="selected_frame"]
-[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
-[ext_resource type="PackedScene" path="res://core/screen_shade/screen_shade.tscn" id="shade"]
+[ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_filled.tres" id="normal_frame"]
+[ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_filled_focused.tres" id="selected_frame"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/screen_shade/screen_shade.tscn" id="shade"]
 
 [sub_resource type="AtlasTexture" id="ItemCategory"]
 atlas = ExtResource("part_tab_cell")

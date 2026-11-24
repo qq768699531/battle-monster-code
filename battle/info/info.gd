@@ -1,11 +1,11 @@
-extends "res://core/window_transition/window_transition.gd"
+extends "res://engine/ui/window_transition/window_transition.gd"
 ## 战斗情报窗口。
 
 signal closed
 
 const Menu = preload("res://menu/menu_model/menu_model.gd")
-const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const Battle = preload("res://battle/combat/battle.gd")
 const ItemEffect = preload("res://battle/item_effect/item_effect.gd")
 

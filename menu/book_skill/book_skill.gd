@@ -1,4 +1,4 @@
-extends "res://core/window_transition/window_transition.gd"
+extends "res://engine/ui/window_transition/window_transition.gd"
 
 ## 原生 `Game_Book_Skill`（GAME_STATE_BOOK_SKILL）：228×227 窗口。
 ##
@@ -13,7 +13,7 @@ extends "res://core/window_transition/window_transition.gd"
 signal back_requested
 
 const Book = preload("res://menu/book_model/book_model.gd")
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 const SlotFrames = preload("res://menu/slot_frames/slot_frames.gd")
 const SlotGrade = preload("res://menu/slot_grade/slot_grade.gd")

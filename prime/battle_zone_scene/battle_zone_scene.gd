@@ -2,8 +2,8 @@
 extends Control
 ## 战斗区域页面的展示层。
 
-const UI_THEME = preload("res://core/native_label/ui_theme.tres")
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const UI_THEME = preload("res://engine/ui/native_label/ui_theme.tres")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const UI = preload("res://prime/layout/layout.gd")
 const BUTTON_COUNT := 6
 const SCENE_PATH := "res://prime/battle_zone/battle_zone.tscn"

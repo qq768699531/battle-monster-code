@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://prime/page_navigation/page_navigation.gd" id="1"]
 
-[ext_resource type="PackedScene" path="res://core/number/number_default.tscn" id="num_default"]
+[ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="num_default"]
 
 [sub_resource type="AtlasTexture" id="Arrow"]
 resource_local_to_scene = true

@@ -6,8 +6,8 @@ const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 const GuildBattle = preload("res://field/guild_battle/guild_battle.gd")
 const ItemKind = preload("res://menu/item_kind/item_kind.gd")
 const GuildChallengeScene = preload("res://field/guild_challenge/guild_challenge.tscn")
-const WindowTransitionScript = preload("res://core/window_transition/window_transition.gd")
-const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
+const WindowTransitionScript = preload("res://engine/ui/window_transition/window_transition.gd")
+const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
 ## 组 39 是 `wiki\data-format\dat-item-guild.md` 记录的 `evt0001` 那一组；`组号 = 99 − code % 1000` ⇒ code 60。
 const GROUP := 39

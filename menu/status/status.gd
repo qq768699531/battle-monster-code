@@ -1,7 +1,7 @@
 extends Control
 ## 状态页：顶部页签下的人物/怪物切换与能力分配入口。
 
-const MonsterAttribute = preload("res://core/monster_attribute/monster_attribute.gd")
+const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
 
 ## 六格流派进度条的几何：`Menu_Hero_Draw1` 逐格调 `Menu_Attr_Draw`，
 ## 每格传 `w = 99`（`a3`）与行高 13（`a4`）。内轨从 `x + 18` 起、宽 `w − 44`，

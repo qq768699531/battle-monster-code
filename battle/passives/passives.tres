@@ -1,5 +1,5 @@
 [gd_resource type="Resource" script_class="GameplayData" format=3]
-[ext_resource type="Script" path="res://core/gameplay_data/gameplay_data.gd" id="data_script"]
+[ext_resource type="Script" path="res://engine/data/gameplay_data/gameplay_data.gd" id="data_script"]
 [ext_resource type="Script" uid="uid://d21nisecxjdmi" path="res://battle/passive_definition/passive_definition.gd" id="6_g0pew"]
 [sub_resource type="Resource" id="Resource_uegbp"]
 script = ExtResource("6_g0pew")

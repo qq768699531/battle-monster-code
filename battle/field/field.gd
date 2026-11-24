@@ -10,10 +10,10 @@ const PoseScene = preload("res://battle/pose/pose.tscn")
 const DamageNumberScene = preload("res://battle/damage_number/damage_number.tscn")
 const HitEffectScene = preload("res://battle/hit_effect/hit_effect.tscn")
 const HitEffect = preload("res://battle/hit_effect/hit_effect.gd")
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const ItemEffect = preload("res://battle/item_effect/item_effect.gd")
 const BattlePoses = preload("res://battle/battle_poses/battle-poses.tres")
-const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
+const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
 ## 原生站位表 `Battle_objGetPosition` 的 10 个世界坐标槽（rodata 0x97864），
 ## 选槽规则见 `Battle_objGetPosition2`：我方 8／10／12、敌方 3／5／7，各自减去实际人数，
 ## 因此 1～2 只在战时会被摆到整列中间。减去战斗镜头偏移后即 400×240 屏幕坐标。

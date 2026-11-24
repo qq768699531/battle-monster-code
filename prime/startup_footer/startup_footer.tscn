@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://prime/startup_footer/startup_footer.gd" id="1"]
 
-[ext_resource type="PackedScene" path="res://core/dotted_line/dotted_line.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://engine/ui/dotted_line/dotted_line.tscn" id="2"]
 
-[ext_resource type="PackedScene" path="res://core/message_choice/message_choice.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://engine/ui/message_choice/message_choice.tscn" id="3"]
 
 [node name="StartupFooter" type="Control"]
 script = ExtResource("1")

@@ -7,10 +7,10 @@ const REGION_QUEST_ID := 2
 
 const QuestDetailScene = preload("res://scenes/field/quest_detail.tscn")
 const QuestDetailScript = preload("res://scripts/field/quest_detail.gd")
-const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
+const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 const QuestCompleteScene = preload("res://field/quest_complete/quest_complete.tscn")
-const MonsterAttribute = preload("res://core/monster_attribute/monster_attribute.gd")
-const Story = preload("res://core/story/story.gd")
+const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
+const Story = preload("res://engine/data/story/story.gd")
 
 const QUEST_ID := 43
 ## `qst/qstlist.fxt:43` 的 page 3（关联地域号）只有 `29`，页脚开图的焦点就是它

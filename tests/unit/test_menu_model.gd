@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
 const Menu = preload("res://menu/menu_model/menu_model.gd")
-const Story = preload("res://core/story/story.gd")
+const Story = preload("res://engine/data/story/story.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 
 

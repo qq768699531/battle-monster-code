@@ -1,7 +1,7 @@
 [gd_scene format=3]
 [ext_resource type="Texture2D" path="res://menu/menu_list_button/list_button.webp" id="part_list_button"]
 
-[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 
 [sub_resource type="AtlasTexture" id="Selected"]
 atlas = ExtResource("part_list_button")

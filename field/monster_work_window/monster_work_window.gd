@@ -8,7 +8,7 @@ extends "res://field/field_window/field_window.gd"
 ## `ParamData.money_balance`。所以列表格、道具格、包裹与金额读数放这里；子状态机、成功率与
 ## 结算仍留在各自页面（原生 `Game_Monster_Mix_Proc` 与 `Game_Monster_Enchant_Proc` 完全不同）。
 
-const MessageStack = preload("res://core/message_stack/message_stack.gd")
+const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 const Menu = preload("res://menu/menu_model/menu_model.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 

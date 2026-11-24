@@ -17,8 +17,8 @@ extends RefCounted
 const Battle = preload("res://battle/combat/battle.gd")
 const ItemKind = preload("res://menu/item_kind/item_kind.gd")
 const MenuModel = preload("res://menu/menu_model/menu_model.gd")
-const MonsterAttribute = preload("res://core/monster_attribute/monster_attribute.gd")
-const Story = preload("res://core/story/story.gd")
+const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
+const Story = preload("res://engine/data/story/story.gd")
 
 ## 状态 5 = 挑战页进（`Field_Guild_Challenge_mKeyPressed` 的
 ## `GameCanvas_SetNext(GAME_STATE_GUILD_BATTLE_5, guild_code)`）；只有 `kind == 3` 的胜利会在

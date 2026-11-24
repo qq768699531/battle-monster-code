@@ -5,7 +5,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const EnchantScene = preload("res://field/monster_enchant/monster_enchant.tscn")
 const EnchantScript = preload("res://field/monster_enchant/monster_enchant.gd")
-const Story = preload("res://core/story/story.gd")
+const Story = preload("res://engine/data/story/story.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 
 const SPECIES := 49

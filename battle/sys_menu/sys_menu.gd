@@ -29,7 +29,7 @@ signal setting_changed(settings: Dictionary, key: String, previous_value: int)
 const Layout = preload("res://prime/layout/layout.gd")
 const PrimeConstants = preload("res://prime/runtime_constants/runtime_constants.gd")
 const SettingsStore = preload("res://prime/prime_settings_store/prime_settings_store.gd")
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const BattleView = preload("res://battle/battle_view/battle_view.gd")
 ## 帮助页正文源（`Battle_Method_init` 的 `EFC_fsLoadRES("skt/method.fxt")`）。
 const HELP_SOURCE := "skt/method.fxt"

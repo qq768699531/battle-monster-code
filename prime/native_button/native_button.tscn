@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://prime/native_button/native_button.gd" id="1"]
-[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://core/native_panel/native_panel.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_panel/native_panel.tscn" id="3"]
 
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 

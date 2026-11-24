@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://prime/settings_view/settings_view.gd" id="script"]
 
-[ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
 
 [ext_resource type="PackedScene" path="res://prime/window_title/window_title.tscn" id="title"]
 
 [ext_resource type="PackedScene" path="res://prime/settings_row/settings_row.tscn" id="row"]
 
-[ext_resource type="PackedScene" path="res://core/window_footer/window_footer.tscn" id="footer"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_footer/window_footer.tscn" id="footer"]
 
 [node name="Settings" instance=ExtResource("window")]
 visible = false

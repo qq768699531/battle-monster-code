@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://engine/ui/atlas_number/atlas_number.gd" id="1"]
+[ext_resource type="Texture2D" path="res://engine/ui/number/number.webp" id="Sheet_number"]
+
+[node name="AtlasNumber" type="Control"]
+script = ExtResource("1")
+offset_right = 100.0
+offset_bottom = 7.0
+texture_filter = 1
+use_parent_material = true
+texture = ExtResource("Sheet_number")
+source_y = 0
+
+[node name="Glyphs" type="HBoxContainer" parent="."]
+alignment = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+mouse_filter = 2
+use_parent_material = true

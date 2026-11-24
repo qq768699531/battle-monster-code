@@ -2,7 +2,7 @@ extends Node2D
 ## 存档槽选择展示层。
 
 const UI = preload("res://prime/layout/layout.gd")
-const WorldResources = preload("res://core/world_resources/world_resources.gd")
+const WorldResources = preload("res://engine/data/world_resources/world_resources.gd")
 
 var _npc_records: Array = []
 var slot_progress: Array[Dictionary] = []

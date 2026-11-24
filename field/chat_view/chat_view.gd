@@ -3,7 +3,7 @@ extends Control
 
 ## 正文控制码引擎（`#C`／`#P`／`[color=…]`）只有 `components/message_stack.gd` 一处实现，
 ## 对话正文复用同一份：`JC_fntDrawText:265-274` 换调色板下标、`JC_fntSetPALETTE` 定义调色板。
-const MessageText = preload("res://core/message_stack/message_stack.gd")
+const MessageText = preload("res://engine/ui/message_stack/message_stack.gd")
 
 const CHAT_WINDOW := Rect2(1, 184, 398, 55)
 const TEXT_PAGE_LINE_COUNT := 2

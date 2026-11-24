@@ -1,14 +1,14 @@
 [gd_scene load_steps=13 format=3]
-[ext_resource type="Texture2D" path="res://core/plus_minus/plus_minus.webp" id="part_plus_minus"]
-[ext_resource type="Texture2D" path="res://core/number/number.webp" id="Sheet_common_ui_number"]
+[ext_resource type="Texture2D" path="res://engine/ui/plus_minus/plus_minus.webp" id="part_plus_minus"]
+[ext_resource type="Texture2D" path="res://engine/ui/number/number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://menu/item_discard/item_discard.gd" id="1"]
-[ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://menu/item_cell/item_cell.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://core/message_choice/message_choice.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://core/dotted_line/dotted_line.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://core/number/number_top.tscn" id="num_top"]
-[ext_resource type="Theme" path="res://core/native_label/ui_theme.tres" id="9"]
+[ext_resource type="PackedScene" path="res://engine/ui/message_choice/message_choice.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://engine/ui/dotted_line/dotted_line.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://engine/ui/number/number_top.tscn" id="num_top"]
+[ext_resource type="Theme" path="res://engine/ui/native_label/ui_theme.tres" id="9"]
 
 [sub_resource type="AtlasTexture" id="Atlas_7"]
 atlas = ExtResource("Sheet_common_ui_number")

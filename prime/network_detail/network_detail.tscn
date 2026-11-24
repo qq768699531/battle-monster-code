@@ -4,7 +4,7 @@
 
 [ext_resource type="PackedScene" path="res://prime/plain_label/plain_label.tscn" id="2"]
 
-[ext_resource type="PackedScene" path="res://core/text_line_list/text_line_list.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://engine/ui/text_line_list/text_line_list.tscn" id="3"]
 
 [node name="NetworkDetail" type="Node2D"]
 script = ExtResource("1")

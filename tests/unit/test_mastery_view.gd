@@ -2,7 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const MasteryScene = preload("res://field/mastery_view/mastery_view.tscn")
 const MasteryScript = preload("res://field/mastery_view/mastery_view.gd")
-const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
+const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
 ## `Menu_CharacterSelect_Draw:56-61` 的六个流派名，详情页只用来摆位。
 const MASTERY_NAMES: Array[String] = ["水", "火", "木", "风", "光", "暗"]

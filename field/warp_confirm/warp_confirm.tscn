@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://field/warp_confirm/warp_confirm.gd" id="script"]
-[ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="window"]
-[ext_resource type="PackedScene" path="res://core/text_line_list/text_line_list.tscn" id="lines"]
-[ext_resource type="PackedScene" path="res://core/dotted_line/dotted_line.tscn" id="rule"]
-[ext_resource type="PackedScene" path="res://core/message_choice/message_choice.tscn" id="choice"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://engine/ui/text_line_list/text_line_list.tscn" id="lines"]
+[ext_resource type="PackedScene" path="res://engine/ui/dotted_line/dotted_line.tscn" id="rule"]
+[ext_resource type="PackedScene" path="res://engine/ui/message_choice/message_choice.tscn" id="choice"]
 
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 

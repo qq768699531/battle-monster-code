@@ -1,14 +1,14 @@
 [gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://battle/sys_menu/sys_menu.gd" id="script"]
-[ext_resource type="PackedScene" path="res://core/screen_shade/screen_shade.tscn" id="shade"]
-[ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://engine/ui/screen_shade/screen_shade.tscn" id="shade"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://menu/option_card/option_card.tscn" id="card"]
 [ext_resource type="PackedScene" path="res://prime/settings_view/settings_view.tscn" id="settings"]
 [ext_resource type="PackedScene" path="res://prime/text_page_view/text_page_view.tscn" id="method"]
-[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
-[ext_resource type="PackedScene" path="res://core/dotted_line/dotted_line.tscn" id="line"]
-[ext_resource type="PackedScene" path="res://core/message_choice/message_choice.tscn" id="choice"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/dotted_line/dotted_line.tscn" id="line"]
+[ext_resource type="PackedScene" path="res://engine/ui/message_choice/message_choice.tscn" id="choice"]
 
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 

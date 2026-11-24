@@ -6,7 +6,7 @@
 
 [ext_resource type="PackedScene" path="res://prime/plain_label/plain_label.tscn" id="3"]
 
-[ext_resource type="PackedScene" path="res://core/text_line_list/text_line_list.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://engine/ui/text_line_list/text_line_list.tscn" id="4"]
 
 [ext_resource type="PackedScene" path="res://prime/startup_footer/startup_footer.tscn" id="5"]
 

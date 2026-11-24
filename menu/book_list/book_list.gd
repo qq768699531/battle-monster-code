@@ -1,4 +1,4 @@
-extends "res://core/window_transition/window_transition.gd"
+extends "res://engine/ui/window_transition/window_transition.gd"
 
 ## 原生 `Game_Book_List`（GAME_STATE_BOOK_LIST）：228×208 窗口、标题「图鉴」，
 ## 两个 118×20 选项「精灵」／「技能书」。

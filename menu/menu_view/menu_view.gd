@@ -1,6 +1,6 @@
 extends Control
 
-const MessageStack = preload("res://core/message_stack/message_stack.gd")
+const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 ## 管理菜单的展示与导航状态机；进度持久化与运行时接入由 host（field_runtime）负责。
 ##
 ## 两层导航：顶部页签（selected_tab）→ 页内层级。每个 `*_open` 标志表示「已进入该页的内层」，
@@ -19,7 +19,7 @@ const Menu = preload("res://menu/menu_model/menu_model.gd")
 const TouchControls = preload("res://field/touch_controls/touch_controls.gd")
 const PrimeSettingsStore = preload("res://prime/prime_settings_store/prime_settings_store.gd")
 const FieldActors = preload("res://field/field_actors/field_actors.gd")
-const WorldResources = preload("res://core/world_resources/world_resources.gd")
+const WorldResources = preload("res://engine/data/world_resources/world_resources.gd")
 const Box2Prompt = preload("res://field/box2_prompt/box2_prompt.gd")
 const SlotFrames = preload("res://menu/slot_frames/slot_frames.gd")
 const SlotGrade = preload("res://menu/slot_grade/slot_grade.gd")

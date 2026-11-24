@@ -13,9 +13,9 @@ extends Control
 ## `v20[0]=640167938`／`v20[1]=36057126`、`v19[0]=84095333`／`v19[1]=-1661923572` 这种
 ## 立即数），中间 16 字节是 int16[8] 的文字横向偏移（`v16` 由四句 `ldm`/`ldr` 从该区拷出）。
 
-const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
-const UI_THEME = preload("res://core/native_label/ui_theme.tres")
+const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
+const UI_THEME = preload("res://engine/ui/native_label/ui_theme.tres")
 
 ## `JC_grpSetMODE(GRP_MODE_ALPHA, 128)`：`JC_grpSetMODE` 的 alpha 分量是按 256 计的
 ## （`PixelData.mode_*_component_256`），128 ⇒ 50% 黑。

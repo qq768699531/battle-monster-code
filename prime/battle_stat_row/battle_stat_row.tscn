@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://prime/battle_stat_row/battle_stat_row.gd" id="1"]
-[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://prime/native_gradient/native_gradient.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://core/native_stat_cell/native_stat_cell.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_stat_cell/native_stat_cell.tscn" id="4"]
 
 [node name="BattleStatRow" type="Control"]
 custom_minimum_size = Vector2(120, 34)

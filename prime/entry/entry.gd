@@ -6,15 +6,15 @@ const PrimeTitleRuntime = preload("res://prime/prime_title_runtime/prime_title_r
 const PrimeSettingsStore = preload("res://prime/prime_settings_store/prime_settings_store.gd")
 const LocalServiceClient = preload("res://field/local_service_client/local_service_client.gd")
 const LocalServiceProcess = preload("res://field/local_service_process/local_service_process.gd")
-const SaveStore = preload("res://core/save_store/save_store.gd")
-const Story = preload("res://core/story/story.gd")
-const WorldResources = preload("res://core/world_resources/world_resources.gd")
+const SaveStore = preload("res://engine/data/save_store/save_store.gd")
+const Story = preload("res://engine/data/story/story.gd")
+const WorldResources = preload("res://engine/data/world_resources/world_resources.gd")
 const EventScripts = preload("res://field/event_scripts/event_scripts.gd")
 const FIELD_SCENE = preload("res://field/field_runtime/field_runtime.tscn")
 const PrimeView = preload("res://prime/prime_view/prime_view.gd")
 const TouchControls = preload("res://field/touch_controls/touch_controls.gd")
-const NativeTextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
-const StartupPreload = preload("res://core/startup_preload/startup_preload.gd")
+const NativeTextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
+const StartupPreload = preload("res://engine/data/startup_preload/startup_preload.gd")
 ## 振动档位 → 时长（毫秒）：档位是 `MdaData.vibration_option` 的 `&3` 取值（0 档不振）。
 ## `Menu_Setup_mKeyPressed` 行3 改完档位随即 `EFC_mdaVIBRATE()` 按档位振一次。
 const SETTING_VIBRATION_MS := [0, 60, 100, 200]

@@ -3,7 +3,7 @@ extends "res://tests/unit/gut_case.gd"
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 const MenuScene = preload("res://menu/menu/menu.tscn")
 const WorldMapScene = preload("res://menu/world_map/world_map.tscn")
-const WindowTransitionScript = preload("res://core/window_transition/window_transition.gd")
+const WindowTransitionScript = preload("res://engine/ui/window_transition/window_transition.gd")
 ## 「半透明 + 模糊」层用的 shader（`Field_Basic_Capture` 的 `JC_grpFillBLUR`）。
 const BLUR_SHADER := "res://shaders/menu_map_blur.gdshader"
 

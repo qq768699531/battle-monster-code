@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://prime/slot_card/slot_card.gd" id="1"]
 
-[ext_resource type="Shader" path="res://core/monster_animation/ani_brightness.gdshader" id="2"]
+[ext_resource type="Shader" path="res://engine/anim/monster_animation/ani_brightness.gdshader" id="2"]
 
 [ext_resource type="PackedScene" path="res://prime/plain_label/plain_label.tscn" id="3"]
 
-[ext_resource type="PackedScene" path="res://core/number/number_small.tscn" id="num_small"]
+[ext_resource type="PackedScene" path="res://engine/ui/number/number_small.tscn" id="num_small"]
 
-[ext_resource type="PackedScene" path="res://core/native_panel/native_panel.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_panel/native_panel.tscn" id="5"]
 
 [ext_resource type="PackedScene" path="res://prime/ui_select/ui_select.tscn" id="6"]
 

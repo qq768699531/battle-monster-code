@@ -6,7 +6,7 @@ const WarpWorldScript = preload("res://field/warp_world/warp_world.gd")
 ## 共用的 Box2 确认框脚本：WARP1／WARP2 的框是同一个场景实例。
 const WarpConfirmScript = preload("res://field/warp_confirm/warp_confirm.gd")
 ## 开合相位枚举（`Menu_win_Box4_DrawWindow@0x4F82C` 的 `n4`）在父脚本里。
-const WindowTransitionScript = preload("res://core/window_transition/window_transition.gd")
+const WindowTransitionScript = preload("res://engine/ui/window_transition/window_transition.gd")
 ## 「半透明 + 模糊」层用的 shader（`Field_Basic_Capture` 的 `JC_grpFillBLUR`）。
 const BLUR_SHADER := "res://shaders/menu_map_blur.gdshader"
 

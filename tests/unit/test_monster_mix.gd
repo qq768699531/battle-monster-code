@@ -5,7 +5,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const MixScene = preload("res://field/monster_mix/monster_mix.tscn")
 const MixScript = preload("res://scripts/field/monster_mix.gd")
-const Story = preload("res://core/story/story.gd")
+const Story = preload("res://engine/data/story/story.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 
 

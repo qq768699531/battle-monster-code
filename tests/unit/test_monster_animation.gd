@@ -2,7 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 
 func test_legacy_suite() -> void:
-	var scene := load("res://core/monster_animation/monster_animation.tscn") as PackedScene
+	var scene := load("res://engine/anim/monster_animation/monster_animation.tscn") as PackedScene
 	var view = scene.instantiate()
 	get_tree().root.add_child(view)
 	view.position = Vector2(120, 180)

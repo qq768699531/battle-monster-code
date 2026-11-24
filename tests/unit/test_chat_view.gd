@@ -2,7 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const ChatView = preload("res://field/chat_view/chat_view.gd")
 const CHAT_SCENE = preload("res://field/chat_view/chat_view.tscn")
-const MessageText = preload("res://core/message_stack/message_stack.gd")
+const MessageText = preload("res://engine/ui/message_stack/message_stack.gd")
 
 
 func test_legacy_suite() -> void:

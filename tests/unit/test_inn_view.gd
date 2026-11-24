@@ -7,8 +7,8 @@ extends "res://tests/unit/gut_case.gd"
 const InnScene = preload("res://field/inn/inn.tscn")
 const Inn = preload("res://field/inn/inn.gd")
 const Layout = preload("res://prime/layout/layout.gd")
-const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
-const Story = preload("res://core/story/story.gd")
+const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
+const Story = preload("res://engine/data/story/story.gd")
 const Battle = preload("res://battle/combat/battle.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 

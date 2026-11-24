@@ -5,7 +5,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const WarpConfirmScene = preload("res://field/warp_confirm/warp_confirm.tscn")
 const WarpConfirm = preload("res://field/warp_confirm/warp_confirm.gd")
-const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
+const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
 
 func _settle(page: Control, visible: bool) -> void:

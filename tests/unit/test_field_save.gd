@@ -4,7 +4,7 @@ extends "res://tests/unit/gut_case.gd"
 ## 开窗画 msg 39「数据存档ing...」→ 写盘 → msg 41「已存档」＋确认，确认后才关窗。
 
 const SaveViewScene = preload("res://field/save_view/save_view.tscn")
-const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
+const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
 
 func test_legacy_suite() -> void:

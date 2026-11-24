@@ -10,7 +10,7 @@ signal settings_changed(settings: Dictionary, saved: bool)
 signal music_requested(resource_id: int)
 signal effect_requested(resource_id: int)
 
-const Story = preload("res://core/story/story.gd")
+const Story = preload("res://engine/data/story/story.gd")
 const Battle = preload("res://battle/combat/battle.gd")
 const ChatView = preload("res://field/chat_view/chat_view.gd")
 const TouchView = preload("res://field/touch_controls/touch_controls.gd")
@@ -37,7 +37,7 @@ const MonsterMixScene = preload("res://field/monster_mix/monster_mix.tscn")
 const GuildChallengeScene = preload("res://field/guild_challenge/guild_challenge.tscn")
 const GuildQuestScene = preload("res://field/guild_quest/guild_quest.tscn")
 const Book = preload("res://menu/book_model/book_model.gd")
-const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
+const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
 const WorldMapScene = preload("res://menu/world_map/world_map.tscn")
 const WorldMap = preload("res://menu/world_map/world_map.gd")
 ## `Game_infoInit` 的任务图标帧（原生立即数 `0x94`）。
@@ -61,7 +61,7 @@ const MESSAGE_HIGHLIGHT_CODE := "#C5"
 const EVENT_QUEST_TEXT_SOURCE := "evt/evtlist.fxt"
 ## 任务表按 id 从 `field/quest_set/qN/quest.tres` 合并；任务门禁与头顶任务图标共用。
 const QuestSetLoader = preload("res://field/quest_set/quest_set.gd")
-const MessageStack = preload("res://core/message_stack/message_stack.gd")
+const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 const MapNameView = preload("res://field/map_name_view/map_name_view.gd")
 const TILE := 16.0
 # Native 6/8px steps at the 50ms base interval; Engine.time_scale applies the speed setting.

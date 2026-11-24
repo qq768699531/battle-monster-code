@@ -1,8 +1,8 @@
 extends "res://tests/unit/gut_case.gd"
-const MessageStack = preload("res://core/message_stack/message_stack.gd")
+const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 
-const StackScene = preload("res://core/message_stack/message_stack.tscn")
-const Msg = preload("res://core/msg/msg.gd")
+const StackScene = preload("res://engine/ui/message_stack/message_stack.tscn")
+const Msg = preload("res://engine/ui/msg/msg.gd")
 
 var _stack: Control
 

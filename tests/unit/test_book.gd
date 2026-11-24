@@ -3,7 +3,7 @@ extends "res://tests/unit/gut_case.gd"
 const Book = preload("res://menu/book_model/book_model.gd")
 const BookScene = preload("res://menu/book/book.tscn")
 const MonsterScene = preload("res://menu/book_monster/book_monster.tscn")
-const Story = preload("res://core/story/story.gd")
+const Story = preload("res://engine/data/story/story.gd")
 const Battle = preload("res://battle/combat/battle.gd")
 const ItemKind = preload("res://menu/item_kind/item_kind.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")

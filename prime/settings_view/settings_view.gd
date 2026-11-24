@@ -1,4 +1,4 @@
-extends "res://core/window_transition/window_transition.gd"
+extends "res://engine/ui/window_transition/window_transition.gd"
 ## 环境设定页：原生 Box4 窗框、五行选项与标题／页脚。
 ##
 ## 窗口主体复用 `components/window_transition.tscn`：正文尺寸由场景里的 `window_size`

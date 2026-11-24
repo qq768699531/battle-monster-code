@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" path="res://prime/prime_view/prime_view.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://prime/boundary/boundary.tscn" id="7"]
 [ext_resource type="Resource" path="res://field/event_scripts/event_scripts.tres" id="8"]
-[ext_resource type="PackedScene" path="res://core/message_stack/message_stack.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://engine/ui/message_stack/message_stack.tscn" id="9"]
 
 [node name="Main" type="Node2D" unique_id=234776110]
 script = ExtResource("1")

@@ -1,6 +1,6 @@
 extends Control
 
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 
 var host: Control

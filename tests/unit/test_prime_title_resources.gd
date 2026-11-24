@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
+const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
 
 
 func _run() -> void:

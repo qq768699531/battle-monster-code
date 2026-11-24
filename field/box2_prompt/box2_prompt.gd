@@ -1,4 +1,4 @@
-extends "res://core/window_transition/window_transition.gd"
+extends "res://engine/ui/window_transition/window_transition.gd"
 
 ## Box2 正文窗：一条正文 + 可选确认键，窗高按正文折行数算。
 ##
@@ -13,8 +13,8 @@ extends "res://core/window_transition/window_transition.gd"
 
 signal confirmed
 
-const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 
 ## 确认键正文是 `Msg.SOURCE` 里 `Msg.Id.CONFIRM_OK` 这一条（`Menu_win_Box2_DrawOk` 的
 ## `JC_fxt2Return(138)`）；文本源标识统一走 `Msg.SOURCE`，本组件不再自带常量。

@@ -1,4 +1,4 @@
-extends "res://core/window_transition/window_transition.gd"
+extends "res://engine/ui/window_transition/window_transition.gd"
 
 ## 野外服务页的共用关页生命周期。
 ##

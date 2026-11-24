@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=3]
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
-[ext_resource type="Texture2D" path="res://core/touch_button/touch_button.webp" id="Sheet_touch_ui_button"]
+[ext_resource type="Texture2D" path="res://engine/ui/touch_button/touch_button.webp" id="Sheet_touch_ui_button"]
 
 [ext_resource type="Script" path="res://field/chat_view/chat_view.gd" id="1"]
 [ext_resource type="PackedScene" path="res://field/dialogue_button/dialogue_button.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://field/dialogue_window/dialogue_window.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://field/dialogue_text/dialogue_text.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://core/monster_animation/monster_animation.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://engine/anim/monster_animation/monster_animation.tscn" id="8"]
 
 [sub_resource type="AtlasTexture" id="Atlas_5"]
 atlas = ExtResource("Sheet_common_ui_battle")

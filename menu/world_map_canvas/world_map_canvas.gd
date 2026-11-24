@@ -419,7 +419,7 @@ func _build_labels(catalog: Object) -> void:
 		label.queue_free()
 	_labels.clear()
 	if _label_scene == null:
-		_label_scene = load("res://core/native_label/native_label.tscn")
+		_label_scene = load("res://engine/ui/native_label/native_label.tscn")
 	for map_id: int in _layer:
 		var label: Control = _label_scene.instantiate()
 		label.text = String(catalog.text_message("map/m%d.mif" % map_id, "name"))

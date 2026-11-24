@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" path="res://menu/book_monster/book_monster.tscn" id="monster"]
 [ext_resource type="Script" uid="uid://dshq3rft5i5b5" path="res://menu/book/book.gd" id="script"]
 [ext_resource type="PackedScene" path="res://menu/book_skill/book_skill.tscn" id="skill"]
-[ext_resource type="PackedScene" path="res://core/screen_shade/screen_shade.tscn" id="shade"]
+[ext_resource type="PackedScene" path="res://engine/ui/screen_shade/screen_shade.tscn" id="shade"]
 
 [node name="Book" type="Control" unique_id=1038645731]
 offset_right = 400.0

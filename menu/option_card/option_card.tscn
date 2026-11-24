@@ -1,5 +1,5 @@
 [gd_scene format=3]
-[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 [sub_resource type="StyleBoxFlat" id="Fill"]
 bg_color = Color(0.0313726, 0.109804, 0.160784, 1)

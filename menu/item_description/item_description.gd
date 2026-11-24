@@ -1,7 +1,7 @@
 extends Panel
 ## 物品说明框：名称、正文、图标与箭头。
 
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 
 @onready var _title_color: Color = $HeaderClip/SelectedItem.color
 

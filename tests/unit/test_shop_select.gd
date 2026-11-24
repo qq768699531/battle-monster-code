@@ -4,7 +4,7 @@ extends "res://tests/unit/gut_case.gd"
 ## 买／卖在道具行与正文之间多 12 px 价格行，金额 = 单价 × 数量（`:117-138`）。
 
 const ShopSelectScene = preload("res://field/shop_select/shop_select.tscn")
-const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
+const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
 
 func _present(kind: int, unit_price: int) -> Control:

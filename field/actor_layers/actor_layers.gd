@@ -1,7 +1,7 @@
 extends Node2D
 ## 地图/战斗单位的绘制体：持有一个 monster_animation 实例。
 
-const ANIMATION_SCENE = preload("res://core/monster_animation/monster_animation.tscn")
+const ANIMATION_SCENE = preload("res://engine/anim/monster_animation/monster_animation.tscn")
 
 ## 非循环动作播完（转发 `monster_animation.animation_finished`）；循环动作每圈也会触发，
 ## 调用方要按当前 action 判定。

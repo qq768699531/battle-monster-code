@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Layout = preload("res://core/native_text_layout/native_text_layout.gd")
+const Layout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const View = preload("res://prime/prime_view/prime_view.gd")
 
 

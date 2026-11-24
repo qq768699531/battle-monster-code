@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://field/guild_info/guild_info.gd" id="script"]
-[ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="window"]
-[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://menu/scrollbar/scrollbar.tscn" id="scroll"]
 
 [sub_resource type="StyleBoxFlat" id="PanelFrame"]

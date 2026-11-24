@@ -9,7 +9,7 @@ func before_all() -> void:
 
 func test_translation_resource_is_registered() -> void:
 	assert_eq(_assets.TEXT_TRANSLATION.resource_path,
-		"res://core/message_stack/zh_CN.tres", "唯一可编辑的 Translation 资源")
+		"res://engine/ui/message_stack/zh_CN.tres", "唯一可编辑的 Translation 资源")
 
 
 func test_menu_messages_resolve_through_translation() -> void:

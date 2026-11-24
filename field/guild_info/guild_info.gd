@@ -1,4 +1,4 @@
-extends "res://core/window_transition/window_transition.gd"
+extends "res://engine/ui/window_transition/window_transition.gd"
 
 ## 原生 `Field_Guild_Info_Detail_*`（`FieldCanvas` 状态 9）：
 ## `Field_Guild_Info_Detail_init`（`EFC_fsLoadRES("common/guild.fxt")`、开窗计数置 1）／
@@ -19,7 +19,7 @@ const INFO_SOURCE := "common/guild.fxt"
 ## 一页固定 9 行（native `y+72` 起 12 px 步距到 `y+168`）。
 const ROWS := 9
 const TEXT_WIDTH := 158.0
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 
 ## `FieldData+0x20`／`+0x24`／`+0x34`。
 var page := 0

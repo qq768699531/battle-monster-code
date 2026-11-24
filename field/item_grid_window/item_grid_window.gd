@@ -7,7 +7,7 @@ extends "res://field/field_window/field_window.gd"
 ## 「在条目范围内」），底部 11 px 条画选中名与持有金钱；失败与异常提示走 `Game_infoInit`
 ## （`notice_id` + 提示栈），关页到相位 −4 时清掉。格子内容与详情面板各页自己的。
 
-const MessageStack = preload("res://core/message_stack/message_stack.gd")
+const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 
 ## `Field_Item_DrawList` 的 6 列 × 2 行（`32 × 6 + 20` 宽、`32 × 行数 + 15` 高）。

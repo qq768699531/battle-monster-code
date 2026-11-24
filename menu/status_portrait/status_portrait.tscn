@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://core/monster_animation/monster_animation.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://engine/anim/monster_animation/monster_animation.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://menu/status_portrait/status_portrait_effect.tscn" id="2"]
 
 [node name="Portrait" type="Control"]

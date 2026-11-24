@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
-const WindowScene = preload("res://core/window_transition/window_transition.tscn")
-const WindowScript = preload("res://core/window_transition/window_transition.gd")
+const WindowScene = preload("res://engine/ui/window_transition/window_transition.tscn")
+const WindowScript = preload("res://engine/ui/window_transition/window_transition.gd")
 ## 原生 `Menu_win_Box4_DrawWindow` 每帧推进 1／2／3／4 四个相位，每相位一帧；
 ## 动画把每相位摆成 0.05 s，所以 0.05 是相位 1／2 的条形，0.1 是相位 3 的条文。
 const BAR_PHASE_TIME := 0.05

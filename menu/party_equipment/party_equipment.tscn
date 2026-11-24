@@ -1,15 +1,15 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/tab_cell/tab_cell.webp" id="part_tab_cell"]
-[ext_resource type="Texture2D" path="res://core/number/number.webp" id="Sheet_common_ui_number"]
+[ext_resource type="Texture2D" path="res://engine/ui/tab_cell/tab_cell.webp" id="part_tab_cell"]
+[ext_resource type="Texture2D" path="res://engine/ui/number/number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://menu/party_equipment/party_equipment.gd" id="script"]
-[ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://menu/item_cell/item_cell.tscn" id="cell"]
 [ext_resource type="PackedScene" path="res://menu/scrollbar/scrollbar.tscn" id="scroll"]
-[ext_resource type="PackedScene" path="res://core/number/number_default.tscn" id="num_default"]
-[ext_resource type="PackedScene" path="res://core/currency_amount/currency_amount.tscn" id="money"]
+[ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="num_default"]
+[ext_resource type="PackedScene" path="res://engine/ui/currency_amount/currency_amount.tscn" id="money"]
 [ext_resource type="PackedScene" path="res://menu/item_description/item_description.tscn" id="description"]
-[ext_resource type="Shader" path="res://core/number/native_number_palette.gdshader" id="palette"]
+[ext_resource type="Shader" path="res://engine/ui/number/native_number_palette.gdshader" id="palette"]
 
 [sub_resource type="AtlasTexture" id="Atlas_digits"]
 atlas = ExtResource("Sheet_common_ui_number")

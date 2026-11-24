@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://battle/b_icon2/b_icon2.tscn" id="cursor"]
 [ext_resource type="PackedScene" path="res://battle/vitals/vitals.tscn" id="vitals"]
 [ext_resource type="PackedScene" path="res://battle/party_card/party_card.tscn" id="card"]
-[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://battle/skill_banner/skill_banner.tscn" id="skill_banner"]
 
 [sub_resource type="AtlasTexture" id="Atlas_headings"]

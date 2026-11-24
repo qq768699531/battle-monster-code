@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const WorldResources = preload("res://core/world_resources/world_resources.gd")
+const WorldResources = preload("res://engine/data/world_resources/world_resources.gd")
 
 
 func test_legacy_suite() -> void:

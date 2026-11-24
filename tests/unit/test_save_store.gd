@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Store = preload("res://core/save_store/save_store.gd")
-const Story = preload("res://core/story/story.gd")
+const Store = preload("res://engine/data/save_store/save_store.gd")
+const Story = preload("res://engine/data/story/story.gd")
 
 
 func _cleanup(path: String) -> void:

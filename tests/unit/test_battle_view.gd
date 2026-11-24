@@ -1,14 +1,14 @@
 extends "res://tests/unit/gut_case.gd"
 
 const Battle = preload("res://battle/combat/battle.gd")
-const Resources = preload("res://core/world_resources/world_resources.gd")
+const Resources = preload("res://engine/data/world_resources/world_resources.gd")
 const ViewScene = preload("res://battle/combat/battle.tscn")
 const SysMenuScript = preload("res://battle/sys_menu/sys_menu.gd")
-const StackScene = preload("res://core/message_stack/message_stack.tscn")
-const StackScript = preload("res://core/message_stack/message_stack.gd")
-const Story = preload("res://core/story/story.gd")
-const Msg = preload("res://core/msg/msg.gd")
-const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
+const StackScene = preload("res://engine/ui/message_stack/message_stack.tscn")
+const StackScript = preload("res://engine/ui/message_stack/message_stack.gd")
+const Story = preload("res://engine/data/story/story.gd")
+const Msg = preload("res://engine/ui/msg/msg.gd")
+const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
 const BattlePoses = preload("res://battle/battle_poses/battle-poses.tres")
 const FieldScript = preload("res://battle/field/field.gd")
 ## 原生状态 26 的窗口：`Battle_Win_Draw:49` 的 `Menu_win_Box4_DrawWindow(…, 228, 240, …, 1, 16)`

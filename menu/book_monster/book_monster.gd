@@ -1,4 +1,4 @@
-extends "res://core/window_transition/window_transition.gd"
+extends "res://engine/ui/window_transition/window_transition.gd"
 
 ## 原生 `Game_Book_Monster`（GAME_STATE_BOOK_MONSTER_19／`GAME_STATE_BOOK_MONSTER_16`）：228×240 窗口。
 ##
@@ -21,14 +21,14 @@ signal starter_confirmed
 
 const Book = preload("res://menu/book_model/book_model.gd")
 const Battle = preload("res://battle/combat/battle.gd")
-const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
-const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
-const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
+const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
+const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 const SlotFrames = preload("res://menu/slot_frames/slot_frames.gd")
 const SlotGrade = preload("res://menu/slot_grade/slot_grade.gd")
 ## 未选中的页签按 `GRP_MODE_GRAY` 画成灰度（与怪物立绘同一套灰度公式）。
-const GRAY_SHADER := preload("res://core/monster_animation/ani_brightness.gdshader")
+const GRAY_SHADER := preload("res://engine/anim/monster_animation/ani_brightness.gdshader")
 
 const MONSTER_TEXT_SOURCE := "common/item_mon.dat"
 const TAB_SHEET := "common/ui_battle/frame-014"
