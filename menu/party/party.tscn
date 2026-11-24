@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" path="res://menu/scrollbar/scrollbar.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://menu/status_monster/status_monster.tscn" id="monster"]
 [ext_resource type="PackedScene" path="res://menu/status_portrait/status_portrait.tscn" id="portrait"]
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
+[ext_resource type="PackedScene" path="res://ui/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://menu/status_metric/status_metric.tscn" id="metric"]
 [ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 [ext_resource type="PackedScene" path="res://menu/party_actions/party_actions.tscn" id="actions"]
@@ -97,7 +97,7 @@ theme_override_constants/separation = 2
 [node name="Slot4" parent="Slots" instance=ExtResource("2")]
 [node name="Slot5" parent="Slots" instance=ExtResource("2")]
 
-[node name="BallCount" parent="." instance=ExtResource("number")]
+[node name="BallCount" parent="." instance=ExtResource("num_default")]
 offset_left = 95.0
 offset_top = 87.0
 offset_right = 123.0
@@ -105,7 +105,6 @@ offset_bottom = 94.0
 mouse_filter = 2
 material = SubResource("NumberKey")
 use_parent_material = false
-source_y = 14
 texture = SubResource("Atlas_digits")
 
 [node name="PartyUsage" parent="." instance=ExtResource("metric")]

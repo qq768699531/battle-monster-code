@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://ui/page_navigation.gd" id="1"]
 
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://ui/number/number_default.tscn" id="num_default"]
 
 [sub_resource type="AtlasTexture" id="Arrow"]
 resource_local_to_scene = true
@@ -16,7 +16,7 @@ region = Rect2(0, 0, 13, 8)
 script = ExtResource("1")
 metadata/visible_lines = 12
 
-[node name="Numbers" parent="." instance=ExtResource("2")]
+[node name="Numbers" parent="." instance=ExtResource("num_default")]
 offset_left = 100.0
 offset_top = 40.0
 offset_right = 289.0

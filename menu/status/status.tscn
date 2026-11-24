@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" path="res://menu/status_card/status_card.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://menu/status_growth/status_growth.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://menu/status_metric/status_metric.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
 [ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="7"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="8"]
 [ext_resource type="PackedScene" path="res://menu/status_monster/status_monster.tscn" id="9"]
@@ -120,7 +120,7 @@ offset_bottom = 8.0
 mouse_filter = 2
 texture_filter = 1
 expand_mode = 1
-[node name="Number" parent="Points" instance=ExtResource("6")]
+[node name="Number" parent="Points" instance=ExtResource("num_top")]
 material = SubResource("NumberPalette")
 use_parent_material = false
 layout_mode = 1
@@ -129,7 +129,6 @@ offset_top = 2.0
 offset_right = -2.0
 offset_bottom = 9.0
 mouse_filter = 2
-source_y = 0
 [node name="GrowthFrame" type="Panel" parent="."]
 offset_left = 94.0
 offset_top = 159.0

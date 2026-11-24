@@ -4,7 +4,8 @@
 [ext_resource type="Script" path="res://menu/items.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/item_cell/item_cell.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://menu/item_category/item_category.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
+[ext_resource type="PackedScene" path="res://ui/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://menu/scrollbar/scrollbar.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://ui/item_description/item_description.tscn" id="description"]
@@ -158,14 +159,13 @@ offset_left = 38.0
 offset_top = 10.0
 offset_right = 130.0
 offset_bottom = 20.0
-[node name="Count" parent="BookDetailFrame/Recipe0" instance=ExtResource("4")]
+[node name="Count" parent="BookDetailFrame/Recipe0" instance=ExtResource("num_top")]
 material = SubResource("NumberPalette")
 use_parent_material = false
 offset_left = 62.0
 offset_top = 12.0
 offset_right = 133.0
 offset_bottom = 19.0
-source_y = 0
 texture = SubResource("Atlas_digits")
 [node name="Recipe1" type="Control" parent="BookDetailFrame"]
 offset_top = 54.0
@@ -185,14 +185,13 @@ offset_left = 38.0
 offset_top = 10.0
 offset_right = 130.0
 offset_bottom = 20.0
-[node name="Count" parent="BookDetailFrame/Recipe1" instance=ExtResource("4")]
+[node name="Count" parent="BookDetailFrame/Recipe1" instance=ExtResource("num_top")]
 material = SubResource("NumberPalette")
 use_parent_material = false
 offset_left = 62.0
 offset_top = 12.0
 offset_right = 133.0
 offset_bottom = 19.0
-source_y = 0
 texture = SubResource("Atlas_digits")
 [node name="Cost" parent="BookDetailFrame" instance=ExtResource("money")]
 offset_left = 161.0
@@ -205,13 +204,13 @@ offset_bottom = 7.0
 [node name="Number" parent="BookDetailFrame/Cost" index="1"]
 offset_top = 2.0
 
-[node name="CountOne" parent="." instance=ExtResource("4")]
+[node name="CountOne" parent="." instance=ExtResource("num_default")]
 offset_left = 23.0
 offset_top = 119.0
 offset_right = 123.0
 offset_bottom = 126.0
 mouse_filter = 2
-[node name="CountTwo" parent="." instance=ExtResource("4")]
+[node name="CountTwo" parent="." instance=ExtResource("num_default")]
 offset_left = 23.0
 offset_top = 151.0
 offset_right = 123.0

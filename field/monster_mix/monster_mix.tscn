@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://menu/option_card/option_card.tscn" id="option"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://ui/currency_amount/currency_amount.tscn" id="money"]
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
+[ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
 [ext_resource type="PackedScene" path="res://menu/status_metric/status_metric.tscn" id="metric"]
 [ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="ani"]
 [ext_resource type="Texture2D" path="res://ui/slot/filled.tres" id="cell_filled"]
@@ -141,13 +141,12 @@ offset_bottom = 89.0
 mouse_filter = 2
 color = Color(0.054902, 0.105882, 0.184314, 1)
 
-[node name="ListCount" parent="Content" instance=ExtResource("number")]
+[node name="ListCount" parent="Content" instance=ExtResource("num_top")]
 offset_left = 63.0
 offset_top = 80.0
 offset_right = 123.0
 offset_bottom = 89.0
 mouse_filter = 2
-source_y = 0
 texture = SubResource("Atlas_digits")
 
 [node name="ListMoney" parent="Content" instance=ExtResource("money")]
@@ -284,13 +283,12 @@ offset_top = 102.0
 offset_right = 166.0
 offset_bottom = 112.0
 
-[node name="Percent" parent="Content/Confirm" instance=ExtResource("number")]
+[node name="Percent" parent="Content/Confirm" instance=ExtResource("num_top")]
 offset_left = 131.0
 offset_top = 103.0
 offset_right = 171.0
 offset_bottom = 112.0
 mouse_filter = 2
-source_y = 0
 texture = SubResource("Atlas_digits")
 
 [node name="FeeLabel" parent="Content/Confirm" instance=ExtResource("label")]

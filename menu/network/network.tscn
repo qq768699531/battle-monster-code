@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" path="res://ui/item_cell/item_cell.tscn" id="cell"]
 [ext_resource type="PackedScene" path="res://menu/scrollbar/scrollbar.tscn" id="scroll"]
 [ext_resource type="PackedScene" path="res://ui/item_description/item_description.tscn" id="description"]
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
+[ext_resource type="PackedScene" path="res://ui/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://ui/currency_amount/currency_amount.tscn" id="currency"]
 
 [sub_resource type="AtlasTexture" id="Atlas_icons"]
@@ -129,7 +129,7 @@ theme_override_styles/hover = SubResource("Empty")
 theme_override_styles/pressed = SubResource("Empty")
 theme_override_styles/focus = SubResource("Empty")
 
-[node name="Count" parent="." instance=ExtResource("number")]
+[node name="Count" parent="." instance=ExtResource("num_default")]
 offset_left = 23.0
 offset_top = 151.0
 offset_right = 123.0

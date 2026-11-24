@@ -2,7 +2,8 @@
 [ext_resource type="Texture2D" path="res://ui/window/ui_window.webp" id="Sheet_common_ui_window"]
 [ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
 
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
+[ext_resource type="PackedScene" path="res://ui/number/number_compact.tscn" id="num_compact"]
+[ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
 [ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 
 [sub_resource type="AtlasTexture" id="Atlas_icons"]
@@ -44,7 +45,7 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("GoldIcon")
 
-[node name="Number" parent="." instance=ExtResource("number")]
+[node name="Number" parent="." instance=ExtResource("num_compact")]
 material = SubResource("Palette")
 use_parent_material = false
 anchor_right = 1.0
@@ -52,19 +53,14 @@ offset_left = 10.0
 offset_top = 1.0
 offset_right = -3.0
 offset_bottom = 6.0
-source_y = 0
-glyph_height = 5
-fixed_advance = 6
-compact_dot = true
 texture = SubResource("Atlas_small_digits")
 
-[node name="Unknown" parent="." instance=ExtResource("number")]
+[node name="Unknown" parent="." instance=ExtResource("num_top")]
 visible = false
 material = SubResource("Palette")
 use_parent_material = false
 anchor_right = 1.0
 offset_left = 10.0
 offset_right = -3.0
-source_y = 0
 texture = SubResource("Atlas_digits")
 

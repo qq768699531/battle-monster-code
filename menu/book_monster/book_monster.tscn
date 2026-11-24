@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" path="res://ui/window_footer/window_footer.tscn" id="footer"]
 [ext_resource type="PackedScene" path="res://ui/dotted_line/dotted_line.tscn" id="rule"]
 [ext_resource type="PackedScene" path="res://ui/message_choice/message_choice.tscn" id="choice"]
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
+[ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="monster"]
 [ext_resource type="PackedScene" path="res://actors/ui_eff/ui_eff.tscn" id="effect"]
@@ -442,14 +442,13 @@ offset_bottom = 7.0
 mouse_filter = 2
 texture_filter = 1
 texture = SubResource("HpIcon")
-[node name="Number" parent="Content/Detail/Vitals/HP" instance=ExtResource("number")]
+[node name="Number" parent="Content/Detail/Vitals/HP" instance=ExtResource("num_top")]
 material = SubResource("NumberKey")
 use_parent_material = false
 layout_mode = 0
 offset_left = 13.0
 offset_right = 52.0
 mouse_filter = 2
-source_y = 0
 texture = SubResource("Atlas_digits")
 [node name="SP" type="Control" parent="Content/Detail/Vitals"]
 layout_mode = 0
@@ -492,14 +491,13 @@ offset_bottom = 7.0
 mouse_filter = 2
 texture_filter = 1
 texture = SubResource("SpIcon")
-[node name="Number" parent="Content/Detail/Vitals/SP" instance=ExtResource("number")]
+[node name="Number" parent="Content/Detail/Vitals/SP" instance=ExtResource("num_top")]
 material = SubResource("NumberKey")
 use_parent_material = false
 layout_mode = 0
 offset_left = 13.0
 offset_right = 52.0
 mouse_filter = 2
-source_y = 0
 texture = SubResource("Atlas_digits")
 
 [node name="TopRule" type="TextureRect" parent="Content/Detail"]
@@ -544,14 +542,13 @@ offset_bottom = 26.0
 mouse_filter = 2
 texture_filter = 1
 texture = SubResource("NoIcon")
-[node name="Number" parent="Content/Detail" instance=ExtResource("number")]
+[node name="Number" parent="Content/Detail" instance=ExtResource("num_top")]
 layout_mode = 0
 offset_left = 89.0
 offset_top = 20.0
 offset_right = 129.0
 offset_bottom = 27.0
 mouse_filter = 2
-source_y = 0
 texture = SubResource("Atlas_digits")
 [node name="NameBox" type="Panel" parent="Content/Detail"]
 layout_mode = 0

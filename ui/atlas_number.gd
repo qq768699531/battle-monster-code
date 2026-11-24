@@ -18,7 +18,9 @@ func _ready() -> void:
 
 
 func configure(catalog: Object) -> bool:
-	texture = catalog.load_sprite(sprite_id)
+	# 图集由预设场景（ui/number/number_*.tscn）自带；只有未指定时才回落到目录查询。
+	if texture == null:
+		texture = catalog.load_sprite(sprite_id)
 	return texture != null
 
 

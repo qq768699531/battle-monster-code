@@ -6,7 +6,7 @@
 
 [ext_resource type="PackedScene" path="res://ui/plain_label/plain_label.tscn" id="3"]
 
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://ui/number/number_small.tscn" id="num_small"]
 
 [ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="5"]
 
@@ -170,59 +170,39 @@ color = Color(1.0, 0.7137254901960784, 0.3333333333333333, 1)
 mouse_filter = 2
 use_parent_material = true
 
-[node name="Level" parent="Occupied" instance=ExtResource("4")]
+[node name="Level" parent="Occupied" instance=ExtResource("num_small")]
 offset_left = 120
 offset_top = 37
 offset_right = 151
 offset_bottom = 42
-sprite_id = "common/ui_number/frame-001"
-source_y = 0
-glyph_height = 5
-fixed_advance = 6
 alignment = 1
 mouse_filter = 2
 
-[node name="Party0" parent="Occupied" instance=ExtResource("4")]
+[node name="Party0" parent="Occupied" instance=ExtResource("num_small")]
 offset_top = 63
 offset_right = 49
 offset_bottom = 68
-sprite_id = "common/ui_number/frame-001"
-source_y = 0
-glyph_height = 5
-fixed_advance = 6
 alignment = 2
 mouse_filter = 2
 
-[node name="Party1" parent="Occupied" instance=ExtResource("4")]
+[node name="Party1" parent="Occupied" instance=ExtResource("num_small")]
 offset_top = 63
 offset_right = 95
 offset_bottom = 68
-sprite_id = "common/ui_number/frame-001"
-source_y = 0
-glyph_height = 5
-fixed_advance = 6
 alignment = 2
 mouse_filter = 2
 
-[node name="Party2" parent="Occupied" instance=ExtResource("4")]
+[node name="Party2" parent="Occupied" instance=ExtResource("num_small")]
 offset_top = 63
 offset_right = 141
 offset_bottom = 68
-sprite_id = "common/ui_number/frame-001"
-source_y = 0
-glyph_height = 5
-fixed_advance = 6
 alignment = 2
 mouse_filter = 2
 
-[node name="Time" parent="Occupied" instance=ExtResource("4")]
+[node name="Time" parent="Occupied" instance=ExtResource("num_small")]
 offset_top = 72
 offset_right = 141
 offset_bottom = 77
-sprite_id = "common/ui_number/frame-001"
-source_y = 0
-glyph_height = 5
-fixed_advance = 6
 alignment = 2
 mouse_filter = 2
 

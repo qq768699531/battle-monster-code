@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" path="res://field/mastery_view/mastery_view.tscn" id="12"]
 [ext_resource type="PackedScene" path="res://menu/book_monster/book_monster.tscn" id="book_monster"]
 [ext_resource type="PackedScene" path="res://field/save_view/save_view.tscn" id="13"]
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="exp_number"]
+[ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
 [ext_resource type="PackedScene" path="res://ui/item_icon/item_icon.tscn" id="exp_icon"]
 
 [sub_resource type="AtlasTexture" id="Atlas_exp_digits"]
@@ -53,13 +53,12 @@ offset_top = 9.0
 offset_right = 76.0
 offset_bottom = 25.0
 
-[node name="Minutes" parent="ExpBonus" instance=ExtResource("exp_number")]
+[node name="Minutes" parent="ExpBonus" instance=ExtResource("num_top")]
 offset_left = 61.0
 offset_top = 33.0
 offset_right = 81.0
 offset_bottom = 40.0
 texture = SubResource("Atlas_exp_digits")
-source_y = 0
 
 [node name="Minimap" parent="." instance=ExtResource("9")]
 z_index = 98

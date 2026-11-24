@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://battle/vitals.gd" id="script"]
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
+[ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
 [ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 
 [sub_resource type="AtlasTexture" id="Atlas_attributes"]
@@ -136,13 +136,12 @@ offset_bottom = 7.0
 mouse_filter = 2
 texture = SubResource("HP")
 
-[node name="Number" parent="Metrics/HP" instance=ExtResource("number")]
+[node name="Number" parent="Metrics/HP" instance=ExtResource("num_top")]
 material = SubResource("NumberKey")
 use_parent_material = false
 anchor_right = 1.0
 offset_left = 13.0
 offset_right = 1.0
-source_y = 0
 texture = SubResource("Atlas_digits")
 mouse_filter = 2
 
@@ -182,13 +181,12 @@ offset_bottom = 7.0
 mouse_filter = 2
 texture = SubResource("SP")
 
-[node name="Number" parent="Metrics/SP" instance=ExtResource("number")]
+[node name="Number" parent="Metrics/SP" instance=ExtResource("num_top")]
 material = SubResource("NumberKey")
 use_parent_material = false
 anchor_right = 1.0
 offset_left = 13.0
 offset_right = 1.0
-source_y = 0
 texture = SubResource("Atlas_digits")
 mouse_filter = 2
 

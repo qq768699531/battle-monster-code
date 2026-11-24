@@ -6,7 +6,9 @@
 [ext_resource type="Script" path="res://battle/result.gd" id="script"]
 [ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
+[ext_resource type="PackedScene" path="res://ui/number/number_compact.tscn" id="num_compact"]
+[ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
+[ext_resource type="PackedScene" path="res://ui/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="monster"]
 [ext_resource type="PackedScene" path="res://ui/window_footer/window_footer.tscn" id="footer"]
 [ext_resource type="PackedScene" path="res://menu/scrollbar/scrollbar.tscn" id="scroll"]
@@ -140,16 +142,12 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("MoneyIcon")
 
-[node name="MoneyNumber" parent="Content" instance=ExtResource("number")]
+[node name="MoneyNumber" parent="Content" instance=ExtResource("num_compact")]
 offset_left = 245.0
 offset_top = 140.0
 offset_right = 301.0
 offset_bottom = 145.0
 texture = SubResource("Atlas_small_digits")
-source_y = 0
-glyph_height = 5
-fixed_advance = 6
-compact_dot = true
 
 [node name="Row0" type="Control" parent="Content"]
 offset_left = 97.0
@@ -234,11 +232,10 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("ExpLabel")
 
-[node name="Percent" parent="Content/Row0/Gage" instance=ExtResource("number")]
+[node name="Percent" parent="Content/Row0/Gage" instance=ExtResource("num_top")]
 offset_left = 80.0
 offset_right = 150.0
 texture = SubResource("Atlas_digits")
-source_y = 0
 
 [node name="LevelIcon" type="TextureRect" parent="Content/Row0/Gage"]
 offset_left = 152.0
@@ -248,11 +245,10 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("LevelLabel")
 
-[node name="Level" parent="Content/Row0/Gage" instance=ExtResource("number")]
+[node name="Level" parent="Content/Row0/Gage" instance=ExtResource("num_default")]
 offset_left = 165.0
 offset_right = 180.0
 texture = SubResource("Atlas_digits")
-source_y = 14
 alignment = 0
 
 [node name="Row1" type="Control" parent="Content"]
@@ -338,11 +334,10 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("ExpLabel")
 
-[node name="Percent" parent="Content/Row1/Gage" instance=ExtResource("number")]
+[node name="Percent" parent="Content/Row1/Gage" instance=ExtResource("num_top")]
 offset_left = 80.0
 offset_right = 150.0
 texture = SubResource("Atlas_digits")
-source_y = 0
 
 [node name="LevelIcon" type="TextureRect" parent="Content/Row1/Gage"]
 offset_left = 152.0
@@ -352,11 +347,10 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("LevelLabel")
 
-[node name="Level" parent="Content/Row1/Gage" instance=ExtResource("number")]
+[node name="Level" parent="Content/Row1/Gage" instance=ExtResource("num_default")]
 offset_left = 165.0
 offset_right = 180.0
 texture = SubResource("Atlas_digits")
-source_y = 14
 alignment = 0
 
 [node name="Row2" type="Control" parent="Content"]
@@ -442,11 +436,10 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("ExpLabel")
 
-[node name="Percent" parent="Content/Row2/Gage" instance=ExtResource("number")]
+[node name="Percent" parent="Content/Row2/Gage" instance=ExtResource("num_top")]
 offset_left = 80.0
 offset_right = 150.0
 texture = SubResource("Atlas_digits")
-source_y = 0
 
 [node name="LevelIcon" type="TextureRect" parent="Content/Row2/Gage"]
 offset_left = 152.0
@@ -456,11 +449,10 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("LevelLabel")
 
-[node name="Level" parent="Content/Row2/Gage" instance=ExtResource("number")]
+[node name="Level" parent="Content/Row2/Gage" instance=ExtResource("num_default")]
 offset_left = 165.0
 offset_right = 180.0
 texture = SubResource("Atlas_digits")
-source_y = 14
 alignment = 0
 
 [node name="Row3" type="Control" parent="Content"]
@@ -546,11 +538,10 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("ExpLabel")
 
-[node name="Percent" parent="Content/Row3/Gage" instance=ExtResource("number")]
+[node name="Percent" parent="Content/Row3/Gage" instance=ExtResource("num_top")]
 offset_left = 80.0
 offset_right = 150.0
 texture = SubResource("Atlas_digits")
-source_y = 0
 
 [node name="LevelIcon" type="TextureRect" parent="Content/Row3/Gage"]
 offset_left = 152.0
@@ -560,11 +551,10 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("LevelLabel")
 
-[node name="Level" parent="Content/Row3/Gage" instance=ExtResource("number")]
+[node name="Level" parent="Content/Row3/Gage" instance=ExtResource("num_default")]
 offset_left = 165.0
 offset_right = 180.0
 texture = SubResource("Atlas_digits")
-source_y = 14
 alignment = 0
 
 [node name="Item0" type="Control" parent="Content"]

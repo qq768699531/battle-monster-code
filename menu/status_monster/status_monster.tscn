@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" path="res://menu/status_metric/status_metric.tscn" id="metric"]
 [ext_resource type="PackedScene" path="res://menu/status_skill/status_skill.tscn" id="skill"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
-[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
+[ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
 [ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 [ext_resource type="PackedScene" path="res://ui/item_cell/item_cell.tscn" id="item"]
 [ext_resource type="Texture2D" path="res://ui/slot/filled.tres" id="slot_filled"]
@@ -381,12 +381,11 @@ offset_right = 13.0
 offset_bottom = 7.0
 mouse_filter = 2
 texture = SubResource("HP")
-[node name="Number" parent="Vitals/HP" instance=ExtResource("number")]
+[node name="Number" parent="Vitals/HP" instance=ExtResource("num_top")]
 material = SubResource("NumberKey")
 use_parent_material = false
 offset_left = 13.0
 offset_right = 52.0
-source_y = 0
 texture = SubResource("Atlas_digits")
 [node name="SP" type="Control" parent="Vitals"]
 offset_left = 14.0
@@ -420,12 +419,11 @@ offset_right = 13.0
 offset_bottom = 7.0
 mouse_filter = 2
 texture = SubResource("SP")
-[node name="Number" parent="Vitals/SP" instance=ExtResource("number")]
+[node name="Number" parent="Vitals/SP" instance=ExtResource("num_top")]
 material = SubResource("NumberKey")
 use_parent_material = false
 offset_left = 13.0
 offset_right = 52.0
-source_y = 0
 texture = SubResource("Atlas_digits")
 
 [node name="Skills" type="Panel" parent="."]
