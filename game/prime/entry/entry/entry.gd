@@ -298,13 +298,12 @@ func _load_resources() -> void:
 		atlas.atlas = sheet
 		atlas.region = region
 		_title_textures.append(atlas)
-	var flash := AtlasTexture.new()
-	flash.atlas = sheet
-	flash.region = Rect2(0, 87, 28, 21)
-	_title_flash_texture = flash
+	# 斜光是原版 common/ui_title2.fbm 的第 2 帧（28×21），不是标题图集里的菜单底条：
+	# 图集只装了评级徽标和两条底条。缺这个本地资源时高亮画不出来，但不阻断启动。
+	var flash: Variant = load("res://game/prime/title/title_visual/title_flash.webp")
+	_title_flash_texture = flash if flash is Texture2D else null
 	if _title_flash_texture == null:
-		_startup_error = "Prime title flash sprite is unavailable."
-		return
+		push_warning("标题高亮的斜光贴图缺失：game/prime/title/title_visual/title_flash.webp")
 
 
 func _load_prime_pages() -> void:

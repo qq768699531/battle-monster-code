@@ -26,7 +26,8 @@ var _menu_open := false
 var _playing := ""
 var _shown_frame := 0
 @onready var _fade_overlay: ColorRect = $Fade
-@onready var _title_flash = $Flash
+@onready var _title_flash: Node2D = $Flash
+@onready var _title_flash_sprite: Sprite2D = $Flash/Sprite
 @onready var _player: AnimationPlayer = $Player
 @onready var _logo: Node2D = $Logo
 @onready var _title_group: Node2D = $TitleGroup
@@ -173,9 +174,27 @@ func _render_menu(items: Array) -> void:
 		var phase := int(item.get("flash_phase", -1))
 		if phase >= 0:
 			_title_flash_phase = phase
-			# 高亮是原生绘制（白圆角块 + 斜光贴片），这里只把贴图与落点交给它。
-			_title_flash.setup(_title_flash_texture)
-			_title_flash.present(phase, display.position)
+			_title_flash.position = display.position
+			_title_flash.visible = true
+			var phase_marker := $Flash/Phases.get_child(phase)
+			var texture: Texture2D = _title_flash_texture
+			if phase in [0, 3]:
+				# 闪光图可能已经是图集里的一块区域：二次裁切要用绝对坐标，
+				# 否则 region 会被当成相对整张图集的位置，取到别的控件。
+				var crop := AtlasTexture.new()
+				if _title_flash_texture is AtlasTexture:
+					var base: AtlasTexture = _title_flash_texture
+					crop.atlas = base.atlas
+					crop.region = Rect2(base.region.position + Vector2(8, 0), Vector2(20, 21))
+				else:
+					crop.atlas = _title_flash_texture
+					crop.region = Rect2(8, 0, 20, 21)
+				texture = crop
+			_title_flash_sprite.texture = texture
+			_title_flash_sprite.position = _title_flash.to_local(phase_marker.global_position)
+			_title_flash_sprite.flip_h = phase >= 2
+			_title_flash_sprite.flip_v = phase >= 2
+
 
 func menu_regions(selection: int, coordinate_space: Node2D = null) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []

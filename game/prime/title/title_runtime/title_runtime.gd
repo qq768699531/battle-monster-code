@@ -64,7 +64,8 @@ static func title_layout(selection: int, opening: int, highlight: int) -> Dictio
 			"text_id": C.TITLE_TEXT_IDS[index],
 			"opacity": 0.5 if opening == 2 else 1.0,
 			"image": 0 if active and phase >= 2 else 1,
-			"flash_phase": phase if active else -1,
+			# 闪光只在前 4 帧（原生 *p_n2 递增到 4 以后 DrawItem 不再画闪光）。
+			"flash_phase": phase if active and phase < 4 else -1,
 		})
 		if interactive:
 			var key: int = TouchCode.Key.OK if index == selection else (
