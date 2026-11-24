@@ -182,9 +182,16 @@ func _render_menu(items: Array) -> void:
 			_flash_backing.position = _title_flash.to_local(phase_marker.get_node("Backing").global_position)
 			var texture: Texture2D = _title_flash_texture
 			if phase in [0, 3]:
+				# 闪光图可能已经是图集里的一块区域：二次裁切要用绝对坐标，
+				# 否则 region 会被当成相对整张图集的位置，取到别的控件。
 				var crop := AtlasTexture.new()
-				crop.atlas = _title_flash_texture
-				crop.region = Rect2(8, 0, 20, 21)
+				if _title_flash_texture is AtlasTexture:
+					var base: AtlasTexture = _title_flash_texture
+					crop.atlas = base.atlas
+					crop.region = Rect2(base.region.position + Vector2(8, 0), Vector2(20, 21))
+				else:
+					crop.atlas = _title_flash_texture
+					crop.region = Rect2(8, 0, 20, 21)
 				texture = crop
 			_title_flash_sprite.texture = texture
 			_title_flash_sprite.position = _title_flash.to_local(phase_marker.global_position)
