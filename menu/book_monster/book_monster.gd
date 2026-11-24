@@ -1,4 +1,4 @@
-extends "res://ui/window_transition/window_transition.gd"
+extends "res://core/window_transition/window_transition.gd"
 
 ## 原生 `Game_Book_Monster`（GAME_STATE_BOOK_MONSTER_19／`GAME_STATE_BOOK_MONSTER_16`）：228×240 窗口。
 ##
@@ -21,9 +21,9 @@ signal starter_confirmed
 
 const Book = preload("res://menu/book_model/book_model.gd")
 const Battle = preload("res://battle/battle/battle.gd")
-const MonsterAnimation = preload("res://ui/monster_animation/monster_animation.gd")
-const ConfirmLayout = preload("res://ui/confirm_layout/confirm_layout.gd")
-const TextLayout = preload("res://ui/native_text_layout/native_text_layout.gd")
+const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
+const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
+const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
 const SlotFrame = preload("res://data/slot_frame/slot_frame.gd")
 const SlotFrames = preload("res://data/slot_frames/slot_frames.gd")
 const SlotGrade = preload("res://data/slot_grade/slot_grade.gd")

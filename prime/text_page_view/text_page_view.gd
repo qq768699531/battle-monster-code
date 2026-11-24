@@ -31,7 +31,7 @@ func live_regions(paint: Dictionary) -> Array[Dictionary]:
 
 
 static func page_scroll_origin(scene: int) -> Vector2i:
-	var navigation = load("res://ui/page_navigation/page_navigation.tscn").instantiate()
+	var navigation = load("res://prime/page_navigation/page_navigation.tscn").instantiate()
 	var origin: Vector2i = UI.control_rect(navigation.get_node("MethodScroll" if scene == 13 else "InfoScroll")).position
 	navigation.free()
 	return origin

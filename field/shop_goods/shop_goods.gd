@@ -50,7 +50,7 @@ static func sell_bags(shop_mode: int) -> Array[int]:
 
 ## `Field_Item_Buy_SetList` 的货架表（`script\export_shops.py` 从反编译立即数导出）。
 const Shops = preload("res://field/shops.tres")
-const ConfirmLayout = preload("res://ui/confirm_layout/confirm_layout.gd")
+const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
 
 var mode := BUY
 var shop_mode_code := 0

@@ -1,4 +1,4 @@
-extends "res://ui/window_transition/window_transition.gd"
+extends "res://core/window_transition/window_transition.gd"
 ## 世界地图窗口（`Menu_world_Draw` 的 228x208 Box4 窗 + `Map_worldDRAW`）。
 ##
 ## 窗口本身是 `components/window_transition.tscn`（`window_size` 228×208、`side_width` 12、

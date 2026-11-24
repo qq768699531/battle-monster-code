@@ -1,6 +1,6 @@
-extends "res://ui/window_transition/window_transition.gd"
+extends "res://core/window_transition/window_transition.gd"
 
-const MessageStack = preload("res://ui/message_stack/message_stack.gd")
+const MessageStack = preload("res://core/message_stack/message_stack.gd")
 
 ## 原生任务详情页：`FieldCanvas` 状态 10（支线）／状态 8（公会）自己只 `Map_Copy` 清屏，
 ## 窗口与输入由 `GameCanvas` 层的任务浮层给——`Qst_chtDRAW`（画）／
@@ -31,9 +31,9 @@ signal closed
 ## 接取成功：`slot` 是写进 `QuestLog` 的槽位（公会任务 0、普通任务 1..10）。
 signal accepted(quest_id: int, slot: int)
 
-const TextLayout = preload("res://ui/native_text_layout/native_text_layout.gd")
-const ConfirmLayout = preload("res://ui/confirm_layout/confirm_layout.gd")
-const UI_THEME = preload("res://ui/theme/ui_theme.tres")
+const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
+const UI_THEME = preload("res://core/theme/ui_theme.tres")
 
 ## 任务正文走 `TextTables.QUEST_SOURCE`（`qst/qstlist.fxt:<任务号>`），payload 是
 ## 「标题 \t 说明 \t 目标 \t 关联地域号 \t 目标地域号 \t 地域名」六段（尾段可能整体缺失）。

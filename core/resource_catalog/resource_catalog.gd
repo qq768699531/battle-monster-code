@@ -11,7 +11,7 @@ const TEXT_TABLE_FILES := {
 	"evt": "res://field/text/evt.tres",
 	"npc": "res://field/text/npc.tres",
 	"qst": "res://field/text/qst.tres",
-	"common": "res://ui/text/common.tres",
+	"common": "res://core/text/common.tres",
 }
 const TEXT_TABLE_FALLBACK := "res://monsters/text/creature_names.tres"
 const TextSources = preload("res://core/text_sources.gd")
@@ -30,7 +30,7 @@ const AUDIO_OGG_ROOT := "ogg/"
 const INTEGER_ID_SUFFIXES := [".fxt", ".nm"]
 ## 只存在于翻译资源、没有结构文件的正文源（NPC 名字由 `gameplay.tres` 的 NpcDefinition 索引）。
 const EXTERNAL_TEXT_SOURCES := ["npc"]
-const TEXT_TRANSLATION: Translation = preload("res://ui/translations/zh_CN.tres")
+const TEXT_TRANSLATION: Translation = preload("res://core/translations/zh_CN.tres")
 ## 地图实体节点放在格子中心，position / 16 还原成格子坐标。
 const CELL := 16.0
 ## 地图 Scene 目录：`m<地图id>.tscn`，地形在 `terrain/t<组>_<号>.tscn`。

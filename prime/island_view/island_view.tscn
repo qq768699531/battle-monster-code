@@ -1,13 +1,13 @@
 [gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://prime/island_view/island_view.gd" id="1"]
-[ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://ui/window_title/window_title.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://ui/native_button/native_button.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://ui/window_footer/window_footer.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="7"]
-[ext_resource type="PackedScene" path="res://ui/native_gradient/native_gradient.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://prime/window_title/window_title.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://prime/native_button/native_button.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://core/window_footer/window_footer.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://core/native_panel/native_panel.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://prime/native_gradient/native_gradient.tscn" id="8"]
 
 [sub_resource type="AtlasTexture" id="Level"]
 resource_local_to_scene = true

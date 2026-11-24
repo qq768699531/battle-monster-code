@@ -1,7 +1,7 @@
 extends Control
 ## 出战队伍卡片。
 
-const MonsterAnimation = preload("res://ui/monster_animation/monster_animation.gd")
+const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
 
 
 func present(ball: Dictionary, species: MonsterDefinition) -> void:

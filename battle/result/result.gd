@@ -1,4 +1,4 @@
-extends "res://ui/window_transition/window_transition.gd"
+extends "res://core/window_transition/window_transition.gd"
 ## 原生状态 26「战斗结果」（`Battle_Win_*`）：228×240 窗口、四行经验条、金币条与掉落列表。
 ##
 ## 窗口尺寸的原生出处是 `Battle_Win_Draw:49` 的
@@ -18,8 +18,8 @@ signal finished
 ## 才进子状态 2，这时逐件 `Item_stdAddEx`（掉落入包 + fxt416 入手提示），窗口本身早已开着。
 signal items_reached
 
-const MonsterAnimation = preload("res://ui/monster_animation/monster_animation.gd")
-const TextLayout = preload("res://ui/native_text_layout/native_text_layout.gd")
+const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
+const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
 const Battle = preload("res://battle/battle/battle.gd")
 
 ## 原生 `Battle_Win_mRun` 返回 500（单位未取证）；这里与战斗其它步进一致用 0.05 秒一帧，

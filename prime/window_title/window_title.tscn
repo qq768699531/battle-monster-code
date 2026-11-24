@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://prime/window_title/window_title.gd" id="1"]
+[ext_resource type="Shader" path="res://core/shaders/prime_title.gdshader" id="2"]
+
+[sub_resource type="ShaderMaterial" id="TitleMaterial"]
+shader = ExtResource("2")
+
+[node name="WindowTitle" type="Control"]
+mouse_filter = 2
+material = SubResource("TitleMaterial")
+script = ExtResource("1")
+

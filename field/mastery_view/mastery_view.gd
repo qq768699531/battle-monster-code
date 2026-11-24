@@ -1,4 +1,4 @@
-extends "res://ui/window_transition/window_transition.gd"
+extends "res://core/window_transition/window_transition.gd"
 
 ## 原生初始精灵选择的第一级：`Game_Character_Select`（`GAME_STATE_CHARACTER_SELECT_15`，六个流派
 ## 候选的立绘）。第二级 `GAME_STATE_BOOK_MONSTER_16` 与图鉴是同一张页，落点是
@@ -17,9 +17,9 @@ extends "res://ui/window_transition/window_transition.gd"
 ## `field_runtime` 只调用 `present`／`move`／`row_at`／`press_row`／`selected`／`clear`。
 
 const Book = preload("res://menu/book_model/book_model.gd")
-const MonsterAnimation = preload("res://ui/monster_animation/monster_animation.gd")
-const ConfirmLayout = preload("res://ui/confirm_layout/confirm_layout.gd")
-const TextLayout = preload("res://ui/native_text_layout/native_text_layout.gd")
+const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
+const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
+const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
 
 ## Box2 确认框的页面状态：原生 `current_state_index_bits+1`（`Game_Character_Select_mKeyPressed`），
 ## 0 浏览候选、1 确认框打开；框收拢到相位 −4 时 `Game_Character_Select_mRun` 把它清零。

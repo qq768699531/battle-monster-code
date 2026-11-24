@@ -15,7 +15,7 @@ extends Control
 signal save_requested
 signal closed
 
-const Box2Prompt = preload("res://ui/box2_prompt/box2_prompt.gd")
+const Box2Prompt = preload("res://field/box2_prompt/box2_prompt.gd")
 
 @onready var _window: Control = $Window
 

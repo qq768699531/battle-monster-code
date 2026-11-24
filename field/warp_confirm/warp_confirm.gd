@@ -1,4 +1,4 @@
-extends "res://ui/window_transition/window_transition.gd"
+extends "res://core/window_transition/window_transition.gd"
 
 ## 原生 `Field_Warp1_*`（`FieldCanvas` 状态 4，野外触控键 48 进；反编译见 `wiki\field\npc-service-menu.md` §5.1）：
 ## `Field_Warp1_init` 只把 Box2 开窗计数置 1（不动光标、无其它状态）；
@@ -29,7 +29,7 @@ signal board_requested
 ## `Menu_win_Box2_DrawSelect` 的 cursor（原生 `FieldData+0x2C`）：0 = 左「是」、1 = 右「否」。
 enum Answer { YES, NO }
 
-const ConfirmLayout = preload("res://ui/confirm_layout/confirm_layout.gd")
+const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
 
 ## 调用方给的窗口宽（`Field_Warp1_mPaint:8` 的 `&width__0` 是 160）。
 const BOX_WIDTH := 160

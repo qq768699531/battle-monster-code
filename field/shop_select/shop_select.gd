@@ -7,7 +7,7 @@ extends Control
 ## 先选数量（数字嵌在橙色底上），再切是／否（数字改黑底白字）。
 
 
-const ConfirmLayout = preload("res://ui/confirm_layout/confirm_layout.gd")
+const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
 
 ## 原生 `Field_Item_DrawSelect(n2, 160, …)` 的窗宽（`Field_Item_Buy_mPaint` 等传 160）。
 const BOX_WIDTH := 160

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="PackedScene" path="res://ui/item_cell/item_cell.tscn" id="cell"]
-[ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="monster"]
+[ext_resource type="PackedScene" path="res://menu/item_cell/item_cell.tscn" id="cell"]
+[ext_resource type="PackedScene" path="res://core/monster_animation/monster_animation.tscn" id="monster"]
 
 [node name="BookCell" instance=ExtResource("cell")]
 

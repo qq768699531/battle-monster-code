@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://battle/party_card/party_card.gd" id="script"]
 [ext_resource type="PackedScene" path="res://battle/vitals/vitals.tscn" id="vitals"]
-[ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="monster"]
+[ext_resource type="PackedScene" path="res://core/monster_animation/monster_animation.tscn" id="monster"]
 
 [sub_resource type="StyleBoxFlat" id="Outer"]
 bg_color = Color(0.52549, 0.521569, 0.521569, 1)

@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://menu/item_actions/item_actions.gd" id="script"]
-[ext_resource type="PackedScene" path="res://ui/menu_list_button/menu_list_button.tscn" id="button"]
+[ext_resource type="PackedScene" path="res://menu/menu_list_button/menu_list_button.tscn" id="button"]
 
 [node name="ItemActions" type="VBoxContainer"]
 offset_right = 49.0

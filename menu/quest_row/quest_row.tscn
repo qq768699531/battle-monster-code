@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3]
-[ext_resource type="Texture2D" path="res://ui/window/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
 
-[ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="1"]
 
 [sub_resource type="AtlasTexture" id="Atlas_2"]
 atlas = ExtResource("Sheet_common_ui_window")

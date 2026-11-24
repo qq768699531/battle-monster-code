@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://ui/native_touch_feedback/native_touch_feedback.gd" id="1"]
+[ext_resource type="Script" path="res://field/native_touch_feedback/native_touch_feedback.gd" id="1"]
 
 [node name="NativeTouchFeedback" type="CanvasLayer"]
 layer = 100

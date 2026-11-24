@@ -13,13 +13,13 @@ signal effect_requested(resource_id: int)
 const Story = preload("res://core/story/story.gd")
 const Battle = preload("res://battle/battle/battle.gd")
 const ChatView = preload("res://field/chat_view/chat_view.gd")
-const TouchView = preload("res://ui/touch_controls/touch_controls.gd")
+const TouchView = preload("res://field/touch_controls/touch_controls.gd")
 const MenuModel = preload("res://menu/menu_model/menu_model.gd")
 const Followers = preload("res://field/party_followers/party_followers.gd")
 const Wild = preload("res://field/wild_encounters/wild_encounters.gd")
 const EncounterScene = preload("res://field/encounter_transition/encounter_transition.tscn")
-const BattleScene = preload("res://ui/battle/battle.tscn")
-const MenuScene = preload("res://ui/menu/menu.tscn")
+const BattleScene = preload("res://core/battle/battle.tscn")
+const MenuScene = preload("res://core/menu/menu.tscn")
 const BookScene = preload("res://menu/book/book.tscn")
 const GuildMenuScene = preload("res://field/guild_menu/guild_menu.tscn")
 const GuildInfoScene = preload("res://field/guild_info/guild_info.tscn")
@@ -37,7 +37,7 @@ const MonsterMixScene = preload("res://field/monster_mix/monster_mix.tscn")
 const GuildChallengeScene = preload("res://field/guild_challenge/guild_challenge.tscn")
 const GuildQuestScene = preload("res://field/guild_quest/guild_quest.tscn")
 const Book = preload("res://menu/book_model/book_model.gd")
-const MonsterAnimation = preload("res://ui/monster_animation/monster_animation.gd")
+const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
 const WorldMapScene = preload("res://menu/world_map/world_map.tscn")
 const WorldMap = preload("res://menu/world_map/world_map.gd")
 ## `Game_infoInit` 的任务图标帧（原生立即数 `0x94`）。
@@ -61,7 +61,7 @@ const MESSAGE_HIGHLIGHT_CODE := "#C5"
 const EVENT_QUEST_TEXT_SOURCE := "evt/evtlist.fxt"
 ## 任务表（`QuestTable`）的唯一加载路径：任务门禁与头顶任务图标共用。
 const QUEST_TABLE_PATH := "res://field/quests.tres"
-const MessageStack = preload("res://ui/message_stack/message_stack.gd")
+const MessageStack = preload("res://core/message_stack/message_stack.gd")
 const MapNameView = preload("res://field/map_name_view/map_name_view.gd")
 const TILE := 16.0
 # Native 6/8px steps at the 50ms base interval; Engine.time_scale applies the speed setting.

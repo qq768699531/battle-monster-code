@@ -1,6 +1,6 @@
 extends Control
 
-const MessageStack = preload("res://ui/message_stack/message_stack.gd")
+const MessageStack = preload("res://core/message_stack/message_stack.gd")
 ## The caller supplies the encounter and resources; settlement remains caller-owned.
 ## Godot players animate poses and schedule display steps; results await confirmation.
 
@@ -27,7 +27,7 @@ signal settlement_drops(settlement: RefCounted)
 
 const Battle = preload("res://battle/battle/battle.gd")
 const Resources = preload("res://core/world_resources/world_resources.gd")
-const MonsterAnimation = preload("res://ui/monster_animation/monster_animation.gd")
+const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
 const Presentation = preload("res://battle/presentation/presentation.gd")
 const Settlement = preload("res://battle/battle_settlement/battle_settlement.gd")
 const Menu = preload("res://menu/menu_model/menu_model.gd")

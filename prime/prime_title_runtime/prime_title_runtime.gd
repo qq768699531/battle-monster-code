@@ -2,7 +2,7 @@ extends "res://prime/runtime_state/runtime_state.gd"
 ## 标题选单的状态机：场景切换、动画相位、请求与提示。
 ## 不含绘制；视图由 PrimeView 与各 *_view 消费。
 
-const TouchControls = preload("res://ui/touch_controls/touch_controls.gd")
+const TouchControls = preload("res://field/touch_controls/touch_controls.gd")
 
 ## 环境设定页底部的形态由原生 `EFC_mainTouchSTYLE` 决定：Prime 画布的 4131 让
 ## `Menu_win_Box_DrawKeyInfo` 画窗口内 OK／BACK，游戏内 OPTION 层 4 的 35 只留摇杆与 OK／CLR。

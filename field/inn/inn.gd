@@ -1,4 +1,4 @@
-extends "res://ui/window_transition/window_transition.gd"
+extends "res://core/window_transition/window_transition.gd"
 
 ## 原生 `Field_Inn_*`（`FieldCanvas` 状态 16，NPC 交互码 5）：
 ## `Field_Inn_init` 只把开窗计数 `MainData+0xD` 置 1（不动光标），
@@ -27,7 +27,7 @@ extends "res://ui/window_transition/window_transition.gd"
 
 signal closed
 
-const ConfirmLayout = preload("res://ui/confirm_layout/confirm_layout.gd")
+const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
 const WIDTH := 160
 const TEXT_WIDTH := 144          ## 折行宽度：`width − 16`
 

@@ -1,7 +1,7 @@
-extends "res://ui/window_transition/window_transition.gd"
+extends "res://core/window_transition/window_transition.gd"
 ## 队伍页的详细情报窗口。
 
-const TextLayout = preload("res://ui/native_text_layout/native_text_layout.gd")
+const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
 
 var host: Control
 

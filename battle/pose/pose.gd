@@ -1,7 +1,7 @@
 extends Control
 ## 战斗姿态与动作播放的封装。
 
-const MonsterAnimation = preload("res://ui/monster_animation/monster_animation.gd")
+const MonsterAnimation = preload("res://core/monster_animation/monster_animation.gd")
 
 @export var actor_scale := 1.0
 

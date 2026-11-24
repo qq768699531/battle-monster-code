@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://prime/notice_body/notice_body.gd" id="1"]
+
+[ext_resource type="PackedScene" path="res://prime/plain_label/plain_label.tscn" id="2"]
+
+[ext_resource type="PackedScene" path="res://core/dotted_line/dotted_line.tscn" id="3"]
+
+[ext_resource type="PackedScene" path="res://core/text_line_list/text_line_list.tscn" id="4"]
+
+[node name="NoticeBody" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Heading" parent="." instance=ExtResource("2")]
+offset_left = 106.0
+offset_top = 38.0
+color = Color(1.0, 0.7137254901960784, 0.3333333333333333, 1)
+
+[node name="Separator" parent="." instance=ExtResource("3")]
+offset_left = 93.0
+offset_top = 52.0
+offset_right = 307.0
+offset_bottom = 53.0
+mouse_filter = 2
+
+[node name="Lines" parent="." instance=ExtResource("4")]
+offset_left = 102.0
+offset_top = 61.0
+offset_right = 298.0
+offset_bottom = 205.0
+mouse_filter = 2

@@ -1,4 +1,4 @@
-extends "res://ui/window_transition/window_transition.gd"
+extends "res://core/window_transition/window_transition.gd"
 ## 飞艇世界地图移动页（原生 `FIELD_STATE_WARP2`，状态 5）。
 ##
 ## 窗口就是 `components/window_transition.tscn`（`window_size` 228×208、`side_width` 12、
@@ -27,7 +27,7 @@ signal close_requested
 ## 关窗动画播完。
 signal closed
 
-const MessageStack = preload("res://ui/message_stack/message_stack.gd")
+const MessageStack = preload("res://core/message_stack/message_stack.gd")
 ## Box2 确认框的几何／折行只有 `warp_confirm.gd` 一处实现（WARP1／WARP2 的 `Content` 同构）。
 const WarpConfirmBox = preload("res://field/warp_confirm/warp_confirm.gd")
 

@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://field/emotion/f_emoticon.webp" id="Sheet_obj_f_emoticon"]
 
 [ext_resource type="Script" path="res://field/emotion/emotion.gd" id="1"]
-[ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://core/monster_animation/monster_animation.tscn" id="6"]
 
 [sub_resource type="AtlasTexture" id="Atlas_2"]
 atlas = ExtResource("Sheet_obj_f_emoticon")

@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="Script" path="res://prime/settings_row/settings_row.gd" id="1"]
+[ext_resource type="PackedScene" path="res://core/native_panel/native_panel.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://core/settings_content/settings_content.tscn" id="3"]
+[node name="Row" type="Node2D"]
+script = ExtResource("1")
+[node name="Panel" parent="." instance=ExtResource("2")]
+offset_right = 118.0
+offset_bottom = 20.0
+border_width = 2
+[node name="NarrowTrack" parent="." instance=ExtResource("2")]
+offset_left = 59.0
+offset_top = 6.0
+offset_right = 105.0
+offset_bottom = 13.0
+border_width = 0
+background_color = Color(0.02745098, 0.24313725, 0.3372549, 1)
+[node name="WideTrack" parent="." instance=ExtResource("2")]
+offset_left = 54.0
+offset_top = 4.0
+offset_right = 110.0
+offset_bottom = 15.0
+border_width = 0
+background_color = Color(0.02745098, 0.24313725, 0.3372549, 1)
+[node name="Content" parent="." instance=ExtResource("3")]
+[node name="Decrease" type="Control" parent="."]
+offset_right = 82.0
+offset_bottom = 20.0
+mouse_filter = 2
+[node name="Increase" type="Control" parent="."]
+offset_left = 82.0
+offset_right = 118.0
+offset_bottom = 20.0
+mouse_filter = 2
+[node name="Select" type="Control" parent="."]
+offset_left = -10.0
+offset_top = -3.0
+offset_right = 128.0
+offset_bottom = 23.0
+mouse_filter = 2

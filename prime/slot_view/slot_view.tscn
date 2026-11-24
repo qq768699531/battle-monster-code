@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" path="res://prime/slot_view/slot_view.gd" id="1"]
 
-[ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="2"]
 
-[ext_resource type="PackedScene" path="res://ui/slot_card/slot_card.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://prime/slot_card/slot_card.tscn" id="3"]
 
-[ext_resource type="PackedScene" path="res://ui/window_title/window_title.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://prime/window_title/window_title.tscn" id="4"]
 
-[ext_resource type="PackedScene" path="res://ui/slot_names/slot_names.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://prime/slot_names/slot_names.tscn" id="5"]
 
-[ext_resource type="PackedScene" path="res://ui/window_footer/window_footer.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://core/window_footer/window_footer.tscn" id="6"]
 
 [node name="Slots" type="Node2D"]
 script = ExtResource("1")

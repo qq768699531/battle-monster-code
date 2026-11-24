@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://core/window_frame/window_frame.gd" id="1_frame"]
+[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="2_sheet"]
+
+[node name="WindowFrame" type="NinePatchRect"]
+texture = ExtResource("2_sheet")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8

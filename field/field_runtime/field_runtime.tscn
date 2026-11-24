@@ -1,12 +1,12 @@
 [gd_scene load_steps=19 format=3]
-[ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
+[ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://field/field_runtime/field_runtime.gd" id="1"]
 [ext_resource type="PackedScene" path="res://field/map_renderer/map_renderer.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://field/field_actors/field_actors.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://field/chat_view/chat_view.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://ui/touch_controls/touch_controls.tscn" id="5"]
-[ext_resource type="Theme" path="res://ui/theme/ui_theme.tres" id="6"]
+[ext_resource type="PackedScene" path="res://field/touch_controls/touch_controls.tscn" id="5"]
+[ext_resource type="Theme" path="res://core/theme/ui_theme.tres" id="6"]
 [ext_resource type="PackedScene" path="res://field/map_name_view/map_name_view.tscn" id="7"]
 [ext_resource type="PackedScene" path="res://field/map_effect/map_effect.tscn" id="14"]
 [ext_resource type="PackedScene" path="res://field/hero_summary/hero_summary.tscn" id="8"]
@@ -16,8 +16,8 @@
 [ext_resource type="PackedScene" path="res://field/mastery_view/mastery_view.tscn" id="12"]
 [ext_resource type="PackedScene" path="res://menu/book_monster/book_monster.tscn" id="book_monster"]
 [ext_resource type="PackedScene" path="res://field/save_view/save_view.tscn" id="13"]
-[ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
-[ext_resource type="PackedScene" path="res://ui/item_icon/item_icon.tscn" id="exp_icon"]
+[ext_resource type="PackedScene" path="res://core/number/number_top.tscn" id="num_top"]
+[ext_resource type="PackedScene" path="res://core/item_icon/item_icon.tscn" id="exp_icon"]
 
 [sub_resource type="AtlasTexture" id="Atlas_exp_digits"]
 atlas = ExtResource("Sheet_common_ui_number")

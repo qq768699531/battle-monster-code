@@ -13,8 +13,8 @@ extends Control
 ## 就把 `Menu_win_Box2_DrawSelect` 画在列表之上。
 ## 菜单页没有「接受任务」这条路（那是野外 `Qst_chtDRAW` 的 `field/quest_detail`）。
 
-const TextLayout = preload("res://ui/native_text_layout/native_text_layout.gd")
-const UI_THEME = preload("res://ui/theme/ui_theme.tres")
+const TextLayout = preload("res://core/native_text_layout/native_text_layout.gd")
+const UI_THEME = preload("res://core/theme/ui_theme.tres")
 
 ## 页脚选中项（`MenuData` 的 `transition_parameter_bits + 3`）：0 = 世界地图，1 = 接受／放弃。
 const PAGE_MAP := 0

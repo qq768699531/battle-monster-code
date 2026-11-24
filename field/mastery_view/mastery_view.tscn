@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3]
 
-[ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="Script" path="res://field/mastery_view/mastery_view.gd" id="script"]
-[ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="monster"]
-[ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
-[ext_resource type="PackedScene" path="res://ui/dotted_line/dotted_line.tscn" id="rule"]
-[ext_resource type="PackedScene" path="res://ui/message_choice/message_choice.tscn" id="choice"]
+[ext_resource type="PackedScene" path="res://core/monster_animation/monster_animation.tscn" id="monster"]
+[ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://core/dotted_line/dotted_line.tscn" id="rule"]
+[ext_resource type="PackedScene" path="res://core/message_choice/message_choice.tscn" id="choice"]
 
 [sub_resource type="StyleBoxFlat" id="SelectionOutline"]
 draw_center = false

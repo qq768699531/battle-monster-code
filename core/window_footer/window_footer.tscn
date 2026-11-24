@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://core/window_footer/window_footer.gd" id="1"]
+
+[sub_resource type="AtlasTexture" id="OkFrame"]
+resource_local_to_scene = true
+region = Rect2(0, 0, 42, 12)
+[sub_resource type="AtlasTexture" id="OkIcon"]
+resource_local_to_scene = true
+region = Rect2(0, 0, 15, 8)
+[sub_resource type="AtlasTexture" id="BackFrame"]
+resource_local_to_scene = true
+region = Rect2(94, 0, 42, 12)
+[sub_resource type="AtlasTexture" id="BackIcon"]
+resource_local_to_scene = true
+region = Rect2(15, 0, 31, 8)
+[sub_resource type="AtlasTexture" id="MiddleFrame"]
+resource_local_to_scene = true
+region = Rect2(42, 0, 52, 12)
+[sub_resource type="AtlasTexture" id="MiddleIcon"]
+resource_local_to_scene = true
+region = Rect2(46, 0, 36, 8)
+
+[node name="WindowFooter" type="Control"]
+offset_right = 42.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture_filter = 1
+script = ExtResource("1")
+
+[node name="Accept" type="Node2D" parent="."]
+[node name="Frame" type="TextureRect" parent="Accept"]
+offset_right = 42.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture = SubResource("OkFrame")
+[node name="Icon" type="TextureRect" parent="Accept"]
+offset_left = 12.0
+offset_top = 2.0
+offset_right = 27.0
+offset_bottom = 10.0
+mouse_filter = 2
+texture = SubResource("OkIcon")
+
+[node name="Back" type="Node2D" parent="."]
+visible = false
+[node name="Frame" type="TextureRect" parent="Back"]
+offset_right = 42.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture = SubResource("BackFrame")
+[node name="Icon" type="TextureRect" parent="Back"]
+offset_left = 8.0
+offset_top = 2.0
+offset_right = 39.0
+offset_bottom = 10.0
+mouse_filter = 2
+texture = SubResource("BackIcon")
+
+[node name="Middle" type="Node2D" parent="."]
+visible = false
+[node name="Frame" type="TextureRect" parent="Middle"]
+offset_left = -5.0
+offset_right = 47.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture = SubResource("MiddleFrame")
+[node name="Icon" type="TextureRect" parent="Middle"]
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 39.0
+offset_bottom = 10.0
+mouse_filter = 2
+texture = SubResource("MiddleIcon")

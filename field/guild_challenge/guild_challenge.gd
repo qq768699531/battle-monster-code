@@ -1,6 +1,6 @@
 extends Control
 
-const MessageStack = preload("res://ui/message_stack/message_stack.gd")
+const MessageStack = preload("res://core/message_stack/message_stack.gd")
 
 ## 原生 `Field_Guild_Challenge_*`（`FieldCanvas` 状态 7）：`Field_Guild_Challenge_init`
 ## （开窗）／`mRun`（关窗计数到 −4 才 `SetNext(6)`）／`mKeyPressed`／
@@ -31,7 +31,7 @@ signal closed
 
 const GuildBattle = preload("res://field/guild_battle/guild_battle.gd")
 const Layout = preload("res://prime/layout/layout.gd")
-const ConfirmLayout = preload("res://ui/confirm_layout/confirm_layout.gd")
+const ConfirmLayout = preload("res://core/confirm_layout/confirm_layout.gd")
 
 ## `FieldData+0x08`：0 = 本页、1 = 确认框。
 enum Page { MAIN, CONFIRM }

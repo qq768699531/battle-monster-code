@@ -1,4 +1,4 @@
-extends "res://ui/window_transition/window_transition.gd"
+extends "res://core/window_transition/window_transition.gd"
 ## 环境设定页：原生 Box4 窗框、五行选项与标题／页脚。
 ##
 ## 窗口主体复用 `components/window_transition.tscn`：正文尺寸由场景里的 `window_size`
@@ -10,8 +10,8 @@ extends "res://ui/window_transition/window_transition.gd"
 ## 不画它，改用窗外的半透明摇杆与 OK／CLR。
 
 const PrimeLayout = preload("res://prime/layout/layout.gd")
-const TouchControls = preload("res://ui/touch_controls/touch_controls.gd")
-const TOUCH_CONTROLS := preload("res://ui/touch_controls/touch_controls.tscn")
+const TouchControls = preload("res://field/touch_controls/touch_controls.gd")
+const TOUCH_CONTROLS := preload("res://field/touch_controls/touch_controls.tscn")
 const SCENE := 12
 const ROW_COUNT := PrimeLayout.SETTINGS_ROW_COUNT
 const OPEN_PHASE := 4

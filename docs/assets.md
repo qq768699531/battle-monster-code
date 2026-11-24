@@ -14,10 +14,10 @@ maps/m0/
   t0_0.tscn         地形层
   m0_0.tres         TileSet（普通 Texture2D 引用，不能用 AtlasTexture）
   m0_0.webp         地图图层
-ui/number/
+core/number/
   number_default.tscn / number_top.tscn / number_small.tscn / number_compact.tscn
   ui_number.webp    数字图集，由预设场景自身持有
-ui/theme/
+core/theme/
   ui_theme.tres     全局主题（字号、字体槽位）
   boutique-*.ttf    原版字体，本地补齐
 ```
@@ -28,7 +28,7 @@ ui/theme/
 | --- | --- |
 | `core/` | 跨功能运行时：`story`、`save_store`、`world_resources`、`resource_catalog`、`sprite_index`、`gameplay.tres`、`shaders/` |
 | `data/` | 跨功能数据类型定义（`ItemDefinition`、`MonsterDefinition` 等 Resource 脚本） |
-| `ui/` | 通用界面组件、文案表、数字与窗框图集；`ui/theme/` 放主题与本地字体 |
+| `core/` 下的组件目录 | 通用界面组件（窗框、数字、标签、消息栈等），每个目录内场景+脚本+图集同层 |
 | `battle/` `field/` `menu/` `prime/` `main/` | 各自功能的场景、脚本、数据 |
 | `actors/` `monsters/` `maps/` | 按对象/地图组存放的角色、怪物、地图 |
 | `audio/` | 音频三位一体：`audio_manager.tscn` + `audio_manager.gd` + `default_bus_layout.tres` + 本地 `ogg/` |
@@ -41,7 +41,7 @@ ui/theme/
 | --- | --- | --- |
 | `**/*.tscn` `**/*.gd` `**/*.tres` `**/*.gdshader` | 是 | 场景、脚本、数据表、着色器 |
 | `**/*.webp` `**/*.png` `**/*.jpg` | 否 | 原版美术与平台图标，版权归原开发方，本地补齐 |
-| `audio/ogg/*.ogg` `ui/theme/*.ttf` | 否 | 原版音频与字体 |
+| `audio/ogg/*.ogg` `core/theme/*.ttf` | 否 | 原版音频与字体 |
 | `**/*.import` | 否 | Godot 导入缓存 |
 
 ## 精灵图约定
@@ -54,7 +54,7 @@ ui/theme/
   `Texture2D`——`AtlasTexture` 会让 Godot 拒绝创建任何 tile。
 - 运行时按 id 取帧走 `core/sprite_index.gd`：`对象/frame-NNN` → `[图集路径, 帧矩形]`，
   共 6,038 帧；`ResourceCatalog.load_sprite()` 据此切 `AtlasTexture`。
-- 通用组件自带图集（如 `ui/number/number_*.tscn`），其余场景实例化组件，而不是各自引用贴图。
+- 通用组件自带图集（如 `core/number/number_*.tscn`），其余场景实例化组件，而不是各自引用贴图。
 
 ## 本地补齐二进制资源
 
@@ -63,7 +63,7 @@ ui/theme/
 ```text
 <各功能目录>/<对象>/<对象>.webp
 audio/ogg/*.ogg
-ui/theme/*.ttf
+core/theme/*.ttf
 ```
 
 放好后导入一次：
@@ -87,7 +87,7 @@ godot --headless --path . --import
 | `evt/` | `field/text/evt.tres` | 83 条 / 396 KB |
 | `npc/` | `field/text/npc.tres` | 27 条 / 14 KB |
 | `qst/` | `field/text/qst.tres` | 18 条 / 16 KB |
-| `common/` | `ui/text/common.tres` | 11 条 / 262 KB |
+| `common/` | `core/text/common.tres` | 11 条 / 262 KB |
 | `skt/` `ktf/` `lgt/` … | `monsters/text/creature_names.tres` | 10 条 / 39 KB |
 
 拆表前后 149 条正文逐条比对 sha1 一致。
