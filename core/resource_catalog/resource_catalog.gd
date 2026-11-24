@@ -17,7 +17,15 @@ const TEXT_TABLE_FALLBACK := "res://monsters/text/creature_names.tres"
 const TextSources = preload("res://core/text_sources.gd")
 const TEXT_SOURCES: Dictionary = TextSources.IDS
 const SPRITE_ORIGINS: SpriteOrigins = preload("res://monsters/sprite-origins.tres")
-const GAMEPLAY_DATA: GameplayData = preload("res://core/gameplay.tres")
+## 玩法数值按功能拆成六份，各自放在使用它的功能目录；这里只在首次访问时拼回一个门面对象。
+const GAMEPLAY_PARTS := {
+	"items": "res://core/gameplay_items.tres",
+	"monsters": "res://monsters/gameplay_monsters.tres",
+	"passives": "res://battle/gameplay_passives.tres",
+	"encounters": "res://field/gameplay_encounters.tres",
+	"script_battles": "res://battle/gameplay_script_battles.tres",
+	"npcs": "res://field/gameplay_npcs.tres",
+}
 const WORLD_MAP_DATA: WorldMapData = preload("res://maps/world-map.tres")
 const ASSET_ROOT := "res://assets/"
 const SPRITE_ROOT := ASSET_ROOT + "sprite/"
@@ -393,10 +401,15 @@ func _grid_from_state(terrain_state: SceneState) -> Variant:
 
 func load_gameplay_catalog() -> GameplayData:
 	if _gameplay_data == null:
-		# 深拷贝一份：调用方（含测试夹具）会就地替换数组，不能污染共享资源文件。
-		_gameplay_data = GAMEPLAY_DATA.duplicate(true)
-		if _gameplay_data == null:
-			_report_error("Gameplay data could not be duplicated: %s" % GAMEPLAY_DATA.resource_path)
+		var data := GameplayData.new()
+		for key: String in GAMEPLAY_PARTS:
+			var path: String = GAMEPLAY_PARTS[key]
+			var part: Variant = load(path)
+			if part == null:
+				_report_error("Gameplay table could not be loaded: %s" % path)
+				return null
+			data.set(key, (part.get(key) as Array).duplicate(true))
+		_gameplay_data = data
 	return _gameplay_data
 
 

@@ -1,0 +1,1546 @@
+[gd_resource type="Resource" script_class="GameplayData" format=3 uid="uid://bs7hwmggwxfsu"]
+[ext_resource type="Script" path="res://data/gameplay_data/gameplay_data.gd" id="data_script"]
+[ext_resource type="Script" uid="uid://djkywnmwoou6v" path="res://data/monster_definition/monster_definition.gd" id="4_hgwl4"]
+[sub_resource type="Resource" id="Resource_fcfde"]
+script = ExtResource("4_hgwl4")
+attribute_group = 1
+ability_inputs = Array[int]([2, 6, 5, 4, 3, 3])
+attribute_inputs = Array[int]([18, 6, 24, 4, 7, 4])
+name_record = "item_mon.group.0.name"
+prime_portrait_position = 1231
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_lv7ya"]
+script = ExtResource("4_hgwl4")
+id = 1
+attribute_group = 1
+ability_inputs = Array[int]([1, 7, 6, 5, 4, 3])
+attribute_inputs = Array[int]([18, 6, 24, 4, 7, 4])
+name_record = "item_mon.group.1.name"
+prime_portrait_position = 1231
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_055hm"]
+script = ExtResource("4_hgwl4")
+id = 2
+attribute_group = 1
+ability_inputs = Array[int]([2, 6, 5, 4, 3, 2])
+attribute_inputs = Array[int]([18, 6, 24, 4, 7, 4])
+name_record = "item_mon.group.2.name"
+prime_portrait_position = 1238
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_a6bwj"]
+script = ExtResource("4_hgwl4")
+id = 3
+attribute_group = 1
+ability_inputs = Array[int]([1, 7, 6, 5, 4, 2])
+attribute_inputs = Array[int]([18, 6, 24, 4, 7, 4])
+name_record = "item_mon.group.3.name"
+prime_portrait_position = 1231
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_x8sqe"]
+script = ExtResource("4_hgwl4")
+id = 4
+kind = 1
+attribute_group = 1
+attribute_entry = 1
+ability_inputs = Array[int]([12, 16, 16, 15, 14, 12])
+attribute_inputs = Array[int]([19, 7, 25, 5, 8, 5])
+name_record = "item_mon.group.4.name"
+prime_portrait_position = 931
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_rqmb5"]
+script = ExtResource("4_hgwl4")
+id = 5
+kind = 1
+attribute_group = 1
+attribute_entry = 1
+ability_inputs = Array[int]([11, 17, 16, 14, 13, 12])
+attribute_inputs = Array[int]([19, 7, 25, 5, 8, 5])
+name_record = "item_mon.group.5.name"
+prime_portrait_position = 1233
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_q3038"]
+script = ExtResource("4_hgwl4")
+id = 6
+attribute_group = 1
+attribute_entry = 1
+ability_inputs = Array[int]([12, 17, 15, 15, 13, 12])
+attribute_inputs = Array[int]([19, 7, 25, 5, 8, 5])
+name_record = "item_mon.group.6.name"
+prime_portrait_position = 626
+portrait_offset = Array[Vector2]([Vector2(0, 6), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_1sbts"]
+script = ExtResource("4_hgwl4")
+id = 7
+attribute_group = 1
+attribute_entry = 1
+ability_inputs = Array[int]([11, 16, 15, 14, 14, 13])
+attribute_inputs = Array[int]([19, 7, 25, 5, 8, 5])
+name_record = "item_mon.group.7.name"
+prime_portrait_position = 830
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_ycf7n"]
+script = ExtResource("4_hgwl4")
+id = 8
+attribute_group = 1
+attribute_entry = 1
+ability_inputs = Array[int]([12, 16, 16, 15, 14, 13])
+attribute_inputs = Array[int]([19, 7, 25, 5, 8, 5])
+name_record = "item_mon.group.8.name"
+prime_portrait_position = 727
+portrait_offset = Array[Vector2]([Vector2(0, 7), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_xtjwn"]
+script = ExtResource("4_hgwl4")
+id = 9
+attribute_group = 1
+attribute_entry = 2
+ability_inputs = Array[int]([22, 26, 26, 25, 24, 22])
+attribute_inputs = Array[int]([20, 8, 26, 6, 9, 6])
+name_record = "item_mon.group.9.name"
+prime_portrait_position = 1037
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_qt234"]
+script = ExtResource("4_hgwl4")
+id = 10
+attribute_group = 1
+attribute_entry = 2
+ability_inputs = Array[int]([21, 26, 26, 24, 23, 23])
+attribute_inputs = Array[int]([20, 8, 26, 6, 9, 6])
+name_record = "item_mon.group.10.name"
+prime_portrait_position = 1028
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 5)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_2gnuw"]
+script = ExtResource("4_hgwl4")
+id = 11
+attribute_group = 1
+attribute_entry = 2
+ability_inputs = Array[int]([22, 27, 25, 24, 24, 23])
+attribute_inputs = Array[int]([20, 8, 26, 6, 9, 6])
+name_record = "item_mon.group.11.name"
+prime_portrait_position = 733
+portrait_offset = Array[Vector2]([Vector2(0, 6), Vector2(0, 6)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_87xty"]
+script = ExtResource("4_hgwl4")
+id = 12
+attribute_group = 1
+attribute_entry = 2
+ability_inputs = Array[int]([21, 27, 25, 25, 23, 22])
+attribute_inputs = Array[int]([20, 8, 26, 6, 9, 6])
+name_record = "item_mon.group.12.name"
+prime_portrait_position = 936
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_maqb5"]
+script = ExtResource("4_hgwl4")
+id = 13
+attribute_group = 1
+attribute_entry = 3
+ability_inputs = Array[int]([32, 37, 35, 35, 34, 33])
+attribute_inputs = Array[int]([21, 9, 27, 7, 10, 7])
+name_record = "item_mon.group.13.name"
+prime_portrait_position = 639
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_4atb5"]
+script = ExtResource("4_hgwl4")
+id = 14
+attribute_group = 1
+attribute_entry = 3
+ability_inputs = Array[int]([31, 37, 35, 34, 33, 32])
+attribute_inputs = Array[int]([21, 9, 27, 7, 10, 7])
+name_record = "item_mon.group.14.name"
+prime_portrait_position = 431
+portrait_offset = Array[Vector2]([Vector2(3, 5), Vector2(0, 5)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_t5ajq"]
+script = ExtResource("4_hgwl4")
+id = 15
+attribute_group = 1
+attribute_entry = 3
+ability_inputs = Array[int]([32, 36, 36, 35, 33, 33])
+attribute_inputs = Array[int]([21, 9, 27, 7, 10, 7])
+name_record = "item_mon.group.15.name"
+prime_portrait_position = 241
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_t42vy"]
+script = ExtResource("4_hgwl4")
+id = 16
+attribute_group = 1
+attribute_entry = 3
+ability_inputs = Array[int]([31, 36, 36, 34, 34, 32])
+attribute_inputs = Array[int]([21, 9, 27, 7, 10, 7])
+name_record = "item_mon.group.16.name"
+prime_portrait_position = 438
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_f2ng3"]
+script = ExtResource("4_hgwl4")
+id = 17
+attribute_group = 1
+attribute_entry = 4
+ability_inputs = Array[int]([42, 46, 46, 45, 44, 43])
+attribute_inputs = Array[int]([22, 10, 28, 8, 11, 8])
+name_record = "item_mon.group.17.name"
+prime_portrait_position = 541
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_yxnh7"]
+script = ExtResource("4_hgwl4")
+id = 18
+attribute_group = 1
+attribute_entry = 4
+ability_inputs = Array[int]([41, 47, 45, 45, 43, 42])
+attribute_inputs = Array[int]([22, 10, 28, 8, 11, 8])
+name_record = "item_mon.group.18.name"
+prime_portrait_position = -236
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_fx1q2"]
+script = ExtResource("4_hgwl4")
+id = 19
+kind = 1
+attribute_group = 1
+attribute_entry = 4
+ability_inputs = Array[int]([42, 46, 46, 44, 44, 42])
+attribute_inputs = Array[int]([22, 10, 28, 8, 11, 8])
+name_record = "item_mon.group.19.name"
+prime_portrait_position = 646
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_ne05w"]
+script = ExtResource("4_hgwl4")
+id = 20
+attribute_group = 1
+attribute_entry = 5
+ability_inputs = Array[int]([52, 57, 55, 54, 53, 53])
+attribute_inputs = Array[int]([23, 11, 29, 9, 12, 9])
+name_record = "item_mon.group.20.name"
+prime_portrait_position = -647
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_4prc3"]
+script = ExtResource("4_hgwl4")
+id = 21
+kind = 1
+attribute_group = 1
+attribute_entry = 5
+ability_inputs = Array[int]([51, 56, 56, 55, 54, 52])
+attribute_inputs = Array[int]([23, 11, 29, 9, 12, 9])
+name_record = "item_mon.group.21.name"
+prime_portrait_position = 860
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_jh63o"]
+script = ExtResource("4_hgwl4")
+id = 22
+attribute_group = 2
+ability_inputs = Array[int]([6, 5, 4, 3, 3, 2])
+attribute_inputs = Array[int]([19, 5, 23, 3, 6, 5])
+name_record = "item_mon.group.22.name"
+prime_portrait_position = 1231
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_j6a7k"]
+script = ExtResource("4_hgwl4")
+id = 23
+attribute_group = 2
+ability_inputs = Array[int]([7, 6, 5, 4, 3, 1])
+attribute_inputs = Array[int]([19, 5, 23, 3, 6, 5])
+name_record = "item_mon.group.23.name"
+prime_portrait_position = 825
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_xyiwt"]
+script = ExtResource("4_hgwl4")
+id = 24
+attribute_group = 2
+ability_inputs = Array[int]([6, 5, 4, 3, 2, 2])
+attribute_inputs = Array[int]([19, 5, 23, 3, 6, 5])
+name_record = "item_mon.group.24.name"
+prime_portrait_position = 1030
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_35eol"]
+script = ExtResource("4_hgwl4")
+id = 25
+attribute_group = 2
+ability_inputs = Array[int]([7, 6, 5, 4, 2, 1])
+attribute_inputs = Array[int]([19, 5, 23, 3, 6, 5])
+name_record = "item_mon.group.25.name"
+prime_portrait_position = 628
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_v8pan"]
+script = ExtResource("4_hgwl4")
+id = 26
+attribute_group = 2
+attribute_entry = 1
+ability_inputs = Array[int]([16, 16, 15, 14, 12, 12])
+attribute_inputs = Array[int]([20, 6, 24, 4, 7, 6])
+name_record = "item_mon.group.26.name"
+prime_portrait_position = 1232
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_ak06m"]
+script = ExtResource("4_hgwl4")
+id = 27
+attribute_group = 2
+attribute_entry = 1
+ability_inputs = Array[int]([17, 16, 14, 13, 12, 11])
+attribute_inputs = Array[int]([20, 6, 24, 4, 7, 6])
+name_record = "item_mon.group.27.name"
+prime_portrait_position = 1436
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_h3cwc"]
+script = ExtResource("4_hgwl4")
+id = 28
+kind = 1
+attribute_group = 2
+attribute_entry = 1
+ability_inputs = Array[int]([17, 15, 15, 13, 12, 12])
+attribute_inputs = Array[int]([20, 6, 24, 4, 7, 6])
+name_record = "item_mon.group.28.name"
+prime_portrait_position = 1437
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_2385l"]
+script = ExtResource("4_hgwl4")
+id = 29
+attribute_group = 2
+attribute_entry = 1
+ability_inputs = Array[int]([16, 15, 14, 14, 13, 11])
+attribute_inputs = Array[int]([20, 6, 24, 4, 7, 6])
+name_record = "item_mon.group.29.name"
+prime_portrait_position = 1231
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_dyooe"]
+script = ExtResource("4_hgwl4")
+id = 30
+kind = 1
+attribute_group = 2
+attribute_entry = 1
+ability_inputs = Array[int]([16, 16, 15, 14, 13, 12])
+attribute_inputs = Array[int]([20, 6, 24, 4, 7, 6])
+name_record = "item_mon.group.30.name"
+prime_portrait_position = 1141
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_420eg"]
+script = ExtResource("4_hgwl4")
+id = 31
+kind = 1
+attribute_group = 2
+attribute_entry = 2
+ability_inputs = Array[int]([26, 26, 25, 24, 22, 22])
+attribute_inputs = Array[int]([21, 7, 25, 5, 8, 7])
+name_record = "item_mon.group.31.name"
+prime_portrait_position = 1248
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_11bmx"]
+script = ExtResource("4_hgwl4")
+id = 32
+attribute_group = 2
+attribute_entry = 2
+ability_inputs = Array[int]([26, 26, 24, 23, 23, 21])
+attribute_inputs = Array[int]([21, 7, 25, 5, 8, 7])
+name_record = "item_mon.group.32.name"
+prime_portrait_position = 728
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 5)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_p3g3t"]
+script = ExtResource("4_hgwl4")
+id = 33
+attribute_group = 2
+attribute_entry = 2
+ability_inputs = Array[int]([27, 25, 24, 24, 23, 22])
+attribute_inputs = Array[int]([21, 7, 25, 5, 8, 7])
+name_record = "item_mon.group.33.name"
+prime_portrait_position = 238
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 4)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_8tj18"]
+script = ExtResource("4_hgwl4")
+id = 34
+attribute_group = 2
+attribute_entry = 2
+ability_inputs = Array[int]([27, 25, 25, 23, 22, 21])
+attribute_inputs = Array[int]([21, 7, 25, 5, 8, 7])
+name_record = "item_mon.group.34.name"
+prime_portrait_position = 1029
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 5)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_ciy6p"]
+script = ExtResource("4_hgwl4")
+id = 35
+kind = 1
+attribute_group = 2
+attribute_entry = 3
+ability_inputs = Array[int]([37, 35, 35, 34, 33, 32])
+attribute_inputs = Array[int]([22, 8, 26, 6, 9, 8])
+name_record = "item_mon.group.35.name"
+prime_portrait_position = 1145
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_0yrf5"]
+script = ExtResource("4_hgwl4")
+id = 36
+attribute_group = 2
+attribute_entry = 3
+ability_inputs = Array[int]([37, 35, 34, 33, 32, 31])
+attribute_inputs = Array[int]([22, 8, 26, 6, 9, 8])
+name_record = "item_mon.group.36.name"
+prime_portrait_position = 436
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_arg1o"]
+script = ExtResource("4_hgwl4")
+id = 37
+attribute_group = 2
+attribute_entry = 3
+ability_inputs = Array[int]([36, 36, 35, 33, 33, 32])
+attribute_inputs = Array[int]([22, 8, 26, 6, 9, 8])
+name_record = "item_mon.group.37.name"
+prime_portrait_position = 644
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_oxoxg"]
+script = ExtResource("4_hgwl4")
+id = 38
+attribute_group = 2
+attribute_entry = 3
+ability_inputs = Array[int]([36, 36, 34, 34, 32, 31])
+attribute_inputs = Array[int]([22, 8, 26, 6, 9, 8])
+name_record = "item_mon.group.38.name"
+prime_portrait_position = 1242
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_jokxe"]
+script = ExtResource("4_hgwl4")
+id = 39
+attribute_group = 2
+attribute_entry = 4
+ability_inputs = Array[int]([46, 46, 45, 44, 43, 42])
+attribute_inputs = Array[int]([23, 9, 27, 7, 10, 9])
+name_record = "item_mon.group.39.name"
+prime_portrait_position = -433
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_ahbir"]
+script = ExtResource("4_hgwl4")
+id = 40
+attribute_group = 2
+attribute_entry = 4
+ability_inputs = Array[int]([47, 45, 45, 43, 42, 41])
+attribute_inputs = Array[int]([23, 9, 27, 7, 10, 9])
+name_record = "item_mon.group.40.name"
+prime_portrait_position = 246
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_av3wq"]
+script = ExtResource("4_hgwl4")
+id = 41
+kind = 1
+attribute_group = 2
+attribute_entry = 4
+ability_inputs = Array[int]([46, 46, 44, 44, 42, 42])
+attribute_inputs = Array[int]([23, 9, 27, 7, 10, 9])
+name_record = "item_mon.group.41.name"
+prime_portrait_position = 1357
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_i4nh5"]
+script = ExtResource("4_hgwl4")
+id = 42
+attribute_group = 2
+attribute_entry = 5
+ability_inputs = Array[int]([57, 55, 54, 53, 53, 52])
+attribute_inputs = Array[int]([24, 10, 28, 8, 11, 10])
+name_record = "item_mon.group.42.name"
+prime_portrait_position = -852
+portrait_offset = Array[Vector2]([Vector2(-3, -2), Vector2(-3, -2)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_amaoc"]
+script = ExtResource("4_hgwl4")
+id = 43
+attribute_group = 2
+attribute_entry = 5
+ability_inputs = Array[int]([56, 56, 55, 54, 52, 51])
+attribute_inputs = Array[int]([24, 10, 28, 8, 11, 10])
+name_record = "item_mon.group.43.name"
+prime_portrait_position = -156
+portrait_offset = Array[Vector2]([Vector2(0, -2), Vector2(0, -2)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_2ibo7"]
+script = ExtResource("4_hgwl4")
+id = 44
+attribute_group = 3
+ability_inputs = Array[int]([4, 3, 3, 2, 6, 5])
+attribute_inputs = Array[int]([15, 3, 21, 1, 10, 1])
+name_record = "item_mon.group.44.name"
+prime_portrait_position = 1123
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_cl7wj"]
+script = ExtResource("4_hgwl4")
+id = 45
+kind = 1
+attribute_group = 3
+ability_inputs = Array[int]([5, 4, 3, 1, 7, 6])
+attribute_inputs = Array[int]([15, 3, 21, 1, 10, 1])
+name_record = "item_mon.group.45.name"
+prime_portrait_position = 1330
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_k2t3p"]
+script = ExtResource("4_hgwl4")
+id = 46
+attribute_group = 3
+ability_inputs = Array[int]([4, 3, 2, 2, 6, 5])
+attribute_inputs = Array[int]([15, 3, 21, 1, 10, 1])
+name_record = "item_mon.group.46.name"
+prime_portrait_position = 829
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_f5mu0"]
+script = ExtResource("4_hgwl4")
+id = 47
+attribute_group = 3
+ability_inputs = Array[int]([5, 4, 2, 1, 7, 6])
+attribute_inputs = Array[int]([15, 3, 21, 1, 10, 1])
+name_record = "item_mon.group.47.name"
+prime_portrait_position = 926
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_sbxpb"]
+script = ExtResource("4_hgwl4")
+id = 48
+attribute_group = 3
+attribute_entry = 1
+ability_inputs = Array[int]([15, 14, 12, 12, 16, 16])
+attribute_inputs = Array[int]([16, 4, 22, 2, 11, 2])
+name_record = "item_mon.group.48.name"
+prime_portrait_position = 326
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_qvheh"]
+script = ExtResource("4_hgwl4")
+id = 49
+attribute_group = 3
+attribute_entry = 1
+ability_inputs = Array[int]([14, 13, 12, 11, 17, 16])
+attribute_inputs = Array[int]([16, 4, 22, 2, 11, 2])
+name_record = "item_mon.group.49.name"
+prime_portrait_position = 1132
+portrait_offset = Array[Vector2]([Vector2(0, 2), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_18m6o"]
+script = ExtResource("4_hgwl4")
+id = 50
+attribute_group = 3
+attribute_entry = 1
+ability_inputs = Array[int]([15, 13, 12, 12, 17, 15])
+attribute_inputs = Array[int]([16, 4, 22, 2, 11, 2])
+name_record = "item_mon.group.50.name"
+prime_portrait_position = 830
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_v6u3j"]
+script = ExtResource("4_hgwl4")
+id = 51
+kind = 1
+attribute_group = 3
+attribute_entry = 1
+ability_inputs = Array[int]([14, 14, 13, 11, 16, 15])
+attribute_inputs = Array[int]([16, 4, 22, 2, 11, 2])
+name_record = "item_mon.group.51.name"
+prime_portrait_position = 1232
+portrait_offset = Array[Vector2]([Vector2(0, 2), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_oqaqh"]
+script = ExtResource("4_hgwl4")
+id = 52
+attribute_group = 3
+attribute_entry = 1
+ability_inputs = Array[int]([15, 14, 13, 12, 16, 16])
+attribute_inputs = Array[int]([16, 4, 22, 2, 11, 2])
+name_record = "item_mon.group.52.name"
+prime_portrait_position = 926
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_pdgub"]
+script = ExtResource("4_hgwl4")
+id = 53
+kind = 1
+attribute_group = 3
+attribute_entry = 2
+ability_inputs = Array[int]([25, 24, 22, 22, 26, 26])
+attribute_inputs = Array[int]([17, 5, 23, 3, 12, 3])
+name_record = "item_mon.group.53.name"
+prime_portrait_position = 1438
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 3)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_tov65"]
+script = ExtResource("4_hgwl4")
+id = 54
+attribute_group = 3
+attribute_entry = 2
+ability_inputs = Array[int]([24, 23, 23, 21, 26, 26])
+attribute_inputs = Array[int]([17, 5, 23, 3, 12, 3])
+name_record = "item_mon.group.54.name"
+prime_portrait_position = 933
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 4)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_e8xuf"]
+script = ExtResource("4_hgwl4")
+id = 55
+attribute_group = 3
+attribute_entry = 2
+ability_inputs = Array[int]([24, 24, 23, 22, 27, 25])
+attribute_inputs = Array[int]([17, 5, 23, 3, 12, 3])
+name_record = "item_mon.group.55.name"
+prime_portrait_position = 1131
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 5)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_dftnf"]
+script = ExtResource("4_hgwl4")
+id = 56
+attribute_group = 3
+attribute_entry = 2
+ability_inputs = Array[int]([25, 23, 22, 21, 27, 25])
+attribute_inputs = Array[int]([17, 5, 23, 3, 12, 3])
+name_record = "item_mon.group.56.name"
+prime_portrait_position = 434
+portrait_offset = Array[Vector2]([Vector2(-2, 3), Vector2(-2, 3)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_i83vt"]
+script = ExtResource("4_hgwl4")
+id = 57
+attribute_group = 3
+attribute_entry = 3
+ability_inputs = Array[int]([35, 34, 33, 32, 37, 35])
+attribute_inputs = Array[int]([18, 6, 24, 4, 13, 4])
+name_record = "item_mon.group.57.name"
+prime_portrait_position = 1144
+portrait_offset = Array[Vector2]([Vector2(0, 2), Vector2(0, 1)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_2vpgi"]
+script = ExtResource("4_hgwl4")
+id = 58
+attribute_group = 3
+attribute_entry = 3
+ability_inputs = Array[int]([34, 33, 32, 31, 37, 35])
+attribute_inputs = Array[int]([18, 6, 24, 4, 13, 4])
+name_record = "item_mon.group.58.name"
+prime_portrait_position = 46
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_a2mam"]
+script = ExtResource("4_hgwl4")
+id = 59
+attribute_group = 3
+attribute_entry = 3
+ability_inputs = Array[int]([35, 33, 33, 32, 36, 36])
+attribute_inputs = Array[int]([18, 6, 24, 4, 13, 4])
+name_record = "item_mon.group.59.name"
+prime_portrait_position = -627
+portrait_offset = Array[Vector2]([Vector2(-3, 4), Vector2(-3, 4)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_hy6a8"]
+script = ExtResource("4_hgwl4")
+id = 60
+kind = 1
+attribute_group = 3
+attribute_entry = 3
+ability_inputs = Array[int]([34, 34, 32, 31, 36, 36])
+attribute_inputs = Array[int]([18, 6, 24, 4, 13, 4])
+name_record = "item_mon.group.60.name"
+prime_portrait_position = 1140
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 3)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_m4yot"]
+script = ExtResource("4_hgwl4")
+id = 61
+kind = 1
+attribute_group = 3
+attribute_entry = 4
+ability_inputs = Array[int]([45, 44, 43, 42, 46, 46])
+attribute_inputs = Array[int]([19, 7, 25, 5, 14, 5])
+name_record = "item_mon.group.61.name"
+prime_portrait_position = -229
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(2, 4)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_fhjpe"]
+script = ExtResource("4_hgwl4")
+id = 62
+attribute_group = 3
+attribute_entry = 4
+ability_inputs = Array[int]([45, 43, 42, 41, 47, 45])
+attribute_inputs = Array[int]([19, 7, 25, 5, 14, 5])
+name_record = "item_mon.group.62.name"
+prime_portrait_position = -142
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_tvxp6"]
+script = ExtResource("4_hgwl4")
+id = 63
+attribute_group = 3
+attribute_entry = 4
+ability_inputs = Array[int]([44, 44, 42, 42, 46, 46])
+attribute_inputs = Array[int]([19, 7, 25, 5, 14, 5])
+name_record = "item_mon.group.63.name"
+prime_portrait_position = 247
+portrait_offset = Array[Vector2]([Vector2(-3, 0), Vector2(-3, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_l3a0l"]
+script = ExtResource("4_hgwl4")
+id = 64
+kind = 1
+attribute_group = 3
+attribute_entry = 5
+ability_inputs = Array[int]([54, 53, 53, 52, 57, 55])
+attribute_inputs = Array[int]([20, 8, 26, 6, 15, 6])
+name_record = "item_mon.group.64.name"
+prime_portrait_position = 1162
+portrait_offset = Array[Vector2]([Vector2(2, -2), Vector2(2, -2)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_nmkm3"]
+script = ExtResource("4_hgwl4")
+id = 65
+attribute_group = 3
+attribute_entry = 5
+ability_inputs = Array[int]([55, 54, 52, 51, 56, 56])
+attribute_inputs = Array[int]([20, 8, 26, 6, 15, 6])
+name_record = "item_mon.group.65.name"
+prime_portrait_position = -750
+portrait_offset = Array[Vector2]([Vector2(-3, 0), Vector2(-3, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_cm664"]
+script = ExtResource("4_hgwl4")
+id = 66
+attribute_group = 4
+ability_inputs = Array[int]([5, 4, 3, 3, 2, 6])
+attribute_inputs = Array[int]([16, 4, 20, 2, 5, 6])
+name_record = "item_mon.group.66.name"
+prime_portrait_position = 921
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_51ghl"]
+script = ExtResource("4_hgwl4")
+id = 67
+attribute_group = 4
+ability_inputs = Array[int]([6, 5, 4, 3, 1, 7])
+attribute_inputs = Array[int]([16, 4, 20, 2, 5, 6])
+name_record = "item_mon.group.67.name"
+prime_portrait_position = 1123
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_47445"]
+script = ExtResource("4_hgwl4")
+id = 68
+attribute_group = 4
+ability_inputs = Array[int]([5, 4, 3, 2, 2, 6])
+attribute_inputs = Array[int]([16, 4, 20, 2, 5, 6])
+name_record = "item_mon.group.68.name"
+prime_portrait_position = 1329
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_2ipbo"]
+script = ExtResource("4_hgwl4")
+id = 69
+attribute_group = 4
+ability_inputs = Array[int]([6, 5, 4, 2, 1, 7])
+attribute_inputs = Array[int]([16, 4, 20, 2, 5, 6])
+name_record = "item_mon.group.69.name"
+prime_portrait_position = 733
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_q1fem"]
+script = ExtResource("4_hgwl4")
+id = 70
+kind = 1
+attribute_group = 4
+attribute_entry = 1
+ability_inputs = Array[int]([16, 15, 14, 12, 12, 16])
+attribute_inputs = Array[int]([17, 5, 21, 3, 6, 7])
+name_record = "item_mon.group.70.name"
+prime_portrait_position = 1036
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_awhdp"]
+script = ExtResource("4_hgwl4")
+id = 71
+attribute_group = 4
+attribute_entry = 1
+ability_inputs = Array[int]([16, 14, 13, 12, 11, 17])
+attribute_inputs = Array[int]([17, 5, 21, 3, 6, 7])
+name_record = "item_mon.group.71.name"
+prime_portrait_position = 626
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_b4wlw"]
+script = ExtResource("4_hgwl4")
+id = 72
+attribute_group = 4
+attribute_entry = 1
+ability_inputs = Array[int]([15, 15, 13, 12, 12, 17])
+attribute_inputs = Array[int]([17, 5, 21, 3, 6, 7])
+name_record = "item_mon.group.72.name"
+prime_portrait_position = 1234
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_emv4e"]
+script = ExtResource("4_hgwl4")
+id = 73
+attribute_group = 4
+attribute_entry = 1
+ability_inputs = Array[int]([15, 14, 14, 13, 11, 16])
+attribute_inputs = Array[int]([17, 5, 21, 3, 6, 7])
+name_record = "item_mon.group.73.name"
+prime_portrait_position = 546
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_ea8io"]
+script = ExtResource("4_hgwl4")
+id = 74
+kind = 1
+attribute_group = 4
+attribute_entry = 1
+ability_inputs = Array[int]([16, 15, 14, 13, 12, 16])
+attribute_inputs = Array[int]([17, 5, 21, 3, 6, 7])
+name_record = "item_mon.group.74.name"
+prime_portrait_position = 933
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_mwlka"]
+script = ExtResource("4_hgwl4")
+id = 75
+kind = 1
+attribute_group = 4
+attribute_entry = 2
+ability_inputs = Array[int]([26, 25, 24, 22, 22, 26])
+attribute_inputs = Array[int]([18, 6, 22, 4, 7, 8])
+name_record = "item_mon.group.75.name"
+prime_portrait_position = 1040
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 3)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_63yab"]
+script = ExtResource("4_hgwl4")
+id = 76
+attribute_group = 4
+attribute_entry = 2
+ability_inputs = Array[int]([26, 24, 23, 23, 21, 26])
+attribute_inputs = Array[int]([18, 6, 22, 4, 7, 8])
+name_record = "item_mon.group.76.name"
+prime_portrait_position = 140
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 4)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_wdkl1"]
+script = ExtResource("4_hgwl4")
+id = 77
+kind = 1
+attribute_group = 4
+attribute_entry = 2
+ability_inputs = Array[int]([25, 24, 24, 23, 22, 27])
+attribute_inputs = Array[int]([18, 6, 22, 4, 7, 8])
+name_record = "item_mon.group.77.name"
+prime_portrait_position = 847
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_fgyyv"]
+script = ExtResource("4_hgwl4")
+id = 78
+attribute_group = 4
+attribute_entry = 2
+ability_inputs = Array[int]([25, 25, 23, 22, 21, 27])
+attribute_inputs = Array[int]([18, 6, 22, 4, 7, 8])
+name_record = "item_mon.group.78.name"
+prime_portrait_position = 138
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 4)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_prv36"]
+script = ExtResource("4_hgwl4")
+id = 79
+attribute_group = 4
+attribute_entry = 3
+ability_inputs = Array[int]([35, 35, 34, 33, 32, 37])
+attribute_inputs = Array[int]([19, 7, 23, 5, 8, 9])
+name_record = "item_mon.group.79.name"
+prime_portrait_position = 334
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 3)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_1bmoc"]
+script = ExtResource("4_hgwl4")
+id = 80
+kind = 1
+attribute_group = 4
+attribute_entry = 3
+ability_inputs = Array[int]([35, 34, 33, 32, 31, 37])
+attribute_inputs = Array[int]([19, 7, 23, 5, 8, 9])
+name_record = "item_mon.group.80.name"
+prime_portrait_position = 745
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_gqoo4"]
+script = ExtResource("4_hgwl4")
+id = 81
+attribute_group = 4
+attribute_entry = 3
+ability_inputs = Array[int]([36, 35, 33, 33, 32, 36])
+attribute_inputs = Array[int]([19, 7, 23, 5, 8, 9])
+name_record = "item_mon.group.81.name"
+prime_portrait_position = 544
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_rmj0s"]
+script = ExtResource("4_hgwl4")
+id = 82
+attribute_group = 4
+attribute_entry = 3
+ability_inputs = Array[int]([36, 34, 34, 32, 31, 36])
+attribute_inputs = Array[int]([19, 7, 23, 5, 8, 9])
+name_record = "item_mon.group.82.name"
+prime_portrait_position = 638
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 3)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_vornd"]
+script = ExtResource("4_hgwl4")
+id = 83
+kind = 1
+attribute_group = 4
+attribute_entry = 4
+ability_inputs = Array[int]([46, 45, 44, 43, 42, 46])
+attribute_inputs = Array[int]([20, 8, 24, 6, 9, 10])
+name_record = "item_mon.group.83.name"
+prime_portrait_position = 1046
+portrait_offset = Array[Vector2]([Vector2(0, 2), Vector2(0, 2)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_lpoon"]
+script = ExtResource("4_hgwl4")
+id = 84
+attribute_group = 4
+attribute_entry = 4
+ability_inputs = Array[int]([45, 45, 43, 42, 41, 47])
+attribute_inputs = Array[int]([20, 8, 24, 6, 9, 10])
+name_record = "item_mon.group.84.name"
+prime_portrait_position = 252
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_4lhyo"]
+script = ExtResource("4_hgwl4")
+id = 85
+kind = 1
+attribute_group = 4
+attribute_entry = 4
+ability_inputs = Array[int]([46, 44, 44, 42, 42, 46])
+attribute_inputs = Array[int]([20, 8, 24, 6, 9, 10])
+name_record = "item_mon.group.85.name"
+prime_portrait_position = 148
+portrait_offset = Array[Vector2]([Vector2(-4, 0), Vector2(-4, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_5v3ka"]
+script = ExtResource("4_hgwl4")
+id = 86
+attribute_group = 4
+attribute_entry = 5
+ability_inputs = Array[int]([55, 54, 53, 53, 52, 57])
+attribute_inputs = Array[int]([21, 9, 25, 7, 10, 11])
+name_record = "item_mon.group.86.name"
+prime_portrait_position = -1250
+portrait_offset = Array[Vector2]([Vector2(-4, -3), Vector2(-4, -3)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_440xc"]
+script = ExtResource("4_hgwl4")
+id = 87
+kind = 1
+attribute_group = 4
+attribute_entry = 5
+ability_inputs = Array[int]([56, 55, 54, 52, 51, 56])
+attribute_inputs = Array[int]([21, 9, 25, 7, 10, 11])
+name_record = "item_mon.group.87.name"
+prime_portrait_position = 1159
+portrait_offset = Array[Vector2]([Vector2(-3, 0), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_yeyha"]
+script = ExtResource("4_hgwl4")
+id = 88
+attribute_group = 5
+ability_inputs = Array[int]([3, 2, 6, 5, 4, 3])
+attribute_inputs = Array[int]([14, 1, 25, 5, 8, 2])
+name_record = "item_mon.group.88.name"
+prime_portrait_position = 1136
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_yf5pd"]
+script = ExtResource("4_hgwl4")
+id = 89
+attribute_group = 5
+ability_inputs = Array[int]([3, 1, 7, 6, 5, 4])
+attribute_inputs = Array[int]([14, 1, 25, 5, 8, 2])
+name_record = "item_mon.group.89.name"
+prime_portrait_position = 1027
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_fg4vh"]
+script = ExtResource("4_hgwl4")
+id = 90
+kind = 1
+attribute_group = 5
+ability_inputs = Array[int]([2, 2, 6, 5, 4, 3])
+attribute_inputs = Array[int]([14, 1, 25, 5, 8, 2])
+name_record = "item_mon.group.90.name"
+prime_portrait_position = 1434
+portrait_offset = Array[Vector2]([Vector2(0, 2), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_5qau5"]
+script = ExtResource("4_hgwl4")
+id = 91
+attribute_group = 5
+ability_inputs = Array[int]([2, 1, 7, 6, 5, 4])
+attribute_inputs = Array[int]([14, 1, 25, 5, 8, 2])
+name_record = "item_mon.group.91.name"
+prime_portrait_position = 525
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_hvvgk"]
+script = ExtResource("4_hgwl4")
+id = 92
+kind = 1
+attribute_group = 5
+attribute_entry = 1
+ability_inputs = Array[int]([12, 12, 16, 16, 15, 14])
+attribute_inputs = Array[int]([15, 2, 26, 6, 9, 3])
+name_record = "item_mon.group.92.name"
+prime_portrait_position = 1331
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_ymbjh"]
+script = ExtResource("4_hgwl4")
+id = 93
+attribute_group = 5
+attribute_entry = 1
+ability_inputs = Array[int]([12, 11, 17, 16, 14, 13])
+attribute_inputs = Array[int]([15, 2, 26, 6, 9, 3])
+name_record = "item_mon.group.93.name"
+prime_portrait_position = 626
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_yrlu5"]
+script = ExtResource("4_hgwl4")
+id = 94
+kind = 1
+attribute_group = 5
+attribute_entry = 1
+ability_inputs = Array[int]([12, 12, 17, 15, 15, 13])
+attribute_inputs = Array[int]([15, 2, 26, 6, 9, 3])
+name_record = "item_mon.group.94.name"
+prime_portrait_position = 1335
+portrait_offset = Array[Vector2]([Vector2(0, 2), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_4gika"]
+script = ExtResource("4_hgwl4")
+id = 95
+kind = 1
+attribute_group = 5
+attribute_entry = 1
+ability_inputs = Array[int]([13, 11, 16, 15, 14, 14])
+attribute_inputs = Array[int]([15, 2, 26, 6, 9, 3])
+name_record = "item_mon.group.95.name"
+prime_portrait_position = 232
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_on3lu"]
+script = ExtResource("4_hgwl4")
+id = 96
+kind = 1
+attribute_group = 5
+attribute_entry = 1
+ability_inputs = Array[int]([13, 12, 16, 16, 15, 14])
+attribute_inputs = Array[int]([15, 2, 26, 6, 9, 3])
+name_record = "item_mon.group.96.name"
+prime_portrait_position = 834
+portrait_offset = Array[Vector2]([Vector2(0, 2), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_w8lsv"]
+script = ExtResource("4_hgwl4")
+id = 97
+kind = 1
+attribute_group = 5
+attribute_entry = 2
+ability_inputs = Array[int]([22, 22, 26, 26, 25, 24])
+attribute_inputs = Array[int]([16, 3, 27, 7, 10, 4])
+name_record = "item_mon.group.97.name"
+prime_portrait_position = 644
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_n28kh"]
+script = ExtResource("4_hgwl4")
+id = 98
+attribute_group = 5
+attribute_entry = 2
+ability_inputs = Array[int]([23, 21, 26, 26, 24, 23])
+attribute_inputs = Array[int]([16, 3, 27, 7, 10, 4])
+name_record = "item_mon.group.98.name"
+prime_portrait_position = 541
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_wo6vu"]
+script = ExtResource("4_hgwl4")
+id = 99
+attribute_group = 5
+attribute_entry = 2
+ability_inputs = Array[int]([23, 22, 27, 25, 24, 24])
+attribute_inputs = Array[int]([16, 3, 27, 7, 10, 4])
+name_record = "item_mon.group.99.name"
+prime_portrait_position = 327
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 4)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_8fuef"]
+script = ExtResource("4_hgwl4")
+id = 100
+attribute_group = 5
+attribute_entry = 2
+ability_inputs = Array[int]([22, 21, 27, 25, 25, 23])
+attribute_inputs = Array[int]([16, 3, 27, 7, 10, 4])
+name_record = "item_mon.group.100.name"
+prime_portrait_position = 1243
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_8vykh"]
+script = ExtResource("4_hgwl4")
+id = 101
+attribute_group = 5
+attribute_entry = 3
+ability_inputs = Array[int]([33, 32, 37, 35, 35, 34])
+attribute_inputs = Array[int]([17, 4, 28, 8, 11, 5])
+name_record = "item_mon.group.101.name"
+prime_portrait_position = 436
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_ardw0"]
+script = ExtResource("4_hgwl4")
+id = 102
+attribute_group = 5
+attribute_entry = 3
+ability_inputs = Array[int]([32, 31, 37, 35, 34, 33])
+attribute_inputs = Array[int]([17, 4, 28, 8, 11, 5])
+name_record = "item_mon.group.102.name"
+prime_portrait_position = 737
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_fy5rk"]
+script = ExtResource("4_hgwl4")
+id = 103
+attribute_group = 5
+attribute_entry = 3
+ability_inputs = Array[int]([33, 32, 36, 36, 35, 33])
+attribute_inputs = Array[int]([17, 4, 28, 8, 11, 5])
+name_record = "item_mon.group.103.name"
+prime_portrait_position = 847
+portrait_offset = Array[Vector2]([Vector2(3, 0), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_d5e0t"]
+script = ExtResource("4_hgwl4")
+id = 104
+kind = 1
+attribute_group = 5
+attribute_entry = 3
+ability_inputs = Array[int]([32, 31, 36, 36, 34, 34])
+attribute_inputs = Array[int]([17, 4, 28, 8, 11, 5])
+name_record = "item_mon.group.104.name"
+prime_portrait_position = 1241
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_uilkb"]
+script = ExtResource("4_hgwl4")
+id = 105
+attribute_group = 5
+attribute_entry = 4
+ability_inputs = Array[int]([43, 42, 46, 46, 45, 44])
+attribute_inputs = Array[int]([18, 5, 29, 9, 12, 6])
+name_record = "item_mon.group.105.name"
+prime_portrait_position = -634
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_c5yt0"]
+script = ExtResource("4_hgwl4")
+id = 106
+attribute_group = 5
+attribute_entry = 4
+ability_inputs = Array[int]([42, 41, 47, 45, 45, 43])
+attribute_inputs = Array[int]([18, 5, 29, 9, 12, 6])
+name_record = "item_mon.group.106.name"
+prime_portrait_position = 249
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_8dofo"]
+script = ExtResource("4_hgwl4")
+id = 107
+kind = 1
+attribute_group = 5
+attribute_entry = 4
+ability_inputs = Array[int]([42, 42, 46, 46, 44, 44])
+attribute_inputs = Array[int]([18, 5, 29, 9, 12, 6])
+name_record = "item_mon.group.107.name"
+prime_portrait_position = 645
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_v71kx"]
+script = ExtResource("4_hgwl4")
+id = 108
+kind = 1
+attribute_group = 5
+attribute_entry = 5
+ability_inputs = Array[int]([53, 52, 57, 55, 54, 53])
+attribute_inputs = Array[int]([19, 6, 30, 10, 13, 7])
+name_record = "item_mon.group.108.name"
+prime_portrait_position = 758
+portrait_offset = Array[Vector2]([Vector2(0, -2), Vector2(0, -2)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_idpr8"]
+script = ExtResource("4_hgwl4")
+id = 109
+kind = 1
+attribute_group = 5
+attribute_entry = 5
+ability_inputs = Array[int]([52, 51, 56, 56, 55, 54])
+attribute_inputs = Array[int]([19, 6, 30, 10, 13, 7])
+name_record = "item_mon.group.109.name"
+prime_portrait_position = -559
+portrait_offset = Array[Vector2]([Vector2(-3, -2), Vector2(-2, -2)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_ooou0"]
+script = ExtResource("4_hgwl4")
+id = 110
+attribute_group = 6
+ability_inputs = Array[int]([3, 3, 2, 6, 5, 4])
+attribute_inputs = Array[int]([17, 2, 22, 6, 9, 3])
+name_record = "item_mon.group.110.name"
+prime_portrait_position = 1332
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_3hjlu"]
+script = ExtResource("4_hgwl4")
+id = 111
+attribute_group = 6
+ability_inputs = Array[int]([4, 3, 1, 7, 6, 5])
+attribute_inputs = Array[int]([17, 2, 22, 6, 9, 3])
+name_record = "item_mon.group.111.name"
+prime_portrait_position = 1138
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_jbjqf"]
+script = ExtResource("4_hgwl4")
+id = 112
+attribute_group = 6
+ability_inputs = Array[int]([3, 2, 2, 6, 5, 4])
+attribute_inputs = Array[int]([17, 2, 22, 6, 9, 3])
+name_record = "item_mon.group.112.name"
+prime_portrait_position = 626
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_fbuls"]
+script = ExtResource("4_hgwl4")
+id = 113
+attribute_group = 6
+ability_inputs = Array[int]([4, 2, 1, 7, 6, 5])
+attribute_inputs = Array[int]([17, 2, 22, 6, 9, 3])
+name_record = "item_mon.group.113.name"
+prime_portrait_position = 925
+portrait_offset = Array[Vector2]([Vector2(0, 4), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_fbqo4"]
+script = ExtResource("4_hgwl4")
+id = 114
+kind = 1
+attribute_group = 6
+attribute_entry = 1
+ability_inputs = Array[int]([14, 12, 12, 16, 16, 15])
+attribute_inputs = Array[int]([18, 3, 23, 7, 10, 4])
+name_record = "item_mon.group.114.name"
+prime_portrait_position = 937
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(0, 0)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_q4thb"]
+script = ExtResource("4_hgwl4")
+id = 115
+attribute_group = 6
+attribute_entry = 1
+ability_inputs = Array[int]([13, 12, 11, 17, 16, 14])
+attribute_inputs = Array[int]([18, 3, 23, 7, 10, 4])
+name_record = "item_mon.group.115.name"
+prime_portrait_position = 1039
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_iu8c5"]
+script = ExtResource("4_hgwl4")
+id = 116
+attribute_group = 6
+attribute_entry = 1
+ability_inputs = Array[int]([13, 12, 12, 17, 15, 15])
+attribute_inputs = Array[int]([18, 3, 23, 7, 10, 4])
+name_record = "item_mon.group.116.name"
+prime_portrait_position = 1133
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_m00w5"]
+script = ExtResource("4_hgwl4")
+id = 117
+attribute_group = 6
+attribute_entry = 1
+ability_inputs = Array[int]([14, 13, 11, 16, 15, 14])
+attribute_inputs = Array[int]([18, 3, 23, 7, 10, 4])
+name_record = "item_mon.group.117.name"
+prime_portrait_position = 1436
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_8vylj"]
+script = ExtResource("4_hgwl4")
+id = 118
+attribute_group = 6
+attribute_entry = 1
+ability_inputs = Array[int]([14, 13, 12, 16, 16, 15])
+attribute_inputs = Array[int]([18, 3, 23, 7, 10, 4])
+name_record = "item_mon.group.118.name"
+prime_portrait_position = 526
+portrait_offset = Array[Vector2]([Vector2(0, 5), Vector2(0, 0)])
+idle_frames = 6
+
+[sub_resource type="Resource" id="Resource_yobeu"]
+script = ExtResource("4_hgwl4")
+id = 119
+attribute_group = 6
+attribute_entry = 2
+ability_inputs = Array[int]([24, 22, 22, 26, 26, 25])
+attribute_inputs = Array[int]([19, 4, 24, 8, 11, 5])
+name_record = "item_mon.group.119.name"
+prime_portrait_position = 640
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_38e8k"]
+script = ExtResource("4_hgwl4")
+id = 120
+kind = 1
+attribute_group = 6
+attribute_entry = 2
+ability_inputs = Array[int]([23, 23, 21, 26, 26, 24])
+attribute_inputs = Array[int]([19, 4, 24, 8, 11, 5])
+name_record = "item_mon.group.120.name"
+prime_portrait_position = 942
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_untn4"]
+script = ExtResource("4_hgwl4")
+id = 121
+attribute_group = 6
+attribute_entry = 2
+ability_inputs = Array[int]([24, 23, 22, 27, 25, 24])
+attribute_inputs = Array[int]([19, 4, 24, 8, 11, 5])
+name_record = "item_mon.group.121.name"
+prime_portrait_position = 936
+portrait_offset = Array[Vector2]([Vector2(0, 2), Vector2(0, 2)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_ecaai"]
+script = ExtResource("4_hgwl4")
+id = 122
+attribute_group = 6
+attribute_entry = 2
+ability_inputs = Array[int]([23, 22, 21, 27, 25, 25])
+attribute_inputs = Array[int]([19, 4, 24, 8, 11, 5])
+name_record = "item_mon.group.122.name"
+prime_portrait_position = 1037
+portrait_offset = Array[Vector2]([Vector2(0, 3), Vector2(-2, 3)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_236qr"]
+script = ExtResource("4_hgwl4")
+id = 123
+attribute_group = 6
+attribute_entry = 3
+ability_inputs = Array[int]([34, 33, 32, 37, 35, 35])
+attribute_inputs = Array[int]([20, 5, 25, 9, 12, 6])
+name_record = "item_mon.group.123.name"
+prime_portrait_position = 228
+portrait_offset = Array[Vector2]([Vector2(1, 4), Vector2(0, 4)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_ycpov"]
+script = ExtResource("4_hgwl4")
+id = 124
+kind = 1
+attribute_group = 6
+attribute_entry = 3
+ability_inputs = Array[int]([33, 32, 31, 37, 35, 34])
+attribute_inputs = Array[int]([20, 5, 25, 9, 12, 6])
+name_record = "item_mon.group.124.name"
+prime_portrait_position = 539
+portrait_offset = Array[Vector2]([Vector2(-4, 2), Vector2(-4, 2)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_u4fvi"]
+script = ExtResource("4_hgwl4")
+id = 125
+attribute_group = 6
+attribute_entry = 3
+ability_inputs = Array[int]([33, 33, 32, 36, 36, 35])
+attribute_inputs = Array[int]([20, 5, 25, 9, 12, 6])
+name_record = "item_mon.group.125.name"
+prime_portrait_position = 742
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_0nhax"]
+script = ExtResource("4_hgwl4")
+id = 126
+attribute_group = 6
+attribute_entry = 3
+ability_inputs = Array[int]([34, 32, 31, 36, 36, 34])
+attribute_inputs = Array[int]([20, 5, 25, 9, 12, 6])
+name_record = "item_mon.group.126.name"
+prime_portrait_position = 46
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_qypht"]
+script = ExtResource("4_hgwl4")
+id = 127
+kind = 1
+attribute_group = 6
+attribute_entry = 4
+ability_inputs = Array[int]([44, 43, 42, 46, 46, 45])
+attribute_inputs = Array[int]([21, 6, 26, 10, 13, 7])
+name_record = "item_mon.group.127.name"
+prime_portrait_position = 1045
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_hxc82"]
+script = ExtResource("4_hgwl4")
+id = 128
+attribute_group = 6
+attribute_entry = 4
+ability_inputs = Array[int]([43, 42, 41, 47, 45, 45])
+attribute_inputs = Array[int]([21, 6, 26, 10, 13, 7])
+name_record = "item_mon.group.128.name"
+prime_portrait_position = 149
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_lrloc"]
+script = ExtResource("4_hgwl4")
+id = 129
+kind = 1
+attribute_group = 6
+attribute_entry = 4
+ability_inputs = Array[int]([44, 42, 42, 46, 46, 44])
+attribute_inputs = Array[int]([21, 6, 26, 10, 13, 7])
+name_record = "item_mon.group.129.name"
+prime_portrait_position = 355
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_onnkv"]
+script = ExtResource("4_hgwl4")
+id = 130
+kind = 1
+attribute_group = 6
+attribute_entry = 5
+ability_inputs = Array[int]([53, 53, 52, 57, 55, 54])
+attribute_inputs = Array[int]([22, 7, 27, 11, 14, 8])
+name_record = "item_mon.group.130.name"
+prime_portrait_position = 748
+portrait_offset = Array[Vector2]([Vector2(-5, 0), Vector2(-4, -2)])
+idle_frames = 8
+
+[sub_resource type="Resource" id="Resource_cm0lf"]
+script = ExtResource("4_hgwl4")
+id = 131
+attribute_group = 6
+attribute_entry = 5
+ability_inputs = Array[int]([54, 52, 51, 56, 56, 55])
+attribute_inputs = Array[int]([22, 7, 27, 11, 14, 8])
+name_record = "item_mon.group.131.name"
+prime_portrait_position = -557
+portrait_offset = Array[Vector2]([Vector2(-3, -2), Vector2(-3, -2)])
+idle_frames = 8
+
+[resource]
+script = ExtResource("data_script")
+monsters = Array[ExtResource("4_hgwl4")]([SubResource("Resource_fcfde"), SubResource("Resource_lv7ya"), SubResource("Resource_055hm"), SubResource("Resource_a6bwj"), SubResource("Resource_x8sqe"), SubResource("Resource_rqmb5"), SubResource("Resource_q3038"), SubResource("Resource_1sbts"), SubResource("Resource_ycf7n"), SubResource("Resource_xtjwn"), SubResource("Resource_qt234"), SubResource("Resource_2gnuw"), SubResource("Resource_87xty"), SubResource("Resource_maqb5"), SubResource("Resource_4atb5"), SubResource("Resource_t5ajq"), SubResource("Resource_t42vy"), SubResource("Resource_f2ng3"), SubResource("Resource_yxnh7"), SubResource("Resource_fx1q2"), SubResource("Resource_ne05w"), SubResource("Resource_4prc3"), SubResource("Resource_jh63o"), SubResource("Resource_j6a7k"), SubResource("Resource_xyiwt"), SubResource("Resource_35eol"), SubResource("Resource_v8pan"), SubResource("Resource_ak06m"), SubResource("Resource_h3cwc"), SubResource("Resource_2385l"), SubResource("Resource_dyooe"), SubResource("Resource_420eg"), SubResource("Resource_11bmx"), SubResource("Resource_p3g3t"), SubResource("Resource_8tj18"), SubResource("Resource_ciy6p"), SubResource("Resource_0yrf5"), SubResource("Resource_arg1o"), SubResource("Resource_oxoxg"), SubResource("Resource_jokxe"), SubResource("Resource_ahbir"), SubResource("Resource_av3wq"), SubResource("Resource_i4nh5"), SubResource("Resource_amaoc"), SubResource("Resource_2ibo7"), SubResource("Resource_cl7wj"), SubResource("Resource_k2t3p"), SubResource("Resource_f5mu0"), SubResource("Resource_sbxpb"), SubResource("Resource_qvheh"), SubResource("Resource_18m6o"), SubResource("Resource_v6u3j"), SubResource("Resource_oqaqh"), SubResource("Resource_pdgub"), SubResource("Resource_tov65"), SubResource("Resource_e8xuf"), SubResource("Resource_dftnf"), SubResource("Resource_i83vt"), SubResource("Resource_2vpgi"), SubResource("Resource_a2mam"), SubResource("Resource_hy6a8"), SubResource("Resource_m4yot"), SubResource("Resource_fhjpe"), SubResource("Resource_tvxp6"), SubResource("Resource_l3a0l"), SubResource("Resource_nmkm3"), SubResource("Resource_cm664"), SubResource("Resource_51ghl"), SubResource("Resource_47445"), SubResource("Resource_2ipbo"), SubResource("Resource_q1fem"), SubResource("Resource_awhdp"), SubResource("Resource_b4wlw"), SubResource("Resource_emv4e"), SubResource("Resource_ea8io"), SubResource("Resource_mwlka"), SubResource("Resource_63yab"), SubResource("Resource_wdkl1"), SubResource("Resource_fgyyv"), SubResource("Resource_prv36"), SubResource("Resource_1bmoc"), SubResource("Resource_gqoo4"), SubResource("Resource_rmj0s"), SubResource("Resource_vornd"), SubResource("Resource_lpoon"), SubResource("Resource_4lhyo"), SubResource("Resource_5v3ka"), SubResource("Resource_440xc"), SubResource("Resource_yeyha"), SubResource("Resource_yf5pd"), SubResource("Resource_fg4vh"), SubResource("Resource_5qau5"), SubResource("Resource_hvvgk"), SubResource("Resource_ymbjh"), SubResource("Resource_yrlu5"), SubResource("Resource_4gika"), SubResource("Resource_on3lu"), SubResource("Resource_w8lsv"), SubResource("Resource_n28kh"), SubResource("Resource_wo6vu"), SubResource("Resource_8fuef"), SubResource("Resource_8vykh"), SubResource("Resource_ardw0"), SubResource("Resource_fy5rk"), SubResource("Resource_d5e0t"), SubResource("Resource_uilkb"), SubResource("Resource_c5yt0"), SubResource("Resource_8dofo"), SubResource("Resource_v71kx"), SubResource("Resource_idpr8"), SubResource("Resource_ooou0"), SubResource("Resource_3hjlu"), SubResource("Resource_jbjqf"), SubResource("Resource_fbuls"), SubResource("Resource_fbqo4"), SubResource("Resource_q4thb"), SubResource("Resource_iu8c5"), SubResource("Resource_m00w5"), SubResource("Resource_8vylj"), SubResource("Resource_yobeu"), SubResource("Resource_38e8k"), SubResource("Resource_untn4"), SubResource("Resource_ecaai"), SubResource("Resource_236qr"), SubResource("Resource_ycpov"), SubResource("Resource_u4fvi"), SubResource("Resource_0nhax"), SubResource("Resource_qypht"), SubResource("Resource_hxc82"), SubResource("Resource_lrloc"), SubResource("Resource_onnkv"), SubResource("Resource_cm0lf")])

@@ -1,0 +1,2607 @@
+[gd_resource type="Resource" script_class="GameplayData" format=3 uid="uid://bs7hwmggwxfsu"]
+[ext_resource type="Script" path="res://data/gameplay_data/gameplay_data.gd" id="data_script"]
+[ext_resource type="Script" uid="uid://cy6f5r8uax3fx" path="res://data/encounter_definition/encounter_definition.gd" id="1_42mg7"]
+[ext_resource type="Script" uid="uid://c4143gewcybu" path="res://data/encounter_entry/encounter_entry.gd" id="2_bqnts"]
+[sub_resource type="Resource" id="Resource_hoqkv"]
+script = ExtResource("2_bqnts")
+weight = 50
+
+[sub_resource type="Resource" id="Resource_vb3rm"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 50
+
+[sub_resource type="Resource" id="Resource_jbjdk"]
+script = ExtResource("1_42mg7")
+mode = "native-weighted"
+world_level = 1
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_hoqkv"), SubResource("Resource_vb3rm")])
+
+[sub_resource type="Resource" id="Resource_u7su3"]
+script = ExtResource("2_bqnts")
+weight = 50
+
+[sub_resource type="Resource" id="Resource_8lo1o"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 50
+
+[sub_resource type="Resource" id="Resource_ai7tm"]
+script = ExtResource("1_42mg7")
+id = 1
+mode = "native-weighted"
+world_level = 1
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_u7su3"), SubResource("Resource_8lo1o")])
+
+[sub_resource type="Resource" id="Resource_btred"]
+script = ExtResource("2_bqnts")
+weight = 50
+
+[sub_resource type="Resource" id="Resource_04fa6"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 50
+
+[sub_resource type="Resource" id="Resource_o7alm"]
+script = ExtResource("1_42mg7")
+id = 2
+mode = "native-weighted"
+world_level = 1
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_btred"), SubResource("Resource_04fa6")])
+
+[sub_resource type="Resource" id="Resource_8l5tn"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 50
+
+[sub_resource type="Resource" id="Resource_4sl7d"]
+script = ExtResource("2_bqnts")
+species = 112
+weight = 50
+
+[sub_resource type="Resource" id="Resource_jkpsu"]
+script = ExtResource("1_42mg7")
+id = 3
+mode = "native-weighted"
+world_level = 2
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_8l5tn"), SubResource("Resource_4sl7d")])
+
+[sub_resource type="Resource" id="Resource_6ayiy"]
+script = ExtResource("2_bqnts")
+weight = 50
+
+[sub_resource type="Resource" id="Resource_uoqyl"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 50
+
+[sub_resource type="Resource" id="Resource_myfya"]
+script = ExtResource("1_42mg7")
+id = 4
+mode = "native-weighted"
+world_level = 3
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_6ayiy"), SubResource("Resource_uoqyl")])
+
+[sub_resource type="Resource" id="Resource_nvxqc"]
+script = ExtResource("2_bqnts")
+weight = 50
+
+[sub_resource type="Resource" id="Resource_vdnmh"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 50
+
+[sub_resource type="Resource" id="Resource_4xkm3"]
+script = ExtResource("1_42mg7")
+id = 5
+mode = "native-weighted"
+world_level = 3
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_nvxqc"), SubResource("Resource_vdnmh")])
+
+[sub_resource type="Resource" id="Resource_1r6lh"]
+script = ExtResource("1_42mg7")
+id = 6
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_blvwg"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 40
+
+[sub_resource type="Resource" id="Resource_ahwi6"]
+script = ExtResource("2_bqnts")
+species = 67
+weight = 40
+
+[sub_resource type="Resource" id="Resource_ywe1n"]
+script = ExtResource("2_bqnts")
+species = 89
+weight = 20
+
+[sub_resource type="Resource" id="Resource_uls84"]
+script = ExtResource("1_42mg7")
+id = 7
+mode = "native-weighted"
+world_level = 4
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_blvwg"), SubResource("Resource_ahwi6"), SubResource("Resource_ywe1n")])
+
+[sub_resource type="Resource" id="Resource_aj8dc"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 40
+
+[sub_resource type="Resource" id="Resource_fm3qt"]
+script = ExtResource("2_bqnts")
+species = 67
+weight = 40
+
+[sub_resource type="Resource" id="Resource_avxjp"]
+script = ExtResource("2_bqnts")
+species = 89
+weight = 20
+
+[sub_resource type="Resource" id="Resource_tgkg3"]
+script = ExtResource("1_42mg7")
+id = 8
+mode = "native-weighted"
+world_level = 4
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_aj8dc"), SubResource("Resource_fm3qt"), SubResource("Resource_avxjp")])
+
+[sub_resource type="Resource" id="Resource_4yvrp"]
+script = ExtResource("2_bqnts")
+species = 45
+weight = 40
+
+[sub_resource type="Resource" id="Resource_5ousq"]
+script = ExtResource("2_bqnts")
+species = 66
+weight = 40
+
+[sub_resource type="Resource" id="Resource_pegmd"]
+script = ExtResource("2_bqnts")
+species = 46
+weight = 20
+
+[sub_resource type="Resource" id="Resource_wf843"]
+script = ExtResource("1_42mg7")
+id = 9
+mode = "native-weighted"
+world_level = 5
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_4yvrp"), SubResource("Resource_5ousq"), SubResource("Resource_pegmd")])
+
+[sub_resource type="Resource" id="Resource_7tl8y"]
+script = ExtResource("2_bqnts")
+species = 45
+weight = 40
+
+[sub_resource type="Resource" id="Resource_cwf6w"]
+script = ExtResource("2_bqnts")
+species = 66
+weight = 40
+
+[sub_resource type="Resource" id="Resource_sjsce"]
+script = ExtResource("2_bqnts")
+species = 46
+weight = 20
+
+[sub_resource type="Resource" id="Resource_7dy1p"]
+script = ExtResource("1_42mg7")
+id = 10
+mode = "native-weighted"
+world_level = 5
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_7tl8y"), SubResource("Resource_cwf6w"), SubResource("Resource_sjsce")])
+
+[sub_resource type="Resource" id="Resource_msbyp"]
+script = ExtResource("2_bqnts")
+species = 2
+weight = 40
+
+[sub_resource type="Resource" id="Resource_y2k4u"]
+script = ExtResource("2_bqnts")
+species = 45
+weight = 40
+
+[sub_resource type="Resource" id="Resource_vtafm"]
+script = ExtResource("2_bqnts")
+species = 91
+weight = 20
+
+[sub_resource type="Resource" id="Resource_3q2id"]
+script = ExtResource("1_42mg7")
+id = 11
+mode = "native-weighted"
+world_level = 6
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_msbyp"), SubResource("Resource_y2k4u"), SubResource("Resource_vtafm")])
+
+[sub_resource type="Resource" id="Resource_aawfx"]
+script = ExtResource("2_bqnts")
+species = 2
+weight = 40
+
+[sub_resource type="Resource" id="Resource_oshlq"]
+script = ExtResource("2_bqnts")
+species = 45
+weight = 40
+
+[sub_resource type="Resource" id="Resource_n3xkk"]
+script = ExtResource("2_bqnts")
+species = 91
+weight = 20
+
+[sub_resource type="Resource" id="Resource_xyarn"]
+script = ExtResource("1_42mg7")
+id = 12
+mode = "native-weighted"
+world_level = 6
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_aawfx"), SubResource("Resource_oshlq"), SubResource("Resource_n3xkk")])
+
+[sub_resource type="Resource" id="Resource_y2fq2"]
+script = ExtResource("2_bqnts")
+weight = 40
+
+[sub_resource type="Resource" id="Resource_o7m7x"]
+script = ExtResource("2_bqnts")
+species = 47
+weight = 40
+
+[sub_resource type="Resource" id="Resource_g58nm"]
+script = ExtResource("2_bqnts")
+species = 1
+weight = 20
+
+[sub_resource type="Resource" id="Resource_livou"]
+script = ExtResource("1_42mg7")
+id = 13
+mode = "native-weighted"
+world_level = 7
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_y2fq2"), SubResource("Resource_o7m7x"), SubResource("Resource_g58nm")])
+
+[sub_resource type="Resource" id="Resource_k07x1"]
+script = ExtResource("2_bqnts")
+species = 90
+weight = 40
+
+[sub_resource type="Resource" id="Resource_bvd2g"]
+script = ExtResource("2_bqnts")
+species = 113
+weight = 40
+
+[sub_resource type="Resource" id="Resource_xfsob"]
+script = ExtResource("2_bqnts")
+species = 111
+weight = 20
+
+[sub_resource type="Resource" id="Resource_gpdpb"]
+script = ExtResource("1_42mg7")
+id = 14
+mode = "native-weighted"
+world_level = 9
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_k07x1"), SubResource("Resource_bvd2g"), SubResource("Resource_xfsob")])
+
+[sub_resource type="Resource" id="Resource_2rhww"]
+script = ExtResource("2_bqnts")
+species = 47
+weight = 40
+
+[sub_resource type="Resource" id="Resource_wip68"]
+script = ExtResource("2_bqnts")
+species = 67
+weight = 40
+
+[sub_resource type="Resource" id="Resource_qibp3"]
+script = ExtResource("2_bqnts")
+species = 68
+weight = 20
+
+[sub_resource type="Resource" id="Resource_guvoa"]
+script = ExtResource("1_42mg7")
+id = 15
+mode = "native-weighted"
+world_level = 10
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_2rhww"), SubResource("Resource_wip68"), SubResource("Resource_qibp3")])
+
+[sub_resource type="Resource" id="Resource_oqoy1"]
+script = ExtResource("2_bqnts")
+species = 47
+weight = 40
+
+[sub_resource type="Resource" id="Resource_wb2sy"]
+script = ExtResource("2_bqnts")
+species = 67
+weight = 40
+
+[sub_resource type="Resource" id="Resource_bhv1l"]
+script = ExtResource("2_bqnts")
+species = 68
+weight = 20
+
+[sub_resource type="Resource" id="Resource_7f681"]
+script = ExtResource("1_42mg7")
+id = 16
+mode = "native-weighted"
+world_level = 10
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_oqoy1"), SubResource("Resource_wb2sy"), SubResource("Resource_bhv1l")])
+
+[sub_resource type="Resource" id="Resource_4pimt"]
+script = ExtResource("2_bqnts")
+species = 47
+weight = 40
+
+[sub_resource type="Resource" id="Resource_nqb4o"]
+script = ExtResource("2_bqnts")
+species = 67
+weight = 40
+
+[sub_resource type="Resource" id="Resource_k13ef"]
+script = ExtResource("2_bqnts")
+species = 68
+weight = 20
+
+[sub_resource type="Resource" id="Resource_83qur"]
+script = ExtResource("1_42mg7")
+id = 17
+mode = "native-weighted"
+world_level = 10
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_4pimt"), SubResource("Resource_nqb4o"), SubResource("Resource_k13ef")])
+
+[sub_resource type="Resource" id="Resource_6wwph"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 40
+
+[sub_resource type="Resource" id="Resource_jmljs"]
+script = ExtResource("2_bqnts")
+species = 66
+weight = 40
+
+[sub_resource type="Resource" id="Resource_7noiy"]
+script = ExtResource("2_bqnts")
+species = 69
+weight = 20
+
+[sub_resource type="Resource" id="Resource_ay7rw"]
+script = ExtResource("1_42mg7")
+id = 18
+mode = "native-weighted"
+world_level = 11
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_6wwph"), SubResource("Resource_jmljs"), SubResource("Resource_7noiy")])
+
+[sub_resource type="Resource" id="Resource_nuycj"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 40
+
+[sub_resource type="Resource" id="Resource_rg5sy"]
+script = ExtResource("2_bqnts")
+species = 66
+weight = 40
+
+[sub_resource type="Resource" id="Resource_rcodr"]
+script = ExtResource("2_bqnts")
+species = 69
+weight = 20
+
+[sub_resource type="Resource" id="Resource_by60t"]
+script = ExtResource("1_42mg7")
+id = 19
+mode = "native-weighted"
+world_level = 11
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_nuycj"), SubResource("Resource_rg5sy"), SubResource("Resource_rcodr")])
+
+[sub_resource type="Resource" id="Resource_fec5c"]
+script = ExtResource("2_bqnts")
+species = 2
+weight = 40
+
+[sub_resource type="Resource" id="Resource_jv7e0"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 40
+
+[sub_resource type="Resource" id="Resource_4aepx"]
+script = ExtResource("2_bqnts")
+species = 110
+weight = 20
+
+[sub_resource type="Resource" id="Resource_wfu4r"]
+script = ExtResource("1_42mg7")
+id = 20
+mode = "native-weighted"
+world_level = 12
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_fec5c"), SubResource("Resource_jv7e0"), SubResource("Resource_4aepx")])
+
+[sub_resource type="Resource" id="Resource_54cr3"]
+script = ExtResource("2_bqnts")
+species = 2
+weight = 40
+
+[sub_resource type="Resource" id="Resource_5k1no"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 40
+
+[sub_resource type="Resource" id="Resource_x57jn"]
+script = ExtResource("2_bqnts")
+species = 110
+weight = 20
+
+[sub_resource type="Resource" id="Resource_008yy"]
+script = ExtResource("1_42mg7")
+id = 21
+mode = "native-weighted"
+world_level = 12
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_54cr3"), SubResource("Resource_5k1no"), SubResource("Resource_x57jn")])
+
+[sub_resource type="Resource" id="Resource_f5leb"]
+script = ExtResource("2_bqnts")
+weight = 40
+
+[sub_resource type="Resource" id="Resource_6mba0"]
+script = ExtResource("2_bqnts")
+species = 67
+weight = 40
+
+[sub_resource type="Resource" id="Resource_yfa8c"]
+script = ExtResource("2_bqnts")
+species = 3
+weight = 20
+
+[sub_resource type="Resource" id="Resource_f4hyg"]
+script = ExtResource("1_42mg7")
+id = 22
+mode = "native-weighted"
+world_level = 14
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_f5leb"), SubResource("Resource_6mba0"), SubResource("Resource_yfa8c")])
+
+[sub_resource type="Resource" id="Resource_q6you"]
+script = ExtResource("2_bqnts")
+weight = 40
+
+[sub_resource type="Resource" id="Resource_x6qfp"]
+script = ExtResource("2_bqnts")
+species = 67
+weight = 40
+
+[sub_resource type="Resource" id="Resource_2fp63"]
+script = ExtResource("2_bqnts")
+species = 3
+weight = 20
+
+[sub_resource type="Resource" id="Resource_jwkrd"]
+script = ExtResource("1_42mg7")
+id = 23
+mode = "native-weighted"
+world_level = 14
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_q6you"), SubResource("Resource_x6qfp"), SubResource("Resource_2fp63")])
+
+[sub_resource type="Resource" id="Resource_q6k7f"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 50
+
+[sub_resource type="Resource" id="Resource_c7wsr"]
+script = ExtResource("2_bqnts")
+species = 90
+weight = 50
+
+[sub_resource type="Resource" id="Resource_owf25"]
+script = ExtResource("1_42mg7")
+id = 24
+mode = "native-weighted"
+world_level = 15
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_q6k7f"), SubResource("Resource_c7wsr")])
+
+[sub_resource type="Resource" id="Resource_l0ki2"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 50
+
+[sub_resource type="Resource" id="Resource_kqatn"]
+script = ExtResource("2_bqnts")
+species = 90
+weight = 50
+
+[sub_resource type="Resource" id="Resource_g1561"]
+script = ExtResource("1_42mg7")
+id = 25
+mode = "native-weighted"
+world_level = 15
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_l0ki2"), SubResource("Resource_kqatn")])
+
+[sub_resource type="Resource" id="Resource_v8ghy"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 50
+
+[sub_resource type="Resource" id="Resource_whk6r"]
+script = ExtResource("2_bqnts")
+species = 90
+weight = 50
+
+[sub_resource type="Resource" id="Resource_vtvrt"]
+script = ExtResource("1_42mg7")
+id = 26
+mode = "native-weighted"
+world_level = 15
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_v8ghy"), SubResource("Resource_whk6r")])
+
+[sub_resource type="Resource" id="Resource_baii0"]
+script = ExtResource("2_bqnts")
+species = 2
+weight = 40
+
+[sub_resource type="Resource" id="Resource_8rakw"]
+script = ExtResource("2_bqnts")
+species = 45
+weight = 40
+
+[sub_resource type="Resource" id="Resource_bsc0y"]
+script = ExtResource("2_bqnts")
+species = 25
+weight = 20
+
+[sub_resource type="Resource" id="Resource_swgdw"]
+script = ExtResource("1_42mg7")
+id = 27
+mode = "native-weighted"
+world_level = 16
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_baii0"), SubResource("Resource_8rakw"), SubResource("Resource_bsc0y")])
+
+[sub_resource type="Resource" id="Resource_13xee"]
+script = ExtResource("2_bqnts")
+species = 2
+weight = 40
+
+[sub_resource type="Resource" id="Resource_02dba"]
+script = ExtResource("2_bqnts")
+species = 45
+weight = 40
+
+[sub_resource type="Resource" id="Resource_fttgc"]
+script = ExtResource("2_bqnts")
+species = 25
+weight = 20
+
+[sub_resource type="Resource" id="Resource_sshco"]
+script = ExtResource("1_42mg7")
+id = 28
+mode = "native-weighted"
+world_level = 16
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_13xee"), SubResource("Resource_02dba"), SubResource("Resource_fttgc")])
+
+[sub_resource type="Resource" id="Resource_10v37"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 40
+
+[sub_resource type="Resource" id="Resource_6e1vk"]
+script = ExtResource("2_bqnts")
+species = 88
+weight = 40
+
+[sub_resource type="Resource" id="Resource_h5xdq"]
+script = ExtResource("2_bqnts")
+species = 23
+weight = 20
+
+[sub_resource type="Resource" id="Resource_666so"]
+script = ExtResource("1_42mg7")
+id = 29
+mode = "native-weighted"
+world_level = 18
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_10v37"), SubResource("Resource_6e1vk"), SubResource("Resource_h5xdq")])
+
+[sub_resource type="Resource" id="Resource_hdd8x"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 50
+
+[sub_resource type="Resource" id="Resource_yv3qw"]
+script = ExtResource("2_bqnts")
+species = 112
+weight = 50
+
+[sub_resource type="Resource" id="Resource_endjm"]
+script = ExtResource("1_42mg7")
+id = 30
+mode = "native-weighted"
+world_level = 19
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_hdd8x"), SubResource("Resource_yv3qw")])
+
+[sub_resource type="Resource" id="Resource_ai2sr"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 50
+
+[sub_resource type="Resource" id="Resource_1repg"]
+script = ExtResource("2_bqnts")
+species = 112
+weight = 50
+
+[sub_resource type="Resource" id="Resource_ns1ex"]
+script = ExtResource("1_42mg7")
+id = 31
+mode = "native-weighted"
+world_level = 19
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_ai2sr"), SubResource("Resource_1repg")])
+
+[sub_resource type="Resource" id="Resource_51gg1"]
+script = ExtResource("2_bqnts")
+species = 112
+weight = 40
+
+[sub_resource type="Resource" id="Resource_g68dd"]
+script = ExtResource("2_bqnts")
+species = 26
+weight = 40
+
+[sub_resource type="Resource" id="Resource_x6m7k"]
+script = ExtResource("2_bqnts")
+species = 29
+weight = 20
+
+[sub_resource type="Resource" id="Resource_o6t0o"]
+script = ExtResource("1_42mg7")
+id = 32
+mode = "native-weighted"
+world_level = 20
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_51gg1"), SubResource("Resource_g68dd"), SubResource("Resource_x6m7k")])
+
+[sub_resource type="Resource" id="Resource_2dgxn"]
+script = ExtResource("2_bqnts")
+species = 112
+weight = 40
+
+[sub_resource type="Resource" id="Resource_0uxje"]
+script = ExtResource("2_bqnts")
+species = 26
+weight = 40
+
+[sub_resource type="Resource" id="Resource_y37mo"]
+script = ExtResource("2_bqnts")
+species = 29
+weight = 20
+
+[sub_resource type="Resource" id="Resource_g4awu"]
+script = ExtResource("1_42mg7")
+id = 33
+mode = "native-weighted"
+world_level = 20
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_2dgxn"), SubResource("Resource_0uxje"), SubResource("Resource_y37mo")])
+
+[sub_resource type="Resource" id="Resource_g6h6n"]
+script = ExtResource("2_bqnts")
+species = 45
+weight = 40
+
+[sub_resource type="Resource" id="Resource_h4hry"]
+script = ExtResource("2_bqnts")
+species = 4
+weight = 40
+
+[sub_resource type="Resource" id="Resource_jhpmx"]
+script = ExtResource("2_bqnts")
+species = 95
+weight = 20
+
+[sub_resource type="Resource" id="Resource_tj62c"]
+script = ExtResource("1_42mg7")
+id = 34
+mode = "native-weighted"
+world_level = 21
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_g6h6n"), SubResource("Resource_h4hry"), SubResource("Resource_jhpmx")])
+
+[sub_resource type="Resource" id="Resource_g2bmp"]
+script = ExtResource("2_bqnts")
+species = 45
+weight = 40
+
+[sub_resource type="Resource" id="Resource_4d3l6"]
+script = ExtResource("2_bqnts")
+species = 4
+weight = 40
+
+[sub_resource type="Resource" id="Resource_co44f"]
+script = ExtResource("2_bqnts")
+species = 95
+weight = 20
+
+[sub_resource type="Resource" id="Resource_htl8n"]
+script = ExtResource("1_42mg7")
+id = 35
+mode = "native-weighted"
+world_level = 21
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_g2bmp"), SubResource("Resource_4d3l6"), SubResource("Resource_co44f")])
+
+[sub_resource type="Resource" id="Resource_5qtbj"]
+script = ExtResource("1_42mg7")
+id = 36
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_a2441"]
+script = ExtResource("2_bqnts")
+weight = 40
+
+[sub_resource type="Resource" id="Resource_sx8ix"]
+script = ExtResource("2_bqnts")
+species = 48
+weight = 40
+
+[sub_resource type="Resource" id="Resource_y3vbr"]
+script = ExtResource("2_bqnts")
+species = 49
+weight = 20
+
+[sub_resource type="Resource" id="Resource_cuphh"]
+script = ExtResource("1_42mg7")
+id = 37
+mode = "native-weighted"
+world_level = 22
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_a2441"), SubResource("Resource_sx8ix"), SubResource("Resource_y3vbr")])
+
+[sub_resource type="Resource" id="Resource_4wwpt"]
+script = ExtResource("2_bqnts")
+weight = 40
+
+[sub_resource type="Resource" id="Resource_6thf5"]
+script = ExtResource("2_bqnts")
+species = 48
+weight = 40
+
+[sub_resource type="Resource" id="Resource_fakyb"]
+script = ExtResource("2_bqnts")
+species = 49
+weight = 20
+
+[sub_resource type="Resource" id="Resource_rod0v"]
+script = ExtResource("1_42mg7")
+id = 38
+mode = "native-weighted"
+world_level = 22
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_4wwpt"), SubResource("Resource_6thf5"), SubResource("Resource_fakyb")])
+
+[sub_resource type="Resource" id="Resource_vosw4"]
+script = ExtResource("2_bqnts")
+species = 66
+weight = 40
+
+[sub_resource type="Resource" id="Resource_j85di"]
+script = ExtResource("2_bqnts")
+species = 5
+weight = 40
+
+[sub_resource type="Resource" id="Resource_cncuq"]
+script = ExtResource("2_bqnts")
+species = 116
+weight = 20
+
+[sub_resource type="Resource" id="Resource_pf1u4"]
+script = ExtResource("1_42mg7")
+id = 39
+mode = "native-weighted"
+world_level = 24
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_vosw4"), SubResource("Resource_j85di"), SubResource("Resource_cncuq")])
+
+[sub_resource type="Resource" id="Resource_k1ujr"]
+script = ExtResource("2_bqnts")
+species = 66
+weight = 40
+
+[sub_resource type="Resource" id="Resource_o1b22"]
+script = ExtResource("2_bqnts")
+species = 5
+weight = 40
+
+[sub_resource type="Resource" id="Resource_6pgy6"]
+script = ExtResource("2_bqnts")
+species = 116
+weight = 20
+
+[sub_resource type="Resource" id="Resource_8llt1"]
+script = ExtResource("1_42mg7")
+id = 40
+mode = "native-weighted"
+world_level = 24
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_k1ujr"), SubResource("Resource_o1b22"), SubResource("Resource_6pgy6")])
+
+[sub_resource type="Resource" id="Resource_e226h"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 40
+
+[sub_resource type="Resource" id="Resource_af3fm"]
+script = ExtResource("2_bqnts")
+species = 92
+weight = 40
+
+[sub_resource type="Resource" id="Resource_b4q2l"]
+script = ExtResource("2_bqnts")
+species = 6
+weight = 20
+
+[sub_resource type="Resource" id="Resource_u8b4w"]
+script = ExtResource("1_42mg7")
+id = 41
+mode = "native-weighted"
+world_level = 25
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_e226h"), SubResource("Resource_af3fm"), SubResource("Resource_b4q2l")])
+
+[sub_resource type="Resource" id="Resource_1k4jl"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 40
+
+[sub_resource type="Resource" id="Resource_jbbq8"]
+script = ExtResource("2_bqnts")
+species = 92
+weight = 40
+
+[sub_resource type="Resource" id="Resource_utlle"]
+script = ExtResource("2_bqnts")
+species = 6
+weight = 20
+
+[sub_resource type="Resource" id="Resource_04acw"]
+script = ExtResource("1_42mg7")
+id = 42
+mode = "native-weighted"
+world_level = 25
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_1k4jl"), SubResource("Resource_jbbq8"), SubResource("Resource_utlle")])
+
+[sub_resource type="Resource" id="Resource_8f50d"]
+script = ExtResource("2_bqnts")
+species = 47
+weight = 40
+
+[sub_resource type="Resource" id="Resource_qjc32"]
+script = ExtResource("2_bqnts")
+species = 70
+weight = 40
+
+[sub_resource type="Resource" id="Resource_jlimx"]
+script = ExtResource("2_bqnts")
+species = 52
+weight = 20
+
+[sub_resource type="Resource" id="Resource_teinc"]
+script = ExtResource("1_42mg7")
+id = 43
+mode = "native-weighted"
+world_level = 26
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_8f50d"), SubResource("Resource_qjc32"), SubResource("Resource_jlimx")])
+
+[sub_resource type="Resource" id="Resource_4desv"]
+script = ExtResource("2_bqnts")
+species = 47
+weight = 40
+
+[sub_resource type="Resource" id="Resource_3hp5g"]
+script = ExtResource("2_bqnts")
+species = 70
+weight = 40
+
+[sub_resource type="Resource" id="Resource_8qhkj"]
+script = ExtResource("2_bqnts")
+species = 52
+weight = 20
+
+[sub_resource type="Resource" id="Resource_5yd28"]
+script = ExtResource("1_42mg7")
+id = 44
+mode = "native-weighted"
+world_level = 26
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_4desv"), SubResource("Resource_3hp5g"), SubResource("Resource_8qhkj")])
+
+[sub_resource type="Resource" id="Resource_e3xui"]
+script = ExtResource("2_bqnts")
+species = 47
+weight = 40
+
+[sub_resource type="Resource" id="Resource_kyy4u"]
+script = ExtResource("2_bqnts")
+species = 70
+weight = 40
+
+[sub_resource type="Resource" id="Resource_bqk5s"]
+script = ExtResource("2_bqnts")
+species = 52
+weight = 20
+
+[sub_resource type="Resource" id="Resource_ukysg"]
+script = ExtResource("1_42mg7")
+id = 45
+mode = "native-weighted"
+world_level = 26
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_e3xui"), SubResource("Resource_kyy4u"), SubResource("Resource_bqk5s")])
+
+[sub_resource type="Resource" id="Resource_fuxfo"]
+script = ExtResource("2_bqnts")
+species = 113
+weight = 50
+
+[sub_resource type="Resource" id="Resource_n6lji"]
+script = ExtResource("2_bqnts")
+species = 27
+weight = 50
+
+[sub_resource type="Resource" id="Resource_fgqwk"]
+script = ExtResource("1_42mg7")
+id = 46
+mode = "native-weighted"
+world_level = 27
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_fuxfo"), SubResource("Resource_n6lji")])
+
+[sub_resource type="Resource" id="Resource_c06bm"]
+script = ExtResource("2_bqnts")
+species = 113
+weight = 50
+
+[sub_resource type="Resource" id="Resource_e86nt"]
+script = ExtResource("2_bqnts")
+species = 27
+weight = 50
+
+[sub_resource type="Resource" id="Resource_w110v"]
+script = ExtResource("1_42mg7")
+id = 47
+mode = "native-weighted"
+world_level = 27
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_c06bm"), SubResource("Resource_e86nt")])
+
+[sub_resource type="Resource" id="Resource_3h5q2"]
+script = ExtResource("2_bqnts")
+species = 2
+weight = 40
+
+[sub_resource type="Resource" id="Resource_xcvc0"]
+script = ExtResource("2_bqnts")
+species = 73
+weight = 40
+
+[sub_resource type="Resource" id="Resource_pq1le"]
+script = ExtResource("2_bqnts")
+species = 52
+weight = 20
+
+[sub_resource type="Resource" id="Resource_pne34"]
+script = ExtResource("1_42mg7")
+id = 48
+mode = "native-weighted"
+world_level = 29
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_3h5q2"), SubResource("Resource_xcvc0"), SubResource("Resource_pq1le")])
+
+[sub_resource type="Resource" id="Resource_0oafa"]
+script = ExtResource("2_bqnts")
+species = 2
+weight = 40
+
+[sub_resource type="Resource" id="Resource_m2jg7"]
+script = ExtResource("2_bqnts")
+species = 73
+weight = 40
+
+[sub_resource type="Resource" id="Resource_sls1t"]
+script = ExtResource("2_bqnts")
+species = 52
+weight = 20
+
+[sub_resource type="Resource" id="Resource_aibj0"]
+script = ExtResource("1_42mg7")
+id = 49
+mode = "native-weighted"
+world_level = 29
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_0oafa"), SubResource("Resource_m2jg7"), SubResource("Resource_sls1t")])
+
+[sub_resource type="Resource" id="Resource_nuxj5"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 40
+
+[sub_resource type="Resource" id="Resource_qeabt"]
+script = ExtResource("2_bqnts")
+species = 93
+weight = 40
+
+[sub_resource type="Resource" id="Resource_yu47q"]
+script = ExtResource("2_bqnts")
+species = 72
+weight = 20
+
+[sub_resource type="Resource" id="Resource_xcijl"]
+script = ExtResource("1_42mg7")
+id = 50
+mode = "native-weighted"
+world_level = 30
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_nuxj5"), SubResource("Resource_qeabt"), SubResource("Resource_yu47q")])
+
+[sub_resource type="Resource" id="Resource_ebh2c"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 40
+
+[sub_resource type="Resource" id="Resource_44gpl"]
+script = ExtResource("2_bqnts")
+species = 93
+weight = 40
+
+[sub_resource type="Resource" id="Resource_vuaqu"]
+script = ExtResource("2_bqnts")
+species = 72
+weight = 20
+
+[sub_resource type="Resource" id="Resource_2hhbh"]
+script = ExtResource("1_42mg7")
+id = 51
+mode = "native-weighted"
+world_level = 30
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_ebh2c"), SubResource("Resource_44gpl"), SubResource("Resource_vuaqu")])
+
+[sub_resource type="Resource" id="Resource_slmcx"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 50
+
+[sub_resource type="Resource" id="Resource_otoln"]
+script = ExtResource("2_bqnts")
+species = 7
+weight = 50
+
+[sub_resource type="Resource" id="Resource_wj0wg"]
+script = ExtResource("1_42mg7")
+id = 52
+mode = "native-weighted"
+world_level = 31
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_slmcx"), SubResource("Resource_otoln")])
+
+[sub_resource type="Resource" id="Resource_nwo2a"]
+script = ExtResource("2_bqnts")
+species = 44
+weight = 30
+
+[sub_resource type="Resource" id="Resource_n5xap"]
+script = ExtResource("2_bqnts")
+species = 7
+weight = 35
+
+[sub_resource type="Resource" id="Resource_ksc50"]
+script = ExtResource("2_bqnts")
+species = 9
+weight = 35
+
+[sub_resource type="Resource" id="Resource_nwcgv"]
+script = ExtResource("1_42mg7")
+id = 53
+mode = "native-weighted"
+world_level = 31
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_nwo2a"), SubResource("Resource_n5xap"), SubResource("Resource_ksc50")])
+
+[sub_resource type="Resource" id="Resource_03im0"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 30
+
+[sub_resource type="Resource" id="Resource_7tc37"]
+script = ExtResource("2_bqnts")
+species = 114
+weight = 30
+
+[sub_resource type="Resource" id="Resource_qlipp"]
+script = ExtResource("2_bqnts")
+species = 32
+weight = 30
+
+[sub_resource type="Resource" id="Resource_y33nq"]
+script = ExtResource("2_bqnts")
+species = 56
+weight = 10
+
+[sub_resource type="Resource" id="Resource_gkojj"]
+script = ExtResource("1_42mg7")
+id = 54
+mode = "native-weighted"
+world_level = 32
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_03im0"), SubResource("Resource_7tc37"), SubResource("Resource_qlipp"), SubResource("Resource_y33nq")])
+
+[sub_resource type="Resource" id="Resource_cfink"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 30
+
+[sub_resource type="Resource" id="Resource_2xsn5"]
+script = ExtResource("2_bqnts")
+species = 114
+weight = 30
+
+[sub_resource type="Resource" id="Resource_565n8"]
+script = ExtResource("2_bqnts")
+species = 32
+weight = 30
+
+[sub_resource type="Resource" id="Resource_pfpb1"]
+script = ExtResource("2_bqnts")
+species = 56
+weight = 10
+
+[sub_resource type="Resource" id="Resource_rawdm"]
+script = ExtResource("1_42mg7")
+id = 55
+mode = "native-weighted"
+world_level = 32
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_cfink"), SubResource("Resource_2xsn5"), SubResource("Resource_565n8"), SubResource("Resource_pfpb1")])
+
+[sub_resource type="Resource" id="Resource_1ydf7"]
+script = ExtResource("2_bqnts")
+species = 88
+weight = 30
+
+[sub_resource type="Resource" id="Resource_b8hpf"]
+script = ExtResource("2_bqnts")
+species = 28
+weight = 35
+
+[sub_resource type="Resource" id="Resource_trpd7"]
+script = ExtResource("2_bqnts")
+species = 97
+weight = 35
+
+[sub_resource type="Resource" id="Resource_1602k"]
+script = ExtResource("1_42mg7")
+id = 56
+mode = "native-weighted"
+world_level = 35
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_1ydf7"), SubResource("Resource_b8hpf"), SubResource("Resource_trpd7")])
+
+[sub_resource type="Resource" id="Resource_ahk1h"]
+script = ExtResource("2_bqnts")
+species = 88
+weight = 30
+
+[sub_resource type="Resource" id="Resource_j12y3"]
+script = ExtResource("2_bqnts")
+species = 28
+weight = 35
+
+[sub_resource type="Resource" id="Resource_my68k"]
+script = ExtResource("2_bqnts")
+species = 97
+weight = 35
+
+[sub_resource type="Resource" id="Resource_jfpnm"]
+script = ExtResource("1_42mg7")
+id = 57
+mode = "native-weighted"
+world_level = 35
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_ahk1h"), SubResource("Resource_j12y3"), SubResource("Resource_my68k")])
+
+[sub_resource type="Resource" id="Resource_qk4ib"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 30
+
+[sub_resource type="Resource" id="Resource_sx0b4"]
+script = ExtResource("2_bqnts")
+species = 115
+weight = 30
+
+[sub_resource type="Resource" id="Resource_q40rl"]
+script = ExtResource("2_bqnts")
+species = 119
+weight = 30
+
+[sub_resource type="Resource" id="Resource_qwogm"]
+script = ExtResource("2_bqnts")
+species = 12
+weight = 10
+
+[sub_resource type="Resource" id="Resource_j5mgs"]
+script = ExtResource("1_42mg7")
+id = 58
+mode = "native-weighted"
+world_level = 36
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_qk4ib"), SubResource("Resource_sx0b4"), SubResource("Resource_q40rl"), SubResource("Resource_qwogm")])
+
+[sub_resource type="Resource" id="Resource_0l5r2"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 30
+
+[sub_resource type="Resource" id="Resource_lwlk4"]
+script = ExtResource("2_bqnts")
+species = 115
+weight = 30
+
+[sub_resource type="Resource" id="Resource_lsdw3"]
+script = ExtResource("2_bqnts")
+species = 119
+weight = 30
+
+[sub_resource type="Resource" id="Resource_0j31l"]
+script = ExtResource("2_bqnts")
+species = 12
+weight = 10
+
+[sub_resource type="Resource" id="Resource_u15lh"]
+script = ExtResource("1_42mg7")
+id = 59
+mode = "native-weighted"
+world_level = 36
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_0l5r2"), SubResource("Resource_lwlk4"), SubResource("Resource_lsdw3"), SubResource("Resource_0j31l")])
+
+[sub_resource type="Resource" id="Resource_k5rw3"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 30
+
+[sub_resource type="Resource" id="Resource_jxsvj"]
+script = ExtResource("2_bqnts")
+species = 115
+weight = 30
+
+[sub_resource type="Resource" id="Resource_q15m0"]
+script = ExtResource("2_bqnts")
+species = 119
+weight = 30
+
+[sub_resource type="Resource" id="Resource_v5pwt"]
+script = ExtResource("2_bqnts")
+species = 12
+weight = 10
+
+[sub_resource type="Resource" id="Resource_a5ckc"]
+script = ExtResource("1_42mg7")
+id = 60
+mode = "native-weighted"
+world_level = 36
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_k5rw3"), SubResource("Resource_jxsvj"), SubResource("Resource_q15m0"), SubResource("Resource_v5pwt")])
+
+[sub_resource type="Resource" id="Resource_brfld"]
+script = ExtResource("2_bqnts")
+species = 112
+weight = 30
+
+[sub_resource type="Resource" id="Resource_rep3q"]
+script = ExtResource("2_bqnts")
+species = 94
+weight = 35
+
+[sub_resource type="Resource" id="Resource_7jkki"]
+script = ExtResource("2_bqnts")
+species = 75
+weight = 35
+
+[sub_resource type="Resource" id="Resource_437b1"]
+script = ExtResource("1_42mg7")
+id = 61
+mode = "native-weighted"
+world_level = 39
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_brfld"), SubResource("Resource_rep3q"), SubResource("Resource_7jkki")])
+
+[sub_resource type="Resource" id="Resource_70edy"]
+script = ExtResource("2_bqnts")
+species = 112
+weight = 30
+
+[sub_resource type="Resource" id="Resource_4vd2w"]
+script = ExtResource("2_bqnts")
+species = 94
+weight = 35
+
+[sub_resource type="Resource" id="Resource_h3wg0"]
+script = ExtResource("2_bqnts")
+species = 75
+weight = 35
+
+[sub_resource type="Resource" id="Resource_7jd36"]
+script = ExtResource("1_42mg7")
+id = 62
+mode = "native-weighted"
+world_level = 39
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_70edy"), SubResource("Resource_4vd2w"), SubResource("Resource_h3wg0")])
+
+[sub_resource type="Resource" id="Resource_1rhh1"]
+script = ExtResource("2_bqnts")
+species = 112
+weight = 30
+
+[sub_resource type="Resource" id="Resource_onsuh"]
+script = ExtResource("2_bqnts")
+species = 94
+weight = 35
+
+[sub_resource type="Resource" id="Resource_c5nly"]
+script = ExtResource("2_bqnts")
+species = 75
+weight = 35
+
+[sub_resource type="Resource" id="Resource_xvevr"]
+script = ExtResource("1_42mg7")
+id = 63
+mode = "native-weighted"
+world_level = 39
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_1rhh1"), SubResource("Resource_onsuh"), SubResource("Resource_c5nly")])
+
+[sub_resource type="Resource" id="Resource_hhuag"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 15
+
+[sub_resource type="Resource" id="Resource_cv1dn"]
+script = ExtResource("2_bqnts")
+species = 117
+weight = 35
+
+[sub_resource type="Resource" id="Resource_cbmgc"]
+script = ExtResource("2_bqnts")
+species = 53
+weight = 15
+
+[sub_resource type="Resource" id="Resource_1scmk"]
+script = ExtResource("2_bqnts")
+species = 36
+weight = 15
+
+[sub_resource type="Resource" id="Resource_715kv"]
+script = ExtResource("2_bqnts")
+species = 120
+weight = 10
+
+[sub_resource type="Resource" id="Resource_12hei"]
+script = ExtResource("2_bqnts")
+species = 35
+weight = 10
+
+[sub_resource type="Resource" id="Resource_v4ug7"]
+script = ExtResource("1_42mg7")
+id = 64
+mode = "native-weighted"
+world_level = 40
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_hhuag"), SubResource("Resource_cv1dn"), SubResource("Resource_cbmgc"), SubResource("Resource_1scmk"), SubResource("Resource_715kv"), SubResource("Resource_12hei")])
+
+[sub_resource type="Resource" id="Resource_1ktnu"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 15
+
+[sub_resource type="Resource" id="Resource_wa7be"]
+script = ExtResource("2_bqnts")
+species = 117
+weight = 35
+
+[sub_resource type="Resource" id="Resource_0ddlm"]
+script = ExtResource("2_bqnts")
+species = 53
+weight = 15
+
+[sub_resource type="Resource" id="Resource_axas0"]
+script = ExtResource("2_bqnts")
+species = 36
+weight = 15
+
+[sub_resource type="Resource" id="Resource_04dd4"]
+script = ExtResource("2_bqnts")
+species = 120
+weight = 10
+
+[sub_resource type="Resource" id="Resource_l5gxs"]
+script = ExtResource("2_bqnts")
+species = 35
+weight = 10
+
+[sub_resource type="Resource" id="Resource_womtj"]
+script = ExtResource("1_42mg7")
+id = 65
+mode = "native-weighted"
+world_level = 40
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_1ktnu"), SubResource("Resource_wa7be"), SubResource("Resource_0ddlm"), SubResource("Resource_axas0"), SubResource("Resource_04dd4"), SubResource("Resource_l5gxs")])
+
+[sub_resource type="Resource" id="Resource_4y1f1"]
+script = ExtResource("1_42mg7")
+id = 66
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_rgrxr"]
+script = ExtResource("2_bqnts")
+species = 113
+weight = 15
+
+[sub_resource type="Resource" id="Resource_06ilf"]
+script = ExtResource("2_bqnts")
+species = 30
+weight = 35
+
+[sub_resource type="Resource" id="Resource_qmw78"]
+script = ExtResource("2_bqnts")
+species = 33
+weight = 20
+
+[sub_resource type="Resource" id="Resource_d6i0h"]
+script = ExtResource("2_bqnts")
+species = 101
+weight = 15
+
+[sub_resource type="Resource" id="Resource_jxbmb"]
+script = ExtResource("2_bqnts")
+species = 31
+weight = 15
+
+[sub_resource type="Resource" id="Resource_j717u"]
+script = ExtResource("1_42mg7")
+id = 67
+mode = "native-weighted"
+world_level = 41
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_rgrxr"), SubResource("Resource_06ilf"), SubResource("Resource_qmw78"), SubResource("Resource_d6i0h"), SubResource("Resource_jxbmb")])
+
+[sub_resource type="Resource" id="Resource_mqoyj"]
+script = ExtResource("2_bqnts")
+species = 113
+weight = 15
+
+[sub_resource type="Resource" id="Resource_m6gc5"]
+script = ExtResource("2_bqnts")
+species = 30
+weight = 35
+
+[sub_resource type="Resource" id="Resource_6di25"]
+script = ExtResource("2_bqnts")
+species = 33
+weight = 20
+
+[sub_resource type="Resource" id="Resource_u17e6"]
+script = ExtResource("2_bqnts")
+species = 101
+weight = 15
+
+[sub_resource type="Resource" id="Resource_b4y4f"]
+script = ExtResource("2_bqnts")
+species = 31
+weight = 15
+
+[sub_resource type="Resource" id="Resource_d336c"]
+script = ExtResource("1_42mg7")
+id = 68
+mode = "native-weighted"
+world_level = 41
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_mqoyj"), SubResource("Resource_m6gc5"), SubResource("Resource_6di25"), SubResource("Resource_u17e6"), SubResource("Resource_b4y4f")])
+
+[sub_resource type="Resource" id="Resource_gdd4f"]
+script = ExtResource("2_bqnts")
+weight = 15
+
+[sub_resource type="Resource" id="Resource_yeqnq"]
+script = ExtResource("2_bqnts")
+species = 50
+weight = 35
+
+[sub_resource type="Resource" id="Resource_3bfqg"]
+script = ExtResource("2_bqnts")
+species = 10
+weight = 15
+
+[sub_resource type="Resource" id="Resource_lfi55"]
+script = ExtResource("2_bqnts")
+species = 81
+weight = 15
+
+[sub_resource type="Resource" id="Resource_jswhx"]
+script = ExtResource("2_bqnts")
+species = 76
+weight = 10
+
+[sub_resource type="Resource" id="Resource_xh2ux"]
+script = ExtResource("2_bqnts")
+species = 79
+weight = 10
+
+[sub_resource type="Resource" id="Resource_k3tcw"]
+script = ExtResource("1_42mg7")
+id = 69
+mode = "native-weighted"
+world_level = 42
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_gdd4f"), SubResource("Resource_yeqnq"), SubResource("Resource_3bfqg"), SubResource("Resource_lfi55"), SubResource("Resource_jswhx"), SubResource("Resource_xh2ux")])
+
+[sub_resource type="Resource" id="Resource_ftl4p"]
+script = ExtResource("2_bqnts")
+species = 90
+weight = 15
+
+[sub_resource type="Resource" id="Resource_xqyys"]
+script = ExtResource("2_bqnts")
+species = 118
+weight = 35
+
+[sub_resource type="Resource" id="Resource_2b2sw"]
+script = ExtResource("2_bqnts")
+species = 98
+weight = 20
+
+[sub_resource type="Resource" id="Resource_i6lp4"]
+script = ExtResource("2_bqnts")
+species = 123
+weight = 15
+
+[sub_resource type="Resource" id="Resource_7s4c7"]
+script = ExtResource("2_bqnts")
+species = 100
+weight = 15
+
+[sub_resource type="Resource" id="Resource_r4b3b"]
+script = ExtResource("1_42mg7")
+id = 70
+mode = "native-weighted"
+world_level = 45
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_ftl4p"), SubResource("Resource_xqyys"), SubResource("Resource_2b2sw"), SubResource("Resource_i6lp4"), SubResource("Resource_7s4c7")])
+
+[sub_resource type="Resource" id="Resource_1tv8y"]
+script = ExtResource("2_bqnts")
+species = 45
+weight = 15
+
+[sub_resource type="Resource" id="Resource_2x3in"]
+script = ExtResource("2_bqnts")
+species = 8
+weight = 35
+
+[sub_resource type="Resource" id="Resource_mp4nn"]
+script = ExtResource("2_bqnts")
+species = 121
+weight = 25
+
+[sub_resource type="Resource" id="Resource_12bmj"]
+script = ExtResource("2_bqnts")
+species = 58
+weight = 15
+
+[sub_resource type="Resource" id="Resource_nnd3k"]
+script = ExtResource("2_bqnts")
+species = 40
+weight = 1
+
+[sub_resource type="Resource" id="Resource_2slmh"]
+script = ExtResource("2_bqnts")
+species = 59
+weight = 10
+
+[sub_resource type="Resource" id="Resource_mbusr"]
+script = ExtResource("1_42mg7")
+id = 71
+mode = "native-weighted"
+world_level = 46
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_1tv8y"), SubResource("Resource_2x3in"), SubResource("Resource_mp4nn"), SubResource("Resource_12bmj"), SubResource("Resource_nnd3k"), SubResource("Resource_2slmh")])
+
+[sub_resource type="Resource" id="Resource_xcgp1"]
+script = ExtResource("2_bqnts")
+species = 112
+weight = 15
+
+[sub_resource type="Resource" id="Resource_esoh2"]
+script = ExtResource("2_bqnts")
+species = 96
+weight = 35
+
+[sub_resource type="Resource" id="Resource_ujvv3"]
+script = ExtResource("2_bqnts")
+species = 77
+weight = 25
+
+[sub_resource type="Resource" id="Resource_wv4d1"]
+script = ExtResource("2_bqnts")
+species = 15
+weight = 14
+
+[sub_resource type="Resource" id="Resource_lptsl"]
+script = ExtResource("2_bqnts")
+species = 19
+weight = 1
+
+[sub_resource type="Resource" id="Resource_b7vjo"]
+script = ExtResource("2_bqnts")
+species = 13
+weight = 10
+
+[sub_resource type="Resource" id="Resource_v30gw"]
+script = ExtResource("1_42mg7")
+id = 72
+mode = "native-weighted"
+world_level = 49
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_xcgp1"), SubResource("Resource_esoh2"), SubResource("Resource_ujvv3"), SubResource("Resource_wv4d1"), SubResource("Resource_lptsl"), SubResource("Resource_b7vjo")])
+
+[sub_resource type="Resource" id="Resource_ee2wr"]
+script = ExtResource("2_bqnts")
+species = 112
+weight = 15
+
+[sub_resource type="Resource" id="Resource_0hrwf"]
+script = ExtResource("2_bqnts")
+species = 96
+weight = 35
+
+[sub_resource type="Resource" id="Resource_edutu"]
+script = ExtResource("2_bqnts")
+species = 77
+weight = 25
+
+[sub_resource type="Resource" id="Resource_axxj0"]
+script = ExtResource("2_bqnts")
+species = 15
+weight = 14
+
+[sub_resource type="Resource" id="Resource_fnr2t"]
+script = ExtResource("2_bqnts")
+species = 19
+weight = 1
+
+[sub_resource type="Resource" id="Resource_a5kk6"]
+script = ExtResource("2_bqnts")
+species = 13
+weight = 10
+
+[sub_resource type="Resource" id="Resource_mxwew"]
+script = ExtResource("1_42mg7")
+id = 73
+mode = "native-weighted"
+world_level = 49
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_ee2wr"), SubResource("Resource_0hrwf"), SubResource("Resource_edutu"), SubResource("Resource_axxj0"), SubResource("Resource_fnr2t"), SubResource("Resource_a5kk6")])
+
+[sub_resource type="Resource" id="Resource_uussr"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 15
+
+[sub_resource type="Resource" id="Resource_0cu87"]
+script = ExtResource("2_bqnts")
+species = 118
+weight = 35
+
+[sub_resource type="Resource" id="Resource_kdujj"]
+script = ExtResource("2_bqnts")
+species = 54
+weight = 25
+
+[sub_resource type="Resource" id="Resource_hbuh4"]
+script = ExtResource("2_bqnts")
+species = 38
+weight = 14
+
+[sub_resource type="Resource" id="Resource_t72lv"]
+script = ExtResource("2_bqnts")
+species = 63
+weight = 1
+
+[sub_resource type="Resource" id="Resource_nes6s"]
+script = ExtResource("2_bqnts")
+species = 37
+weight = 10
+
+[sub_resource type="Resource" id="Resource_w5cen"]
+script = ExtResource("1_42mg7")
+id = 74
+mode = "native-weighted"
+world_level = 50
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_uussr"), SubResource("Resource_0cu87"), SubResource("Resource_kdujj"), SubResource("Resource_hbuh4"), SubResource("Resource_t72lv"), SubResource("Resource_nes6s")])
+
+[sub_resource type="Resource" id="Resource_jnk3u"]
+script = ExtResource("2_bqnts")
+species = 88
+weight = 15
+
+[sub_resource type="Resource" id="Resource_wbfqf"]
+script = ExtResource("2_bqnts")
+species = 114
+weight = 35
+
+[sub_resource type="Resource" id="Resource_po0v6"]
+script = ExtResource("2_bqnts")
+species = 11
+weight = 20
+
+[sub_resource type="Resource" id="Resource_vmitr"]
+script = ExtResource("2_bqnts")
+species = 103
+weight = 15
+
+[sub_resource type="Resource" id="Resource_2ncrp"]
+script = ExtResource("2_bqnts")
+species = 102
+weight = 15
+
+[sub_resource type="Resource" id="Resource_vpgme"]
+script = ExtResource("1_42mg7")
+id = 75
+mode = "native-weighted"
+world_level = 53
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_jnk3u"), SubResource("Resource_wbfqf"), SubResource("Resource_po0v6"), SubResource("Resource_vmitr"), SubResource("Resource_2ncrp")])
+
+[sub_resource type="Resource" id="Resource_f7c1n"]
+script = ExtResource("2_bqnts")
+species = 2
+weight = 15
+
+[sub_resource type="Resource" id="Resource_tsqed"]
+script = ExtResource("2_bqnts")
+species = 51
+weight = 35
+
+[sub_resource type="Resource" id="Resource_kaqvh"]
+script = ExtResource("2_bqnts")
+species = 34
+weight = 25
+
+[sub_resource type="Resource" id="Resource_38o6i"]
+script = ExtResource("2_bqnts")
+species = 82
+weight = 14
+
+[sub_resource type="Resource" id="Resource_smptf"]
+script = ExtResource("2_bqnts")
+species = 84
+weight = 1
+
+[sub_resource type="Resource" id="Resource_2rcr5"]
+script = ExtResource("2_bqnts")
+species = 124
+weight = 10
+
+[sub_resource type="Resource" id="Resource_0wiyu"]
+script = ExtResource("1_42mg7")
+id = 76
+mode = "native-weighted"
+world_level = 54
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_f7c1n"), SubResource("Resource_tsqed"), SubResource("Resource_kaqvh"), SubResource("Resource_38o6i"), SubResource("Resource_smptf"), SubResource("Resource_2rcr5")])
+
+[sub_resource type="Resource" id="Resource_uab6f"]
+script = ExtResource("2_bqnts")
+species = 113
+weight = 15
+
+[sub_resource type="Resource" id="Resource_pd6ch"]
+script = ExtResource("2_bqnts")
+species = 26
+weight = 35
+
+[sub_resource type="Resource" id="Resource_5u8b2"]
+script = ExtResource("2_bqnts")
+species = 99
+weight = 35
+
+[sub_resource type="Resource" id="Resource_qebyf"]
+script = ExtResource("2_bqnts")
+species = 125
+weight = 15
+
+[sub_resource type="Resource" id="Resource_q2gct"]
+script = ExtResource("1_42mg7")
+id = 77
+mode = "native-weighted"
+world_level = 55
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_uab6f"), SubResource("Resource_pd6ch"), SubResource("Resource_5u8b2"), SubResource("Resource_qebyf")])
+
+[sub_resource type="Resource" id="Resource_ixvqo"]
+script = ExtResource("2_bqnts")
+species = 113
+weight = 15
+
+[sub_resource type="Resource" id="Resource_nbr7b"]
+script = ExtResource("2_bqnts")
+species = 26
+weight = 35
+
+[sub_resource type="Resource" id="Resource_x4ybk"]
+script = ExtResource("2_bqnts")
+species = 99
+weight = 35
+
+[sub_resource type="Resource" id="Resource_avkp3"]
+script = ExtResource("2_bqnts")
+species = 125
+weight = 15
+
+[sub_resource type="Resource" id="Resource_b4uj3"]
+script = ExtResource("1_42mg7")
+id = 78
+mode = "native-weighted"
+world_level = 55
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_ixvqo"), SubResource("Resource_nbr7b"), SubResource("Resource_x4ybk"), SubResource("Resource_avkp3")])
+
+[sub_resource type="Resource" id="Resource_re8gx"]
+script = ExtResource("2_bqnts")
+species = 113
+weight = 15
+
+[sub_resource type="Resource" id="Resource_51uia"]
+script = ExtResource("2_bqnts")
+species = 26
+weight = 35
+
+[sub_resource type="Resource" id="Resource_esnxn"]
+script = ExtResource("2_bqnts")
+species = 99
+weight = 35
+
+[sub_resource type="Resource" id="Resource_gex5h"]
+script = ExtResource("2_bqnts")
+species = 125
+weight = 15
+
+[sub_resource type="Resource" id="Resource_xpkhg"]
+script = ExtResource("1_42mg7")
+id = 79
+mode = "native-weighted"
+world_level = 55
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_re8gx"), SubResource("Resource_51uia"), SubResource("Resource_esnxn"), SubResource("Resource_gex5h")])
+
+[sub_resource type="Resource" id="Resource_bdoue"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 15
+
+[sub_resource type="Resource" id="Resource_idxog"]
+script = ExtResource("2_bqnts")
+species = 115
+weight = 35
+
+[sub_resource type="Resource" id="Resource_irpbl"]
+script = ExtResource("2_bqnts")
+species = 122
+weight = 25
+
+[sub_resource type="Resource" id="Resource_e3glk"]
+script = ExtResource("2_bqnts")
+species = 60
+weight = 14
+
+[sub_resource type="Resource" id="Resource_4gf3c"]
+script = ExtResource("2_bqnts")
+species = 106
+weight = 1
+
+[sub_resource type="Resource" id="Resource_0dwt5"]
+script = ExtResource("2_bqnts")
+species = 57
+weight = 10
+
+[sub_resource type="Resource" id="Resource_rgb1n"]
+script = ExtResource("1_42mg7")
+id = 80
+mode = "native-weighted"
+world_level = 56
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_bdoue"), SubResource("Resource_idxog"), SubResource("Resource_irpbl"), SubResource("Resource_e3glk"), SubResource("Resource_4gf3c"), SubResource("Resource_0dwt5")])
+
+[sub_resource type="Resource" id="Resource_nv6nb"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 15
+
+[sub_resource type="Resource" id="Resource_auhpx"]
+script = ExtResource("2_bqnts")
+species = 115
+weight = 35
+
+[sub_resource type="Resource" id="Resource_pinpb"]
+script = ExtResource("2_bqnts")
+species = 122
+weight = 25
+
+[sub_resource type="Resource" id="Resource_p8ivk"]
+script = ExtResource("2_bqnts")
+species = 60
+weight = 14
+
+[sub_resource type="Resource" id="Resource_sk1d4"]
+script = ExtResource("2_bqnts")
+species = 106
+weight = 1
+
+[sub_resource type="Resource" id="Resource_npagt"]
+script = ExtResource("2_bqnts")
+species = 57
+weight = 10
+
+[sub_resource type="Resource" id="Resource_ds7vv"]
+script = ExtResource("1_42mg7")
+id = 81
+mode = "native-weighted"
+world_level = 56
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_nv6nb"), SubResource("Resource_auhpx"), SubResource("Resource_pinpb"), SubResource("Resource_p8ivk"), SubResource("Resource_sk1d4"), SubResource("Resource_npagt")])
+
+[sub_resource type="Resource" id="Resource_ay3t6"]
+script = ExtResource("2_bqnts")
+weight = 15
+
+[sub_resource type="Resource" id="Resource_gjpcy"]
+script = ExtResource("2_bqnts")
+species = 71
+weight = 35
+
+[sub_resource type="Resource" id="Resource_c7ayc"]
+script = ExtResource("2_bqnts")
+species = 78
+weight = 20
+
+[sub_resource type="Resource" id="Resource_sp55h"]
+script = ExtResource("2_bqnts")
+species = 16
+weight = 15
+
+[sub_resource type="Resource" id="Resource_54a5m"]
+script = ExtResource("2_bqnts")
+species = 14
+weight = 15
+
+[sub_resource type="Resource" id="Resource_7uimg"]
+script = ExtResource("1_42mg7")
+id = 82
+mode = "native-weighted"
+world_level = 58
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_ay3t6"), SubResource("Resource_gjpcy"), SubResource("Resource_c7ayc"), SubResource("Resource_sp55h"), SubResource("Resource_54a5m")])
+
+[sub_resource type="Resource" id="Resource_nqaf6"]
+script = ExtResource("2_bqnts")
+weight = 15
+
+[sub_resource type="Resource" id="Resource_2ei7h"]
+script = ExtResource("2_bqnts")
+species = 71
+weight = 35
+
+[sub_resource type="Resource" id="Resource_6vee3"]
+script = ExtResource("2_bqnts")
+species = 78
+weight = 20
+
+[sub_resource type="Resource" id="Resource_7imwg"]
+script = ExtResource("2_bqnts")
+species = 16
+weight = 15
+
+[sub_resource type="Resource" id="Resource_uhnn1"]
+script = ExtResource("2_bqnts")
+species = 14
+weight = 15
+
+[sub_resource type="Resource" id="Resource_yobkc"]
+script = ExtResource("1_42mg7")
+id = 83
+mode = "native-weighted"
+world_level = 58
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_nqaf6"), SubResource("Resource_2ei7h"), SubResource("Resource_6vee3"), SubResource("Resource_7imwg"), SubResource("Resource_uhnn1")])
+
+[sub_resource type="Resource" id="Resource_4tqux"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 15
+
+[sub_resource type="Resource" id="Resource_s5lv8"]
+script = ExtResource("2_bqnts")
+species = 74
+weight = 35
+
+[sub_resource type="Resource" id="Resource_hkwxt"]
+script = ExtResource("2_bqnts")
+species = 55
+weight = 15
+
+[sub_resource type="Resource" id="Resource_ihj3s"]
+script = ExtResource("2_bqnts")
+species = 36
+weight = 15
+
+[sub_resource type="Resource" id="Resource_c8le2"]
+script = ExtResource("2_bqnts")
+species = 126
+weight = 10
+
+[sub_resource type="Resource" id="Resource_sjq20"]
+script = ExtResource("2_bqnts")
+species = 104
+weight = 10
+
+[sub_resource type="Resource" id="Resource_fevxr"]
+script = ExtResource("1_42mg7")
+id = 84
+mode = "native-weighted"
+world_level = 59
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_4tqux"), SubResource("Resource_s5lv8"), SubResource("Resource_hkwxt"), SubResource("Resource_ihj3s"), SubResource("Resource_c8le2"), SubResource("Resource_sjq20")])
+
+[sub_resource type="Resource" id="Resource_8mlb5"]
+script = ExtResource("2_bqnts")
+species = 22
+weight = 15
+
+[sub_resource type="Resource" id="Resource_ngpwl"]
+script = ExtResource("2_bqnts")
+species = 74
+weight = 35
+
+[sub_resource type="Resource" id="Resource_xp2o1"]
+script = ExtResource("2_bqnts")
+species = 55
+weight = 15
+
+[sub_resource type="Resource" id="Resource_ji0tx"]
+script = ExtResource("2_bqnts")
+species = 36
+weight = 15
+
+[sub_resource type="Resource" id="Resource_a5olw"]
+script = ExtResource("2_bqnts")
+species = 126
+weight = 10
+
+[sub_resource type="Resource" id="Resource_ub7lq"]
+script = ExtResource("2_bqnts")
+species = 104
+weight = 10
+
+[sub_resource type="Resource" id="Resource_prwdj"]
+script = ExtResource("1_42mg7")
+id = 85
+mode = "native-weighted"
+world_level = 59
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_8mlb5"), SubResource("Resource_ngpwl"), SubResource("Resource_xp2o1"), SubResource("Resource_ji0tx"), SubResource("Resource_a5olw"), SubResource("Resource_ub7lq")])
+
+[sub_resource type="Resource" id="Resource_ytbrs"]
+script = ExtResource("2_bqnts")
+species = 90
+weight = 15
+
+[sub_resource type="Resource" id="Resource_fhot2"]
+script = ExtResource("2_bqnts")
+species = 27
+weight = 35
+
+[sub_resource type="Resource" id="Resource_2klhk"]
+script = ExtResource("2_bqnts")
+species = 33
+weight = 15
+
+[sub_resource type="Resource" id="Resource_ys023"]
+script = ExtResource("2_bqnts")
+species = 101
+weight = 15
+
+[sub_resource type="Resource" id="Resource_qpj2m"]
+script = ExtResource("2_bqnts")
+species = 126
+weight = 10
+
+[sub_resource type="Resource" id="Resource_0sjyp"]
+script = ExtResource("2_bqnts")
+species = 104
+weight = 10
+
+[sub_resource type="Resource" id="Resource_n68fc"]
+script = ExtResource("1_42mg7")
+id = 86
+mode = "native-weighted"
+world_level = 60
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_ytbrs"), SubResource("Resource_fhot2"), SubResource("Resource_2klhk"), SubResource("Resource_ys023"), SubResource("Resource_qpj2m"), SubResource("Resource_0sjyp")])
+
+[sub_resource type="Resource" id="Resource_gaj40"]
+script = ExtResource("2_bqnts")
+species = 90
+weight = 15
+
+[sub_resource type="Resource" id="Resource_612mo"]
+script = ExtResource("2_bqnts")
+species = 27
+weight = 35
+
+[sub_resource type="Resource" id="Resource_7xja8"]
+script = ExtResource("2_bqnts")
+species = 33
+weight = 15
+
+[sub_resource type="Resource" id="Resource_npipa"]
+script = ExtResource("2_bqnts")
+species = 101
+weight = 15
+
+[sub_resource type="Resource" id="Resource_ecdix"]
+script = ExtResource("2_bqnts")
+species = 126
+weight = 10
+
+[sub_resource type="Resource" id="Resource_aie6h"]
+script = ExtResource("2_bqnts")
+species = 104
+weight = 10
+
+[sub_resource type="Resource" id="Resource_ou2sq"]
+script = ExtResource("1_42mg7")
+id = 87
+mode = "native-weighted"
+world_level = 60
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_gaj40"), SubResource("Resource_612mo"), SubResource("Resource_7xja8"), SubResource("Resource_npipa"), SubResource("Resource_ecdix"), SubResource("Resource_aie6h")])
+
+[sub_resource type="Resource" id="Resource_qes8b"]
+script = ExtResource("2_bqnts")
+species = 47
+weight = 15
+
+[sub_resource type="Resource" id="Resource_d4670"]
+script = ExtResource("2_bqnts")
+species = 5
+weight = 35
+
+[sub_resource type="Resource" id="Resource_wvcs6"]
+script = ExtResource("2_bqnts")
+species = 75
+weight = 25
+
+[sub_resource type="Resource" id="Resource_ws3au"]
+script = ExtResource("2_bqnts")
+species = 81
+weight = 14
+
+[sub_resource type="Resource" id="Resource_xg8wc"]
+script = ExtResource("2_bqnts")
+species = 127
+weight = 1
+
+[sub_resource type="Resource" id="Resource_x2d1h"]
+script = ExtResource("2_bqnts")
+species = 80
+weight = 10
+
+[sub_resource type="Resource" id="Resource_k848j"]
+script = ExtResource("1_42mg7")
+id = 88
+mode = "native-weighted"
+world_level = 61
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_qes8b"), SubResource("Resource_d4670"), SubResource("Resource_wvcs6"), SubResource("Resource_ws3au"), SubResource("Resource_xg8wc"), SubResource("Resource_x2d1h")])
+
+[sub_resource type="Resource" id="Resource_dtawq"]
+script = ExtResource("2_bqnts")
+species = 47
+weight = 15
+
+[sub_resource type="Resource" id="Resource_soptc"]
+script = ExtResource("2_bqnts")
+species = 5
+weight = 35
+
+[sub_resource type="Resource" id="Resource_vkpbn"]
+script = ExtResource("2_bqnts")
+species = 75
+weight = 25
+
+[sub_resource type="Resource" id="Resource_v3vvd"]
+script = ExtResource("2_bqnts")
+species = 81
+weight = 14
+
+[sub_resource type="Resource" id="Resource_qsrh4"]
+script = ExtResource("2_bqnts")
+species = 127
+weight = 1
+
+[sub_resource type="Resource" id="Resource_sh672"]
+script = ExtResource("2_bqnts")
+species = 80
+weight = 10
+
+[sub_resource type="Resource" id="Resource_eb3he"]
+script = ExtResource("1_42mg7")
+id = 89
+mode = "native-weighted"
+world_level = 61
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_dtawq"), SubResource("Resource_soptc"), SubResource("Resource_vkpbn"), SubResource("Resource_v3vvd"), SubResource("Resource_qsrh4"), SubResource("Resource_sh672")])
+
+[sub_resource type="Resource" id="Resource_8dkq6"]
+script = ExtResource("2_bqnts")
+species = 47
+weight = 15
+
+[sub_resource type="Resource" id="Resource_5a8oq"]
+script = ExtResource("2_bqnts")
+species = 5
+weight = 35
+
+[sub_resource type="Resource" id="Resource_ryyqb"]
+script = ExtResource("2_bqnts")
+species = 75
+weight = 25
+
+[sub_resource type="Resource" id="Resource_wigys"]
+script = ExtResource("2_bqnts")
+species = 81
+weight = 14
+
+[sub_resource type="Resource" id="Resource_jkfiu"]
+script = ExtResource("2_bqnts")
+species = 127
+weight = 1
+
+[sub_resource type="Resource" id="Resource_71jp2"]
+script = ExtResource("2_bqnts")
+species = 80
+weight = 10
+
+[sub_resource type="Resource" id="Resource_6u3bp"]
+script = ExtResource("1_42mg7")
+id = 90
+mode = "native-weighted"
+world_level = 61
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_8dkq6"), SubResource("Resource_5a8oq"), SubResource("Resource_ryyqb"), SubResource("Resource_wigys"), SubResource("Resource_jkfiu"), SubResource("Resource_71jp2")])
+
+[sub_resource type="Resource" id="Resource_3ksrg"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 15
+
+[sub_resource type="Resource" id="Resource_h1ukk"]
+script = ExtResource("2_bqnts")
+species = 93
+weight = 35
+
+[sub_resource type="Resource" id="Resource_a05ok"]
+script = ExtResource("2_bqnts")
+species = 119
+weight = 35
+
+[sub_resource type="Resource" id="Resource_vj51b"]
+script = ExtResource("2_bqnts")
+species = 123
+weight = 15
+
+[sub_resource type="Resource" id="Resource_dqiji"]
+script = ExtResource("1_42mg7")
+id = 91
+mode = "native-weighted"
+world_level = 64
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_3ksrg"), SubResource("Resource_h1ukk"), SubResource("Resource_a05ok"), SubResource("Resource_vj51b")])
+
+[sub_resource type="Resource" id="Resource_yywef"]
+script = ExtResource("2_bqnts")
+species = 24
+weight = 15
+
+[sub_resource type="Resource" id="Resource_c7c2w"]
+script = ExtResource("2_bqnts")
+species = 93
+weight = 35
+
+[sub_resource type="Resource" id="Resource_6u08k"]
+script = ExtResource("2_bqnts")
+species = 119
+weight = 35
+
+[sub_resource type="Resource" id="Resource_kbfcn"]
+script = ExtResource("2_bqnts")
+species = 123
+weight = 15
+
+[sub_resource type="Resource" id="Resource_ywtuq"]
+script = ExtResource("1_42mg7")
+id = 92
+mode = "native-weighted"
+world_level = 64
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_yywef"), SubResource("Resource_c7c2w"), SubResource("Resource_6u08k"), SubResource("Resource_kbfcn")])
+
+[sub_resource type="Resource" id="Resource_qq8af"]
+script = ExtResource("2_bqnts")
+species = 88
+weight = 15
+
+[sub_resource type="Resource" id="Resource_gvqhn"]
+script = ExtResource("2_bqnts")
+species = 28
+weight = 35
+
+[sub_resource type="Resource" id="Resource_egbgf"]
+script = ExtResource("2_bqnts")
+species = 121
+weight = 35
+
+[sub_resource type="Resource" id="Resource_uidlv"]
+script = ExtResource("2_bqnts")
+species = 125
+weight = 15
+
+[sub_resource type="Resource" id="Resource_x365h"]
+script = ExtResource("1_42mg7")
+id = 93
+mode = "native-weighted"
+world_level = 65
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_qq8af"), SubResource("Resource_gvqhn"), SubResource("Resource_egbgf"), SubResource("Resource_uidlv")])
+
+[sub_resource type="Resource" id="Resource_c7r5v"]
+script = ExtResource("2_bqnts")
+species = 88
+weight = 15
+
+[sub_resource type="Resource" id="Resource_0c7ip"]
+script = ExtResource("2_bqnts")
+species = 28
+weight = 35
+
+[sub_resource type="Resource" id="Resource_b6b64"]
+script = ExtResource("2_bqnts")
+species = 121
+weight = 35
+
+[sub_resource type="Resource" id="Resource_2haen"]
+script = ExtResource("2_bqnts")
+species = 125
+weight = 15
+
+[sub_resource type="Resource" id="Resource_3qhmd"]
+script = ExtResource("1_42mg7")
+id = 94
+mode = "native-weighted"
+world_level = 65
+pool = Array[ExtResource("2_bqnts")]([SubResource("Resource_c7r5v"), SubResource("Resource_0c7ip"), SubResource("Resource_b6b64"), SubResource("Resource_2haen")])
+
+[sub_resource type="Resource" id="Resource_wpeg0"]
+script = ExtResource("1_42mg7")
+id = 95
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_kopg1"]
+script = ExtResource("1_42mg7")
+id = 96
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_52f6j"]
+script = ExtResource("1_42mg7")
+id = 97
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_t5wt4"]
+script = ExtResource("1_42mg7")
+id = 98
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_7ddlk"]
+script = ExtResource("1_42mg7")
+id = 99
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_q6xmn"]
+script = ExtResource("1_42mg7")
+id = 100
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_cx8tv"]
+script = ExtResource("1_42mg7")
+id = 101
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_ne1st"]
+script = ExtResource("1_42mg7")
+id = 102
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_mq0rl"]
+script = ExtResource("1_42mg7")
+id = 103
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_j4fqh"]
+script = ExtResource("1_42mg7")
+id = 104
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_pbefs"]
+script = ExtResource("1_42mg7")
+id = 105
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_hiwai"]
+script = ExtResource("1_42mg7")
+id = 106
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_3a8h8"]
+script = ExtResource("1_42mg7")
+id = 107
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_8ayc4"]
+script = ExtResource("1_42mg7")
+id = 108
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_2y6sg"]
+script = ExtResource("1_42mg7")
+id = 109
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_tewxo"]
+script = ExtResource("1_42mg7")
+id = 110
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_a4n4s"]
+script = ExtResource("1_42mg7")
+id = 111
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_vhr1y"]
+script = ExtResource("1_42mg7")
+id = 112
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_wdnxc"]
+script = ExtResource("1_42mg7")
+id = 113
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_uohtq"]
+script = ExtResource("1_42mg7")
+id = 114
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_tvwt6"]
+script = ExtResource("1_42mg7")
+id = 115
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_s41mx"]
+script = ExtResource("1_42mg7")
+id = 116
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_424ee"]
+script = ExtResource("1_42mg7")
+id = 117
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_oe7ud"]
+script = ExtResource("1_42mg7")
+id = 118
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_i2o1b"]
+script = ExtResource("1_42mg7")
+id = 119
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_mp7rk"]
+script = ExtResource("1_42mg7")
+id = 120
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_ns3uh"]
+script = ExtResource("1_42mg7")
+id = 121
+mode = "native-dynamic-unimplemented"
+
+[sub_resource type="Resource" id="Resource_4rtxv"]
+script = ExtResource("1_42mg7")
+id = 122
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_kwbdi"]
+script = ExtResource("1_42mg7")
+id = 123
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_54j4e"]
+script = ExtResource("1_42mg7")
+id = 124
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_xu47v"]
+script = ExtResource("1_42mg7")
+id = 125
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_3v3gt"]
+script = ExtResource("1_42mg7")
+id = 126
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_18vl5"]
+script = ExtResource("1_42mg7")
+id = 127
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_xfj8c"]
+script = ExtResource("1_42mg7")
+id = 128
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_cq3mt"]
+script = ExtResource("1_42mg7")
+id = 129
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_3k8iv"]
+script = ExtResource("1_42mg7")
+id = 130
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_g45cn"]
+script = ExtResource("1_42mg7")
+id = 131
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_d5mmp"]
+script = ExtResource("1_42mg7")
+id = 132
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_2lqlk"]
+script = ExtResource("1_42mg7")
+id = 133
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_n1j03"]
+script = ExtResource("1_42mg7")
+id = 134
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_6nrph"]
+script = ExtResource("1_42mg7")
+id = 135
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_nry3u"]
+script = ExtResource("1_42mg7")
+id = 136
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_vyj6u"]
+script = ExtResource("1_42mg7")
+id = 137
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_vnc6l"]
+script = ExtResource("1_42mg7")
+id = 138
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_2sc1r"]
+script = ExtResource("1_42mg7")
+id = 139
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_sd4pp"]
+script = ExtResource("1_42mg7")
+id = 140
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_t5peq"]
+script = ExtResource("1_42mg7")
+id = 141
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_ml6io"]
+script = ExtResource("1_42mg7")
+id = 142
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_1eroy"]
+script = ExtResource("1_42mg7")
+id = 143
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_51e45"]
+script = ExtResource("1_42mg7")
+id = 144
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_ne20g"]
+script = ExtResource("1_42mg7")
+id = 145
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_l4ymf"]
+script = ExtResource("1_42mg7")
+id = 146
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_hls6c"]
+script = ExtResource("1_42mg7")
+id = 147
+mode = "native-weighted"
+
+[sub_resource type="Resource" id="Resource_dq3a6"]
+script = ExtResource("1_42mg7")
+id = 148
+mode = "native-weighted"
+
+[resource]
+script = ExtResource("data_script")
+encounters = Array[ExtResource("1_42mg7")]([SubResource("Resource_jbjdk"), SubResource("Resource_ai7tm"), SubResource("Resource_o7alm"), SubResource("Resource_jkpsu"), SubResource("Resource_myfya"), SubResource("Resource_4xkm3"), SubResource("Resource_1r6lh"), SubResource("Resource_uls84"), SubResource("Resource_tgkg3"), SubResource("Resource_wf843"), SubResource("Resource_7dy1p"), SubResource("Resource_3q2id"), SubResource("Resource_xyarn"), SubResource("Resource_livou"), SubResource("Resource_gpdpb"), SubResource("Resource_guvoa"), SubResource("Resource_7f681"), SubResource("Resource_83qur"), SubResource("Resource_ay7rw"), SubResource("Resource_by60t"), SubResource("Resource_wfu4r"), SubResource("Resource_008yy"), SubResource("Resource_f4hyg"), SubResource("Resource_jwkrd"), SubResource("Resource_owf25"), SubResource("Resource_g1561"), SubResource("Resource_vtvrt"), SubResource("Resource_swgdw"), SubResource("Resource_sshco"), SubResource("Resource_666so"), SubResource("Resource_endjm"), SubResource("Resource_ns1ex"), SubResource("Resource_o6t0o"), SubResource("Resource_g4awu"), SubResource("Resource_tj62c"), SubResource("Resource_htl8n"), SubResource("Resource_5qtbj"), SubResource("Resource_cuphh"), SubResource("Resource_rod0v"), SubResource("Resource_pf1u4"), SubResource("Resource_8llt1"), SubResource("Resource_u8b4w"), SubResource("Resource_04acw"), SubResource("Resource_teinc"), SubResource("Resource_5yd28"), SubResource("Resource_ukysg"), SubResource("Resource_fgqwk"), SubResource("Resource_w110v"), SubResource("Resource_pne34"), SubResource("Resource_aibj0"), SubResource("Resource_xcijl"), SubResource("Resource_2hhbh"), SubResource("Resource_wj0wg"), SubResource("Resource_nwcgv"), SubResource("Resource_gkojj"), SubResource("Resource_rawdm"), SubResource("Resource_1602k"), SubResource("Resource_jfpnm"), SubResource("Resource_j5mgs"), SubResource("Resource_u15lh"), SubResource("Resource_a5ckc"), SubResource("Resource_437b1"), SubResource("Resource_7jd36"), SubResource("Resource_xvevr"), SubResource("Resource_v4ug7"), SubResource("Resource_womtj"), SubResource("Resource_4y1f1"), SubResource("Resource_j717u"), SubResource("Resource_d336c"), SubResource("Resource_k3tcw"), SubResource("Resource_r4b3b"), SubResource("Resource_mbusr"), SubResource("Resource_v30gw"), SubResource("Resource_mxwew"), SubResource("Resource_w5cen"), SubResource("Resource_vpgme"), SubResource("Resource_0wiyu"), SubResource("Resource_q2gct"), SubResource("Resource_b4uj3"), SubResource("Resource_xpkhg"), SubResource("Resource_rgb1n"), SubResource("Resource_ds7vv"), SubResource("Resource_7uimg"), SubResource("Resource_yobkc"), SubResource("Resource_fevxr"), SubResource("Resource_prwdj"), SubResource("Resource_n68fc"), SubResource("Resource_ou2sq"), SubResource("Resource_k848j"), SubResource("Resource_eb3he"), SubResource("Resource_6u3bp"), SubResource("Resource_dqiji"), SubResource("Resource_ywtuq"), SubResource("Resource_x365h"), SubResource("Resource_3qhmd"), SubResource("Resource_wpeg0"), SubResource("Resource_kopg1"), SubResource("Resource_52f6j"), SubResource("Resource_t5wt4"), SubResource("Resource_7ddlk"), SubResource("Resource_q6xmn"), SubResource("Resource_cx8tv"), SubResource("Resource_ne1st"), SubResource("Resource_mq0rl"), SubResource("Resource_j4fqh"), SubResource("Resource_pbefs"), SubResource("Resource_hiwai"), SubResource("Resource_3a8h8"), SubResource("Resource_8ayc4"), SubResource("Resource_2y6sg"), SubResource("Resource_tewxo"), SubResource("Resource_a4n4s"), SubResource("Resource_vhr1y"), SubResource("Resource_wdnxc"), SubResource("Resource_uohtq"), SubResource("Resource_tvwt6"), SubResource("Resource_s41mx"), SubResource("Resource_424ee"), SubResource("Resource_oe7ud"), SubResource("Resource_i2o1b"), SubResource("Resource_mp7rk"), SubResource("Resource_ns3uh"), SubResource("Resource_4rtxv"), SubResource("Resource_kwbdi"), SubResource("Resource_54j4e"), SubResource("Resource_xu47v"), SubResource("Resource_3v3gt"), SubResource("Resource_18vl5"), SubResource("Resource_xfj8c"), SubResource("Resource_cq3mt"), SubResource("Resource_3k8iv"), SubResource("Resource_g45cn"), SubResource("Resource_d5mmp"), SubResource("Resource_2lqlk"), SubResource("Resource_n1j03"), SubResource("Resource_6nrph"), SubResource("Resource_nry3u"), SubResource("Resource_vyj6u"), SubResource("Resource_vnc6l"), SubResource("Resource_2sc1r"), SubResource("Resource_sd4pp"), SubResource("Resource_t5peq"), SubResource("Resource_ml6io"), SubResource("Resource_1eroy"), SubResource("Resource_51e45"), SubResource("Resource_ne20g"), SubResource("Resource_l4ymf"), SubResource("Resource_hls6c"), SubResource("Resource_dq3a6")])

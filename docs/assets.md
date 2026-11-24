@@ -105,3 +105,19 @@ godot --headless --path . --import
 
 整张 `ui_window.webp` 仍保留，仅作为运行时精灵 id（`common/ui_window/frame-NNN`）的图集，
 供 6 个数据驱动脚本按 id 取帧；界面场景已不再引用它。
+
+## 玩法数据表
+
+`core/gameplay.tres`（322 KB，6 张表塞在一起）已按功能拆开，各自放到使用它的目录：
+
+| 表 | 文件 | 记录数 | 体量 |
+| --- | --- | --- | --- |
+| `items` | `core/gameplay_items.tres` | 367 | 125 KB |
+| `monsters` | `monsters/gameplay_monsters.tres` | 132 | 50 KB |
+| `passives` | `battle/gameplay_passives.tres` | 168 | 26 KB |
+| `encounters` | `field/gameplay_encounters.tres` | 149 | 73 KB |
+| `script_battles` | `battle/gameplay_script_battles.tres` | 98 | 32 KB |
+| `npcs` | `field/gameplay_npcs.tres` | 52 | 8 KB |
+
+`ResourceCatalog.load_gameplay_catalog()` 在首次访问时把六份拼回一个 `GameplayData` 门面对象，
+所以 `catalog.monster(id)`、`catalog.item(id)` 等调用点与传入 `GameplayData` 的 40 多处签名都不用改。
