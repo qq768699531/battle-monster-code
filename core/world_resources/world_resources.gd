@@ -46,7 +46,7 @@ func initialize(asset_catalog: Node, event_scripts: Variant = null) -> bool:
 	map_ids.sort()
 	# 事件脚本总表：Scene 传入优先；没传就用共享的 `assets/events.tres`。
 	if _event_scripts == null:
-		_event_scripts = load("res://main/main/event_scripts.tres")
+		_event_scripts = load("res://field/event_scripts/event_scripts.tres")
 	if _event_scripts != null and not _event_scripts.scripts.is_empty():
 		for id: Variant in _event_scripts.scripts.keys():
 			_events[int(id)] = _event_scripts.scripts[id]
