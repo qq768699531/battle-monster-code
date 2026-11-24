@@ -1,5 +1,5 @@
 [gd_scene load_steps=13 format=3]
-[ext_resource type="Texture2D" path="res://core/ui_parts/plus_minus/plus_minus.webp" id="part_plus_minus"]
+[ext_resource type="Texture2D" path="res://core/plus_minus/plus_minus.webp" id="part_plus_minus"]
 [ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://menu/item_discard/item_discard.gd" id="1"]

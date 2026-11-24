@@ -1,5 +1,5 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/ui_parts/gold_icon/gold_icon.webp" id="part_gold_icon"]
+[ext_resource type="Texture2D" path="res://core/gold_icon/gold_icon.webp" id="part_gold_icon"]
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 [ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
 

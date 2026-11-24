@@ -1,7 +1,7 @@
 [gd_scene format=3]
 [ext_resource type="Texture2D" path="res://menu/status_monster/rarity_bar.webp" id="part_rarity_bar"]
-[ext_resource type="Texture2D" path="res://core/ui_parts/party_heading/party_heading.webp" id="part_party_heading"]
-[ext_resource type="Texture2D" path="res://core/ui_parts/stat_icon/stat_icon.webp" id="part_stat_icon"]
+[ext_resource type="Texture2D" path="res://core/party_heading/party_heading.webp" id="part_party_heading"]
+[ext_resource type="Texture2D" path="res://core/stat_icon/stat_icon.webp" id="part_stat_icon"]
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 [ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
 
