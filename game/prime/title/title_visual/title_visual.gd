@@ -15,7 +15,6 @@ var _title_sprites: Array[Sprite2D] = []
 var _menu_labels: Array[Label] = []
 var _menu_text: Array[String] = []
 var _title_textures: Array[Texture2D] = []
-var _flash_selection := -1
 var _capture_viewport: SubViewport
 var _captured_background: Texture2D
 var _last_title_frame := 17
@@ -25,8 +24,6 @@ var _menu_open := false
 var _playing := ""
 var _shown_frame := 0
 @onready var _fade_overlay: ColorRect = $Fade
-@onready var _title_flash: Node2D = $Flash
-@onready var _flash_player: AnimationPlayer = $Flash/Player
 @onready var _player: AnimationPlayer = $Player
 @onready var _logo: Node2D = $Logo
 @onready var _title_group: Node2D = $TitleGroup
@@ -36,15 +33,9 @@ func _ready() -> void:
 		_title_sprites.append(item.get_node("Image"))
 		_menu_labels.append(item.get_node("Label"))
 	_stop_ani_players()
-	_ready_shine()
 
 
 ## 子 ANI 的 AnimationPlayer 自带 autoplay，先停住，等 Scene 动画在指定时刻把它们叫起来。
-func _ready_shine() -> void:
-	_flash_player.animation_finished.connect(func(_name: StringName) -> void:
-		_title_flash.visible = false)
-
-
 func _stop_ani_players() -> void:
 	for path: String in ANI_PLAYERS:
 		(get_node(path) as AnimationPlayer).stop()
@@ -63,8 +54,6 @@ func reset() -> void:
 	for label in _menu_labels: label.hide()
 	for item in $Menu.get_children(): item.hide()
 	_fade_overlay.visible = false
-	_title_flash.visible = false
-	_flash_selection = -1
 
 
 func present(paint: Dictionary) -> void:
@@ -163,10 +152,7 @@ func _freeze_title_capture(viewport: SubViewport) -> void:
 
 func _render_menu(items: Array) -> void:
 	if not _menu_open:
-		_title_flash.visible = false
-		_flash_selection = -1
 		return
-	var selected := -1
 	for item_value: Variant in items:
 		if not item_value is Dictionary:
 			continue
@@ -176,31 +162,7 @@ func _render_menu(items: Array) -> void:
 			continue
 		var display := $Menu.get_child(index)
 		display.present(item, _menu_text[index], _title_textures[int(item.image)])
-		if bool(item.selected):
-			selected = index
-	# 换选时重播一次扫光：斜光从按钮左边滑到右边，动画在 Scene 的 AnimationPlayer 里。
-	if selected != _flash_selection:
-		_flash_selection = selected
-		_play_shine(selected)
 
-
-## 把扫光挂到选中按钮的底条节点下：底条 `clip_children` 一开，扫光就被底条的 alpha
-## （含圆角）裁住，不会溢到按钮外面。
-func _play_shine(index: int) -> void:
-	if index < 0 or index >= $Menu.get_child_count():
-		_title_flash.visible = false
-		return
-	var display: Node2D = $Menu.get_child(index)
-	var bar: Sprite2D = display.get_node("Image")
-	# 遮罩节点与底条同贴图、只画子节点：扫光被底条的 alpha（含圆角）裁住。
-	var mask: Sprite2D = display.get_node("ShineMask")
-	mask.texture = bar.texture
-	if _title_flash.get_parent() != mask:
-		_title_flash.reparent(mask, false)
-	_title_flash.position = Vector2.ZERO
-	_title_flash.visible = true
-	_flash_player.stop()
-	_flash_player.play("shine")
 
 func menu_regions(selection: int, coordinate_space: Node2D = null) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []

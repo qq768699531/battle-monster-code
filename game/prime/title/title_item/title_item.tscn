@@ -8,13 +8,6 @@ z_index = 300
 position = Vector2(-40, 0)
 centered = false
 texture_filter = 1
-[node name="ShineMask" type="Sprite2D" parent="."]
-z_index = 300
-position = Vector2(-40, 0)
-centered = false
-clip_children = 1
-texture_filter = 1
-
 [node name="Label" type="Label" parent="."]
 z_index = 400
 offset_left = -50.0

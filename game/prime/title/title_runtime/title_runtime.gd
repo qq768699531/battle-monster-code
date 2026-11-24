@@ -45,6 +45,8 @@ static func title_layout(selection: int, opening: int, highlight: int) -> Dictio
 		if opening != 2:
 			center_y += int(float(spread * (63 + 28 * index - 120)) / 100.0)
 		var active := interactive and selection == index
+		# 原版 `Prime_Title_DrawItem` 的闪光相位：选中后 0..3 帧，之后不再画。
+		var flash := highlight if active and highlight < 4 else -1
 
 		var offset := 11
 		if active:
@@ -62,6 +64,7 @@ static func title_layout(selection: int, opening: int, highlight: int) -> Dictio
 			"text_id": C.TITLE_TEXT_IDS[index],
 			"opacity": 0.5 if opening == 2 else 1.0,
 			"image": 0 if active else 1,
+			"flash_phase": flash,
 
 		})
 		if interactive:

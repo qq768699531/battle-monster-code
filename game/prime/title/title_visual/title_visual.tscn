@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dkkm4um34f8dk"]
+[gd_scene load_steps=13 format=3 uid="uid://dkkm4um34f8dk"]
 [ext_resource type="Texture2D" path="res://game/prime/title/title_visual/title_visual.webp" id="Sheet_common_ui_grade"]
 
 [ext_resource type="Script" uid="uid://qgw48kxhkey5" path="res://game/prime/title/title_visual/title_visual.gd" id="1"]
@@ -210,27 +210,6 @@ _data = {
 [sub_resource type="CanvasItemMaterial" id="AddBlend"]
 blend_mode = 1
 
-[sub_resource type="Animation" id="ShineAnim"]
-resource_name = "shine"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Shine:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-24, 0), Vector2(104, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="ShineLibrary"]
-_data = {
-&"shine": SubResource("ShineAnim")
-}
-
 [node name="Title" type="Node2D" unique_id=776554764]
 script = ExtResource("1")
 
@@ -324,16 +303,3 @@ z_index = 250
 offset_right = 400.0
 offset_bottom = 240.0
 mouse_filter = 2
-
-[node name="Flash" type="Node2D" parent="."]
-visible = false
-z_index = 1
-
-[node name="Shine" type="Polygon2D" parent="Flash"]
-color = Color(1, 1, 1, 0.6)
-polygon = PackedVector2Array(8, 0, 26, 0, 10, 23, -8, 23)
-material = SubResource("AddBlend")
-
-[node name="Player" type="AnimationPlayer" parent="Flash"]
-root_node = NodePath("..")
-libraries/ = SubResource("ShineLibrary")
