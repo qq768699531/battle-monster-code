@@ -61,3 +61,6 @@ desktop.ini
 
 # --- Godot UID 附属文件（引擎生成，不入库）---
 **/*.uid
+
+# --- 测试自检产物（跑完即删，万一残留也不入库）---
+tests/.field-runtime-check-*
