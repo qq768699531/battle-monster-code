@@ -298,3 +298,17 @@ actors/hero/h_b_01/   h_b_01.tscn + h_b_01.webp + 1.tres   （NPC 1 用主角背
 ```
 
 `ResourceCatalog.GAMEPLAY_OBJECT_DIRS["npcs"]` 改为递归扫描 `res://actors`。
+
+## actors 的分组
+
+`actors/` 不再把立绘、物件、特效都平铺在根上：
+
+```text
+actors/
+  portrait/fc00 … fc49     角色立绘（face/fcNN）
+  objects/obj_f_01 … obj_f_99  场景物件演员
+  effects/ui_eff, f_emoticon   特效演员
+  hero/h_f_01, h_b_01          主角
+  npc/n_f_02 … n_f_49          NPC
+  shared/                      共用图集
+```

@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" path="res://core/number/number_top.tscn" id="num_top"]
 [ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://core/monster_animation/monster_animation.tscn" id="monster"]
-[ext_resource type="PackedScene" path="res://actors/ui_eff/ui_eff.tscn" id="effect"]
+[ext_resource type="PackedScene" path="res://actors/effects/ui_eff/ui_eff.tscn" id="effect"]
 [ext_resource type="Shader" path="res://core/number/native_number_palette.gdshader" id="key"]
 
 [sub_resource type="AtlasTexture" id="Atlas_headings"]
