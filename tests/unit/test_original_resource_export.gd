@@ -6,7 +6,7 @@ func test_legacy_suite() -> void:
 
 func _test() -> void:
 	var catalog: GameplayData = get_tree().root.get_node("AssetCatalog").load_gameplay_catalog()
-	assert_true(catalog != null and catalog.items.size() == 367 and catalog.monsters.size() == 131
+	assert_true(catalog != null and catalog.items.size() == 367 and catalog.monsters.size() == 132
 		and catalog.passives.size() == 168 and catalog.encounters.size() == 149
 		and catalog.script_battles.size() == 98,
 		"Gameplay data loads as a typed resource with the full native tables.")
