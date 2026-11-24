@@ -1,4 +1,4 @@
-extends "res://battle/result/result.gd"
+extends "res://game/battle/presentation/result/result.gd"
 
 ## 原生 `Field_Quest_Complete_*`（`FieldCanvas` 状态 11，任务结算）：
 ## `Field_Quest_Complete_init`（清 `online_battle_monsters` → `SetResult(quest_id)` →
@@ -15,7 +15,7 @@ extends "res://battle/result/result.gd"
 signal rewarded(quest_id: int, model: RefCounted)
 
 const QuestReward = preload("res://game/field/quests/quest_reward/quest_reward.gd")
-const Presentation = preload("res://battle/presentation/presentation.gd")
+const Presentation = preload("res://game/battle/presentation/presentation/presentation.gd")
 
 ## `common/msg.fxt:14`［任务结束］。
 const MESSAGE_QUEST_END := 14

@@ -14,7 +14,7 @@ extends RefCounted
 ## 数字参数（原生 `atoi(首条记录名)`，1–99）。**表里没有这个组就返回 `{ok: false, error}`**，
 ## 不生成替代阵容。
 
-const Battle = preload("res://battle/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/combat/battle.gd")
 const ItemKind = preload("res://game/menu/item/item_kind/item_kind.gd")
 const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")

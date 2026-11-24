@@ -3,8 +3,8 @@ extends "res://tests/unit/gut_case.gd"
 ## 原生胜利结算（`Battle_Win_SetResult`／`Battle_Win_mRun`／
 ## `Battle_Drop_*`／`Param_expSET`／`Ball_stdEXP`）的数值与写回。
 
-const Battle = preload("res://battle/combat/battle.gd")
-const Settlement = preload("res://battle/battle_settlement/battle_settlement.gd")
+const Battle = preload("res://game/battle/combat/combat/battle.gd")
+const Settlement = preload("res://game/battle/combat/battle_settlement/battle_settlement.gd")
 const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 

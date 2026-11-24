@@ -5,10 +5,10 @@ extends RefCounted
 
 const ItemDefinition = preload("res://game/menu/item/item_definition/item_definition.gd")
 const MonsterDefinition = preload("res://monsters/monster_definition/monster_definition.gd")
-const PassiveDefinition = preload("res://battle/passive_definition/passive_definition.gd")
+const PassiveDefinition = preload("res://game/battle/combat/passive_definition/passive_definition.gd")
 const EncounterDefinition = preload("res://game/field/encounters/encounter_definition/encounter_definition.gd")
 const EncounterEntry = preload("res://game/field/encounters/encounter_entry/encounter_entry.gd")
-const ScriptBattleDefinition = preload("res://battle/script_battle_definition/script_battle_definition.gd")
+const ScriptBattleDefinition = preload("res://game/battle/combat/script_battle_definition/script_battle_definition.gd")
 const GameplayData = preload("res://engine/data/gameplay_data/gameplay_data.gd")
 
 

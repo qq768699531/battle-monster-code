@@ -29,7 +29,7 @@ const MAX_IN_FLIGHT := 8
 ## （静态画面＋进度条）的可接受范围内。
 const MAIN_THREAD_LOADS_PER_FRAME := 3
 ## 单个线程化请求的看门狗（毫秒）：超过就丢下不管、清单继续走。实测
-## `res://battle/field/field.tscn` 单独线程化请求会在 74.9% 自锁；正常启动它已被
+## `res://game/battle/arena/field/field.tscn` 单独线程化请求会在 74.9% 自锁；正常启动它已被
 ## `prime/entry/entry.gd` 的 preload 链缓存、走不到这里，这条是兜底。
 const REQUEST_TIMEOUT_MS := 8000
 
@@ -39,7 +39,7 @@ const GROUP_COMPONENTS := "res://engine"
 ## 启动与标题 ANI：`d7d61df` 之后入口是根目录 `main.tscn`，展示与标题模块都在 `prime/`。
 const GROUP_ANI := "res://prime"
 const GROUP_AUDIO := "res://audio/ogg"
-const GROUP_BATTLE_UI := "res://battle"
+const GROUP_BATTLE_UI := "res://game/battle"
 const GROUP_MENU := "res://game/menu"
 const GROUP_FIELD := "res://game/field"
 const GROUP_MAPS := "res://game/field/map/map_set"

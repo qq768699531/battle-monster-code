@@ -25,10 +25,10 @@ const GAMEPLAY_OBJECT_DIRS := {
 }
 
 const GAMEPLAY_PARTS := {
-	"passives": "res://battle/passives/passives.tres",
+	"passives": "res://game/battle/combat/passives/passives.tres",
 	"items": "res://game/menu/item/items/items.tres",
 	"encounters": "res://game/field/runtime/field_runtime/encounters.tres",
-	"script_battles": "res://battle/combat/script_battles.tres",
+	"script_battles": "res://game/battle/combat/combat/script_battles.tres",
 }
 const WORLD_MAP_DATA: WorldMapData = preload("res://game/menu/world_map/world_map/world-map.tres")
 const ASSET_ROOT := "res://assets/"

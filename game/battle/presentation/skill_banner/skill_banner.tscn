@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3]
+[ext_resource type="Texture2D" path="res://game/battle/presentation/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
+
+[ext_resource type="Script" path="res://game/battle/presentation/skill_banner/skill_banner.gd" id="script"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/anim/monster_animation/monster_animation.tscn" id="portrait"]
+
+[sub_resource type="AtlasTexture" id="Atlas_decoration"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(844, 106, 8, 8)
+[node name="SkillBanner" type="Control"]
+visible = false
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+script = ExtResource("script")
+
+[node name="Band" type="ColorRect" parent="."]
+offset_right = 400.0
+offset_bottom = 38.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Name" parent="." instance=ExtResource("label")]
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DecoLeft" type="TextureRect" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+texture_filter = 1
+texture = SubResource("Atlas_decoration")
+
+[node name="DecoRight" type="TextureRect" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+texture_filter = 1
+texture = SubResource("Atlas_decoration")
+
+[node name="Clip" type="Control" parent="."]
+clip_contents = true
+offset_right = 400.0
+offset_bottom = 38.0
+mouse_filter = 2
+
+[node name="Portrait" parent="Clip" instance=ExtResource("portrait")]

@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://game/menu/status/status_monster/rarity_bar.webp" id="part_rarity_bar"]
 [ext_resource type="Texture2D" path="res://engine/ui/party_heading/party_heading.webp" id="part_party_heading"]
 [ext_resource type="Texture2D" path="res://engine/ui/stat_icon/stat_icon.webp" id="part_stat_icon"]
-[ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
+[ext_resource type="Texture2D" path="res://game/battle/presentation/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 [ext_resource type="Texture2D" path="res://engine/ui/number/number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://game/menu/status/status_monster/status_monster.gd" id="script"]

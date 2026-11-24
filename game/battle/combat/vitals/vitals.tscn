@@ -1,0 +1,192 @@
+[gd_scene format=3]
+[ext_resource type="Texture2D" path="res://game/battle/presentation/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
+[ext_resource type="Texture2D" path="res://engine/ui/number/number.webp" id="Sheet_common_ui_number"]
+
+[ext_resource type="Script" path="res://game/battle/combat/vitals/vitals.gd" id="script"]
+[ext_resource type="PackedScene" path="res://engine/ui/number/number_top.tscn" id="num_top"]
+[ext_resource type="Shader" path="res://engine/ui/number/native_number_palette.gdshader" id="key"]
+
+[sub_resource type="AtlasTexture" id="Atlas_attributes"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(0, 0, 78, 13)
+[sub_resource type="AtlasTexture" id="Atlas_icons"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(844, 0, 422, 7)
+[sub_resource type="AtlasTexture" id="Atlas_digits"]
+atlas = ExtResource("Sheet_common_ui_number")
+region = Rect2(0, 0, 87, 28)
+[sub_resource type="AtlasTexture" id="Water"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(0, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Fire"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(13, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Grass"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(26, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Wind"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(39, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Thunder"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(52, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Dark"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(65, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="HP"]
+atlas = SubResource("Atlas_icons")
+region = Rect2(0, 0, 13, 7)
+[sub_resource type="AtlasTexture" id="SP"]
+atlas = SubResource("Atlas_icons")
+region = Rect2(13, 0, 13, 7)
+[sub_resource type="ShaderMaterial" id="NumberKey"]
+shader = ExtResource("key")
+[sub_resource type="StyleBoxFlat" id="Selected"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+[sub_resource type="StyleBoxFlat" id="AttributeBorder"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+
+[node name="Vitals" type="Control"]
+offset_right = 67.0
+offset_bottom = 18.0
+mouse_filter = 2
+script = ExtResource("script")
+attributes = Array[Texture2D]([SubResource("Water"), SubResource("Fire"), SubResource("Grass"), SubResource("Wind"), SubResource("Thunder"), SubResource("Dark")])
+
+[node name="Selection" type="Panel" parent="."]
+visible = false
+offset_left = -2.0
+offset_top = -1.0
+offset_right = 69.0
+offset_bottom = 18.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Selected")
+
+[node name="Attribute" type="Panel" parent="."]
+offset_top = 2.0
+offset_right = 15.0
+offset_bottom = 17.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("AttributeBorder")
+
+[node name="Icon" type="TextureRect" parent="Attribute"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 14.0
+offset_bottom = 14.0
+mouse_filter = 2
+texture = SubResource("Water")
+
+[node name="Metrics" type="Control" parent="."]
+offset_left = 14.0
+offset_right = 67.0
+offset_bottom = 18.0
+mouse_filter = 2
+
+[node name="HP" type="Control" parent="Metrics"]
+anchor_right = 1.0
+offset_bottom = 8.0
+mouse_filter = 2
+
+[node name="Gauge" type="ColorRect" parent="Metrics/HP"]
+anchor_right = 1.0
+offset_left = 1.0
+offset_top = 5.0
+offset_bottom = 9.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Track" type="ColorRect" parent="Metrics/HP/Gauge"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+mouse_filter = 2
+color = Color(0.372549, 0, 0, 1)
+
+[node name="Fill" type="ColorRect" parent="Metrics/HP/Gauge/Track"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(1, 0.282353, 0, 1)
+
+[node name="Icon" type="TextureRect" parent="Metrics/HP"]
+offset_right = 13.0
+offset_bottom = 7.0
+mouse_filter = 2
+texture = SubResource("HP")
+
+[node name="Number" parent="Metrics/HP" instance=ExtResource("num_top")]
+material = SubResource("NumberKey")
+use_parent_material = false
+anchor_right = 1.0
+offset_left = 13.0
+offset_right = 1.0
+texture = SubResource("Atlas_digits")
+mouse_filter = 2
+
+[node name="SP" type="Control" parent="Metrics"]
+anchor_right = 1.0
+offset_top = 8.0
+offset_bottom = 16.0
+mouse_filter = 2
+
+[node name="Gauge" type="ColorRect" parent="Metrics/SP"]
+anchor_right = 1.0
+offset_left = 1.0
+offset_top = 5.0
+offset_bottom = 9.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Track" type="ColorRect" parent="Metrics/SP/Gauge"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+mouse_filter = 2
+color = Color(0.372549, 0, 0, 1)
+
+[node name="Fill" type="ColorRect" parent="Metrics/SP/Gauge/Track"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.0588235, 0.67451, 0.768627, 1)
+
+[node name="Icon" type="TextureRect" parent="Metrics/SP"]
+offset_right = 13.0
+offset_bottom = 7.0
+mouse_filter = 2
+texture = SubResource("SP")
+
+[node name="Number" parent="Metrics/SP" instance=ExtResource("num_top")]
+material = SubResource("NumberKey")
+use_parent_material = false
+anchor_right = 1.0
+offset_left = 13.0
+offset_right = 1.0
+texture = SubResource("Atlas_digits")
+mouse_filter = 2
+

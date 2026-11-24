@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Battle = preload("res://battle/combat/battle.gd")
-const BattleSettlement = preload("res://battle/battle_settlement/battle_settlement.gd")
+const Battle = preload("res://game/battle/combat/combat/battle.gd")
+const BattleSettlement = preload("res://game/battle/combat/battle_settlement/battle_settlement.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 
 var CATALOG: GameplayData = Fixtures.battle_catalog()

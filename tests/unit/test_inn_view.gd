@@ -9,7 +9,7 @@ const Inn = preload("res://game/field/shops/inn/inn.gd")
 const Layout = preload("res://prime/layout/layout.gd")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 const Story = preload("res://engine/data/story/story.gd")
-const Battle = preload("res://battle/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/combat/battle.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 
 class Provider extends RefCounted:

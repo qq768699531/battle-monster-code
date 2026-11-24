@@ -1,6 +1,6 @@
 [gd_scene format=3]
 [ext_resource type="Texture2D" path="res://engine/ui/stat_icon/stat_icon.webp" id="part_stat_icon"]
-[ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
+[ext_resource type="Texture2D" path="res://game/battle/presentation/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 
 [ext_resource type="Script" path="res://game/menu/item/item_description/item_description.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]

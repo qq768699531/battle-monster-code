@@ -1,0 +1,86 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/battle/combat/actions/actions.gd" id="script"]
+[ext_resource type="PackedScene" path="res://game/battle/presentation/b_icon2/b_icon2.tscn" id="icons"]
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+[sub_resource type="Theme" id="InvisibleButtons"]
+Button/styles/normal = SubResource("Empty")
+Button/styles/hover = SubResource("Empty")
+Button/styles/pressed = SubResource("Empty")
+Button/styles/disabled = SubResource("Empty")
+Button/styles/focus = SubResource("Empty")
+
+[node name="Actions" type="Control"]
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+script = ExtResource("script")
+
+[node name="Commands" type="Node2D" parent="."]
+visible = false
+position = Vector2(281, 98)
+[node name="Art" parent="Commands" instance=ExtResource("icons")]
+
+[node name="Attack" type="Button" parent="Commands"]
+visible = false
+theme = SubResource("InvisibleButtons")
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+focus_mode = 0
+flat = true
+[node name="Skill" type="Button" parent="Commands"]
+visible = false
+theme = SubResource("InvisibleButtons")
+offset_left = -45.0
+offset_top = -15.0
+offset_right = -15.0
+offset_bottom = 15.0
+focus_mode = 0
+flat = true
+[node name="Guard" type="Button" parent="Commands"]
+visible = false
+theme = SubResource("InvisibleButtons")
+offset_left = -15.0
+offset_top = -45.0
+offset_right = 15.0
+offset_bottom = -15.0
+focus_mode = 0
+flat = true
+[node name="Flee" type="Button" parent="Commands"]
+visible = false
+theme = SubResource("InvisibleButtons")
+offset_left = 15.0
+offset_top = -15.0
+offset_right = 45.0
+offset_bottom = 15.0
+focus_mode = 0
+flat = true
+[node name="Item" type="Button" parent="Commands"]
+visible = false
+theme = SubResource("InvisibleButtons")
+offset_left = -15.0
+offset_top = 15.0
+offset_right = 15.0
+offset_bottom = 45.0
+focus_mode = 0
+flat = true
+
+[node name="ConfirmResult" type="Button" parent="."]
+visible = false
+offset_left = 172.0
+offset_top = 165.0
+offset_right = 228.0
+offset_bottom = 193.0
+focus_mode = 0
+text = "确认结果"
+[node name="ReturnTitle" type="Button" parent="."]
+visible = false
+offset_left = 172.0
+offset_top = 198.0
+offset_right = 228.0
+offset_bottom = 226.0
+focus_mode = 0
+text = "返回标题"

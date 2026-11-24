@@ -20,7 +20,7 @@ signal back_requested
 signal starter_confirmed
 
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
-const Battle = preload("res://battle/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/combat/battle.gd")
 const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")

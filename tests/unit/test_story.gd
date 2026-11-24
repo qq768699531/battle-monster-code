@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
 const Story = preload("res://engine/data/story/story.gd")
-const Battle = preload("res://battle/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/combat/battle.gd")
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 const MapEffectCatalog = preload("res://game/field/map/map/map_effect.gd")

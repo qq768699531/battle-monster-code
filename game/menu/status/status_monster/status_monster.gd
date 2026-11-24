@@ -1,9 +1,9 @@
 extends Control
 ## 怪物资料页：数值、技能与装备显示切换。
 
-const Battle = preload("res://battle/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/combat/battle.gd")
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
-const Settlement = preload("res://battle/battle_settlement/battle_settlement.gd")
+const Settlement = preload("res://game/battle/combat/battle_settlement/battle_settlement.gd")
 
 ## 记录缺失这四项时的占位：原生直接画记录里的字节，本工程取不到就不伪造数值。
 const BRAIN_UNKNOWN := "--/--"

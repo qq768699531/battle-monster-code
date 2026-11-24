@@ -1,16 +1,16 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Battle = preload("res://battle/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/combat/battle.gd")
 const Resources = preload("res://engine/data/world_resources/world_resources.gd")
-const ViewScene = preload("res://battle/combat/battle.tscn")
-const SysMenuScript = preload("res://battle/sys_menu/sys_menu.gd")
+const ViewScene = preload("res://game/battle/combat/combat/battle.tscn")
+const SysMenuScript = preload("res://game/battle/presentation/sys_menu/sys_menu.gd")
 const StackScene = preload("res://engine/ui/message_stack/message_stack.tscn")
 const StackScript = preload("res://engine/ui/message_stack/message_stack.gd")
 const Story = preload("res://engine/data/story/story.gd")
 const Msg = preload("res://engine/ui/msg/msg.gd")
 const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
-const BattlePoses = preload("res://battle/battle_poses/battle-poses.tres")
-const FieldScript = preload("res://battle/field/field.gd")
+const BattlePoses = preload("res://game/battle/combat/battle_poses/battle-poses.tres")
+const FieldScript = preload("res://game/battle/arena/field/field.gd")
 ## 原生状态 26 的窗口：`Battle_Win_Draw:49` 的 `Menu_win_Box4_DrawWindow(…, 228, 240, …, 1, 16)`
 ## 把正文 228×240 在 400×240 屏幕里居中，所以左上角是 ((400−228)/2, (240−240)/2) = (86, 0)。
 const RESULT_WINDOW_SIZE := Vector2i(228, 240)

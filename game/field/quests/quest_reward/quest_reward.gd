@@ -14,7 +14,7 @@ extends RefCounted
 ## 走 `StoryRuntime.experience_with_bonus`（经验加成窗口由第 7 组第 18 号道具开启）。
 
 const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
-const BattleSettlement = preload("res://battle/battle_settlement/battle_settlement.gd")
+const BattleSettlement = preload("res://game/battle/combat/battle_settlement/battle_settlement.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
 
 ## 阈值、节奏与逐级升级都取 `BattleSettlement` 的同一份（`Battle_Win_mRun` 的两条路径共用）；

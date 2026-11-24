@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/battle/presentation/pose/pose.gd" id="1"]
+[ext_resource type="PackedScene" path="res://engine/anim/monster_animation/monster_animation.tscn" id="2"]
+
+[node name="Pose" type="Control"]
+layout_mode = 0
+mouse_filter = 2
+script = ExtResource("1")
+
+[node name="Monster" parent="." instance=ExtResource("2")]

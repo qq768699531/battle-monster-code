@@ -1,5 +1,5 @@
 [gd_scene load_steps=12 format=3]
-[ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
+[ext_resource type="Texture2D" path="res://game/battle/presentation/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 [ext_resource type="Texture2D" path="res://engine/ui/touch_button/touch_button.webp" id="Sheet_touch_ui_button"]
 
 [ext_resource type="Script" path="res://game/field/dialogue/chat_view/chat_view.gd" id="1"]
