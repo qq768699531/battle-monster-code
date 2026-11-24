@@ -1,0 +1,174 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/menu/world_map.gd" id="script"]
+[ext_resource type="PackedScene" path="res://scenes/components/window_transition.tscn" id="window"]
+[ext_resource type="Texture2D" path="res://assets/sprite/common/ui_battle/frame-010.webp" id="title"]
+[ext_resource type="Texture2D" path="res://assets/sprite/common/ui_battle/frame-001.webp" id="arrows"]
+[ext_resource type="PackedScene" path="res://scenes/menu/world_map_canvas.tscn" id="canvas"]
+[ext_resource type="PackedScene" path="res://scenes/components/window_footer.tscn" id="footer"]
+
+[sub_resource type="AtlasTexture" id="Title"]
+atlas = ExtResource("title")
+region = Rect2(0, 0, 62, 5)
+
+[sub_resource type="AtlasTexture" id="ArrowVertical"]
+atlas = ExtResource("arrows")
+region = Rect2(0, 0, 13, 8)
+
+[sub_resource type="AtlasTexture" id="ArrowHorizontal"]
+atlas = ExtResource("arrows")
+region = Rect2(13, 0, 8, 13)
+
+[sub_resource type="Animation" id="CameraMoveClip"]
+resource_name = "camera_move"
+resource_local_to_scene = true
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraRig:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0.5, 0), Vector2(0.75, 0), Vector2(0.875, 0), Vector2(0.9375, 0), Vector2(0.96875, 0), Vector2(0.984375, 0), Vector2(0.9921875, 0), Vector2(1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="CameraMoveLibrary"]
+_data = {
+&"camera_move": SubResource("CameraMoveClip")
+}
+
+[node name="WorldMap" instance=ExtResource("window")]
+script = ExtResource("script")
+collapsed_height = 18
+window_size = Vector2i(228, 208)
+side_width = 12
+header_height = 12
+content_follows_window = true
+screen_shade = true
+
+[node name="TitleIcon" type="TextureRect" parent="Bounds"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 7.0
+offset_right = 77.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("Title")
+
+[node name="Viewport" type="Control" parent="Content"]
+anchor_right = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 192.0
+clip_contents = true
+mouse_filter = 2
+
+[node name="CameraRig" type="Node2D" parent="Content/Viewport"]
+
+[node name="CameraMove" type="AnimationPlayer" parent="Content/Viewport"]
+libraries/ = SubResource("CameraMoveLibrary")
+
+[node name="Canvas" parent="Content/Viewport" instance=ExtResource("canvas")]
+
+[node name="Overview" type="TextureRect" parent="Content/Viewport"]
+layout_mode = 0
+offset_right = 196.0
+offset_bottom = 176.0
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Up" type="Control" parent="Content"]
+offset_left = 89.0
+offset_top = -16.0
+offset_right = 139.0
+offset_bottom = 34.0
+
+[node name="Icon" type="TextureRect" parent="Content/Up"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 21.0
+offset_right = 32.0
+offset_bottom = 29.0
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("ArrowVertical")
+
+[node name="Down" type="Control" parent="Content"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 89.0
+offset_top = -34.0
+offset_right = 139.0
+offset_bottom = 16.0
+
+[node name="Icon" type="TextureRect" parent="Content/Down"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 21.0
+offset_right = 32.0
+offset_bottom = 29.0
+flip_v = true
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("ArrowVertical")
+
+[node name="Left" type="Control" parent="Content"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -25.0
+offset_right = 34.0
+offset_bottom = 25.0
+
+[node name="Icon" type="TextureRect" parent="Content/Left"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 19.0
+offset_right = 29.0
+offset_bottom = 32.0
+flip_h = true
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("ArrowHorizontal")
+
+[node name="Right" type="Control" parent="Content"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 194.0
+offset_top = -25.0
+offset_right = 244.0
+offset_bottom = 25.0
+
+[node name="Icon" type="TextureRect" parent="Content/Right"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 19.0
+offset_right = 29.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("ArrowHorizontal")
+
+[node name="FooterOk" parent="Content" instance=ExtResource("footer")]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -15.0
+offset_right = 46.0
+offset_bottom = -3.0
+mouse_filter = 0
+
+[node name="FooterBack" parent="Content" instance=ExtResource("footer")]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 182.0
+offset_top = -15.0
+offset_right = 224.0
+offset_bottom = -3.0
+mouse_filter = 0

@@ -1,0 +1,54 @@
+extends Node2D
+## 邮箱主页（四入口）。
+
+const UI = preload("res://scripts/prime/layout.gd")
+const SCENE_PATH := "res://scenes/prime/mail_view.tscn"
+
+var last_error := ""
+var _messages: Dictionary = {}
+var _title_delta_y := 0
+
+
+func configure(catalog: Object, messages: Dictionary) -> bool:
+	_messages = messages
+	if not $Bounds/Accept.configure(catalog, 0) or not $Bounds/Back.configure(catalog, 1):
+		last_error = "Mail footer sprites are unavailable."
+		push_error(last_error)
+		return false
+	return true
+
+
+static func geometry() -> Dictionary:
+	return UI.scene_geometry(SCENE_PATH)
+
+
+func layout_geometry() -> Dictionary:
+	return UI.page_geometry(self)
+
+
+static func regions(paint: Dictionary) -> Array[Dictionary]:
+	return UI.menu_regions(paint.get("network_mail_geometry", geometry()),
+		int(paint.get("network_mail_selected", 0)), int(paint.get("window_state", 0)))
+
+
+func present(paint: Dictionary) -> void:
+	var state := int(paint.get("window_state", 0))
+	visible = paint.scene == 15 and paint.get("network_mail_open", false) and \
+		not paint.get("network_detail", false) and state != -4
+	if not visible:
+		return
+	var bounds: Control = $Bounds
+	var normal := Rect2i(Vector2i(bounds.position), Vector2i(bounds.size))
+	var rect := UI.box4_window_rect(normal, state)
+	var delta := rect.position - normal.position
+	$Frame.phase = state
+	modulate.a = UI.phase_alpha(state)
+	$Bounds/Title.text = _messages[329]
+	_title_delta_y = UI.follow_window_title($Bounds/Title, delta.y, _title_delta_y)
+	$Bounds/Buttons.visible = state in UI.BODY_PHASES
+	for index in range(4):
+		var button = $Bounds/Buttons.get_child(index)
+		button.caption = _messages[325 + index]
+		button.selected = index == int(paint.get("network_mail_selected", 0))
+	$Bounds/Accept.visible = state == 4
+	$Bounds/Back.visible = state == 4

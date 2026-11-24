@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/field/touch_effect.gd" id="1"]
+[ext_resource type="Shader" path="res://shaders/native_touch_blend.gdshader" id="2"]
+
+[sub_resource type="ShaderMaterial" id="Blend"]
+resource_local_to_scene = true
+shader = ExtResource("2")
+
+[sub_resource type="ShaderMaterial" id="Blend1"]
+resource_local_to_scene = true
+shader = ExtResource("2")
+
+[sub_resource type="ShaderMaterial" id="Blend2"]
+resource_local_to_scene = true
+shader = ExtResource("2")
+
+[sub_resource type="ShaderMaterial" id="Blend3"]
+resource_local_to_scene = true
+shader = ExtResource("2")
+
+[node name="TouchEffect" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1")
+
+[node name="Copy0" type="BackBufferCopy" parent="."]
+visible = false
+copy_mode = 2
+
+[node name="Draw0" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("Blend")
+
+[node name="Copy1" type="BackBufferCopy" parent="."]
+visible = false
+copy_mode = 2
+
+[node name="Draw1" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("Blend1")
+
+[node name="Copy2" type="BackBufferCopy" parent="."]
+visible = false
+copy_mode = 2
+
+[node name="Draw2" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("Blend2")
+
+[node name="Copy3" type="BackBufferCopy" parent="."]
+visible = false
+copy_mode = 2
+
+[node name="Draw3" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("Blend3")

@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/menu/party_actions.gd" id="script"]
+[ext_resource type="PackedScene" path="res://scenes/components/menu_list_button.tscn" id="button"]
+
+[node name="PartyActions" type="VBoxContainer"]
+offset_right = 49.0
+offset_bottom = 68.0
+mouse_filter = 2
+theme_override_constants/separation = 1
+script = ExtResource("script")
+
+[node name="Party" parent="." instance=ExtResource("button")]
+layout_mode = 2
+button_pressed = true
+[node name="Caption" parent="Party"]
+text = "离开队伍"
+
+[node name="Details" parent="." instance=ExtResource("button")]
+layout_mode = 2
+[node name="Caption" parent="Details"]
+text = "详细情报"
+
+[node name="Equipment" parent="." instance=ExtResource("button")]
+layout_mode = 2
+[node name="Caption" parent="Equipment"]
+text = "卸下装备"
+
+[node name="Discard" parent="." instance=ExtResource("button")]
+visible = false
+layout_mode = 2
+[node name="Caption" parent="Discard"]
+text = "丢弃"

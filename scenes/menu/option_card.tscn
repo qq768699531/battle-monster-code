@@ -1,0 +1,75 @@
+[gd_scene format=3]
+[ext_resource type="PackedScene" path="res://scenes/components/native_label.tscn" id="label"]
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+[sub_resource type="StyleBoxFlat" id="Fill"]
+bg_color = Color(0.0313726, 0.109804, 0.160784, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_left = 3
+corner_radius_bottom_right = 3
+anti_aliasing = false
+[sub_resource type="StyleBoxFlat" id="Inner"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_left = 2
+corner_radius_bottom_right = 2
+anti_aliasing = false
+[sub_resource type="StyleBoxFlat" id="Outer"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_left = 3
+corner_radius_bottom_right = 3
+anti_aliasing = false
+
+[node name="OptionCard" type="Button"]
+offset_right = 120.0
+offset_bottom = 24.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+[node name="Fill" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Fill")
+[node name="Inner" type="Panel" parent="."]
+modulate = Color(0.0941176, 0.333333, 0.482353, 1)
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Inner")
+[node name="Outer" type="Panel" parent="."]
+modulate = Color(0.0941176, 0.333333, 0.482353, 1)
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outer")
+[node name="Label" parent="." instance=ExtResource("label")]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+horizontal_alignment = 1
+vertical_alignment = 1

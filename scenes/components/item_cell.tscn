@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://dloye1ifpaohu"]
+
+[ext_resource type="Shader" uid="uid://3sq35m6ufn4w" path="res://shaders/item_cell_frame.gdshader" id="bright"]
+[ext_resource type="Texture2D" uid="uid://s2b788vuv63w" path="res://assets/sprite/common/ui_number/frame-000.webp" id="digits"]
+[ext_resource type="PackedScene" path="res://scenes/components/item_icon.tscn" id="icon"]
+[ext_resource type="Shader" uid="uid://c5dfk0re6q1e1" path="res://shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="PackedScene" path="res://scenes/components/atlas_number.tscn" id="number"]
+[ext_resource type="Script" uid="uid://cxwur0rad6fqp" path="res://scripts/components/item_cell.gd" id="script"]
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ftj3y"]
+resource_local_to_scene = true
+shader = ExtResource("bright")
+shader_parameter/brightness = 0
+shader_parameter/focused = false
+shader_parameter/grade_color = Color(1, 1, 1, 1)
+shader_parameter/grade_enabled = false
+shader_parameter/slot_size = Vector2(30, 30)
+
+[sub_resource type="Animation" id="Animation_0675s"]
+resource_name = "breath"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/brightness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0, 63, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hn2gh"]
+_data = {
+&"breath": SubResource("Animation_0675s")
+}
+
+[sub_resource type="ShaderMaterial" id="NumberPalette"]
+shader = ExtResource("key")
+
+[node name="ItemCell" type="Button" unique_id=399730211]
+custom_minimum_size = Vector2(30, 30)
+offset_right = 30.0
+offset_bottom = 30.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/disabled = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+script = ExtResource("script")
+
+[node name="Frame" type="TextureRect" parent="." unique_id=160494876]
+texture_filter = 1
+material = SubResource("ShaderMaterial_ftj3y")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 2
+
+[node name="Breath" type="AnimationPlayer" parent="Frame" unique_id=1151682314]
+libraries/ = SubResource("AnimationLibrary_hn2gh")
+autoplay = &"breath"
+
+[node name="Icon" parent="." unique_id=1741010745 instance=ExtResource("icon")]
+layout_mode = 1
+
+[node name="Quantity" type="Label" parent="." unique_id=773055933]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 5.0
+offset_right = 28.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 7
+horizontal_alignment = 2
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="QuantityNumber" parent="." unique_id=1166275395 instance=ExtResource("number")]
+visible = false
+material = SubResource("NumberPalette")
+offset_left = 2.0
+offset_top = 21.0
+offset_right = 28.0
+offset_bottom = 28.0
+mouse_filter = 2
+source_y = 0
+texture = ExtResource("digits")
+
+[node name="Marker" type="TextureRect" parent="." unique_id=2031421081]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_left = 2.0
+offset_right = 11.0
+offset_bottom = 9.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 2

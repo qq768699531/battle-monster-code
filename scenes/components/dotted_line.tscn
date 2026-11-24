@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.666667)
+colors = PackedColorArray(0.0980392, 0.392157, 0.521569, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="Texture"]
+gradient = SubResource("Gradient")
+width = 3
+height = 1
+fill_to = Vector2(1, 0)
+
+[node name="DottedLine" type="TextureRect"]
+texture_filter = 1
+texture_repeat = 2
+stretch_mode = 1
+offset_right = 172.0
+offset_bottom = 1.0
+texture = SubResource("Texture")

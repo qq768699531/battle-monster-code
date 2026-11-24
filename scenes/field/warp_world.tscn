@@ -1,0 +1,326 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/field/warp_world.gd" id="script"]
+[ext_resource type="PackedScene" path="res://scenes/components/window_transition.tscn" id="window"]
+[ext_resource type="Texture2D" path="res://assets/sprite/common/ui_battle/frame-010.webp" id="title"]
+[ext_resource type="PackedScene" path="res://scenes/components/native_label.tscn" id="label"]
+[ext_resource type="Texture2D" path="res://assets/sprite/obj/ui_world/frame-007.webp" id="disabled_icon"]
+[ext_resource type="PackedScene" path="res://scenes/actors/hero/h_f_01.tscn" id="marker"]
+[ext_resource type="PackedScene" path="res://scenes/field/warp_confirm.tscn" id="confirm"]
+[ext_resource type="Shader" path="res://shaders/ani_brightness.gdshader" id="gray_shader"]
+
+[sub_resource type="AtlasTexture" id="TitleTexture"]
+atlas = ExtResource("title")
+region = Rect2(0, 0, 62, 5)
+
+[sub_resource type="ShaderMaterial" id="GrayMaterial"]
+shader = ExtResource("gray_shader")
+shader_parameter/strength = 0.0
+shader_parameter/grayscale = true
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="WarpWorld" instance=ExtResource("window")]
+script = ExtResource("script")
+collapsed_height = 18
+window_size = Vector2i(228, 208)
+side_width = 12
+header_height = 12
+screen_shade = true
+
+[node name="TitleIcon" type="TextureRect" parent="Bounds"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 7.0
+offset_right = 77.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("TitleTexture")
+
+[node name="Map" type="Control" parent="Content"]
+clip_contents = true
+layout_mode = 0
+offset_left = 102.0
+offset_top = 32.0
+offset_right = 298.0
+offset_bottom = 208.0
+mouse_filter = 2
+
+[node name="Links" type="Node2D" parent="Content/Map"]
+position = Vector2(98, 84)
+
+[node name="ToTop" type="Line2D" parent="Content/Map/Links"]
+points = PackedVector2Array(0, 0, 0, -50)
+width = 3.0
+
+[node name="ToLeft" type="Line2D" parent="Content/Map/Links"]
+points = PackedVector2Array(0, 0, -70, 10)
+width = 3.0
+
+[node name="ToRight" type="Line2D" parent="Content/Map/Links"]
+points = PackedVector2Array(0, 0, 70, 10)
+width = 3.0
+
+[node name="ToBottom" type="Line2D" parent="Content/Map/Links"]
+points = PackedVector2Array(0, 0, 0, 50)
+width = 3.0
+
+[node name="Slots" type="Control" parent="Content/Map"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Top" type="Control" parent="Content/Map/Slots"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 9.0
+offset_right = 123.0
+offset_bottom = 59.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Content/Map/Slots/Top"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture_filter = 1
+stretch_mode = 2
+material = SubResource("GrayMaterial")
+
+[node name="Disabled" type="TextureRect" parent="Content/Map/Slots/Top"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 38.0
+offset_bottom = 38.0
+mouse_filter = 2
+texture_filter = 1
+texture = ExtResource("disabled_icon")
+stretch_mode = 2
+material = SubResource("GrayMaterial")
+
+[node name="Name" parent="Content/Map/Slots/Top" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = -35.0
+offset_top = 41.0
+offset_right = 85.0
+offset_bottom = 51.0
+outline = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+
+[node name="Touch" type="Button" parent="Content/Map/Slots/Top"]
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 50.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Left" type="Control" parent="Content/Map/Slots"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 69.0
+offset_right = 53.0
+offset_bottom = 119.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Content/Map/Slots/Left"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture_filter = 1
+stretch_mode = 2
+material = SubResource("GrayMaterial")
+
+[node name="Disabled" type="TextureRect" parent="Content/Map/Slots/Left"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 38.0
+offset_bottom = 38.0
+mouse_filter = 2
+texture_filter = 1
+texture = ExtResource("disabled_icon")
+stretch_mode = 2
+material = SubResource("GrayMaterial")
+
+[node name="Name" parent="Content/Map/Slots/Left" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = -35.0
+offset_top = 41.0
+offset_right = 85.0
+offset_bottom = 51.0
+outline = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+
+[node name="Touch" type="Button" parent="Content/Map/Slots/Left"]
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 50.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Right" type="Control" parent="Content/Map/Slots"]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 69.0
+offset_right = 193.0
+offset_bottom = 119.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Content/Map/Slots/Right"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture_filter = 1
+stretch_mode = 2
+material = SubResource("GrayMaterial")
+
+[node name="Disabled" type="TextureRect" parent="Content/Map/Slots/Right"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 38.0
+offset_bottom = 38.0
+mouse_filter = 2
+texture_filter = 1
+texture = ExtResource("disabled_icon")
+stretch_mode = 2
+material = SubResource("GrayMaterial")
+
+[node name="Name" parent="Content/Map/Slots/Right" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = -35.0
+offset_top = 41.0
+offset_right = 85.0
+offset_bottom = 51.0
+outline = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+
+[node name="Touch" type="Button" parent="Content/Map/Slots/Right"]
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 50.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Current" type="Control" parent="Content/Map/Slots"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 59.0
+offset_right = 123.0
+offset_bottom = 109.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Content/Map/Slots/Current"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture_filter = 1
+stretch_mode = 2
+material = SubResource("GrayMaterial")
+
+[node name="Disabled" type="TextureRect" parent="Content/Map/Slots/Current"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 38.0
+offset_bottom = 38.0
+mouse_filter = 2
+texture_filter = 1
+texture = ExtResource("disabled_icon")
+stretch_mode = 2
+material = SubResource("GrayMaterial")
+
+[node name="Name" parent="Content/Map/Slots/Current" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = -35.0
+offset_top = 41.0
+offset_right = 85.0
+offset_bottom = 51.0
+outline = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+
+[node name="Touch" type="Button" parent="Content/Map/Slots/Current"]
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 50.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Bottom" type="Control" parent="Content/Map/Slots"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 109.0
+offset_right = 123.0
+offset_bottom = 159.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Content/Map/Slots/Bottom"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture_filter = 1
+stretch_mode = 2
+material = SubResource("GrayMaterial")
+
+[node name="Disabled" type="TextureRect" parent="Content/Map/Slots/Bottom"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 38.0
+offset_bottom = 38.0
+mouse_filter = 2
+texture_filter = 1
+texture = ExtResource("disabled_icon")
+stretch_mode = 2
+material = SubResource("GrayMaterial")
+
+[node name="Name" parent="Content/Map/Slots/Bottom" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = -35.0
+offset_top = 41.0
+offset_right = 85.0
+offset_bottom = 51.0
+outline = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+
+[node name="Touch" type="Button" parent="Content/Map/Slots/Bottom"]
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 50.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Marker" parent="Content/Map" instance=ExtResource("marker")]
+position = Vector2(98, 84)
+
+[node name="Confirm" parent="." instance=ExtResource("confirm")]
+

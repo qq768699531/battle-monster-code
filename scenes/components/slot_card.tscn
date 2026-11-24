@@ -1,0 +1,233 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/slot_card.gd" id="1"]
+
+[ext_resource type="Shader" path="res://shaders/ani_brightness.gdshader" id="2"]
+
+[ext_resource type="PackedScene" path="res://scenes/components/plain_label.tscn" id="3"]
+
+[ext_resource type="PackedScene" path="res://scenes/components/atlas_number.tscn" id="4"]
+
+[ext_resource type="PackedScene" path="res://scenes/components/native_panel.tscn" id="5"]
+
+[ext_resource type="PackedScene" path="res://scenes/ani/obj/ui_select.tscn" id="6"]
+
+[sub_resource type="ShaderMaterial" id="Gray"]
+resource_local_to_scene = true
+shader = ExtResource("2")
+
+[sub_resource type="AtlasTexture" id="Empty"]
+resource_local_to_scene = true
+region = Rect2(44, 0, 54, 7)
+
+[sub_resource type="AtlasTexture" id="LevelCaption"]
+resource_local_to_scene = true
+region = Rect2(0, 0, 29, 5)
+
+[sub_resource type="AtlasTexture" id="TimeCaption"]
+resource_local_to_scene = true
+region = Rect2(0, 40, 29, 5)
+
+[sub_resource type="AtlasTexture" id="TimeUnit"]
+resource_local_to_scene = true
+region = Rect2(0, 45, 29, 5)
+
+[sub_resource type="AtlasTexture" id="Trait"]
+resource_local_to_scene = true
+region = Rect2(0, 0, 13, 13)
+
+[node name="SlotCard" type="Node2D"]
+script = ExtResource("1")
+material = SubResource("Gray")
+texture_filter = 1
+
+[node name="Panel" parent="." instance=ExtResource("5")]
+offset_right = 210.0
+offset_bottom = 83.0
+
+[node name="Selection" parent="." instance=ExtResource("6")]
+position = Vector2(171, 42)
+
+[node name="Backing0" parent="." instance=ExtResource("5")]
+offset_left = 11.0
+offset_top = 45.0
+offset_right = 35.0
+offset_bottom = 69.0
+border_width = 0
+background_color = Color(0.09411765, 0.05098039, 0.01568628, 1)
+use_parent_material = true
+
+[node name="Backing1" parent="." instance=ExtResource("5")]
+offset_left = 57.0
+offset_top = 45.0
+offset_right = 81.0
+offset_bottom = 69.0
+border_width = 0
+background_color = Color(0.09411765, 0.05098039, 0.01568628, 1)
+use_parent_material = true
+
+[node name="Backing2" parent="." instance=ExtResource("5")]
+offset_left = 103.0
+offset_top = 45.0
+offset_right = 127.0
+offset_bottom = 69.0
+border_width = 0
+background_color = Color(0.09411765, 0.05098039, 0.01568628, 1)
+use_parent_material = true
+
+[node name="Clip0" type="Control" parent="."]
+clip_contents = true
+offset_left = 12.0
+offset_top = 46.0
+offset_right = 34.0
+offset_bottom = 68.0
+mouse_filter = 2
+
+[node name="PortraitAnchor" type="Marker2D" parent="Clip0"]
+position = Vector2(22, 0)
+
+[node name="Clip1" type="Control" parent="."]
+clip_contents = true
+offset_left = 58.0
+offset_top = 46.0
+offset_right = 80.0
+offset_bottom = 68.0
+mouse_filter = 2
+
+[node name="PortraitAnchor" type="Marker2D" parent="Clip1"]
+position = Vector2(22, 0)
+
+[node name="Clip2" type="Control" parent="."]
+clip_contents = true
+offset_left = 104.0
+offset_top = 46.0
+offset_right = 126.0
+offset_bottom = 68.0
+mouse_filter = 2
+
+[node name="PortraitAnchor" type="Marker2D" parent="Clip2"]
+position = Vector2(22, 0)
+
+[node name="Empty" type="TextureRect" parent="."]
+offset_left = 50
+offset_top = 40
+offset_right = 104
+offset_bottom = 47
+texture = SubResource("Empty")
+mouse_filter = 2
+use_parent_material = true
+
+[node name="Occupied" type="Node2D" parent="."]
+use_parent_material = true
+
+[node name="Heading" parent="Occupied" instance=ExtResource("3")]
+offset_left = 11.0
+offset_top = 23.0
+use_parent_material = true
+
+[node name="LevelCaption" type="TextureRect" parent="Occupied"]
+offset_left = 12
+offset_top = 37
+offset_right = 41
+offset_bottom = 42
+texture = SubResource("LevelCaption")
+mouse_filter = 2
+use_parent_material = true
+
+[node name="TimeCaption" type="TextureRect" parent="Occupied"]
+offset_left = 12
+offset_top = 72
+offset_right = 41
+offset_bottom = 77
+texture = SubResource("TimeCaption")
+mouse_filter = 2
+use_parent_material = true
+
+[node name="TimeUnit" type="TextureRect" parent="Occupied"]
+offset_left = 38
+offset_top = 72
+offset_right = 67
+offset_bottom = 77
+texture = SubResource("TimeUnit")
+mouse_filter = 2
+use_parent_material = true
+
+[node name="Trait" type="TextureRect" parent="Occupied"]
+offset_left = 129
+offset_top = 22
+offset_right = 142
+offset_bottom = 35
+texture = SubResource("Trait")
+mouse_filter = 2
+use_parent_material = true
+
+[node name="Bar" type="ColorRect" parent="Occupied"]
+offset_left = 45
+offset_top = 40
+offset_right = 126
+offset_bottom = 42
+color = Color(1.0, 0.7137254901960784, 0.3333333333333333, 1)
+mouse_filter = 2
+use_parent_material = true
+
+[node name="Level" parent="Occupied" instance=ExtResource("4")]
+offset_left = 120
+offset_top = 37
+offset_right = 151
+offset_bottom = 42
+sprite_id = "common/ui_number/frame-001"
+source_y = 0
+glyph_height = 5
+fixed_advance = 6
+alignment = 1
+mouse_filter = 2
+
+[node name="Party0" parent="Occupied" instance=ExtResource("4")]
+offset_top = 63
+offset_right = 49
+offset_bottom = 68
+sprite_id = "common/ui_number/frame-001"
+source_y = 0
+glyph_height = 5
+fixed_advance = 6
+alignment = 2
+mouse_filter = 2
+
+[node name="Party1" parent="Occupied" instance=ExtResource("4")]
+offset_top = 63
+offset_right = 95
+offset_bottom = 68
+sprite_id = "common/ui_number/frame-001"
+source_y = 0
+glyph_height = 5
+fixed_advance = 6
+alignment = 2
+mouse_filter = 2
+
+[node name="Party2" parent="Occupied" instance=ExtResource("4")]
+offset_top = 63
+offset_right = 141
+offset_bottom = 68
+sprite_id = "common/ui_number/frame-001"
+source_y = 0
+glyph_height = 5
+fixed_advance = 6
+alignment = 2
+mouse_filter = 2
+
+[node name="Time" parent="Occupied" instance=ExtResource("4")]
+offset_top = 72
+offset_right = 141
+offset_bottom = 77
+sprite_id = "common/ui_number/frame-001"
+source_y = 0
+glyph_height = 5
+fixed_advance = 6
+alignment = 2
+mouse_filter = 2
+
+[node name="Hit" type="Control" parent="."]
+offset_right = 210
+offset_bottom = 83
+mouse_filter = 2
+use_parent_material = true

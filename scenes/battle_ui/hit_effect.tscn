@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle_ui/hit_effect.gd" id="script"]
+[ext_resource type="PackedScene" path="res://scenes/components/monster_animation.tscn" id="ani"]
+
+[node name="HitEffect" type="Node2D"]
+script = ExtResource("script")
+
+[node name="Flash" parent="." instance=ExtResource("ani")]

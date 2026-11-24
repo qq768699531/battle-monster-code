@@ -1,0 +1,3534 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_shadow/frame-002.webp" id="Texture0"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-001.webp" id="Texture1"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-005.webp" id="Texture2"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-004.webp" id="Texture3"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-007.webp" id="Texture4"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-008.webp" id="Texture5"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-002.webp" id="Texture6"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-000.webp" id="Texture7"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-003.webp" id="Texture8"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-009.webp" id="Texture9"]
+[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_effect/frame-013.webp" id="Texture10"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-013.webp" id="Texture11"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-010.webp" id="Texture12"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-011.webp" id="Texture13"]
+[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_effect/frame-018.webp" id="Texture14"]
+[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_effect/frame-019.webp" id="Texture15"]
+[ext_resource type="Texture2D" path="res://assets/sprite/hero/c_b_effect/frame-010.webp" id="Texture16"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-012.webp" id="Texture17"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-014.webp" id="Texture18"]
+[ext_resource type="Texture2D" path="res://assets/sprite/mon2/m_b_093_1/frame-015.webp" id="Texture19"]
+[ext_resource type="Shader" path="res://shaders/native_touch_blend.gdshader" id="BlendShader"]
+
+[sub_resource type="ShaderMaterial" id="Blend4"]
+shader = ExtResource("BlendShader")
+shader_parameter/native_mode = 20
+
+[sub_resource type="ShaderMaterial" id="Blend6"]
+shader = ExtResource("BlendShader")
+shader_parameter/native_mode = 23
+
+[sub_resource type="ShaderMaterial" id="Blend104"]
+shader = ExtResource("BlendShader")
+shader_parameter/native_mode = 14
+shader_parameter/native_alpha = 9
+
+[sub_resource type="ShaderMaterial" id="Blend5"]
+shader = ExtResource("BlendShader")
+shader_parameter/native_mode = 21
+
+[sub_resource type="Animation" id="RESET"]
+resource_name = "RESET"
+length = 0.05
+step = 0.05
+loop_mode = 0
+metadata/frame_count = 1
+metadata/bounds = Rect2(-24, -34, 46, 43)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture0")]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -18, -9)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("Blend4")]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Layer001:texture")
+tracks/6/interp = 0
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture1")]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Layer001:transform")
+tracks/7/interp = 0
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -24, -34)]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Layer001:visible")
+tracks/8/interp = 0
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Layer001:material")
+tracks/9/interp = 0
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Buffer001:copy_mode")
+tracks/10/interp = 0
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Layer002:texture")
+tracks/11/interp = 0
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture2")]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Layer002:transform")
+tracks/12/interp = 0
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -19, -5)]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Layer002:visible")
+tracks/13/interp = 0
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Layer002:material")
+tracks/14/interp = 0
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Buffer002:copy_mode")
+tracks/15/interp = 0
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Layer003:texture")
+tracks/16/interp = 0
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture3")]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Layer003:transform")
+tracks/17/interp = 0
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -20, -20)]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Layer003:visible")
+tracks/18/interp = 0
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Layer003:material")
+tracks/19/interp = 0
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Buffer003:copy_mode")
+tracks/20/interp = 0
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Layer004:texture")
+tracks/21/interp = 0
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture4")]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Layer004:transform")
+tracks/22/interp = 0
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -11, -5)]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Layer004:visible")
+tracks/23/interp = 0
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Layer004:material")
+tracks/24/interp = 0
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Buffer004:copy_mode")
+tracks/25/interp = 0
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Layer005:texture")
+tracks/26/interp = 0
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture5")]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Layer005:transform")
+tracks/27/interp = 0
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 12, -2)]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Layer005:visible")
+tracks/28/interp = 0
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Layer005:material")
+tracks/29/interp = 0
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("Buffer005:copy_mode")
+tracks/30/interp = 0
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/31/type = "value"
+tracks/31/path = NodePath("Layer006:texture")
+tracks/31/interp = 0
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture6")]
+}
+tracks/32/type = "value"
+tracks/32/path = NodePath("Layer006:transform")
+tracks/32/interp = 0
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -8, -32)]
+}
+tracks/33/type = "value"
+tracks/33/path = NodePath("Layer006:visible")
+tracks/33/interp = 0
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/34/type = "value"
+tracks/34/path = NodePath("Layer006:material")
+tracks/34/interp = 0
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/35/type = "value"
+tracks/35/path = NodePath("Buffer006:copy_mode")
+tracks/35/interp = 0
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Layer007:texture")
+tracks/36/interp = 0
+tracks/36/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Layer007:transform")
+tracks/37/interp = 0
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Layer007:visible")
+tracks/38/interp = 0
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("Layer007:material")
+tracks/39/interp = 0
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("Buffer007:copy_mode")
+tracks/40/interp = 0
+tracks/40/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="action_000_idle"]
+resource_name = "action_000_idle"
+length = 0.6
+step = 0.05
+loop_mode = 1
+metadata/frame_count = 12
+metadata/bounds = Rect2(-24, -35, 46, 44)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture0")]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -18, -9)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("Blend4")]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Layer001:texture")
+tracks/6/interp = 0
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.25, 0.4, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture1"), ExtResource("Texture7"), ExtResource("Texture1"), ExtResource("Texture7"), ExtResource("Texture1")]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Layer001:transform")
+tracks/7/interp = 0
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15, 0.2, 0.3, 0.35, 0.45, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -24, -34), Transform2D(1, 0, 0, 1, -24, -33), Transform2D(1, 0, 0, 1, -24, -34), Transform2D(1, 0, 0, 1, -24, -35), Transform2D(1, 0, 0, 1, -24, -34), Transform2D(1, 0, 0, 1, -24, -33), Transform2D(1, 0, 0, 1, -24, -34), Transform2D(1, 0, 0, 1, -24, -35)]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Layer001:visible")
+tracks/8/interp = 0
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Layer001:material")
+tracks/9/interp = 0
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Buffer001:copy_mode")
+tracks/10/interp = 0
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Layer002:texture")
+tracks/11/interp = 0
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture2")]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Layer002:transform")
+tracks/12/interp = 0
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -19, -5)]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Layer002:visible")
+tracks/13/interp = 0
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Layer002:material")
+tracks/14/interp = 0
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Buffer002:copy_mode")
+tracks/15/interp = 0
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Layer003:texture")
+tracks/16/interp = 0
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture3")]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Layer003:transform")
+tracks/17/interp = 0
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15, 0.2, 0.3, 0.35, 0.45, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -20, -20), Transform2D(1, 0, 0, 1, -20, -19), Transform2D(1, 0, 0, 1, -20, -20), Transform2D(1, 0, 0, 1, -20, -21), Transform2D(1, 0, 0, 1, -20, -20), Transform2D(1, 0, 0, 1, -20, -19), Transform2D(1, 0, 0, 1, -20, -20), Transform2D(1, 0, 0, 1, -20, -21)]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Layer003:visible")
+tracks/18/interp = 0
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Layer003:material")
+tracks/19/interp = 0
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Buffer003:copy_mode")
+tracks/20/interp = 0
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Layer004:texture")
+tracks/21/interp = 0
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture4")]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Layer004:transform")
+tracks/22/interp = 0
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -11, -5)]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Layer004:visible")
+tracks/23/interp = 0
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Layer004:material")
+tracks/24/interp = 0
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Buffer004:copy_mode")
+tracks/25/interp = 0
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Layer005:texture")
+tracks/26/interp = 0
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture5")]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Layer005:transform")
+tracks/27/interp = 0
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 12, -2)]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Layer005:visible")
+tracks/28/interp = 0
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Layer005:material")
+tracks/29/interp = 0
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("Buffer005:copy_mode")
+tracks/30/interp = 0
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/31/type = "value"
+tracks/31/path = NodePath("Layer006:texture")
+tracks/31/interp = 0
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture6")]
+}
+tracks/32/type = "value"
+tracks/32/path = NodePath("Layer006:transform")
+tracks/32/interp = 0
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -8, -32), Transform2D(1, 0, 0, 1, -9, -32), Transform2D(1, 0, 0, 1, -9, -33), Transform2D(1, 0, 0, 1, -9, -34), Transform2D(1, 0, 0, 1, -8, -34), Transform2D(1, 0, 0, 1, -8, -33), Transform2D(1, 0, 0, 1, -8, -32), Transform2D(1, 0, 0, 1, -9, -32), Transform2D(1, 0, 0, 1, -9, -33), Transform2D(1, 0, 0, 1, -9, -34), Transform2D(1, 0, 0, 1, -8, -34), Transform2D(1, 0, 0, 1, -8, -33)]
+}
+tracks/33/type = "value"
+tracks/33/path = NodePath("Layer006:visible")
+tracks/33/interp = 0
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/34/type = "value"
+tracks/34/path = NodePath("Layer006:material")
+tracks/34/interp = 0
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/35/type = "value"
+tracks/35/path = NodePath("Buffer006:copy_mode")
+tracks/35/interp = 0
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Layer007:texture")
+tracks/36/interp = 0
+tracks/36/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [null, ExtResource("Texture8"), null]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Layer007:transform")
+tracks/37/interp = 0
+tracks/37/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 6, -14), Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Layer007:visible")
+tracks/38/interp = 0
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("Layer007:material")
+tracks/39/interp = 0
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("Buffer007:copy_mode")
+tracks/40/interp = 0
+tracks/40/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="action_001_damaged"]
+resource_name = "action_001_damaged"
+length = 0.05
+step = 0.05
+loop_mode = 1
+metadata/frame_count = 1
+metadata/bounds = Rect2(-27, -34, 54, 43)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture0")]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -18, -9)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("Blend4")]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Layer001:texture")
+tracks/6/interp = 0
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture9")]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Layer001:transform")
+tracks/7/interp = 0
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -27, -34)]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Layer001:visible")
+tracks/8/interp = 0
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Layer001:material")
+tracks/9/interp = 0
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Buffer001:copy_mode")
+tracks/10/interp = 0
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Layer002:texture")
+tracks/11/interp = 0
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture10")]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Layer002:transform")
+tracks/12/interp = 0
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 18, -8)]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Layer002:visible")
+tracks/13/interp = 0
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Layer002:material")
+tracks/14/interp = 0
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Buffer002:copy_mode")
+tracks/15/interp = 0
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Layer003:texture")
+tracks/16/interp = 0
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Layer003:transform")
+tracks/17/interp = 0
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Layer003:visible")
+tracks/18/interp = 0
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Layer003:material")
+tracks/19/interp = 0
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Buffer003:copy_mode")
+tracks/20/interp = 0
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Layer004:texture")
+tracks/21/interp = 0
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Layer004:transform")
+tracks/22/interp = 0
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Layer004:visible")
+tracks/23/interp = 0
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Layer004:material")
+tracks/24/interp = 0
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Buffer004:copy_mode")
+tracks/25/interp = 0
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Layer005:texture")
+tracks/26/interp = 0
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Layer005:transform")
+tracks/27/interp = 0
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Layer005:visible")
+tracks/28/interp = 0
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Layer005:material")
+tracks/29/interp = 0
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("Buffer005:copy_mode")
+tracks/30/interp = 0
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/31/type = "value"
+tracks/31/path = NodePath("Layer006:texture")
+tracks/31/interp = 0
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/32/type = "value"
+tracks/32/path = NodePath("Layer006:transform")
+tracks/32/interp = 0
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/33/type = "value"
+tracks/33/path = NodePath("Layer006:visible")
+tracks/33/interp = 0
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/34/type = "value"
+tracks/34/path = NodePath("Layer006:material")
+tracks/34/interp = 0
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/35/type = "value"
+tracks/35/path = NodePath("Buffer006:copy_mode")
+tracks/35/interp = 0
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Layer007:texture")
+tracks/36/interp = 0
+tracks/36/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Layer007:transform")
+tracks/37/interp = 0
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Layer007:visible")
+tracks/38/interp = 0
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("Layer007:material")
+tracks/39/interp = 0
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("Buffer007:copy_mode")
+tracks/40/interp = 0
+tracks/40/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="action_002"]
+resource_name = "action_002"
+length = 0.05
+step = 0.05
+loop_mode = 1
+metadata/frame_count = 1
+metadata/bounds = Rect2(-27, -34, 49, 43)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture0")]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -18, -9)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("Blend4")]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Layer001:texture")
+tracks/6/interp = 0
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture9")]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Layer001:transform")
+tracks/7/interp = 0
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -27, -34)]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Layer001:visible")
+tracks/8/interp = 0
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Layer001:material")
+tracks/9/interp = 0
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Buffer001:copy_mode")
+tracks/10/interp = 0
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Layer002:texture")
+tracks/11/interp = 0
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Layer002:transform")
+tracks/12/interp = 0
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Layer002:visible")
+tracks/13/interp = 0
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Layer002:material")
+tracks/14/interp = 0
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Buffer002:copy_mode")
+tracks/15/interp = 0
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Layer003:texture")
+tracks/16/interp = 0
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Layer003:transform")
+tracks/17/interp = 0
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Layer003:visible")
+tracks/18/interp = 0
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Layer003:material")
+tracks/19/interp = 0
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Buffer003:copy_mode")
+tracks/20/interp = 0
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Layer004:texture")
+tracks/21/interp = 0
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Layer004:transform")
+tracks/22/interp = 0
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Layer004:visible")
+tracks/23/interp = 0
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Layer004:material")
+tracks/24/interp = 0
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Buffer004:copy_mode")
+tracks/25/interp = 0
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Layer005:texture")
+tracks/26/interp = 0
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Layer005:transform")
+tracks/27/interp = 0
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Layer005:visible")
+tracks/28/interp = 0
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Layer005:material")
+tracks/29/interp = 0
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("Buffer005:copy_mode")
+tracks/30/interp = 0
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/31/type = "value"
+tracks/31/path = NodePath("Layer006:texture")
+tracks/31/interp = 0
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/32/type = "value"
+tracks/32/path = NodePath("Layer006:transform")
+tracks/32/interp = 0
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/33/type = "value"
+tracks/33/path = NodePath("Layer006:visible")
+tracks/33/interp = 0
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/34/type = "value"
+tracks/34/path = NodePath("Layer006:material")
+tracks/34/interp = 0
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/35/type = "value"
+tracks/35/path = NodePath("Buffer006:copy_mode")
+tracks/35/interp = 0
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Layer007:texture")
+tracks/36/interp = 0
+tracks/36/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Layer007:transform")
+tracks/37/interp = 0
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Layer007:visible")
+tracks/38/interp = 0
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("Layer007:material")
+tracks/39/interp = 0
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("Buffer007:copy_mode")
+tracks/40/interp = 0
+tracks/40/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="action_003_attack"]
+resource_name = "action_003_attack"
+length = 0.7
+step = 0.05
+loop_mode = 1
+metadata/frame_count = 14
+metadata/bounds = Rect2(-67, -54, 97, 65)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture0")]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -53, -9), Transform2D(1, 0, 0, 1, -57, -9), Transform2D(1, 0, 0, 1, -59, -9), Transform2D(1, 0, 0, 1, -60, -9), Transform2D(1, 0, 0, 1, -53, -9), Transform2D(1, 0, 0, 1, -51, -9), Transform2D(1, 0, 0, 1, -50, -9), Transform2D(1, 0, 0, 1, -49, -9), Transform2D(1, 0, 0, 1, -36, -7), Transform2D(1, 0, 0, 1, -34, -12), Transform2D(1, 0, 0, 1, -33, -8)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("Blend4")]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Layer001:texture")
+tracks/6/interp = 0
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture9"), ExtResource("Texture12"), ExtResource("Texture9")]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Layer001:transform")
+tracks/7/interp = 0
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -60, -34), Transform2D(1, 0, 0, 1, -64, -34), Transform2D(1, 0, 0, 1, -66, -34), Transform2D(1, 0, 0, 1, -67, -34), Transform2D(1, 0, 0, 1, -53, -46), Transform2D(1, 0, 0, 1, -52, -47), Transform2D(1, 0, 0, 1, -51, -48), Transform2D(1, 0, 0, 1, -43, -32), Transform2D(1, 0, 0, 1, -41, -37), Transform2D(1, 0, 0, 1, -40, -34)]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Layer001:visible")
+tracks/8/interp = 0
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Layer001:material")
+tracks/9/interp = 0
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [null, SubResource("Blend6"), null]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Buffer001:copy_mode")
+tracks/10/interp = 0
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 2, 0]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Layer002:texture")
+tracks/11/interp = 0
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture11"), ExtResource("Texture13"), ExtResource("Texture11")]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Layer002:transform")
+tracks/12/interp = 0
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -32, -9), Transform2D(1, 0, 0, 1, -36, -9), Transform2D(1, 0, 0, 1, -38, -9), Transform2D(1, 0, 0, 1, -39, -9), Transform2D(1, 0, 0, 1, -38, -54), Transform2D(1, 0, 0, 1, -37, -54), Transform2D(1, 0, 0, 1, -35, -53), Transform2D(1, 0, 0, 1, -15, -7), Transform2D(1, 0, 0, 1, -13, -12), Transform2D(1, 0, 0, 1, -12, -9)]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Layer002:visible")
+tracks/13/interp = 0
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Layer002:material")
+tracks/14/interp = 0
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [null, SubResource("Blend6"), null]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Buffer002:copy_mode")
+tracks/15/interp = 0
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 2, 0]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Layer003:texture")
+tracks/16/interp = 0
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.45, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [null, ExtResource("Texture12"), null, ExtResource("Texture14"), ExtResource("Texture15"), null]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Layer003:transform")
+tracks/17/interp = 0
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.45, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, -55, -44), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, -15, -39), Transform2D(1, 0, 0, 1, 8, -18), Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Layer003:visible")
+tracks/18/interp = 0
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Layer003:material")
+tracks/19/interp = 0
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.55, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [null, SubResource("Blend104"), null]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Buffer003:copy_mode")
+tracks/20/interp = 0
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.55, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 2, 0]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Layer004:texture")
+tracks/21/interp = 0
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [null, ExtResource("Texture13"), null]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Layer004:transform")
+tracks/22/interp = 0
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, -40, -53), Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Layer004:visible")
+tracks/23/interp = 0
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Layer004:material")
+tracks/24/interp = 0
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Buffer004:copy_mode")
+tracks/25/interp = 0
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Layer005:texture")
+tracks/26/interp = 0
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Layer005:transform")
+tracks/27/interp = 0
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Layer005:visible")
+tracks/28/interp = 0
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Layer005:material")
+tracks/29/interp = 0
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("Buffer005:copy_mode")
+tracks/30/interp = 0
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/31/type = "value"
+tracks/31/path = NodePath("Layer006:texture")
+tracks/31/interp = 0
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/32/type = "value"
+tracks/32/path = NodePath("Layer006:transform")
+tracks/32/interp = 0
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/33/type = "value"
+tracks/33/path = NodePath("Layer006:visible")
+tracks/33/interp = 0
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/34/type = "value"
+tracks/34/path = NodePath("Layer006:material")
+tracks/34/interp = 0
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/35/type = "value"
+tracks/35/path = NodePath("Buffer006:copy_mode")
+tracks/35/interp = 0
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Layer007:texture")
+tracks/36/interp = 0
+tracks/36/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Layer007:transform")
+tracks/37/interp = 0
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Layer007:visible")
+tracks/38/interp = 0
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("Layer007:material")
+tracks/39/interp = 0
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("Buffer007:copy_mode")
+tracks/40/interp = 0
+tracks/40/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="action_004_skill"]
+resource_name = "action_004_skill"
+length = 0.95
+step = 0.05
+loop_mode = 1
+metadata/frame_count = 19
+metadata/bounds = Rect2(-76, -57, 187, 66)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture0")]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -62, -9), Transform2D(1, 0, 0, 1, -66, -9), Transform2D(1, 0, 0, 1, -68, -9), Transform2D(1, 0, 0, 1, -69, -9), Transform2D(1, 0, 0, 1, -62, -9), Transform2D(1, 0, 0, 1, -61, -9), Transform2D(1, 0, 0, 1, -59, -9), Transform2D(1, 0, 0, 1, -50, -9), Transform2D(1, 0, 0, 1, -51, -10), Transform2D(1, 0, 0, 1, 53, -10), Transform2D(1, 0, 0, 1, 55, -10), Transform2D(1, 0, 0, 1, 68, -9), Transform2D(1, 0, 0, 1, 69, -9), Transform2D(1, 0, 0, 1, -50, -9), Transform2D(1, 0, 0, 1, -52, -9), Transform2D(1, 0, 0, 1, -57, -9), Transform2D(1, 0, 0, 1, -58, -9)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("Blend4")]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Layer001:texture")
+tracks/6/interp = 0
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.55, 0.6, 0.7, 0.75, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture9"), ExtResource("Texture12"), ExtResource("Texture9"), ExtResource("Texture17"), ExtResource("Texture9"), ExtResource("Texture18"), ExtResource("Texture17"), ExtResource("Texture9")]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Layer001:transform")
+tracks/7/interp = 0
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -69, -34), Transform2D(1, 0, 0, 1, -73, -34), Transform2D(1, 0, 0, 1, -75, -34), Transform2D(1, 0, 0, 1, -76, -34), Transform2D(1, 0, 0, 1, -63, -50), Transform2D(1, 0, 0, 1, -62, -50), Transform2D(1, 0, 0, 1, -57, -34), Transform2D(1, 0, 0, 1, -58, -35), Transform2D(1, 0, 0, 1, -59, -36), Transform2D(1, 0, 0, 1, 49, -29), Transform2D(-1, 0, 0, 1, 110, -34), Transform2D(-1, 0, 0, 1, 111, -34), Transform2D(1, 0, 0, 1, -23, -29), Transform2D(-1, 0, 0, 1, -6, -29), Transform2D(-1, 0, 0, 1, -15, -38), Transform2D(-1, 0, 0, 1, -16, -38)]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Layer001:visible")
+tracks/8/interp = 0
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Layer001:material")
+tracks/9/interp = 0
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5, 0.55, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [null, SubResource("Blend6"), null, SubResource("Blend6"), null, SubResource("Blend5"), null]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Buffer001:copy_mode")
+tracks/10/interp = 0
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5, 0.55, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 0, 2, 0, 2, 0]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Layer002:texture")
+tracks/11/interp = 0
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.55, 0.6, 0.7, 0.75, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture11"), ExtResource("Texture13"), ExtResource("Texture11"), ExtResource("Texture13"), ExtResource("Texture11"), ExtResource("Texture17"), ExtResource("Texture13"), ExtResource("Texture11")]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Layer002:transform")
+tracks/12/interp = 0
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -41, -9), Transform2D(1, 0, 0, 1, -45, -9), Transform2D(1, 0, 0, 1, -47, -9), Transform2D(1, 0, 0, 1, -48, -9), Transform2D(1, 0, 0, 1, -47, -57), Transform2D(1, 0, 0, 1, -46, -55), Transform2D(1, 0, 0, 1, -29, -9), Transform2D(1, 0, 0, 1, -30, -10), Transform2D(1, 0, 0, 1, -31, -11), Transform2D(1, 0, 0, 1, 69, -32), Transform2D(-1, 0, 0, 1, 83, -9), Transform2D(-1, 0, 0, 1, 84, -9), Transform2D(-1, 0, 0, 1, -4, -29), Transform2D(-1, 0, 0, 1, -26, -35), Transform2D(-1, 0, 0, 1, -42, -13), Transform2D(-1, 0, 0, 1, -43, -13)]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Layer002:visible")
+tracks/13/interp = 0
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Layer002:material")
+tracks/14/interp = 0
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [null, SubResource("Blend6"), null, SubResource("Blend6"), null]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Buffer002:copy_mode")
+tracks/15/interp = 0
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 0, 2, 0]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Layer003:texture")
+tracks/16/interp = 0
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5, 0.55, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [null, ExtResource("Texture12"), null, ExtResource("Texture16"), null, ExtResource("Texture13"), null]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Layer003:transform")
+tracks/17/interp = 0
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5, 0.55, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, -64, -48), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, -25, -27), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(-1, 0, 0, 1, -24, -35), Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Layer003:visible")
+tracks/18/interp = 0
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5, 0.55, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Layer003:material")
+tracks/19/interp = 0
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [null, SubResource("Blend5"), null]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Buffer003:copy_mode")
+tracks/20/interp = 0
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 2, 0]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Layer004:texture")
+tracks/21/interp = 0
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5, 0.55, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [null, ExtResource("Texture13"), null, ExtResource("Texture17"), null, ExtResource("Texture19"), null]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Layer004:transform")
+tracks/22/interp = 0
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5, 0.55, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, -49, -57), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 47, -29), Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 62, -34), Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Layer004:visible")
+tracks/23/interp = 0
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.5, 0.55, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Layer004:material")
+tracks/24/interp = 0
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [null, SubResource("Blend6"), null]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Buffer004:copy_mode")
+tracks/25/interp = 0
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 2, 0]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Layer005:texture")
+tracks/26/interp = 0
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [null, ExtResource("Texture13"), null]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Layer005:transform")
+tracks/27/interp = 0
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, 67, -32), Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Layer005:visible")
+tracks/28/interp = 0
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Layer005:material")
+tracks/29/interp = 0
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("Buffer005:copy_mode")
+tracks/30/interp = 0
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/31/type = "value"
+tracks/31/path = NodePath("Layer006:texture")
+tracks/31/interp = 0
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/32/type = "value"
+tracks/32/path = NodePath("Layer006:transform")
+tracks/32/interp = 0
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/33/type = "value"
+tracks/33/path = NodePath("Layer006:visible")
+tracks/33/interp = 0
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/34/type = "value"
+tracks/34/path = NodePath("Layer006:material")
+tracks/34/interp = 0
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/35/type = "value"
+tracks/35/path = NodePath("Buffer006:copy_mode")
+tracks/35/interp = 0
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Layer007:texture")
+tracks/36/interp = 0
+tracks/36/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Layer007:transform")
+tracks/37/interp = 0
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Layer007:visible")
+tracks/38/interp = 0
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("Layer007:material")
+tracks/39/interp = 0
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("Buffer007:copy_mode")
+tracks/40/interp = 0
+tracks/40/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="action_005_clone_a"]
+resource_name = "action_005_clone_a"
+length = 0.05
+step = 0.05
+loop_mode = 0
+metadata/frame_count = 0
+metadata/bounds = Rect2(0, 0, 0, 0)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Layer001:texture")
+tracks/6/interp = 0
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Layer001:transform")
+tracks/7/interp = 0
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Layer001:visible")
+tracks/8/interp = 0
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Layer001:material")
+tracks/9/interp = 0
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Buffer001:copy_mode")
+tracks/10/interp = 0
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Layer002:texture")
+tracks/11/interp = 0
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Layer002:transform")
+tracks/12/interp = 0
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Layer002:visible")
+tracks/13/interp = 0
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Layer002:material")
+tracks/14/interp = 0
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Buffer002:copy_mode")
+tracks/15/interp = 0
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Layer003:texture")
+tracks/16/interp = 0
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Layer003:transform")
+tracks/17/interp = 0
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Layer003:visible")
+tracks/18/interp = 0
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Layer003:material")
+tracks/19/interp = 0
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Buffer003:copy_mode")
+tracks/20/interp = 0
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Layer004:texture")
+tracks/21/interp = 0
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Layer004:transform")
+tracks/22/interp = 0
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Layer004:visible")
+tracks/23/interp = 0
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Layer004:material")
+tracks/24/interp = 0
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Buffer004:copy_mode")
+tracks/25/interp = 0
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Layer005:texture")
+tracks/26/interp = 0
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Layer005:transform")
+tracks/27/interp = 0
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Layer005:visible")
+tracks/28/interp = 0
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Layer005:material")
+tracks/29/interp = 0
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("Buffer005:copy_mode")
+tracks/30/interp = 0
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/31/type = "value"
+tracks/31/path = NodePath("Layer006:texture")
+tracks/31/interp = 0
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/32/type = "value"
+tracks/32/path = NodePath("Layer006:transform")
+tracks/32/interp = 0
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/33/type = "value"
+tracks/33/path = NodePath("Layer006:visible")
+tracks/33/interp = 0
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/34/type = "value"
+tracks/34/path = NodePath("Layer006:material")
+tracks/34/interp = 0
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/35/type = "value"
+tracks/35/path = NodePath("Buffer006:copy_mode")
+tracks/35/interp = 0
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Layer007:texture")
+tracks/36/interp = 0
+tracks/36/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Layer007:transform")
+tracks/37/interp = 0
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Layer007:visible")
+tracks/38/interp = 0
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("Layer007:material")
+tracks/39/interp = 0
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("Buffer007:copy_mode")
+tracks/40/interp = 0
+tracks/40/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="action_006_clone_b"]
+resource_name = "action_006_clone_b"
+length = 0.05
+step = 0.05
+loop_mode = 0
+metadata/frame_count = 0
+metadata/bounds = Rect2(0, 0, 0, 0)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Layer001:texture")
+tracks/6/interp = 0
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Layer001:transform")
+tracks/7/interp = 0
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Layer001:visible")
+tracks/8/interp = 0
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Layer001:material")
+tracks/9/interp = 0
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Buffer001:copy_mode")
+tracks/10/interp = 0
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Layer002:texture")
+tracks/11/interp = 0
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Layer002:transform")
+tracks/12/interp = 0
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Layer002:visible")
+tracks/13/interp = 0
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Layer002:material")
+tracks/14/interp = 0
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Buffer002:copy_mode")
+tracks/15/interp = 0
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Layer003:texture")
+tracks/16/interp = 0
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Layer003:transform")
+tracks/17/interp = 0
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Layer003:visible")
+tracks/18/interp = 0
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Layer003:material")
+tracks/19/interp = 0
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Buffer003:copy_mode")
+tracks/20/interp = 0
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Layer004:texture")
+tracks/21/interp = 0
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Layer004:transform")
+tracks/22/interp = 0
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Layer004:visible")
+tracks/23/interp = 0
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Layer004:material")
+tracks/24/interp = 0
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Buffer004:copy_mode")
+tracks/25/interp = 0
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Layer005:texture")
+tracks/26/interp = 0
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Layer005:transform")
+tracks/27/interp = 0
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Layer005:visible")
+tracks/28/interp = 0
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Layer005:material")
+tracks/29/interp = 0
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("Buffer005:copy_mode")
+tracks/30/interp = 0
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/31/type = "value"
+tracks/31/path = NodePath("Layer006:texture")
+tracks/31/interp = 0
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/32/type = "value"
+tracks/32/path = NodePath("Layer006:transform")
+tracks/32/interp = 0
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/33/type = "value"
+tracks/33/path = NodePath("Layer006:visible")
+tracks/33/interp = 0
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/34/type = "value"
+tracks/34/path = NodePath("Layer006:material")
+tracks/34/interp = 0
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/35/type = "value"
+tracks/35/path = NodePath("Buffer006:copy_mode")
+tracks/35/interp = 0
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Layer007:texture")
+tracks/36/interp = 0
+tracks/36/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Layer007:transform")
+tracks/37/interp = 0
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Layer007:visible")
+tracks/38/interp = 0
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("Layer007:material")
+tracks/39/interp = 0
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("Buffer007:copy_mode")
+tracks/40/interp = 0
+tracks/40/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="action_007"]
+resource_name = "action_007"
+length = 0.05
+step = 0.05
+loop_mode = 1
+metadata/frame_count = 1
+metadata/bounds = Rect2(-56, -58, 98, 80)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture9")]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(2, 0, 0, 2, -56, -58)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Layer001:texture")
+tracks/6/interp = 0
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture11")]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Layer001:transform")
+tracks/7/interp = 0
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(2, 0, 0, 2, -2, -8)]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Layer001:visible")
+tracks/8/interp = 0
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Layer001:material")
+tracks/9/interp = 0
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Buffer001:copy_mode")
+tracks/10/interp = 0
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Layer002:texture")
+tracks/11/interp = 0
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Layer002:transform")
+tracks/12/interp = 0
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Layer002:visible")
+tracks/13/interp = 0
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Layer002:material")
+tracks/14/interp = 0
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Buffer002:copy_mode")
+tracks/15/interp = 0
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Layer003:texture")
+tracks/16/interp = 0
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Layer003:transform")
+tracks/17/interp = 0
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Layer003:visible")
+tracks/18/interp = 0
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Layer003:material")
+tracks/19/interp = 0
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Buffer003:copy_mode")
+tracks/20/interp = 0
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Layer004:texture")
+tracks/21/interp = 0
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Layer004:transform")
+tracks/22/interp = 0
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Layer004:visible")
+tracks/23/interp = 0
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Layer004:material")
+tracks/24/interp = 0
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Buffer004:copy_mode")
+tracks/25/interp = 0
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Layer005:texture")
+tracks/26/interp = 0
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Layer005:transform")
+tracks/27/interp = 0
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Layer005:visible")
+tracks/28/interp = 0
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Layer005:material")
+tracks/29/interp = 0
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("Buffer005:copy_mode")
+tracks/30/interp = 0
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/31/type = "value"
+tracks/31/path = NodePath("Layer006:texture")
+tracks/31/interp = 0
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/32/type = "value"
+tracks/32/path = NodePath("Layer006:transform")
+tracks/32/interp = 0
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/33/type = "value"
+tracks/33/path = NodePath("Layer006:visible")
+tracks/33/interp = 0
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/34/type = "value"
+tracks/34/path = NodePath("Layer006:material")
+tracks/34/interp = 0
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/35/type = "value"
+tracks/35/path = NodePath("Buffer006:copy_mode")
+tracks/35/interp = 0
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Layer007:texture")
+tracks/36/interp = 0
+tracks/36/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Layer007:transform")
+tracks/37/interp = 0
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Layer007:visible")
+tracks/38/interp = 0
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("Layer007:material")
+tracks/39/interp = 0
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("Buffer007:copy_mode")
+tracks/40/interp = 0
+tracks/40/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="Library"]
+_data = {
+&"RESET": SubResource("RESET"),
+&"action_000_idle": SubResource("action_000_idle"),
+&"action_001_damaged": SubResource("action_001_damaged"),
+&"action_002": SubResource("action_002"),
+&"action_003_attack": SubResource("action_003_attack"),
+&"action_004_skill": SubResource("action_004_skill"),
+&"action_005_clone_a": SubResource("action_005_clone_a"),
+&"action_006_clone_b": SubResource("action_006_clone_b"),
+&"action_007": SubResource("action_007"),
+}
+
+[node name="m_b_093_1" type="Node2D"]
+texture_filter = 1
+metadata/frame_motion = Vector2(0, 0)
+
+[node name="Buffer000" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="Layer000" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("Texture0")
+transform = Transform2D(1, 0, 0, 1, -18, -9)
+visible = true
+material = SubResource("Blend4")
+
+[node name="Buffer001" type="BackBufferCopy" parent="."]
+copy_mode = 0
+
+[node name="Layer001" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("Texture1")
+transform = Transform2D(1, 0, 0, 1, -24, -34)
+visible = true
+material = null
+
+[node name="Buffer002" type="BackBufferCopy" parent="."]
+copy_mode = 0
+
+[node name="Layer002" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("Texture2")
+transform = Transform2D(1, 0, 0, 1, -19, -5)
+visible = true
+material = null
+
+[node name="Buffer003" type="BackBufferCopy" parent="."]
+copy_mode = 0
+
+[node name="Layer003" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("Texture3")
+transform = Transform2D(1, 0, 0, 1, -20, -20)
+visible = true
+material = null
+
+[node name="Buffer004" type="BackBufferCopy" parent="."]
+copy_mode = 0
+
+[node name="Layer004" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("Texture4")
+transform = Transform2D(1, 0, 0, 1, -11, -5)
+visible = true
+material = null
+
+[node name="Buffer005" type="BackBufferCopy" parent="."]
+copy_mode = 0
+
+[node name="Layer005" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("Texture5")
+transform = Transform2D(1, 0, 0, 1, 12, -2)
+visible = true
+material = null
+
+[node name="Buffer006" type="BackBufferCopy" parent="."]
+copy_mode = 0
+
+[node name="Layer006" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("Texture6")
+transform = Transform2D(1, 0, 0, 1, -8, -32)
+visible = true
+material = null
+
+[node name="Buffer007" type="BackBufferCopy" parent="."]
+copy_mode = 0
+
+[node name="Layer007" type="Sprite2D" parent="."]
+centered = false
+texture = null
+transform = Transform2D(1, 0, 0, 1, 0, 0)
+visible = false
+material = null
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "action_000_idle"
+libraries = { &"": SubResource("Library") }

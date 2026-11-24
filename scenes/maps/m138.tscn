@@ -1,0 +1,50 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://scenes/maps/terrain/t5_16.tscn" id="1_gqixb"]
+
+[node name="Map_138" type="Node2D" unique_id=1517969600]
+metadata/map_id = 138
+metadata/map_group = 5
+metadata/map_index = 16
+metadata/map_size_tiles = Vector2i(11, 10)
+metadata/map_palette_indices = PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
+metadata/map_objects = PackedInt32Array()
+
+[node name="Warps" type="Node2D" parent="." unique_id=1746483265]
+
+[node name="Warp_0" type="Marker2D" parent="Warps" unique_id=147294084]
+position = Vector2(56, 136)
+metadata/map_warp = {
+"target_map_id": 66,
+"target_tile": Vector2i(28, 12)
+}
+
+[node name="Warp_1" type="Marker2D" parent="Warps" unique_id=1020657616]
+position = Vector2(72, 136)
+metadata/map_warp = {
+"target_map_id": 66,
+"target_tile": Vector2i(28, 12)
+}
+
+[node name="Warp_2" type="Marker2D" parent="Warps" unique_id=1514675843]
+position = Vector2(88, 136)
+metadata/map_warp = {
+"target_map_id": 66,
+"target_tile": Vector2i(28, 12)
+}
+
+[node name="Npcs" type="Node2D" parent="." unique_id=95286560]
+
+[node name="Npc_0" type="Marker2D" parent="Npcs" unique_id=665840473]
+position = Vector2(120, 88)
+metadata/map_npc = {
+"direction_code": 0,
+"resource_id": 44
+}
+metadata/npc_dialogue = "npc/npc0044.cht"
+
+[node name="Terrain" type="Node2D" parent="." unique_id=1814680657 instance=ExtResource("1_gqixb")]
+texture_filter = 1
+metadata/source_layout = "mdt/m5_16"
+metadata/map_size_tiles = Vector2i(11, 10)
+metadata/map_cell_flags = PackedByteArray("AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAAAEBAQEBAQEBAQEBAAAAAAEBAQEBAQEAAAAAAAEBAQEBAAAAAAAAAQEBAQEAAAAAAAABAQEBAQAAAAEBAQEBAQEBAQEBAQEBAQE=")

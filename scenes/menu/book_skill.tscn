@@ -1,0 +1,328 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://scripts/menu/book_skill.gd" id="script"]
+[ext_resource type="PackedScene" path="res://scenes/components/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://scenes/components/item_cell.tscn" id="cell"]
+[ext_resource type="PackedScene" path="res://scenes/menu/scrollbar.tscn" id="scroll"]
+[ext_resource type="PackedScene" path="res://scenes/components/window_footer.tscn" id="footer"]
+[ext_resource type="PackedScene" path="res://scenes/components/atlas_number.tscn" id="number"]
+[ext_resource type="PackedScene" path="res://scenes/components/native_label.tscn" id="label"]
+[ext_resource type="Texture2D" path="res://assets/sprite/common/ui_window/frame-005.webp" id="window_icons"]
+[ext_resource type="Texture2D" path="res://assets/sprite/common/ui_number/frame-000.webp" id="digits"]
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+[sub_resource type="StyleBoxFlat" id="Outline"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0980392, 0.392157, 0.521569, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_left = 2
+corner_radius_bottom_right = 2
+anti_aliasing = false
+[sub_resource type="StyleBoxFlat" id="BoxFill"]
+bg_color = Color(0.054902, 0.105882, 0.184314, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_left = 2
+corner_radius_bottom_right = 2
+anti_aliasing = false
+[sub_resource type="AtlasTexture" id="NoIcon"]
+atlas = ExtResource("window_icons")
+region = Rect2(23, 0, 12, 5)
+
+[node name="BookSkill" instance=ExtResource("window")]
+visible = false
+script = ExtResource("script")
+window_size = Vector2i(228, 227)
+
+[node name="Title" parent="Bounds" index="5"]
+text = "图鉴"
+
+[node name="Subtitle" parent="Content" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 33.0
+offset_right = 306.0
+offset_bottom = 43.0
+horizontal_alignment = 1
+
+[node name="GridFrame" type="Panel" parent="Content"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 49.0
+offset_right = 306.0
+offset_bottom = 181.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outline")
+
+[node name="Cell0" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 52.0
+offset_right = 127.0
+offset_bottom = 82.0
+[node name="Cell1" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 52.0
+offset_right = 159.0
+offset_bottom = 82.0
+[node name="Cell2" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 52.0
+offset_right = 191.0
+offset_bottom = 82.0
+[node name="Cell3" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 52.0
+offset_right = 223.0
+offset_bottom = 82.0
+[node name="Cell4" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 52.0
+offset_right = 255.0
+offset_bottom = 82.0
+[node name="Cell5" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 52.0
+offset_right = 287.0
+offset_bottom = 82.0
+[node name="Cell6" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 84.0
+offset_right = 127.0
+offset_bottom = 114.0
+[node name="Cell7" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 84.0
+offset_right = 159.0
+offset_bottom = 114.0
+[node name="Cell8" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 84.0
+offset_right = 191.0
+offset_bottom = 114.0
+[node name="Cell9" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 84.0
+offset_right = 223.0
+offset_bottom = 114.0
+[node name="Cell10" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 84.0
+offset_right = 255.0
+offset_bottom = 114.0
+[node name="Cell11" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 84.0
+offset_right = 287.0
+offset_bottom = 114.0
+[node name="Cell12" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 116.0
+offset_right = 127.0
+offset_bottom = 146.0
+[node name="Cell13" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 116.0
+offset_right = 159.0
+offset_bottom = 146.0
+[node name="Cell14" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 116.0
+offset_right = 191.0
+offset_bottom = 146.0
+[node name="Cell15" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 116.0
+offset_right = 223.0
+offset_bottom = 146.0
+[node name="Cell16" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 116.0
+offset_right = 255.0
+offset_bottom = 146.0
+[node name="Cell17" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 116.0
+offset_right = 287.0
+offset_bottom = 146.0
+[node name="Cell18" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 148.0
+offset_right = 127.0
+offset_bottom = 178.0
+[node name="Cell19" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 148.0
+offset_right = 159.0
+offset_bottom = 178.0
+[node name="Cell20" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 148.0
+offset_right = 191.0
+offset_bottom = 178.0
+[node name="Cell21" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 148.0
+offset_right = 223.0
+offset_bottom = 178.0
+[node name="Cell22" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 148.0
+offset_right = 255.0
+offset_bottom = 178.0
+[node name="Cell23" parent="Content" instance=ExtResource("cell")]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 148.0
+offset_right = 287.0
+offset_bottom = 178.0
+
+[node name="Scroll" parent="Content" instance=ExtResource("scroll")]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 53.0
+offset_right = 303.0
+offset_bottom = 177.0
+[node name="UpHit" type="Button" parent="Content/Scroll"]
+layout_mode = 0
+offset_right = 13.0
+offset_bottom = 8.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+[node name="DownHit" type="Button" parent="Content/Scroll"]
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 13.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Detail" type="Panel" parent="Content"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 183.0
+offset_right = 306.0
+offset_bottom = 215.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outline")
+[node name="NoBox" type="Panel" parent="Content/Detail"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 6.0
+offset_right = 38.0
+offset_bottom = 15.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("BoxFill")
+[node name="NoIcon" type="TextureRect" parent="Content/Detail"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = 19.0
+offset_bottom = 13.0
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("NoIcon")
+[node name="Number" parent="Content/Detail" instance=ExtResource("number")]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 7.0
+offset_right = 60.0
+offset_bottom = 14.0
+mouse_filter = 2
+source_y = 0
+texture = ExtResource("digits")
+[node name="NameBox" type="Panel" parent="Content/Detail"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 3.0
+offset_right = 158.0
+offset_bottom = 15.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("BoxFill")
+[node name="Name" parent="Content/Detail" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 4.0
+offset_right = 158.0
+offset_bottom = 14.0
+horizontal_alignment = 1
+[node name="DescClip" type="Control" parent="Content/Detail"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 18.0
+offset_right = 207.0
+offset_bottom = 31.0
+mouse_filter = 2
+clip_contents = true
+[node name="Desc" parent="Content/Detail/DescClip" instance=ExtResource("label")]
+layout_mode = 0
+offset_right = 202.0
+
+[node name="Accept" parent="Content" instance=ExtResource("footer")]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 218.0
+offset_right = 132.0
+offset_bottom = 230.0
+[node name="Back" parent="Content" instance=ExtResource("footer")]
+layout_mode = 0
+offset_left = 268.0
+offset_top = 218.0
+offset_right = 310.0
+offset_bottom = 230.0
+[node name="AcceptHit" type="Button" parent="Content"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 218.0
+offset_right = 132.0
+offset_bottom = 230.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+[node name="BackHit" type="Button" parent="Content"]
+layout_mode = 0
+offset_left = 268.0
+offset_top = 218.0
+offset_right = 310.0
+offset_bottom = 230.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")

@@ -1,0 +1,312 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/menu/items.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/components/item_cell.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/menu/item_category.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/components/atlas_number.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/menu/scrollbar.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://scenes/components/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://scenes/components/item_description.tscn" id="description"]
+[ext_resource type="Texture2D" path="res://assets/sprite/common/ui_number/frame-000.webp" id="digits"]
+[ext_resource type="Shader" path="res://shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="PackedScene" path="res://scenes/components/currency_amount.tscn" id="money"]
+[ext_resource type="Texture2D" path="res://assets/sprite/common/ui_battle/frame-008.webp" id="bullet"]
+[ext_resource type="PackedScene" path="res://scenes/menu/item_actions.tscn" id="actions"]
+
+[sub_resource type="StyleBoxFlat" id="Outline"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0980392, 0.392157, 0.521569, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_left = 2
+corner_radius_bottom_right = 2
+anti_aliasing = false
+[sub_resource type="AtlasTexture" id="Bullet"]
+atlas = ExtResource("bullet")
+region = Rect2(6, 0, 6, 7)
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+[sub_resource type="ShaderMaterial" id="NumberPalette"]
+shader = ExtResource("key")
+
+[node name="items" type="Control"]
+visible = false
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+script = ExtResource("1")
+
+[node name="GridFrameOne" type="Panel" parent="."]
+show_behind_parent = true
+offset_left = 94.0
+offset_top = 82.0
+offset_right = 306.0
+offset_bottom = 129.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outline")
+[node name="GridFrameTwo" type="Panel" parent="."]
+show_behind_parent = true
+offset_left = 94.0
+offset_top = 82.0
+offset_right = 306.0
+offset_bottom = 161.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outline")
+[node name="GridMaskOne" type="ColorRect" parent="."]
+show_behind_parent = true
+offset_left = 95.0
+offset_top = 117.0
+offset_right = 305.0
+offset_bottom = 128.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+[node name="GridMaskTwo" type="ColorRect" parent="."]
+show_behind_parent = true
+offset_left = 95.0
+offset_top = 149.0
+offset_right = 305.0
+offset_bottom = 160.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+[node name="DetailFrame" parent="." instance=ExtResource("description")]
+show_behind_parent = true
+offset_left = 94.0
+offset_top = 163.0
+offset_right = 306.0
+offset_bottom = 222.0
+
+[node name="BookDetailFrame" type="Panel" parent="."]
+offset_left = 94.0
+offset_top = 131.0
+offset_right = 306.0
+offset_bottom = 222.0
+mouse_filter = 2
+clip_contents = true
+theme_override_styles/panel = SubResource("Outline")
+[node name="HeaderClip" type="Control" parent="BookDetailFrame"]
+offset_left = 2.0
+offset_top = 5.0
+anchor_right = 1.0
+offset_right = -2.0
+offset_bottom = 39.0
+mouse_filter = 2
+clip_contents = true
+[node name="Content" type="HBoxContainer" parent="BookDetailFrame/HeaderClip"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/separation = 3
+[node name="SelectedItem" parent="BookDetailFrame/HeaderClip/Content" instance=ExtResource("label")]
+custom_minimum_size = Vector2(0, 10)
+size_flags_vertical = 0
+clip_contents = true
+offset_right = 0.0
+color = Color(1, 1, 0.666667, 1)
+[node name="Result" type="Control" parent="BookDetailFrame/HeaderClip/Content"]
+custom_minimum_size = Vector2(17, 0)
+size_flags_horizontal = 3
+mouse_filter = 2
+[node name="Bullet" type="TextureRect" parent="BookDetailFrame/HeaderClip/Content/Result"]
+offset_top = 2.0
+offset_right = 6.0
+offset_bottom = 9.0
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("Bullet")
+[node name="Lines" type="VBoxContainer" parent="BookDetailFrame/HeaderClip/Content/Result"]
+anchor_right = 1.0
+offset_left = 7.0
+offset_bottom = 34.0
+mouse_filter = 2
+theme_override_constants/separation = 2
+[node name="Line0" parent="BookDetailFrame/HeaderClip/Content/Result/Lines" instance=ExtResource("label")]
+custom_minimum_size = Vector2(0, 10)
+[node name="Line1" parent="BookDetailFrame/HeaderClip/Content/Result/Lines" instance=ExtResource("label")]
+custom_minimum_size = Vector2(0, 10)
+[node name="Line2" parent="BookDetailFrame/HeaderClip/Content/Result/Lines" instance=ExtResource("label")]
+custom_minimum_size = Vector2(0, 10)
+[node name="Recipe0" type="Control" parent="BookDetailFrame"]
+offset_top = 32.0
+offset_right = 208.0
+offset_bottom = 62.0
+mouse_filter = 2
+[node name="Unknown" parent="BookDetailFrame" instance=ExtResource("label")]
+visible = false
+offset_left = 13.0
+offset_top = 30.0
+offset_right = 208.0
+offset_bottom = 40.0
+text = "--"
+[node name="Icon" type="TextureRect" parent="BookDetailFrame/Recipe0"]
+offset_left = 11.0
+offset_top = 7.0
+offset_right = 27.0
+offset_bottom = 23.0
+mouse_filter = 2
+texture_filter = 1
+[node name="Name" parent="BookDetailFrame/Recipe0" instance=ExtResource("label")]
+clip_contents = true
+offset_left = 38.0
+offset_top = 10.0
+offset_right = 130.0
+offset_bottom = 20.0
+[node name="Count" parent="BookDetailFrame/Recipe0" instance=ExtResource("4")]
+material = SubResource("NumberPalette")
+use_parent_material = false
+offset_left = 62.0
+offset_top = 12.0
+offset_right = 133.0
+offset_bottom = 19.0
+source_y = 0
+texture = ExtResource("digits")
+[node name="Recipe1" type="Control" parent="BookDetailFrame"]
+offset_top = 54.0
+offset_right = 208.0
+offset_bottom = 84.0
+mouse_filter = 2
+[node name="Icon" type="TextureRect" parent="BookDetailFrame/Recipe1"]
+offset_left = 11.0
+offset_top = 7.0
+offset_right = 27.0
+offset_bottom = 23.0
+mouse_filter = 2
+texture_filter = 1
+[node name="Name" parent="BookDetailFrame/Recipe1" instance=ExtResource("label")]
+clip_contents = true
+offset_left = 38.0
+offset_top = 10.0
+offset_right = 130.0
+offset_bottom = 20.0
+[node name="Count" parent="BookDetailFrame/Recipe1" instance=ExtResource("4")]
+material = SubResource("NumberPalette")
+use_parent_material = false
+offset_left = 62.0
+offset_top = 12.0
+offset_right = 133.0
+offset_bottom = 19.0
+source_y = 0
+texture = ExtResource("digits")
+[node name="Cost" parent="BookDetailFrame" instance=ExtResource("money")]
+offset_left = 161.0
+offset_top = 79.0
+offset_right = 209.0
+offset_bottom = 88.0
+[node name="Icon" parent="BookDetailFrame/Cost" index="0"]
+offset_top = 2.0
+offset_bottom = 7.0
+[node name="Number" parent="BookDetailFrame/Cost" index="1"]
+offset_top = 2.0
+
+[node name="CountOne" parent="." instance=ExtResource("4")]
+offset_left = 23.0
+offset_top = 119.0
+offset_right = 123.0
+offset_bottom = 126.0
+mouse_filter = 2
+[node name="CountTwo" parent="." instance=ExtResource("4")]
+offset_left = 23.0
+offset_top = 151.0
+offset_right = 123.0
+offset_bottom = 158.0
+mouse_filter = 2
+[node name="MoneyOne" parent="." instance=ExtResource("money")]
+offset_left = 211.0
+offset_top = 119.0
+offset_right = 303.0
+offset_bottom = 126.0
+[node name="MoneyTwo" parent="." instance=ExtResource("money")]
+offset_left = 211.0
+offset_top = 151.0
+offset_right = 303.0
+offset_bottom = 158.0
+[node name="ScrollOne" parent="." instance=ExtResource("5")]
+offset_left = 290.0
+offset_top = 86.0
+offset_right = 303.0
+offset_bottom = 114.0
+[node name="ScrollTwo" parent="." instance=ExtResource("5")]
+offset_left = 290.0
+offset_top = 86.0
+offset_right = 303.0
+offset_bottom = 146.0
+[node name="UpHit" type="Button" parent="ScrollOne"]
+offset_right = 13.0
+offset_bottom = 8.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+[node name="DownHit" type="Button" parent="ScrollOne"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 13.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+[node name="UpHit" type="Button" parent="ScrollTwo"]
+offset_right = 13.0
+offset_bottom = 8.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+[node name="DownHit" type="Button" parent="ScrollTwo"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 13.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Categories" type="HBoxContainer" parent="."]
+offset_left = 94.0
+offset_top = 50.0
+offset_right = 302.0
+offset_bottom = 80.0
+mouse_filter = 2
+theme_override_constants/separation = 2
+[node name="Category0" parent="Categories" instance=ExtResource("3")]
+[node name="Category1" parent="Categories" instance=ExtResource("3")]
+[node name="Category2" parent="Categories" instance=ExtResource("3")]
+[node name="Category3" parent="Categories" instance=ExtResource("3")]
+[node name="Category4" parent="Categories" instance=ExtResource("3")]
+[node name="Category5" parent="Categories" instance=ExtResource("3")]
+
+[node name="Grid" type="GridContainer" parent="."]
+offset_left = 98.0
+offset_top = 85.0
+offset_right = 288.0
+offset_bottom = 147.0
+mouse_filter = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 6
+[node name="Cell0" parent="Grid" instance=ExtResource("2")]
+[node name="Cell1" parent="Grid" instance=ExtResource("2")]
+[node name="Cell2" parent="Grid" instance=ExtResource("2")]
+[node name="Cell3" parent="Grid" instance=ExtResource("2")]
+[node name="Cell4" parent="Grid" instance=ExtResource("2")]
+[node name="Cell5" parent="Grid" instance=ExtResource("2")]
+[node name="Cell6" parent="Grid" instance=ExtResource("2")]
+[node name="Cell7" parent="Grid" instance=ExtResource("2")]
+[node name="Cell8" parent="Grid" instance=ExtResource("2")]
+[node name="Cell9" parent="Grid" instance=ExtResource("2")]
+[node name="Cell10" parent="Grid" instance=ExtResource("2")]
+[node name="Cell11" parent="Grid" instance=ExtResource("2")]
+
+[node name="ActionAnchor" type="Control" parent="."]
+z_index = 1
+mouse_filter = 2
+
+[node name="Actions" parent="ActionAnchor" instance=ExtResource("actions")]
+

@@ -1,0 +1,12 @@
+[gd_scene load_steps=1 format=3]
+
+[node name="AtlasGlyph" type="Control"]
+layout_mode = 2
+custom_minimum_size = Vector2(5, 7)
+use_parent_material = true
+
+[node name="Image" type="TextureRect" parent="."]
+expand_mode = 1
+texture_filter = 1
+mouse_filter = 2
+use_parent_material = true

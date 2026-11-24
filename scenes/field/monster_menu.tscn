@@ -1,0 +1,79 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/field/monster_menu.gd" id="script"]
+[ext_resource type="PackedScene" path="res://scenes/components/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://scenes/menu/option_card.tscn" id="card"]
+
+[sub_resource type="StyleBoxFlat" id="RowFill"]
+bg_color = Color(0.054902, 0.105882, 0.184314, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="RowBorder"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="MonsterMenu" instance=ExtResource("window")]
+visible = false
+script = ExtResource("script")
+window_size = Vector2i(228, 208)
+screen_shade = true
+
+[node name="CancelHit" type="Button" parent="Content"]
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 240.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Option0" parent="Content" instance=ExtResource("card")]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 83.0
+offset_right = 259.0
+offset_bottom = 103.0
+
+[node name="Option1" parent="Content" instance=ExtResource("card")]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 140.0
+offset_right = 259.0
+offset_bottom = 160.0
+
+[node name="Fill" parent="Content/Option0"]
+theme_override_styles/panel = SubResource("RowFill")
+
+[node name="Inner" parent="Content/Option0"]
+theme_override_styles/panel = SubResource("RowBorder")
+
+[node name="Outer" parent="Content/Option0"]
+theme_override_styles/panel = SubResource("RowBorder")
+
+[node name="Fill" parent="Content/Option1"]
+theme_override_styles/panel = SubResource("RowFill")
+
+[node name="Inner" parent="Content/Option1"]
+theme_override_styles/panel = SubResource("RowBorder")
+
+[node name="Outer" parent="Content/Option1"]
+theme_override_styles/panel = SubResource("RowBorder")
+
+[editable path="Content/Option0"]
+[editable path="Content/Option1"]

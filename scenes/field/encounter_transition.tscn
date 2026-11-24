@@ -1,0 +1,177 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/field/encounter_transition.gd" id="script"]
+[ext_resource type="Shader" path="res://shaders/encounter_zoom.gdshader" id="zoom"]
+[ext_resource type="PackedScene" path="res://scenes/actors/hero/h_f_01.tscn" id="hero"]
+[ext_resource type="PackedScene" path="res://scenes/field/encounter_art/obj/title.tscn" id="loading"]
+
+[sub_resource type="ShaderMaterial" id="Zoom"]
+resource_local_to_scene = true
+shader = ExtResource("zoom")
+shader_parameter/hero_uv = Vector2(0.5, 0.5)
+shader_parameter/zoom = 0.0
+
+[sub_resource type="Animation" id="Encounter"]
+resource_name = "encounter"
+length = 0.75
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Snapshot:material:shader_parameter/zoom")
+tracks/0/interp = 1
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0.0, 0.25, 0.3, 0.35, 0.5, 0.5]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Shade:color")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1), Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(0, 0, 0, 0.25), Color(0, 0, 0, 0.5), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Hero:visible")
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Runner:visible")
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Loading:visible")
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "animation"
+tracks/5/path = NodePath("Hero/AnimationPlayer")
+tracks/5/keys = {"times": PackedFloat32Array(0), "clips": PackedStringArray("action_003")}
+tracks/6/type = "animation"
+tracks/6/path = NodePath("Runner/AnimationPlayer")
+tracks/6/keys = {"times": PackedFloat32Array(0), "clips": PackedStringArray("action_004")}
+tracks/7/type = "animation"
+tracks/7/path = NodePath("Loading/AnimationPlayer")
+tracks/7/keys = {"times": PackedFloat32Array(0.25), "clips": PackedStringArray("action_005")}
+tracks/8/type = "method"
+tracks/8/path = NodePath(".")
+tracks/8/keys = {
+"times": PackedFloat32Array(0.05),
+"values": [{"method": &"_play_effect", "args": []}]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath(".:modulate")
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Ready"]
+resource_name = "ready"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Snapshot:visible")
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Shade:color")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Hero:position")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(360, 210), Vector2(370, 210), Vector2(380, 210), Vector2(390, 210), Vector2(400, 210)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Runner:position")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(360, 220), Vector2(370, 220), Vector2(380, 220), Vector2(390, 220), Vector2(400, 220)]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.75), Color(1, 1, 1, 0.5), Color(1, 1, 1, 0.25), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="Library"]
+_data = {
+&"encounter": SubResource("Encounter"),
+&"ready": SubResource("Ready")
+}
+
+[node name="EncounterTransition" type="Control"]
+offset_right = 400.0
+offset_bottom = 240.0
+script = ExtResource("script")
+
+[node name="Snapshot" type="TextureRect" parent="."]
+material = SubResource("Zoom")
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Shade" type="ColorRect" parent="."]
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Hero" parent="." instance=ExtResource("hero")]
+visible = false
+position = Vector2(360, 210)
+
+[node name="AnimationPlayer" parent="Hero" index="18"]
+speed_scale = 1.2
+
+[node name="Runner" parent="." instance=ExtResource("loading")]
+visible = false
+position = Vector2(360, 220)
+
+[node name="Loading" parent="." instance=ExtResource("loading")]
+visible = false
+position = Vector2(200, 80)
+
+[node name="Timeline" type="AnimationPlayer" parent="."]
+libraries = {&"": SubResource("Library")}
+callback_mode_method = 1
+
+[editable path="Hero"]

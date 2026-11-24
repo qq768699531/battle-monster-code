@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/slot_names.gd" id="1"]
+
+[sub_resource type="AtlasTexture" id="Name0"]
+resource_local_to_scene = true
+region = Rect2(0, 0, 32, 7)
+
+[sub_resource type="AtlasTexture" id="Number0"]
+resource_local_to_scene = true
+region = Rect2(32, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="Name1"]
+resource_local_to_scene = true
+region = Rect2(0, 0, 32, 7)
+
+[sub_resource type="AtlasTexture" id="Number1"]
+resource_local_to_scene = true
+region = Rect2(38, 0, 6, 7)
+
+[node name="SlotNames" type="Node2D"]
+script = ExtResource("1")
+texture_filter = 1
+
+[node name="Slot0" type="Node2D" parent="."]
+position = Vector2(95, 37)
+
+[node name="Name" type="TextureRect" parent="Slot0"]
+offset_left = 58
+offset_top = 7
+offset_right = 90
+offset_bottom = 14
+texture = SubResource("Name0")
+mouse_filter = 2
+
+[node name="Number" type="TextureRect" parent="Slot0"]
+offset_left = 90
+offset_top = 7
+offset_right = 96
+offset_bottom = 14
+texture = SubResource("Number0")
+mouse_filter = 2
+
+[node name="Slot1" type="Node2D" parent="."]
+position = Vector2(95, 124)
+
+[node name="Name" type="TextureRect" parent="Slot1"]
+offset_left = 58
+offset_top = 7
+offset_right = 90
+offset_bottom = 14
+texture = SubResource("Name1")
+mouse_filter = 2
+
+[node name="Number" type="TextureRect" parent="Slot1"]
+offset_left = 90
+offset_top = 7
+offset_right = 96
+offset_bottom = 14
+texture = SubResource("Number1")
+mouse_filter = 2

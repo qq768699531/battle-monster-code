@@ -1,0 +1,111 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="StyleBoxFlat" id="Outer"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_left = 4
+corner_radius_bottom_right = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Inner"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_left = 2
+corner_radius_bottom_right = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Gray"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72549, 0.72549, 0.72549, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_left = 2
+corner_radius_bottom_right = 2
+anti_aliasing = false
+
+[node name="MenuOutline" type="Control"]
+offset_right = 228.0
+offset_bottom = 240.0
+mouse_filter = 2
+
+[node name="Outer" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outer")
+
+[node name="Inner" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Inner")
+
+[node name="TopLeft" type="ColorRect" parent="Inner"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 2.0
+offset_bottom = 2.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TopRight" type="ColorRect" parent="Inner"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -2.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = 2.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BottomLeft" type="ColorRect" parent="Inner"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = -1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BottomRight" type="ColorRect" parent="Inner"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = -1.0
+offset_bottom = -1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Border" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Gray")

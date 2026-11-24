@@ -1,0 +1,164 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprite/touch/ui_touch/frame-000.webp" id="Texture0"]
+[ext_resource type="Texture2D" path="res://assets/sprite/touch/ui_touch/frame-001.webp" id="Texture1"]
+[ext_resource type="Texture2D" path="res://assets/sprite/touch/ui_touch/frame-002.webp" id="Texture2"]
+[ext_resource type="Texture2D" path="res://assets/sprite/touch/ui_touch/frame-003.webp" id="Texture3"]
+[ext_resource type="Texture2D" path="res://assets/sprite/touch/ui_touch/frame-004.webp" id="Texture4"]
+[ext_resource type="Shader" path="res://shaders/native_touch_blend.gdshader" id="BlendShader"]
+
+[sub_resource type="ShaderMaterial" id="Blend6"]
+shader = ExtResource("BlendShader")
+shader_parameter/native_mode = 23
+
+[sub_resource type="ShaderMaterial" id="Blend5"]
+shader = ExtResource("BlendShader")
+shader_parameter/native_mode = 21
+
+[sub_resource type="Animation" id="RESET"]
+resource_name = "RESET"
+length = 0.05
+step = 0.05
+loop_mode = 0
+metadata/frame_count = 1
+metadata/bounds = Rect2(-22, -23, 46, 45)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture0")]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -22, -23)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("Blend6")]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="action_000"]
+resource_name = "action_000"
+length = 0.25
+step = 0.05
+loop_mode = 1
+metadata/frame_count = 5
+metadata/bounds = Rect2(-23, -23, 47, 47)
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:metadata/frame_motion")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Layer000:texture")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture0"), ExtResource("Texture1"), ExtResource("Texture2"), ExtResource("Texture3"), ExtResource("Texture4")]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Layer000:transform")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Transform2D(1, 0, 0, 1, -22, -23), Transform2D(1, 0, 0, 1, -18, -18), Transform2D(1, 0, 0, 1, -23, -23), Transform2D(1, 0, 0, 1, -9, -10)]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Layer000:visible")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Layer000:material")
+tracks/4/interp = 0
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("Blend6"), SubResource("Blend5"), SubResource("Blend6")]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Buffer000:copy_mode")
+tracks/5/interp = 0
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="AnimationLibrary" id="Library"]
+_data = {
+&"RESET": SubResource("RESET"),
+&"action_000": SubResource("action_000"),
+}
+
+[node name="ui_touch" type="Node2D"]
+texture_filter = 1
+metadata/frame_motion = Vector2(0, 0)
+
+[node name="Buffer000" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="Layer000" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("Texture0")
+transform = Transform2D(1, 0, 0, 1, -22, -23)
+visible = true
+material = SubResource("Blend6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "action_000"
+libraries = { &"": SubResource("Library") }
