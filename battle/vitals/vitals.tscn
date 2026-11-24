@@ -4,7 +4,7 @@
 
 [ext_resource type="Script" path="res://battle/vitals.gd" id="script"]
 [ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
-[ext_resource type="Shader" path="res://shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 
 [sub_resource type="AtlasTexture" id="Atlas_attributes"]
 atlas = ExtResource("Sheet_common_ui_battle")
@@ -191,3 +191,4 @@ offset_right = 1.0
 source_y = 0
 texture = SubResource("Atlas_digits")
 mouse_filter = 2
+

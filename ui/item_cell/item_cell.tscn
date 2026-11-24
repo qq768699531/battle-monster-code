@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dloye1ifpaohu"]
 [ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
 
-[ext_resource type="Shader" uid="uid://3sq35m6ufn4w" path="res://shaders/item_cell_frame.gdshader" id="bright"]
+[ext_resource type="Shader" uid="uid://3sq35m6ufn4w" path="res://core/shaders/item_cell_frame.gdshader" id="bright"]
 [ext_resource type="PackedScene" path="res://ui/item_icon/item_icon.tscn" id="icon"]
-[ext_resource type="Shader" uid="uid://c5dfk0re6q1e1" path="res://shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="Shader" uid="uid://c5dfk0re6q1e1" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 [ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
 [ext_resource type="Script" uid="uid://cxwur0rad6fqp" path="res://ui/item_cell.gd" id="script"]
 
@@ -111,3 +111,4 @@ offset_bottom = 9.0
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 2
+

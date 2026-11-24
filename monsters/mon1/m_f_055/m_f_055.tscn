@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://actors/hero/c_f_shadow/c_f_shadow.webp" id="Sheet_hero_c_f_shadow"]
 [ext_resource type="Texture2D" path="res://monsters/mon1/m_f_055/m_f_055.webp" id="Sheet_mon1_m_f_055"]
 
-[ext_resource type="Shader" path="res://shaders/native_touch_blend.gdshader" id="BlendShader"]
+[ext_resource type="Shader" path="res://core/shaders/native_touch_blend.gdshader" id="BlendShader"]
 
 [sub_resource type="AtlasTexture" id="Atlas_Texture0"]
 atlas = ExtResource("Sheet_hero_c_f_shadow")
@@ -1062,3 +1062,4 @@ material = null
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "action_000_down"
 libraries = { &"": SubResource("Library") }
+

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
-[ext_resource type="Shader" path="res://shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 
 [sub_resource type="AtlasTexture" id="Atlas_icons"]
 atlas = ExtResource("Sheet_common_ui_window")
@@ -67,3 +67,4 @@ offset_left = 10.0
 offset_right = -3.0
 source_y = 0
 texture = SubResource("Atlas_digits")
+

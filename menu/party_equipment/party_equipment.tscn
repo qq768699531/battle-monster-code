@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
 [ext_resource type="PackedScene" path="res://ui/currency_amount/currency_amount.tscn" id="money"]
 [ext_resource type="PackedScene" path="res://ui/item_description/item_description.tscn" id="description"]
-[ext_resource type="Shader" path="res://shaders/native_number_palette.gdshader" id="palette"]
+[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="palette"]
 
 [sub_resource type="AtlasTexture" id="Atlas_categories"]
 atlas = ExtResource("Sheet_common_ui_window")
@@ -141,3 +141,4 @@ offset_left = 95.0
 offset_top = 164.0
 offset_right = 307.0
 offset_bottom = 223.0
+

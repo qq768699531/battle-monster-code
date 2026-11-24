@@ -14,13 +14,13 @@
 [ext_resource type="PackedScene" path="res://menu/world_map/world_map.tscn" id="10_world"]
 [ext_resource type="PackedScene" path="res://menu/options/options.tscn" id="11"]
 [ext_resource type="PackedScene" path="res://ui/touch_controls/touch_controls.tscn" id="14"]
-[ext_resource type="Shader" path="res://shaders/native_menu_brightness.gdshader" id="15"]
+[ext_resource type="Shader" path="res://core/shaders/native_menu_brightness.gdshader" id="15"]
 [ext_resource type="PackedScene" path="res://ui/menu_outline/menu_outline.tscn" id="17"]
 [ext_resource type="PackedScene" path="res://menu/party_discard/party_discard.tscn" id="18"]
 [ext_resource type="PackedScene" path="res://menu/item_discard/item_discard.tscn" id="43"]
 [ext_resource type="PackedScene" path="res://menu/network/network.tscn" id="19"]
 [ext_resource type="PackedScene" path="res://ui/screen_shade/screen_shade.tscn" id="20_shade"]
-[ext_resource type="Shader" path="res://shaders/native_touch_blend.gdshader" id="34_p2357"]
+[ext_resource type="Shader" path="res://core/shaders/native_touch_blend.gdshader" id="34_p2357"]
 [ext_resource type="PackedScene" path="res://ui/box2_prompt/box2_prompt.tscn" id="44_saveprompt"]
 
 [sub_resource type="AtlasTexture" id="Atlas_32_ygt0d"]
@@ -987,3 +987,4 @@ offset_bottom = 240.0
 [editable path="TouchControls/Action"]
 [editable path="TouchControls/Network"]
 [editable path="TouchControls/Exit"]
+

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://actors/hero/h_f_01/h_f_01.tscn" id="marker"]
 [ext_resource type="PackedScene" path="res://field/warp_confirm/warp_confirm.tscn" id="confirm"]
-[ext_resource type="Shader" path="res://shaders/ani_brightness.gdshader" id="gray_shader"]
+[ext_resource type="Shader" path="res://core/shaders/ani_brightness.gdshader" id="gray_shader"]
 
 [sub_resource type="AtlasTexture" id="Atlas_title"]
 atlas = ExtResource("Sheet_common_ui_battle")
@@ -329,4 +329,5 @@ theme_override_styles/focus = SubResource("Empty")
 position = Vector2(98, 84)
 
 [node name="Confirm" parent="." instance=ExtResource("confirm")]
+
 

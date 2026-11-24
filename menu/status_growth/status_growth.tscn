@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3]
 [ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="1"]
-[ext_resource type="Shader" path="res://shaders/native_number_palette.gdshader" id="2"]
+[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="2"]
 [sub_resource type="ShaderMaterial" id="NumberPalette"]
 shader = ExtResource("2")
 [sub_resource type="StyleBoxFlat" id="Bar"]
@@ -52,3 +52,4 @@ offset_top = 3.0
 offset_bottom = 10.0
 mouse_filter = 2
 source_y = 0
+

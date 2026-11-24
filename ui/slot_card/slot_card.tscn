@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://ui/slot_card.gd" id="1"]
 
-[ext_resource type="Shader" path="res://shaders/ani_brightness.gdshader" id="2"]
+[ext_resource type="Shader" path="res://core/shaders/ani_brightness.gdshader" id="2"]
 
 [ext_resource type="PackedScene" path="res://ui/plain_label/plain_label.tscn" id="3"]
 
@@ -231,3 +231,4 @@ offset_right = 210
 offset_bottom = 83
 mouse_filter = 2
 use_parent_material = true
+

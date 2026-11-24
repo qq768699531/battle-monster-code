@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" path="res://field/map_effect/map_effect.tscn" id="14"]
 [ext_resource type="PackedScene" path="res://field/hero_summary/hero_summary.tscn" id="8"]
 [ext_resource type="PackedScene" path="res://field/minimap/minimap.tscn" id="9"]
-[ext_resource type="Shader" path="res://shaders/map_filter.gdshader" id="10"]
+[ext_resource type="Shader" path="res://core/shaders/map_filter.gdshader" id="10"]
 [ext_resource type="PackedScene" path="res://field/narration_view/narration_view.tscn" id="11"]
 [ext_resource type="PackedScene" path="res://field/mastery_view/mastery_view.tscn" id="12"]
 [ext_resource type="PackedScene" path="res://menu/book_monster/book_monster.tscn" id="book_monster"]
@@ -129,3 +129,4 @@ offset_bottom = 77.0
 theme = ExtResource("6")
 theme_override_font_sizes/font_size = 10
 autowrap_mode = 3
+

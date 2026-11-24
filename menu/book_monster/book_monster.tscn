@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="monster"]
 [ext_resource type="PackedScene" path="res://actors/ui_eff/ui_eff.tscn" id="effect"]
-[ext_resource type="Shader" path="res://shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 
 [sub_resource type="AtlasTexture" id="Atlas_window_icons"]
 atlas = ExtResource("Sheet_common_ui_window")
@@ -727,3 +727,4 @@ theme_override_styles/focus = SubResource("Empty")
 [node name="Choice" parent="Confirm/Content/No" instance=ExtResource("choice")]
 
 [editable path="Confirm"]
+

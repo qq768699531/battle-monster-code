@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Shader" path="res://shaders/native_menu_brightness.gdshader" id="bright"]
+[ext_resource type="Shader" path="res://core/shaders/native_menu_brightness.gdshader" id="bright"]
 
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 
@@ -59,3 +59,4 @@ stretch_mode = 2
 [node name="Breath" type="AnimationPlayer" parent="Icon" unique_id=293803856]
 libraries/ = SubResource("AnimationLibrary_d88na")
 autoplay = &"breath"
+

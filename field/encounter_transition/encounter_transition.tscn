@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://field/encounter_transition.gd" id="script"]
-[ext_resource type="Shader" path="res://shaders/encounter_zoom.gdshader" id="zoom"]
+[ext_resource type="Shader" path="res://core/shaders/encounter_zoom.gdshader" id="zoom"]
 [ext_resource type="PackedScene" path="res://actors/hero/h_f_01/h_f_01.tscn" id="hero"]
 [ext_resource type="PackedScene" path="res://field/title/title.tscn" id="loading"]
 
@@ -175,3 +175,4 @@ libraries = {&"": SubResource("Library")}
 callback_mode_method = 1
 
 [editable path="Hero"]
+

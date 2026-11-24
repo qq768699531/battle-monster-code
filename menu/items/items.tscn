@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" path="res://menu/scrollbar/scrollbar.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://ui/item_description/item_description.tscn" id="description"]
-[ext_resource type="Shader" path="res://shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
 [ext_resource type="PackedScene" path="res://ui/currency_amount/currency_amount.tscn" id="money"]
 [ext_resource type="PackedScene" path="res://menu/item_actions/item_actions.tscn" id="actions"]
 
@@ -315,4 +315,5 @@ z_index = 1
 mouse_filter = 2
 
 [node name="Actions" parent="ActionAnchor" instance=ExtResource("actions")]
+
 
