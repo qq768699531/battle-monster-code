@@ -50,3 +50,9 @@ desktop.ini
 /assets/fonts/*.ttf
 /assets/**/*.import
 
+
+# --- 原版美术资源（图集/贴图）不入库，由本地补齐；场景用 AtlasTexture 引用 ---
+**/*.webp
+**/*.png
+**/*.jpg
+**/*.jpeg
