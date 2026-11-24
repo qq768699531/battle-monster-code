@@ -62,10 +62,51 @@ static func _normalize_scene(packed: PackedScene) -> void:
 					(library as AnimationLibrary).get_animation(clip).resource_local_to_scene = false
 
 
+## identity 形如 `命名空间/名字`（`face/fc00`、`mon1/m_f_000`、`obj/title`）。重组后命名空间与目录
+## 不再一一对应：同名对象按用途落在 `monsters/`、`actors/{hero,npc,portrait}/`、`field/map_actor/`
+## 或 `prime/`。查过的结果缓存，避免每次实例化都拼串。
+static var _scene_paths: Dictionary = {}
+
+## 少数对象的场景文件名与 identity 不同：`obj/f_emoticon` 是野外 NPC 头顶的任务图标，
+## 重组后与 `field/emotion/emotion.tscn` 合并（同一张图集，动画已转换）。
+const SCENE_ALIASES := {
+	"obj/f_emoticon": "res://field/emotion/emotion.tscn",
+}
+
+
 static func scene_path(identity: String) -> String:
-	var folder := "monsters/" if identity.begins_with("mon") or \
-		identity in ["obj/b_effect", "obj/b_icon2"] else "actors/"
-	return "res://" + folder + identity + "/" + identity.get_file() + ".tscn"
+	if _scene_paths.has(identity):
+		return _scene_paths[identity]
+	if SCENE_ALIASES.has(identity):
+		_scene_paths[identity] = SCENE_ALIASES[identity]
+		return _scene_paths[identity]
+	var scope := identity.get_slice("/", 0)
+	var name := identity.get_file()
+	var dir := ""
+	match scope:
+		"mon1", "mon2":
+			dir = "res://monsters/" + identity + "/"
+		"hero":
+			dir = "res://actors/hero/" + name + "/"
+		"npc":
+			dir = "res://actors/npc/" + name + "/"
+		"face":
+			dir = "res://actors/portrait/" + name + "/"
+		"obj":
+			# 地图交互物件 `obj/obj_f_*` 移入 `field/map_actor/`；共用特效 `obj/b_*` 仍在 `monsters/`；
+			# 其余 `obj/*` 是标题页 ANI，在 `prime/`。
+			if name.begins_with("obj_f_"):
+				dir = "res://field/map_actor/" + name + "/"
+			elif name.begins_with("b_"):
+				dir = "res://monsters/" + name + "/"
+			else:
+				dir = "res://prime/" + name + "/"
+		_:
+			# 标题页的 ANI（`obj/title`、`ktf/elogo`、`touch/ui_touch` 等）都在 `prime/`。
+			dir = "res://prime/" + name + "/"
+	var path := dir + name + ".tscn"
+	_scene_paths[identity] = path
+	return path
 
 
 ## 预读 identity 的 ANI 场景并清掉 `resource_local_to_scene`（见 `_normalize_scene`）。
