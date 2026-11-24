@@ -35,7 +35,7 @@ const REQUEST_TIMEOUT_MS := 8000
 
 const GROUP_COMPONENTS := "res://ui"
 const GROUP_ANI := "res://main"
-const GROUP_AUDIO := "res://assets/audio/ogg"
+const GROUP_AUDIO := "res://audio/ogg"
 const GROUP_BATTLE_UI := "res://battle"
 const GROUP_MENU := "res://menu"
 const GROUP_FIELD := "res://field"

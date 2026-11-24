@@ -15,7 +15,7 @@ const SPRITE_ROOT := ASSET_ROOT + "sprite/"
 ## 精灵帧索引：图集合并后，`对象/frame-NNN` → [图集路径, 帧矩形]。
 const SpriteIndex = preload("res://core/sprite_index/sprite_index.gd")
 const SPRITE_FRAMES: Dictionary = SpriteIndex.FRAMES
-const AUDIO_ROOT := ASSET_ROOT + "audio/"
+const AUDIO_ROOT := "res://audio/"
 const AUDIO_OGG_ROOT := "ogg/"
 ## 记录号是整数的文本源：翻译键的后半段必须是规范整数。
 const INTEGER_ID_SUFFIXES := [".fxt", ".nm"]
@@ -43,7 +43,7 @@ var _text_ids: Dictionary = {}
 ## 动画全部是 `scenes/monsters`、`scenes/actors`、`scenes/ani` 下的动画 Scene、
 ## 文本 `assets/text-tables.tres`（颜色与换行随正文保存在翻译资源里）、
 ## 玩法 `assets/gameplay.tres`（typed `GameplayData`）、平台图标 `assets/sprite/platform-images/<path>`、
-## 音频按编号扫 `assets/audio/ogg`。
+## 音频按编号扫 `audio/ogg`。
 func _ready() -> void:
 	_load_origins()
 	for key: String in TEXT_TRANSLATION.get_message_list():

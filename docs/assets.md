@@ -28,7 +28,8 @@ ui/number/
 | `ui/` | 通用界面组件、字体主题、文案表、数字与窗框图集 |
 | `battle/` `field/` `menu/` `prime/` `main/` | 各自功能的场景、脚本、数据 |
 | `actors/` `monsters/` `maps/` | 按对象/地图组存放的角色、怪物、地图 |
-| `assets/` | 只放本地二进制资源（音频、字体、未使用的原版贴图），不入库 |
+| `audio/` | 音频三位一体：`audio_manager.tscn` + `audio_manager.gd` + `default_bus_layout.tres` + 本地 `ogg/` |
+| `assets/` | 只放本地二进制资源（字体、未使用的原版贴图），不入库 |
 
 脚本与场景同级：共享脚本也有同名目录（`core/story/story.gd`）。
 
@@ -38,7 +39,7 @@ ui/number/
 | --- | --- | --- |
 | `**/*.tscn` `**/*.gd` `**/*.tres` `**/*.gdshader` | 是 | 场景、脚本、数据表、着色器 |
 | `**/*.webp` `**/*.png` `**/*.jpg` | 否 | 原版美术，版权归原开发方，本地补齐 |
-| `assets/audio/**` `assets/fonts/*.ttf` | 否 | 原版音频与字体 |
+| `audio/ogg/*.ogg` `assets/fonts/*.ttf` | 否 | 原版音频与字体 |
 | `**/*.import` | 否 | Godot 导入缓存 |
 
 ## 精灵图约定
@@ -59,7 +60,7 @@ ui/number/
 
 ```text
 <各功能目录>/<对象>/<对象>.webp
-assets/audio/**/*.ogg
+audio/ogg/*.ogg
 assets/fonts/*.ttf
 ```
 

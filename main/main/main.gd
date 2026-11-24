@@ -19,7 +19,7 @@ const StartupPreload = preload("res://core/startup_preload/startup_preload.gd")
 ## `Menu_Setup_mKeyPressed` 行3 改完档位随即 `EFC_mdaVIBRATE()` 按档位振一次。
 const SETTING_VIBRATION_MS := [0, 60, 100, 200]
 ## 音量试听的音效：`Menu_Setup_mKeyPressed` 改音量后调 `EFC_mdaPlayDATA(123)`。
-## 编号 123 在 `assets/audio/ogg` 里是 `23_effe9.ogg`；同一编号也是试听绕过声音模式的例外
+## 编号 123 在 `audio/ogg` 里是 `23_effe9.ogg`；同一编号也是试听绕过声音模式的例外
 ## （`wiki\index.md`「音量 0–5、声音模式及标题 101／试听 123 的既有模式例外」）。
 const VOLUME_PREVIEW_RESOURCE_ID := 123
 ## 战斗视图由野外运行时自己实例化，启动层按这个场景路径认出它来接设置项即时生效的信号。
