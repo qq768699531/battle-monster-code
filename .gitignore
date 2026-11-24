@@ -58,3 +58,5 @@ desktop.ini
 /audio/**/*.import
 /ui/theme/*.import
 
+
+**/*.import
