@@ -1,0 +1,202 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://game/menu/quest/quest_detail/quest_detail.gd" id="script"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/text_line_list/text_line_list.tscn" id="lines"]
+[ext_resource type="PackedScene" path="res://game/menu/screen/menu_list_button/menu_list_button.tscn" id="button"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://engine/ui/dotted_line/dotted_line.tscn" id="line"]
+[ext_resource type="PackedScene" path="res://engine/ui/message_choice/message_choice.tscn" id="choice"]
+
+[sub_resource type="StyleBoxFlat" id="Outline"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.811765, 0.8, 0.8, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_left = 2
+corner_radius_bottom_right = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="quest_detail" type="Control"]
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+script = ExtResource("script")
+
+[node name="Bounds" type="Control" parent="."]
+offset_left = 94.0
+offset_top = 50.0
+offset_right = 306.0
+offset_bottom = 222.0
+mouse_filter = 2
+
+[node name="HeaderBackground" type="ColorRect" parent="Bounds"]
+anchor_right = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = 12.0
+mouse_filter = 2
+color = Color(0.0156863, 0.027451, 0.0470588, 1)
+
+[node name="BodyBackground" type="ColorRect" parent="Bounds"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 12.0
+offset_right = -1.0
+offset_bottom = -1.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+
+[node name="Outline" type="Panel" parent="Bounds"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outline")
+
+[node name="QuestType" type="TextureRect" parent="Bounds"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 72.0
+offset_bottom = 10.0
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Title" parent="Bounds" instance=ExtResource("label")]
+anchor_right = 1.0
+offset_left = 4.0
+offset_top = 16.0
+offset_right = -4.0
+offset_bottom = 26.0
+clip_contents = true
+text = "[ 任务标题 ]"
+color = Color(1, 1, 0.666667, 1)
+
+[node name="DescriptionClip" type="Control" parent="Bounds"]
+anchor_right = 1.0
+offset_left = 4.0
+offset_top = 30.0
+offset_right = -4.0
+offset_bottom = 108.0
+clip_contents = true
+mouse_filter = 2
+
+[node name="Description" parent="Bounds/DescriptionClip" instance=ExtResource("lines")]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+
+[node name="Regions" type="Control" parent="Bounds"]
+anchor_right = 1.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -56.0
+offset_right = -4.0
+offset_bottom = -32.0
+mouse_filter = 2
+
+[node name="Caption" parent="Bounds/Regions" instance=ExtResource("label")]
+anchor_right = 1.0
+offset_right = 0.0
+text = "[关联地域]"
+color = Color(0.713725, 1, 0.333333, 1)
+
+[node name="Names" parent="Bounds/Regions" instance=ExtResource("label")]
+anchor_right = 1.0
+offset_top = 14.0
+offset_right = 0.0
+offset_bottom = 24.0
+clip_contents = true
+
+[node name="Separator" type="ColorRect" parent="Bounds"]
+anchor_right = 1.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -28.0
+offset_right = -3.0
+offset_bottom = -27.0
+mouse_filter = 2
+color = Color(0.152941, 0.203922, 0.282353, 1)
+
+[node name="MapButton" parent="Bounds" instance=ExtResource("button")]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -25.0
+offset_right = 53.0
+offset_bottom = -3.0
+button_pressed = true
+tooltip_text = "打开世界地图，定位任务关联地域。"
+
+[node name="Caption" parent="Bounds/MapButton" index="0"]
+text = "世界地图"
+
+[node name="DiscardButton" parent="Bounds" instance=ExtResource("button")]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -53.0
+offset_top = -25.0
+offset_right = -4.0
+offset_bottom = -3.0
+
+[node name="Confirm" parent="." instance=ExtResource("window")]
+visible = false
+kind = 1
+window_size = Vector2i(160, 57)
+
+[node name="Prompt" parent="Confirm/Content" instance=ExtResource("label")]
+offset_left = 128.0
+offset_top = 102.0
+offset_right = 272.0
+offset_bottom = 112.0
+horizontal_alignment = 1
+
+[node name="Rule" parent="Confirm/Content" instance=ExtResource("line")]
+offset_left = 124.0
+offset_top = 120.0
+offset_right = 276.0
+offset_bottom = 121.0
+
+[node name="Yes" type="Button" parent="Confirm/Content"]
+offset_left = 138.0
+offset_top = 125.0
+offset_right = 182.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Choice" parent="Confirm/Content/Yes" instance=ExtResource("choice")]
+
+[node name="No" type="Button" parent="Confirm/Content"]
+offset_left = 218.0
+offset_top = 125.0
+offset_right = 262.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Choice" parent="Confirm/Content/No" instance=ExtResource("choice")]
+
+[editable path="Bounds/DescriptionClip/Description"]
+[editable path="Bounds/MapButton"]
+[editable path="Confirm"]

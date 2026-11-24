@@ -15,8 +15,8 @@ extends RefCounted
 ## 不生成替代阵容。
 
 const Battle = preload("res://battle/combat/battle.gd")
-const ItemKind = preload("res://menu/item_kind/item_kind.gd")
-const MenuModel = preload("res://menu/menu_model/menu_model.gd")
+const ItemKind = preload("res://game/menu/item/item_kind/item_kind.gd")
+const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
 const Story = preload("res://engine/data/story/story.gd")
 

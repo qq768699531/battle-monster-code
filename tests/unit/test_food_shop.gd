@@ -2,7 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const FoodShopScene = preload("res://game/field/shops/food_shop/food_shop.tscn")
 const Story = preload("res://engine/data/story/story.gd")
-const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
+const SlotFrame = preload("res://game/menu/party/slot_frame/slot_frame.gd")
 
 
 class CatalogProvider extends RefCounted:

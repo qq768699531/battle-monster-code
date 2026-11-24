@@ -16,7 +16,7 @@ extends "res://engine/ui/window_transition/window_transition.gd"
 ## 取值、几何与差异见 wiki\growth\starter-select.md。
 ## `field_runtime` 只调用 `present`／`move`／`row_at`／`press_row`／`selected`／`clear`。
 
-const Book = preload("res://menu/book_model/book_model.gd")
+const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")

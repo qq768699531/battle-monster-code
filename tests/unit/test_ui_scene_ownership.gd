@@ -41,7 +41,7 @@ func test_legacy_suite() -> void:
 	_check_directory("res://scenes")
 	var unowned: Array[String] = []
 	for script in ["res://scripts/main.gd", "res://prime/prime_view/prime_view.gd",
-			"res://menu/menu_view/menu_view.gd", "res://battle/battle_view/battle_view.gd",
+			"res://game/menu/screen/menu_view/menu_view.gd", "res://battle/battle_view/battle_view.gd",
 			"res://game/field/dialogue/chat_view/chat_view.gd", "res://game/field/map/map/map_renderer.gd",
 			"res://game/field/runtime/field_actors/field_actors.gd", "res://game/field/runtime/touch_controls/touch_controls.gd",
 			"res://game/field/runtime/field_runtime/field_runtime.gd", "res://game/field/runtime/native_touch_feedback/native_touch_feedback.gd"]:
@@ -53,8 +53,8 @@ func test_legacy_suite() -> void:
 		"The legacy unified drawing view must not remain.")
 	# 原生是触屏游戏：确认框的「是／否」不改变光标样式（bm-P2-312）。
 	var cursor_dialogs: Array[String] = []
-	for path: String in ["res://menu/item_discard/item_discard.tscn",
-			"res://menu/party_discard/party_discard.tscn", "res://scenes/menu/quest_detail.tscn",
+	for path: String in ["res://game/menu/item/item_discard/item_discard.tscn",
+			"res://game/menu/party/party_discard/party_discard.tscn", "res://scenes/menu/quest_detail.tscn",
 			"res://game/field/map/warp_confirm/warp_confirm.tscn", "res://game/field/shops/shop_select/shop_select.tscn",
 			"res://game/field/shops/inn/inn.tscn", "res://game/field/monsters/mastery_view/mastery_view.tscn",
 			"res://game/field/guild/guild_challenge/guild_challenge.tscn"]:

@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
-const MenuScene = preload("res://menu/menu/menu.tscn")
+const MenuScene = preload("res://game/menu/screen/menu/menu.tscn")
 
 var viewport: SubViewport
 var menu: Control

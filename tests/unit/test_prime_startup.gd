@@ -7,7 +7,7 @@ const StartupFooter = preload("res://prime/startup_footer/startup_footer.tscn")
 const Store = preload("res://engine/data/save_store/save_store.gd")
 const TouchCode = preload("res://engine/ui/touch_code/touch_code.gd")
 const Story = preload("res://engine/data/story/story.gd")
-const BookMonster = preload("res://menu/book_monster/book_monster.gd")
+const BookMonster = preload("res://game/menu/book/book_monster/book_monster.gd")
 ## 夹具：真实预载只到 25%，远低于 1500／3000 的计时节奏，用来验证填充宽取两者较小值。
 const FIXTURE_LOAD_RATIO := 0.25
 ## 夹具文案：确认键文本不参与断言，只满足 `startup_footer.present` 的入参。

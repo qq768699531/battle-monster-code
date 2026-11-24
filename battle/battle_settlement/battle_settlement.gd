@@ -15,8 +15,8 @@ class_name BattleSettlement
 ## 掉落表全部是 .rodata 固定表（0x97940–0x97BB8），没有可导出数据源，这里逐字节照抄。
 
 const Battle = preload("res://battle/combat/battle.gd")
-const Book = preload("res://menu/book_model/book_model.gd")
-const MenuModel = preload("res://menu/menu_model/menu_model.gd")
+const Book = preload("res://game/menu/book/book_model/book_model.gd")
+const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
 
 ## `Param_expINIT`：主角 `65 × 等级²`；`Ball_stdEXPS`：队员同一条公式。

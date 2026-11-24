@@ -10,7 +10,7 @@ class_name StoryRuntime
 ## Call advance(_process delta in seconds). Paused/external waits accrue no time.
 const Battle = preload("res://battle/combat/battle.gd")
 const BattleSettlementModel = preload("res://battle/battle_settlement/battle_settlement.gd")
-const Book = preload("res://menu/book_model/book_model.gd")
+const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const MapEffectCatalog = preload("res://game/field/map/map/map_effect.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
 const QuestLogModel = preload("res://game/field/quests/quest_log/quest_log.gd")

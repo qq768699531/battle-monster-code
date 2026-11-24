@@ -3,7 +3,7 @@ extends Node
 ## 启动时注册 zh_CN 翻译资源，退出时移除。
 
 const GameplayData = preload("res://engine/data/gameplay_data/gameplay_data.gd")
-const WorldMapData = preload("res://menu/world_map_data/world_map_data.gd")
+const WorldMapData = preload("res://game/menu/world_map/world_map_data/world_map_data.gd")
 const SpriteOrigins = preload("res://engine/data/sprite_origins/sprite_origins.gd")
 const TextTables = preload("res://engine/data/text_tables/text_tables.gd")
 const QuestSet = preload("res://game/field/quests/quest_set/quest_set.gd")
@@ -26,11 +26,11 @@ const GAMEPLAY_OBJECT_DIRS := {
 
 const GAMEPLAY_PARTS := {
 	"passives": "res://battle/passives/passives.tres",
-	"items": "res://menu/items/items.tres",
+	"items": "res://game/menu/item/items/items.tres",
 	"encounters": "res://game/field/runtime/field_runtime/encounters.tres",
 	"script_battles": "res://battle/combat/script_battles.tres",
 }
-const WORLD_MAP_DATA: WorldMapData = preload("res://menu/world_map/world-map.tres")
+const WORLD_MAP_DATA: WorldMapData = preload("res://game/menu/world_map/world_map/world-map.tres")
 const ASSET_ROOT := "res://assets/"
 const SPRITE_ROOT := ASSET_ROOT + "sprite/"
 ## 精灵帧索引：图集合并后，`对象/frame-NNN` → [图集路径, 帧矩形]。

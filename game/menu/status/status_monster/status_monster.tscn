@@ -1,0 +1,601 @@
+[gd_scene format=3]
+[ext_resource type="Texture2D" path="res://game/menu/status/status_monster/rarity_bar.webp" id="part_rarity_bar"]
+[ext_resource type="Texture2D" path="res://engine/ui/party_heading/party_heading.webp" id="part_party_heading"]
+[ext_resource type="Texture2D" path="res://engine/ui/stat_icon/stat_icon.webp" id="part_stat_icon"]
+[ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
+[ext_resource type="Texture2D" path="res://engine/ui/number/number.webp" id="Sheet_common_ui_number"]
+
+[ext_resource type="Script" path="res://game/menu/status/status_monster/status_monster.gd" id="script"]
+[ext_resource type="PackedScene" path="res://game/menu/status/status_metric/status_metric.tscn" id="metric"]
+[ext_resource type="PackedScene" path="res://game/menu/status/status_skill/status_skill.tscn" id="skill"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/number/number_top.tscn" id="num_top"]
+[ext_resource type="Shader" path="res://engine/ui/number/native_number_palette.gdshader" id="key"]
+[ext_resource type="PackedScene" path="res://game/menu/item/item_cell/item_cell.tscn" id="item"]
+[ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_filled.tres" id="slot_filled"]
+
+[sub_resource type="AtlasTexture" id="Atlas_attributes"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(0, 0, 78, 13)
+[sub_resource type="AtlasTexture" id="Atlas_vitals"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(844, 0, 422, 7)
+[sub_resource type="AtlasTexture" id="Atlas_headings"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(844, 53, 197, 5)
+[sub_resource type="AtlasTexture" id="Atlas_arrow"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(1266, 53, 12, 7)
+[sub_resource type="AtlasTexture" id="Atlas_footer"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(422, 106, 136, 12)
+[sub_resource type="AtlasTexture" id="Atlas_footer_text"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(844, 159, 393, 8)
+[sub_resource type="AtlasTexture" id="Atlas_digits"]
+atlas = ExtResource("Sheet_common_ui_number")
+region = Rect2(0, 0, 87, 28)
+[sub_resource type="AtlasTexture" id="Common"]
+atlas = ExtResource("part_rarity_bar")
+region = Rect2(0, 0, 53, 10)
+[sub_resource type="AtlasTexture" id="Uncommon"]
+atlas = ExtResource("part_rarity_bar")
+region = Rect2(53, 0, 69, 10)
+[sub_resource type="AtlasTexture" id="Rare"]
+atlas = ExtResource("part_rarity_bar")
+region = Rect2(122, 0, 37, 10)
+[sub_resource type="AtlasTexture" id="Special"]
+atlas = ExtResource("part_rarity_bar")
+region = Rect2(159, 0, 56, 10)
+[sub_resource type="AtlasTexture" id="Legend"]
+atlas = ExtResource("part_rarity_bar")
+region = Rect2(215, 0, 53, 10)
+[sub_resource type="AtlasTexture" id="God"]
+atlas = ExtResource("part_rarity_bar")
+region = Rect2(268, 0, 29, 10)
+[sub_resource type="AtlasTexture" id="Water"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(0, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Fire"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(13, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Grass"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(26, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Wind"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(39, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Thunder"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(52, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Dark"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(65, 0, 13, 13)
+[sub_resource type="AtlasTexture" id="Level"]
+atlas = ExtResource("part_party_heading")
+region = Rect2(0, 0, 29, 5)
+[sub_resource type="AtlasTexture" id="Party"]
+atlas = ExtResource("part_party_heading")
+region = Rect2(0, 10, 29, 5)
+[sub_resource type="AtlasTexture" id="Experience"]
+atlas = ExtResource("part_party_heading")
+region = Rect2(0, 15, 29, 5)
+[sub_resource type="AtlasTexture" id="Feel"]
+atlas = ExtResource("part_party_heading")
+region = Rect2(0, 20, 29, 5)
+[sub_resource type="AtlasTexture" id="Brain"]
+atlas = ExtResource("part_party_heading")
+region = Rect2(0, 30, 29, 5)
+[sub_resource type="AtlasTexture" id="Food"]
+atlas = ExtResource("part_party_heading")
+region = Rect2(0, 35, 29, 5)
+[sub_resource type="AtlasTexture" id="Stat0"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 0, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat1"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 5, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat2"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 10, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat3"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 15, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat4"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 20, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat5"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 25, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat6"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 30, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat7"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 35, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat8"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 40, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat9"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 45, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat10"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 50, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat11"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 55, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat12"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 60, 23, 5)
+[sub_resource type="AtlasTexture" id="Stat13"]
+atlas = ExtResource("part_stat_icon")
+region = Rect2(0, 65, 23, 5)
+[sub_resource type="AtlasTexture" id="HP"]
+atlas = SubResource("Atlas_vitals")
+region = Rect2(0, 0, 13, 7)
+[sub_resource type="AtlasTexture" id="SP"]
+atlas = SubResource("Atlas_vitals")
+region = Rect2(13, 0, 13, 7)
+[sub_resource type="AtlasTexture" id="Active"]
+atlas = SubResource("Atlas_headings")
+region = Rect2(0, 0, 78, 5)
+[sub_resource type="AtlasTexture" id="Passive"]
+atlas = SubResource("Atlas_headings")
+region = Rect2(78, 0, 85, 5)
+[sub_resource type="AtlasTexture" id="Arrow"]
+atlas = SubResource("Atlas_arrow")
+region = Rect2(0, 0, 6, 7)
+[sub_resource type="AtlasTexture" id="ToggleFrame"]
+atlas = SubResource("Atlas_footer")
+region = Rect2(42, 0, 52, 12)
+[sub_resource type="AtlasTexture" id="PassiveText"]
+atlas = SubResource("Atlas_footer_text")
+region = Rect2(120, 0, 40, 8)
+[sub_resource type="AtlasTexture" id="EquipText"]
+atlas = SubResource("Atlas_footer_text")
+region = Rect2(82, 0, 38, 8)
+[sub_resource type="ShaderMaterial" id="NumberKey"]
+shader = ExtResource("key")
+[sub_resource type="StyleBoxFlat" id="Outline"]
+draw_center = false
+border_width_left = 1
+border_width_right = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0.0980392, 0.392157, 0.521569, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+anti_aliasing = false
+[sub_resource type="StyleBoxFlat" id="AttributeBorder"]
+draw_center = false
+border_width_left = 1
+border_width_right = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+anti_aliasing = false
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+[sub_resource type="Gradient" id="Gradient"]
+colors = PackedColorArray(0.0431373, 0.25098, 0.372549, 1, 0.215686, 0.470588, 0.584314, 1)
+[sub_resource type="GradientTexture1D" id="GradientTexture"]
+gradient = SubResource("Gradient")
+width = 139
+
+[node name="Monster" type="Control"]
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+texture_filter = 1
+script = ExtResource("script")
+rarity_frames = Array[Texture2D]([SubResource("Common"), SubResource("Uncommon"), SubResource("Rare"), SubResource("Special"), SubResource("Legend"), SubResource("God")])
+attribute_frames = Array[Texture2D]([SubResource("Water"), SubResource("Fire"), SubResource("Grass"), SubResource("Wind"), SubResource("Thunder"), SubResource("Dark")])
+equipment_icons = Array[Texture2D]([SubResource("Stat0"), SubResource("Stat1"), SubResource("Stat2"), SubResource("Stat3"), SubResource("Stat4"), SubResource("Stat5"), SubResource("Stat6"), SubResource("Stat7"), SubResource("Stat8"), SubResource("Stat9"), SubResource("Stat10"), SubResource("Stat11"), SubResource("Stat12"), SubResource("Stat13")])
+
+[node name="Nickname" parent="." instance=ExtResource("label")]
+offset_left = 167.0
+offset_top = 53.0
+offset_right = 303.0
+offset_bottom = 63.0
+horizontal_alignment = 2
+[node name="Name" parent="." instance=ExtResource("label")]
+offset_left = 167.0
+offset_top = 68.0
+offset_right = 303.0
+offset_bottom = 78.0
+text = "--"
+horizontal_alignment = 2
+[node name="Rarity" type="TextureRect" parent="."]
+offset_left = 167.0
+offset_top = 86.0
+offset_right = 236.0
+offset_bottom = 96.0
+mouse_filter = 2
+texture = SubResource("Uncommon")
+stretch_mode = 2
+[node name="TopRule" type="TextureRect" parent="."]
+offset_left = 167.0
+offset_top = 82.0
+offset_right = 306.0
+offset_bottom = 83.0
+mouse_filter = 2
+texture = SubResource("GradientTexture")
+[node name="Rule" type="TextureRect" parent="."]
+offset_left = 167.0
+offset_top = 127.0
+offset_right = 306.0
+offset_bottom = 128.0
+mouse_filter = 2
+texture = SubResource("GradientTexture")
+[node name="StatsRule" type="TextureRect" parent="."]
+visible = false
+offset_left = 167.0
+offset_top = 150.0
+offset_right = 306.0
+offset_bottom = 151.0
+mouse_filter = 2
+texture = SubResource("GradientTexture")
+[node name="Level" parent="." instance=ExtResource("metric")]
+offset_left = 167.0
+offset_top = 99.0
+offset_right = 219.0
+offset_bottom = 106.0
+[node name="Icon" parent="Level"]
+texture = SubResource("Level")
+[node name="Brain" parent="." instance=ExtResource("metric")]
+offset_left = 222.0
+offset_top = 99.0
+offset_right = 306.0
+offset_bottom = 106.0
+[node name="Icon" parent="Brain"]
+texture = SubResource("Brain")
+[node name="Party" parent="." instance=ExtResource("metric")]
+offset_left = 167.0
+offset_top = 108.0
+offset_right = 219.0
+offset_bottom = 115.0
+[node name="Icon" parent="Party"]
+texture = SubResource("Party")
+[node name="Experience" parent="." instance=ExtResource("metric")]
+offset_left = 222.0
+offset_top = 108.0
+offset_right = 306.0
+offset_bottom = 115.0
+[node name="Icon" parent="Experience"]
+texture = SubResource("Experience")
+[node name="Food" parent="." instance=ExtResource("metric")]
+offset_left = 167.0
+offset_top = 117.0
+offset_right = 219.0
+offset_bottom = 124.0
+[node name="Icon" parent="Food"]
+texture = SubResource("Food")
+[node name="Feel" parent="." instance=ExtResource("metric")]
+offset_left = 222.0
+offset_top = 117.0
+offset_right = 306.0
+offset_bottom = 124.0
+[node name="Icon" parent="Feel"]
+texture = SubResource("Feel")
+
+[node name="Stats" type="GridContainer" parent="."]
+offset_left = 167.0
+offset_top = 131.0
+offset_right = 306.0
+offset_bottom = 156.0
+mouse_filter = 2
+theme_override_constants/h_separation = 3
+theme_override_constants/v_separation = 2
+columns = 2
+[node name="Attack" parent="Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(68, 7)
+[node name="Icon" parent="Stats/Attack"]
+offset_right = 25.0
+texture = SubResource("Stat10")
+[node name="Defense" parent="Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(68, 7)
+[node name="Icon" parent="Stats/Defense"]
+offset_right = 25.0
+texture = SubResource("Stat11")
+[node name="MagicAttack" parent="Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(68, 7)
+[node name="Icon" parent="Stats/MagicAttack"]
+offset_right = 25.0
+texture = SubResource("Stat12")
+[node name="MagicDefense" parent="Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(68, 7)
+[node name="Icon" parent="Stats/MagicDefense"]
+offset_right = 25.0
+texture = SubResource("Stat13")
+[node name="HP" parent="Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(68, 7)
+[node name="Icon" parent="Stats/HP"]
+offset_right = 25.0
+texture = SubResource("Stat6")
+[node name="Speed" parent="Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(68, 7)
+[node name="Icon" parent="Stats/Speed"]
+offset_right = 25.0
+texture = SubResource("Stat5")
+
+[node name="Vitals" type="Control" parent="."]
+offset_left = 96.0
+offset_top = 139.0
+offset_right = 163.0
+offset_bottom = 156.0
+mouse_filter = 2
+[node name="Border" type="Panel" parent="Vitals"]
+offset_top = 1.0
+offset_right = 15.0
+offset_bottom = 16.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("AttributeBorder")
+[node name="Attribute" type="TextureRect" parent="Vitals"]
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 14.0
+offset_bottom = 15.0
+mouse_filter = 2
+texture = SubResource("Wind")
+[node name="HP" type="Control" parent="Vitals"]
+offset_left = 14.0
+offset_right = 67.0
+offset_bottom = 8.0
+mouse_filter = 2
+[node name="Gauge" type="ColorRect" parent="Vitals/HP"]
+offset_left = 1.0
+offset_top = 5.0
+offset_right = 51.0
+offset_bottom = 9.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+[node name="Track" type="ColorRect" parent="Vitals/HP/Gauge"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+mouse_filter = 2
+color = Color(0.372549, 0, 0, 1)
+[node name="Fill" type="ColorRect" parent="Vitals/HP/Gauge/Track"]
+anchor_bottom = 1.0
+offset_right = 48.0
+mouse_filter = 2
+color = Color(1, 0.282353, 0, 1)
+[node name="Icon" type="TextureRect" parent="Vitals/HP"]
+offset_right = 13.0
+offset_bottom = 7.0
+mouse_filter = 2
+texture = SubResource("HP")
+[node name="Number" parent="Vitals/HP" instance=ExtResource("num_top")]
+material = SubResource("NumberKey")
+use_parent_material = false
+offset_left = 13.0
+offset_right = 52.0
+texture = SubResource("Atlas_digits")
+[node name="SP" type="Control" parent="Vitals"]
+offset_left = 14.0
+offset_top = 8.0
+offset_right = 67.0
+offset_bottom = 16.0
+mouse_filter = 2
+[node name="Gauge" type="ColorRect" parent="Vitals/SP"]
+offset_left = 1.0
+offset_top = 5.0
+offset_right = 51.0
+offset_bottom = 9.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+[node name="Track" type="ColorRect" parent="Vitals/SP/Gauge"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+mouse_filter = 2
+color = Color(0.372549, 0, 0, 1)
+[node name="Fill" type="ColorRect" parent="Vitals/SP/Gauge/Track"]
+anchor_bottom = 1.0
+offset_right = 48.0
+mouse_filter = 2
+color = Color(0.0588235, 0.67451, 0.768627, 1)
+[node name="Icon" type="TextureRect" parent="Vitals/SP"]
+offset_right = 13.0
+offset_bottom = 7.0
+mouse_filter = 2
+texture = SubResource("SP")
+[node name="Number" parent="Vitals/SP" instance=ExtResource("num_top")]
+material = SubResource("NumberKey")
+use_parent_material = false
+offset_left = 13.0
+offset_right = 52.0
+texture = SubResource("Atlas_digits")
+
+[node name="Skills" type="Panel" parent="."]
+offset_left = 94.0
+offset_top = 159.0
+offset_right = 306.0
+offset_bottom = 222.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outline")
+[node name="Active" type="TextureRect" parent="Skills"]
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 84.0
+offset_bottom = 8.0
+mouse_filter = 2
+texture = SubResource("Active")
+[node name="Passive" type="TextureRect" parent="Skills"]
+offset_left = 6.0
+offset_top = 11.0
+offset_right = 91.0
+offset_bottom = 16.0
+mouse_filter = 2
+texture = SubResource("Passive")
+[node name="Arrow" type="TextureRect" parent="Skills"]
+offset_left = 96.0
+offset_top = 6.0
+offset_right = 102.0
+offset_bottom = 13.0
+mouse_filter = 2
+texture = SubResource("Arrow")
+[node name="ActiveClip" type="Control" parent="Skills"]
+clip_contents = true
+offset_left = 104.0
+offset_top = 3.0
+offset_right = 206.0
+offset_bottom = 16.0
+mouse_filter = 2
+[node name="Text" parent="Skills/ActiveClip" instance=ExtResource("label")]
+offset_top = 2.0
+offset_right = 102.0
+offset_bottom = 12.0
+text = "--"
+color = Color(0.94117647, 0.56470588, 0.3137254, 1)
+[node name="Repeat" parent="Skills/ActiveClip" instance=ExtResource("label")]
+visible = false
+offset_top = 2.0
+offset_right = 102.0
+offset_bottom = 12.0
+[node name="Slots" type="HBoxContainer" parent="Skills"]
+offset_left = 6.0
+offset_top = 18.0
+offset_right = 206.0
+offset_bottom = 48.0
+mouse_filter = 2
+theme_override_constants/separation = 4
+[node name="Skill0" parent="Skills/Slots" instance=ExtResource("skill")]
+[node name="Skill1" parent="Skills/Slots" instance=ExtResource("skill")]
+[node name="Skill2" parent="Skills/Slots" instance=ExtResource("skill")]
+[node name="Skill3" parent="Skills/Slots" instance=ExtResource("skill")]
+[node name="Skill4" parent="Skills/Slots" instance=ExtResource("skill")]
+[node name="Skill5" parent="Skills/Slots" instance=ExtResource("skill")]
+[node name="Description" parent="Skills" instance=ExtResource("label")]
+clip_contents = true
+offset_left = 5.0
+offset_top = 50.0
+offset_right = 207.0
+offset_bottom = 60.0
+
+[node name="Equipment" type="Panel" parent="."]
+visible = false
+clip_contents = true
+offset_left = 94.0
+offset_top = 159.0
+offset_right = 306.0
+offset_bottom = 222.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outline")
+[node name="Empty" parent="Equipment" instance=ExtResource("label")]
+offset_left = 2.0
+offset_top = 8.0
+offset_right = 210.0
+offset_bottom = 18.0
+color = Color(1, 1, 0.666667, 1)
+[node name="Name" parent="Equipment" instance=ExtResource("label")]
+offset_left = 2.0
+offset_top = 8.0
+offset_right = 210.0
+offset_bottom = 18.0
+[node name="Stats" type="GridContainer" parent="Equipment"]
+offset_left = 40.0
+offset_top = 23.0
+offset_right = 200.0
+offset_bottom = 81.0
+mouse_filter = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 10
+columns = 2
+[node name="Item" parent="Equipment" instance=ExtResource("item")]
+offset_left = 6.0
+offset_top = 24.0
+offset_right = 36.0
+offset_bottom = 54.0
+mouse_filter = 2
+[node name="Frame" parent="Equipment/Item"]
+texture = ExtResource("slot_filled")
+[node name="Quantity" parent="Equipment/Item"]
+visible = false
+[node name="Stat0" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat1" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat2" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat3" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat4" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat5" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat6" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat7" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat8" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat9" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat10" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat11" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat12" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+[node name="Stat13" parent="Equipment/Stats" instance=ExtResource("metric")]
+custom_minimum_size = Vector2(70, 7)
+theme_override_styles/panel = SubResource("Empty")
+
+[node name="Toggle" type="Button" parent="."]
+offset_left = 179.0
+offset_top = 225.0
+offset_right = 221.0
+offset_bottom = 237.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+[node name="Frame" type="TextureRect" parent="Toggle"]
+offset_left = -5.0
+offset_right = 47.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture = SubResource("ToggleFrame")
+[node name="Equip" type="TextureRect" parent="Toggle"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 40.0
+offset_bottom = 10.0
+mouse_filter = 2
+texture = SubResource("EquipText")
+[node name="Passive" type="TextureRect" parent="Toggle"]
+visible = false
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 41.0
+offset_bottom = 10.0
+mouse_filter = 2
+texture = SubResource("PassiveText")
+

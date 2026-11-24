@@ -3,7 +3,7 @@
 
 [ext_resource type="Script" path="res://game/field/shops/food_shop/food_shop.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
-[ext_resource type="PackedScene" path="res://menu/item_cell/item_cell.tscn" id="cell"]
+[ext_resource type="PackedScene" path="res://game/menu/item/item_cell/item_cell.tscn" id="cell"]
 [ext_resource type="PackedScene" path="res://engine/ui/item_icon/item_icon.tscn" id="icon"]
 [ext_resource type="PackedScene" path="res://engine/ui/window_footer/window_footer.tscn" id="footer"]
 [ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]

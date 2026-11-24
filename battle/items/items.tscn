@@ -1,7 +1,7 @@
 [gd_scene format=3]
 [ext_resource type="Texture2D" path="res://engine/ui/tab_cell/tab_cell.webp" id="part_tab_cell"]
 
-[ext_resource type="PackedScene" path="res://menu/party_equipment/party_equipment.tscn" id="layout"]
+[ext_resource type="PackedScene" path="res://game/menu/party/party_equipment/party_equipment.tscn" id="layout"]
 [ext_resource type="Script" path="res://battle/items/items.gd" id="script"]
 [ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_filled.tres" id="normal_frame"]
 [ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_filled_focused.tres" id="selected_frame"]

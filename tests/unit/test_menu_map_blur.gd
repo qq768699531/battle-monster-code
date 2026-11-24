@@ -1,8 +1,8 @@
 extends "res://tests/unit/gut_case.gd"
 
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
-const MenuScene = preload("res://menu/menu/menu.tscn")
-const WorldMapScene = preload("res://menu/world_map/world_map.tscn")
+const MenuScene = preload("res://game/menu/screen/menu/menu.tscn")
+const WorldMapScene = preload("res://game/menu/world_map/world_map/world_map.tscn")
 const BLUR_SHADER := "res://shaders/menu_map_blur.gdshader"
 
 ## 菜单页序里任务页的下标（`MenuModel.Tab.QUEST`）。

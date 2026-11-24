@@ -3,7 +3,7 @@ extends RefCounted
 ## 测试夹具构造器：把紧凑字典写成 typed 玩法记录，避免每个用例重复逐字段赋值。
 ## 字段名与 `scripts/data/*` 的 `@export` 保持一致；缺省字段取记录里的默认值。
 
-const ItemDefinition = preload("res://menu/item_definition/item_definition.gd")
+const ItemDefinition = preload("res://game/menu/item/item_definition/item_definition.gd")
 const MonsterDefinition = preload("res://monsters/monster_definition/monster_definition.gd")
 const PassiveDefinition = preload("res://battle/passive_definition/passive_definition.gd")
 const EncounterDefinition = preload("res://game/field/encounters/encounter_definition/encounter_definition.gd")

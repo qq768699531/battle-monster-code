@@ -6,7 +6,7 @@ extends "res://tests/unit/gut_case.gd"
 const EnchantScene = preload("res://game/field/monsters/monster_enchant/monster_enchant.tscn")
 const EnchantScript = preload("res://game/field/monsters/monster_enchant/monster_enchant.gd")
 const Story = preload("res://engine/data/story/story.gd")
-const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
+const SlotFrame = preload("res://game/menu/party/slot_frame/slot_frame.gd")
 
 const SPECIES := 49
 const BRAIN_LIMIT := 5

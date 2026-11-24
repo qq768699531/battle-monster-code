@@ -1,7 +1,7 @@
 extends RefCounted
 ## 出战怪物的地图跟随队列（位置与朝向的纯计算）。
 
-const MenuModel = preload("res://menu/menu_model/menu_model.gd")
+const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const TILE := 16.0
 ## 跟随者的临时对象 id：`FOLLOWER_ID_BASE + 槽位 * FOLLOWER_ID_STRIDE + 物种`。
 const FOLLOWER_ID_BASE := 1000000

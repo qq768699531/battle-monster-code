@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const MenuScene = preload("res://menu/menu/menu.tscn")
+const MenuScene = preload("res://game/menu/screen/menu/menu.tscn")
 const MenuFixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 ## `qst/qstlist.fxt:2` 的地图段是 `15,16,17`，详情页左按钮才会真的开世界地图。
 const REGION_QUEST_ID := 2

@@ -8,7 +8,7 @@ extends "res://game/field/runtime/field_window/field_window.gd"
 ## （`notice_id` + 提示栈），关页到相位 −4 时清掉。格子内容与详情面板各页自己的。
 
 const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
-const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
+const SlotFrame = preload("res://game/menu/party/slot_frame/slot_frame.gd")
 
 ## `Field_Item_DrawList` 的 6 列 × 2 行（`32 × 6 + 20` 宽、`32 × 行数 + 15` 高）。
 const COLUMNS := 6

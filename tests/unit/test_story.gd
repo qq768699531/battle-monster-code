@@ -2,11 +2,11 @@ extends "res://tests/unit/gut_case.gd"
 
 const Story = preload("res://engine/data/story/story.gd")
 const Battle = preload("res://battle/combat/battle.gd")
-const Book = preload("res://menu/book_model/book_model.gd")
+const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 const MapEffectCatalog = preload("res://game/field/map/map/map_effect.gd")
 const QuestMarkModel = preload("res://game/field/quests/quest_mark/quest_mark.gd")
-const ItemKind = preload("res://menu/item_kind/item_kind.gd")
+const ItemKind = preload("res://game/menu/item/item_kind/item_kind.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
 ## `item_basic.dat` 第 1 组第 3 号在原生表里的 `ui_item` 帧号（记录第 133 字节，`gameplay.tres` 同值）。
 const CONSUMABLE_ICON_FRAME := 3

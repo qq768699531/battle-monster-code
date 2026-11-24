@@ -2,7 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const Field = preload("res://game/field/runtime/field_runtime/field_runtime.gd")
 const Story = preload("res://engine/data/story/story.gd")
-const Book = preload("res://menu/book_model/book_model.gd")
+const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const Store = preload("res://engine/data/save_store/save_store.gd")
 const World = preload("res://engine/data/world_resources/world_resources.gd")
 const NpcDefinition = preload("res://game/field/actors/npc_definition/npc_definition.gd")

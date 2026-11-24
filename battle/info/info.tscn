@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://menu/party_detail/party_detail.tscn" id="layout"]
+[ext_resource type="PackedScene" path="res://game/menu/party/party_detail/party_detail.tscn" id="layout"]
 [ext_resource type="Script" path="res://battle/info/info.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/screen_shade/screen_shade.tscn" id="shade"]
 

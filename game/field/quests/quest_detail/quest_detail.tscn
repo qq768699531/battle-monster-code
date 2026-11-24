@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://game/field/quests/quest_detail/quest_detail.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
-[ext_resource type="PackedScene" path="res://menu/menu_list_button/menu_list_button.tscn" id="button"]
+[ext_resource type="PackedScene" path="res://game/menu/screen/menu_list_button/menu_list_button.tscn" id="button"]
 [ext_resource type="PackedScene" path="res://engine/ui/dotted_line/dotted_line.tscn" id="line"]
 [ext_resource type="PackedScene" path="res://engine/ui/message_choice/message_choice.tscn" id="choice"]
-[ext_resource type="PackedScene" path="res://menu/world_map/world_map.tscn" id="world_map"]
+[ext_resource type="PackedScene" path="res://game/menu/world_map/world_map/world_map.tscn" id="world_map"]
 
 [sub_resource type="StyleBoxFlat" id="Frame"]
 draw_center = false

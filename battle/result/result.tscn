@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://engine/anim/monster_animation/monster_animation.tscn" id="monster"]
 [ext_resource type="PackedScene" path="res://engine/ui/window_footer/window_footer.tscn" id="footer"]
-[ext_resource type="PackedScene" path="res://menu/scrollbar/scrollbar.tscn" id="scroll"]
+[ext_resource type="PackedScene" path="res://game/menu/screen/scrollbar/scrollbar.tscn" id="scroll"]
 [ext_resource type="PackedScene" path="res://engine/ui/item_icon/item_icon.tscn" id="item_icon"]
 [ext_resource type="PackedScene" path="res://engine/ui/screen_shade/screen_shade.tscn" id="shade"]
 

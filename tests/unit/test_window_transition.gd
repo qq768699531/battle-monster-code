@@ -37,7 +37,7 @@ func test_interior_fill_stays_out_of_the_bar_phases() -> void:
 
 
 func test_discard_window_hides_its_buttons_while_the_frame_is_a_bar() -> void:
-	var page := _page("res://menu/item_discard/item_discard.tscn")
+	var page := _page("res://game/menu/item/item_discard/item_discard.tscn")
 	var window := page.get_node("Window") as Control
 	var frame := page.get_node("Window/Bounds/Box2") as Control
 	var yes := page.get_node("Window/Content/Yes") as Button

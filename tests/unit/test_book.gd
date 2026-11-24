@@ -1,11 +1,11 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Book = preload("res://menu/book_model/book_model.gd")
-const BookScene = preload("res://menu/book/book.tscn")
-const MonsterScene = preload("res://menu/book_monster/book_monster.tscn")
+const Book = preload("res://game/menu/book/book_model/book_model.gd")
+const BookScene = preload("res://game/menu/book/book/book.tscn")
+const MonsterScene = preload("res://game/menu/book/book_monster/book_monster.tscn")
 const Story = preload("res://engine/data/story/story.gd")
 const Battle = preload("res://battle/combat/battle.gd")
-const ItemKind = preload("res://menu/item_kind/item_kind.gd")
+const ItemKind = preload("res://game/menu/item/item_kind/item_kind.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 
 ## 刺球兽（49）：原生 1 级无成长个体的截图数值是 ATK 82 / HP 378 / SPD 100。

@@ -3,7 +3,7 @@ extends "res://engine/ui/window_transition/window_transition.gd"
 
 signal closed
 
-const Menu = preload("res://menu/menu_model/menu_model.gd")
+const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const Battle = preload("res://battle/combat/battle.gd")

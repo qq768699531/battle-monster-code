@@ -13,7 +13,7 @@ extends RefCounted
 ## 未建模：无。`*((int *)&ParamData.standard_progress + 7) > 0` 时经验 +20%（`v2 += v2 / 5`）
 ## 走 `StoryRuntime.experience_with_bonus`（经验加成窗口由第 7 组第 18 号道具开启）。
 
-const MenuModel = preload("res://menu/menu_model/menu_model.gd")
+const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const BattleSettlement = preload("res://battle/battle_settlement/battle_settlement.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
 

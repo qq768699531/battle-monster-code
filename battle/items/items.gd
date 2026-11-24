@@ -4,7 +4,7 @@ extends Control
 signal chosen(item: Dictionary)
 signal cancelled
 
-const Menu = preload("res://menu/menu_model/menu_model.gd")
+const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 
 @export var categories: Array[Texture2D] = []
 @export var frames: Array[Texture2D] = []

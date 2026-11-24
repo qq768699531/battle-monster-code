@@ -5,7 +5,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const Battle = preload("res://battle/combat/battle.gd")
 const Settlement = preload("res://battle/battle_settlement/battle_settlement.gd")
-const Menu = preload("res://menu/menu_model/menu_model.gd")
+const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 
 
