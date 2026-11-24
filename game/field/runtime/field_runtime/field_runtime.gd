@@ -840,8 +840,9 @@ func _drain_effects() -> void:
 					if not _motions[id].manual:
 						story.cancel_move(id)
 				_motions.clear()
-				if not _map_view.render_map({
-					"id": int(effect.mapId), "info": effect.map.info}):
+				# 载荷要整个传进去：`BattleMap.setup()` 同时要 `info` 与 `terrain`，
+				# 只给 `info` 会被当成“Map rules rejected the payload”。
+				if not _map_view.render_map(effect.map):
 					_stop(_map_view.last_error)
 				else:
 					_shown_map_id = int(effect.mapId)
@@ -1152,7 +1153,8 @@ func _advance_motions(delta: float) -> float:
 		var speed := SCRIPT_MOVE_SPEED
 		if motion.manual:
 			speed = RUN_SPEED if int(actor.action) == FieldAction.Hero.RUN else WALK_SPEED
-		var next := current.move_toward(destination, speed * delta)
+		# 速度是原生「每帧像素」（7.5／10／4），一帧 50 ms；漏掉这层折算会让走一格要 2 秒。
+		var next := current.move_toward(destination, speed * (delta / CAMERA_FRAME_SECONDS))
 		actor.x = next.x
 		actor.y = next.y
 		if int(actor.id) == 0:
@@ -1174,7 +1176,8 @@ func _advance_motions(delta: float) -> float:
 			continue
 		_motions.erase(id)
 		if motion.manual:
-			remaining = maxf(0.0, delta - current.distance_to(destination) / speed)
+			remaining = maxf(0.0,
+				delta - current.distance_to(destination) / speed * CAMERA_FRAME_SECONDS)
 			story.after_move(story.map, motion.destination)
 		else:
 			story.complete_effect(id)
