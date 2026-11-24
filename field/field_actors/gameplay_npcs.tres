@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GameplayData" format=3 uid="uid://bs7hwmggwxfsu"]
+[gd_resource type="Resource" script_class="GameplayData" format=3]
 [ext_resource type="Script" path="res://data/gameplay_data/gameplay_data.gd" id="data_script"]
 [ext_resource type="Script" uid="uid://brtywuovwsuj" path="res://data/npc_definition/npc_definition.gd" id="5_q174r"]
 [sub_resource type="Resource" id="Resource_txhhk"]
