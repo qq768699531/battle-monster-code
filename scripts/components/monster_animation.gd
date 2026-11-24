@@ -4,7 +4,7 @@ extends Node2D
 
 signal animation_finished
 
-const SCENE_ROOT := "res://scenes/monsters/"
+const SCENE_ROOT := "res://monsters/"
 const GRAYSCALE_SHADER := preload("res://shaders/ani_brightness.gdshader")
 
 # 每个场景只报一次「未实现的混合模式」，避免刷屏。
@@ -65,7 +65,7 @@ static func _normalize_scene(packed: PackedScene) -> void:
 static func scene_path(identity: String) -> String:
 	var folder := "monsters/" if identity.begins_with("mon") or \
 		identity in ["obj/b_effect", "obj/b_icon2"] else "actors/"
-	return "res://scenes/" + folder + identity + ".tscn"
+	return "res://" + folder + identity + "/" + identity.get_file() + ".tscn"
 
 
 ## 预读 identity 的 ANI 场景并清掉 `resource_local_to_scene`（见 `_normalize_scene`）。
@@ -125,7 +125,7 @@ static func battle_identity(species: int) -> String:
 	var awakened := "mon2/m_b_%03d_2" % (species % 1000)
 	# Battle_Monster_resLOAD retries the base resource when the awakened ANI is absent.
 	return awakened if species > 999 and ResourceLoader.exists(
-		SCENE_ROOT + awakened + ".tscn") else normal
+		SCENE_ROOT + awakened + "/" + awakened.get_file() + ".tscn") else normal
 
 
 ## 动作号 → 当前 identity 的片段名；这个 identity 没有该动作时返回空名。
@@ -356,3 +356,4 @@ func _fail(message: String) -> bool:
 	last_error = message
 	push_error(message)
 	return false
+
