@@ -1,6 +1,6 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://monsters/b_icon/b_icon.webp" id="Sheet_obj_b_icon"]
-[ext_resource type="Texture2D" path="res://actors/hero/c_b_shadow/c_b_shadow.webp" id="Sheet_hero_c_b_shadow"]
+[ext_resource type="Texture2D" path="res://content/monsters/b_icon/b_icon.webp" id="Sheet_obj_b_icon"]
+[ext_resource type="Texture2D" path="res://content/actors/hero/c_b_shadow/c_b_shadow.webp" id="Sheet_hero_c_b_shadow"]
 
 [ext_resource type="Shader" path="res://engine/ui/touch_button/native_touch_blend.gdshader" id="BlendShader"]
 

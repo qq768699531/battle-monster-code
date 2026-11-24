@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://game/field/map/warp_world/warp_world.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
-[ext_resource type="PackedScene" path="res://actors/hero/h_f_01/h_f_01.tscn" id="marker"]
+[ext_resource type="PackedScene" path="res://content/actors/hero/h_f_01/h_f_01.tscn" id="marker"]
 [ext_resource type="PackedScene" path="res://game/field/map/warp_confirm/warp_confirm.tscn" id="confirm"]
 [ext_resource type="Shader" path="res://engine/anim/monster_animation/ani_brightness.gdshader" id="gray_shader"]
 

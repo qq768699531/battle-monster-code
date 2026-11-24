@@ -1,23 +1,26 @@
 # 目录与资源约定
 
+> 2026-11-24 目录已按分层重构，整体结构见 [layout.md](layout.md)。本页下文若出现旧路径
+>（`core/`、`actors/`、`battle/battle_view/` 这类），按“对象名不变、只换了上层目录”理解。
+
 仓库按**用途**分目录，不按文件类型分层。一个对象的场景、脚本、数据与贴图放在同一个目录：
 
 ```text
-monsters/mon1/m_f_000/
+content/monsters/mon1/m_f_000/
   m_f_000.tscn      场景
   m_f_000.webp      该对象整张精灵图（无损 WebP）
-field/food_shop/
+game/field/shops/food_shop/
   food_shop.tscn    场景
   food_shop.gd      该场景的脚本
-field/map_set/m0/
-  m0.tscn           地图场景（挂 field/map/map.gd 的 BattleMap 基类）
+game/field/map/map_set/m0/
+  m0.tscn           地图场景（挂 `game/field/map/map/map.gd` 的 BattleMap 基类）
   t0_0.tscn         地形层
   m0_0.tres         TileSet（普通 Texture2D 引用，不能用 AtlasTexture）
   m0_0.webp         地图图层
-core/number/
+engine/ui/number/
   number_default.tscn / number_top.tscn / number_small.tscn / number_compact.tscn
   ui_number.webp    数字图集，由预设场景自身持有
-core/theme/
+engine/ui/theme/
   ui_theme.tres     全局主题（字号、字体槽位）
   boutique-*.ttf    原版字体，本地补齐
 ```
@@ -26,14 +29,15 @@ core/theme/
 
 | 目录 | 用途 |
 | --- | --- |
-| `core/` | 跨功能运行时：`story`、`save_store`、`world_resources`、`resource_catalog`、`sprite_index`、`gameplay.tres`、`shaders/` |
-| `data/` | 跨功能数据类型定义（`ItemDefinition`、`MonsterDefinition` 等 Resource 脚本） |
-| `core/` 下的组件目录 | 通用界面组件（窗框、数字、标签、消息栈等），每个目录内场景+脚本+图集同层 |
-| `battle/` `field/` `menu/` `prime/` `main/` | 各自功能的场景、脚本、数据 |
-| `actors/` `monsters/` | 按对象/怪物组存放的角色、怪物 |
-| `audio/` | 音频管理器：`audio_manager.tscn` + `audio_manager.gd` + 本地 `ogg/`（总线布局在项目根目录） |
+| `engine/ui/` | 通用界面组件（窗框、数字、标签、消息栈、触控、主题等），每个目录内场景+脚本+图集同层 |
+| `engine/data/` | 装载与索引：`resource_catalog`、`sprite_index`、`gameplay_data`、`text_tables`、`story`、`save_store`、`world_resources` |
+| `engine/anim/` | ANI 播放器：`monster_animation`、`ani_action`、`ani_back_buffer` |
+| `game/{battle,field,menu,prime}/` | 玩法模块，模块内再按子域分组（`combat`、`map`、`quests`、`book`、`title`…） |
+| `game/growth/` | 怪物养成规则：属性、成长、合成、合成表 |
+| `content/actors/` `content/monsters/` | 按对象/怪物组存放的角色、怪物 |
+| `content/audio/` | 音频管理器：`audio_manager.tscn` + `audio_manager.gd` + 本地 `ogg/`（总线布局在项目根目录） |
 
-脚本与场景同级：共享脚本也有同名目录（`core/story/story.gd`）。
+脚本与场景同级：共享脚本也有同名目录（`engine/data/story/story.gd`）。
 
 ## 入库范围
 

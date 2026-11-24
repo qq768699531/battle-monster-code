@@ -38,13 +38,13 @@ const REQUEST_TIMEOUT_MS := 8000
 const GROUP_COMPONENTS := "res://engine"
 ## 启动与标题 ANI：`d7d61df` 之后入口是根目录 `main.tscn`，展示与标题模块都在 `prime/`。
 const GROUP_ANI := "res://game/prime"
-const GROUP_AUDIO := "res://audio/ogg"
+const GROUP_AUDIO := "res://content/audio/ogg"
 const GROUP_BATTLE_UI := "res://game/battle"
 const GROUP_MENU := "res://game/menu"
 const GROUP_FIELD := "res://game/field"
 const GROUP_MAPS := "res://game/field/map/map_set"
-const GROUP_ACTORS := "res://actors"
-const GROUP_MONSTERS := "res://monsters"
+const GROUP_ACTORS := "res://content/actors"
+const GROUP_MONSTERS := "res://content/monsters"
 
 ## 第一档线程化部分（欢迎页期间走完，进度条反映它）：共用组件、开场 ANI、音乐、战斗 UI、
 ## 菜单、野外。顺序即优先级。

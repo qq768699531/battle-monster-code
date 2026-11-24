@@ -4,7 +4,7 @@ extends RefCounted
 ## 字段名与 `scripts/data/*` 的 `@export` 保持一致；缺省字段取记录里的默认值。
 
 const ItemDefinition = preload("res://game/menu/item/item_definition/item_definition.gd")
-const MonsterDefinition = preload("res://monsters/monster_definition/monster_definition.gd")
+const MonsterDefinition = preload("res://content/monsters/monster_definition/monster_definition.gd")
 const PassiveDefinition = preload("res://game/battle/combat/passive_definition/passive_definition.gd")
 const EncounterDefinition = preload("res://game/field/encounters/encounter_definition/encounter_definition.gd")
 const EncounterEntry = preload("res://game/field/encounters/encounter_entry/encounter_entry.gd")

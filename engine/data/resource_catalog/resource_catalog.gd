@@ -20,8 +20,8 @@ const SPRITE_ORIGINS: SpriteOrigins = preload("res://engine/anim/monster_animati
 ## 玩法数值按功能拆成六份，各自放在使用它的功能目录；这里只在首次访问时拼回一个门面对象。
 ## 逐对象存放的表：每个对象一个 `<对象名>.tres`，放在它自己的场景目录里。
 const GAMEPLAY_OBJECT_DIRS := {
-	"monsters": "res://monsters",
-	"npcs": "res://actors",
+	"monsters": "res://content/monsters",
+	"npcs": "res://content/actors",
 }
 
 const GAMEPLAY_PARTS := {
@@ -36,7 +36,7 @@ const SPRITE_ROOT := ASSET_ROOT + "sprite/"
 ## 精灵帧索引：图集合并后，`对象/frame-NNN` → [图集路径, 帧矩形]。
 const SpriteIndex = preload("res://engine/data/sprite_index/sprite_index.gd")
 const SPRITE_FRAMES: Dictionary = SpriteIndex.FRAMES
-const AUDIO_ROOT := "res://audio/"
+const AUDIO_ROOT := "res://content/audio/"
 const AUDIO_OGG_ROOT := "ogg/"
 ## 记录号是整数的文本源：翻译键的后半段必须是规范整数。
 const INTEGER_ID_SUFFIXES := [".fxt", ".nm"]

@@ -4,7 +4,7 @@ extends Node2D
 
 signal animation_finished
 
-const SCENE_ROOT := "res://monsters/"
+const SCENE_ROOT := "res://content/monsters/"
 const GRAYSCALE_SHADER := preload("res://engine/anim/monster_animation/ani_brightness.gdshader")
 
 # 每个场景只报一次「未实现的混合模式」，避免刷屏。
@@ -85,20 +85,20 @@ static func scene_path(identity: String) -> String:
 	var dir := ""
 	match scope:
 		"mon1", "mon2":
-			dir = "res://monsters/" + identity + "/"
+			dir = "res://content/monsters/" + identity + "/"
 		"hero":
-			dir = "res://actors/hero/" + name + "/"
+			dir = "res://content/actors/hero/" + name + "/"
 		"npc":
-			dir = "res://actors/npc/" + name + "/"
+			dir = "res://content/actors/npc/" + name + "/"
 		"face":
-			dir = "res://actors/portrait/" + name + "/"
+			dir = "res://content/actors/portrait/" + name + "/"
 		"obj":
 			# 地图交互物件 `obj/obj_f_*` 移入 `field/map_actor/`；共用特效 `obj/b_*` 仍在 `monsters/`；
 			# 其余 `obj/*` 是标题页 ANI，在 `prime/`。
 			if name.begins_with("obj_f_"):
 				dir = "res://game/field/map/map_actor/" + name + "/"
 			elif name.begins_with("b_"):
-				dir = "res://monsters/" + name + "/"
+				dir = "res://content/monsters/" + name + "/"
 			else:
 				dir = "res://game/prime/" + name + "/"
 		_:
