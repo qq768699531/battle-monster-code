@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3]
 [ext_resource type="Texture2D" path="res://core/number/number.webp" id="Sheet_common_ui_number"]
 [ext_resource type="PackedScene" path="res://core/number/number_top.tscn" id="num_top"]
-[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="2"]
+[ext_resource type="Shader" path="res://core/number/native_number_palette.gdshader" id="2"]
 [ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="3"]
 [sub_resource type="AtlasTexture" id="Atlas_4"]
 atlas = ExtResource("Sheet_common_ui_number")

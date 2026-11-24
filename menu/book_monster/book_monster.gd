@@ -28,7 +28,7 @@ const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 const SlotFrames = preload("res://menu/slot_frames/slot_frames.gd")
 const SlotGrade = preload("res://menu/slot_grade/slot_grade.gd")
 ## 未选中的页签按 `GRP_MODE_GRAY` 画成灰度（与怪物立绘同一套灰度公式）。
-const GRAY_SHADER := preload("res://core/shaders/ani_brightness.gdshader")
+const GRAY_SHADER := preload("res://core/monster_animation/ani_brightness.gdshader")
 
 const MONSTER_TEXT_SOURCE := "common/item_mon.dat"
 const TAB_SHEET := "common/ui_battle/frame-014"

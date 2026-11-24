@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" path="res://actors/hero/c_b_effect/c_b_effect.webp" id="Sheet_hero_c_b_effect"]
 [ext_resource type="Texture2D" path="res://monsters/mon2/m_b_126_1/m_b_126_1.webp" id="Sheet_mon2_m_b_126_1"]
 
-[ext_resource type="Shader" path="res://core/shaders/native_touch_blend.gdshader" id="BlendShader"]
+[ext_resource type="Shader" path="res://core/touch_button/native_touch_blend.gdshader" id="BlendShader"]
 
 [sub_resource type="AtlasTexture" id="Atlas_Texture0"]
 atlas = ExtResource("Sheet_hero_c_b_shadow")

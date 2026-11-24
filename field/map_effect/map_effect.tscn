@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://field/map_effect_view/map_effect_view.gd" id="script"]
-[ext_resource type="Shader" path="res://core/shaders/map_blend.gdshader" id="blend"]
+[ext_resource type="Shader" path="res://field/map_effect/map_blend.gdshader" id="blend"]
 
 [sub_resource type="ShaderMaterial" id="BlendMaterial"]
 resource_local_to_scene = true

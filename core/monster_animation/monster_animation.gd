@@ -5,7 +5,7 @@ extends Node2D
 signal animation_finished
 
 const SCENE_ROOT := "res://monsters/"
-const GRAYSCALE_SHADER := preload("res://core/shaders/ani_brightness.gdshader")
+const GRAYSCALE_SHADER := preload("res://core/monster_animation/ani_brightness.gdshader")
 
 # 每个场景只报一次「未实现的混合模式」，避免刷屏。
 static var _reported_blends: Dictionary = {}

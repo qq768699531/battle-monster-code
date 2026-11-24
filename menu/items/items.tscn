@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://menu/scrollbar/scrollbar.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://menu/item_description/item_description.tscn" id="description"]
-[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="Shader" path="res://core/number/native_number_palette.gdshader" id="key"]
 [ext_resource type="PackedScene" path="res://core/currency_amount/currency_amount.tscn" id="money"]
 [ext_resource type="PackedScene" path="res://menu/item_actions/item_actions.tscn" id="actions"]
 

@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://menu/status_portrait/status_portrait.tscn" id="portrait"]
 [ext_resource type="PackedScene" path="res://core/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://menu/status_metric/status_metric.tscn" id="metric"]
-[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="Shader" path="res://core/number/native_number_palette.gdshader" id="key"]
 [ext_resource type="PackedScene" path="res://menu/party_actions/party_actions.tscn" id="actions"]
 
 [sub_resource type="AtlasTexture" id="Atlas_digits"]

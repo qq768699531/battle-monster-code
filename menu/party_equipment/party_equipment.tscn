@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://core/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://core/currency_amount/currency_amount.tscn" id="money"]
 [ext_resource type="PackedScene" path="res://menu/item_description/item_description.tscn" id="description"]
-[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="palette"]
+[ext_resource type="Shader" path="res://core/number/native_number_palette.gdshader" id="palette"]
 
 [sub_resource type="AtlasTexture" id="Atlas_digits"]
 atlas = ExtResource("Sheet_common_ui_number")

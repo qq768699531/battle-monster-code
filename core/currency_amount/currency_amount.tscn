@@ -4,7 +4,7 @@
 
 [ext_resource type="PackedScene" path="res://core/number/number_compact.tscn" id="num_compact"]
 [ext_resource type="PackedScene" path="res://core/number/number_top.tscn" id="num_top"]
-[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="Shader" path="res://core/number/native_number_palette.gdshader" id="key"]
 
 [sub_resource type="AtlasTexture" id="Atlas_small_digits"]
 atlas = ExtResource("Sheet_common_ui_number")

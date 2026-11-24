@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://core/touch_button/touch_button.webp" id="Sheet_touch_ui_button"]
 
 [ext_resource type="Script" path="res://core/touch_button/touch_button.gd" id="1"]
-[ext_resource type="Shader" path="res://core/shaders/native_touch_blend.gdshader" id="4"]
+[ext_resource type="Shader" path="res://core/touch_button/native_touch_blend.gdshader" id="4"]
 [ext_resource type="PackedScene" path="res://core/ani_back_buffer/ani_back_buffer.tscn" id="5"]
 
 [sub_resource type="AtlasTexture" id="Atlas_2"]

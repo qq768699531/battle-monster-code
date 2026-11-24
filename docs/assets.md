@@ -232,3 +232,21 @@ battle/
 
 地图排除：`maps/mN/` 下每张图层仍是独立文件，TileSet 不接受 `AtlasTexture`。
 平台图标（`main/platform-images/`）也保持独立，运行时按相对路径取。
+
+## 四位一体：着色器跟着模块走
+
+`core/shaders/` 已删除，11 个 `.gdshader` 分别移入使用它的模块，与场景、脚本、数据同目录：
+
+| 着色器 | 模块 |
+| --- | --- |
+| `encounter_zoom` | `field/encounter_transition/` |
+| `item_cell_frame` | `menu/item_cell/` |
+| `map_blend` | `field/map_effect/` |
+| `map_filter` | `field/field_runtime/` |
+| `menu_map_blur` | `core/screen_shade/` |
+| `prime_screen` | `main/title_visual/` |
+| `prime_title` | `prime/window_title/` |
+| `native_menu_brightness` | `menu/menu/` |
+| `ani_brightness` | `core/monster_animation/` |
+| `native_number_palette` | `core/number/` |
+| `native_touch_blend` | `core/touch_button/`（391 个精灵共用） |

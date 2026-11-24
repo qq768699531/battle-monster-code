@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" path="res://menu/status_skill/status_skill.tscn" id="skill"]
 [ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://core/number/number_top.tscn" id="num_top"]
-[ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="key"]
+[ext_resource type="Shader" path="res://core/number/native_number_palette.gdshader" id="key"]
 [ext_resource type="PackedScene" path="res://menu/item_cell/item_cell.tscn" id="item"]
 [ext_resource type="Texture2D" path="res://core/window_frame/slot_filled.tres" id="slot_filled"]
 
