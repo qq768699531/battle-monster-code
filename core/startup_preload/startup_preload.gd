@@ -4,9 +4,9 @@ extends RefCounted
 ##
 ## 两种装载方式，按组选（实测见 `wiki\ui\startup-preload.md`）：
 ## - **线程化**（`THREADED_GROUPS`／`BACKGROUND_GROUPS`）：解码在工作线程，主线程只做状态查询与
-##   提交，实测最坏一帧 4.3 ms。同步 `load()` 全量 `scenes/monsters` 要 35420 ms／346 个、
-##   `scenes/actors` 6197 ms／49 个，必须走线程。
-## - **主线程分帧**（`PACED_GROUPS`）：`scenes/maps` 的地形场景要建 `TileMapLayer`＋`TileSet`，
+##   提交，实测最坏一帧 4.3 ms。同步 `load()` 全量 `monsters/` 要 35420 ms／346 个、
+##   `actors/` 6197 ms／49 个，必须走线程。
+## - **主线程分帧**（`PACED_GROUPS`）：`field/map_set` 的地形场景要建 `TileMapLayer`＋`TileSet`，
 ##   在工作线程里慢 15–25 倍（274 个文件：主线程 1187 ms，单请求线程化 36700 ms），而且多张地图
 ##   并发线程化会各自加载同一份 `TileSet`，实测报
 ##   `Another resource is loaded from path … (possible cyclic resource inclusion)` 并偶发崩溃
@@ -30,11 +30,14 @@ const MAX_IN_FLIGHT := 8
 const MAIN_THREAD_LOADS_PER_FRAME := 3
 ## 单个线程化请求的看门狗（毫秒）：超过就丢下不管、清单继续走。实测
 ## `res://battle/field/field.tscn` 单独线程化请求会在 74.9% 自锁；正常启动它已被
-## `main.gd` 的 preload 链缓存、走不到这里，这条是兜底。
+## `prime/entry/entry.gd` 的 preload 链缓存、走不到这里，这条是兜底。
 const REQUEST_TIMEOUT_MS := 8000
 
-const GROUP_COMPONENTS := "res://ui"
-const GROUP_ANI := "res://main"
+## 共用界面组件：`7fac0bd` 取消 `ui/` 分类后组件按使用方归档，其中 `battle/`、`menu/`、`field/`
+## 已由各自的分组覆盖，这一组只负责 `core/`。
+const GROUP_COMPONENTS := "res://core"
+## 启动与标题 ANI：`d7d61df` 之后入口是根目录 `main.tscn`，展示与标题模块都在 `prime/`。
+const GROUP_ANI := "res://prime"
 const GROUP_AUDIO := "res://audio/ogg"
 const GROUP_BATTLE_UI := "res://battle"
 const GROUP_MENU := "res://menu"

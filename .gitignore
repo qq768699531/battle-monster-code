@@ -47,8 +47,7 @@ desktop.ini
 
 # --- 原版游戏二进制资源（本地放置，不入库；数据层 .tres 照常入库）---
 /audio/**/*.ogg
-/ui/theme/*.ttf
-/assets/**/*.import
+/core/theme/*.ttf
 
 
 # --- 原版美术资源（图集/贴图）不入库，由本地补齐；场景用 AtlasTexture 引用 ---
@@ -56,8 +55,6 @@ desktop.ini
 **/*.png
 **/*.jpg
 **/*.jpeg
-/audio/**/*.import
-/ui/theme/*.import
 
 
 **/*.import
