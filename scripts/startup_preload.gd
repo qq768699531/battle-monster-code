@@ -29,7 +29,7 @@ const MAX_IN_FLIGHT := 8
 ## （静态画面＋进度条）的可接受范围内。
 const MAIN_THREAD_LOADS_PER_FRAME := 3
 ## 单个线程化请求的看门狗（毫秒）：超过就丢下不管、清单继续走。实测
-## `res://scenes/battle_ui/field.tscn` 单独线程化请求会在 74.9% 自锁；正常启动它已被
+## `res://battle/field/field.tscn` 单独线程化请求会在 74.9% 自锁；正常启动它已被
 ## `main.gd` 的 preload 链缓存、走不到这里，这条是兜底。
 const REQUEST_TIMEOUT_MS := 8000
 

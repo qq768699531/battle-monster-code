@@ -2,7 +2,7 @@ extends Node2D
 ## 未知岛主页。
 
 const UI = preload("res://scripts/prime/layout.gd")
-const SCENE_PATH := "res://scenes/prime/island_view.tscn"
+const SCENE_PATH := "res://prime/island_view/island_view.tscn"
 
 var last_error := ""
 var _messages: Dictionary = {}

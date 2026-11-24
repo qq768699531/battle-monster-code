@@ -11,7 +11,7 @@ static var _scene_geometry: Dictionary = {}
 
 static func geometry() -> Dictionary:
 	if _scene_geometry.is_empty():
-		var scene = load("res://scenes/prime/notice_view.tscn").instantiate()
+		var scene = load("res://prime/notice_view/notice_view.tscn").instantiate()
 		var buttons: Array[Rect2i] = []
 		for button: Control in scene.get_node("Network/Buttons").get_children():
 			buttons.append(UI.control_rect(button))
@@ -47,7 +47,7 @@ static func network_regions(paint: Dictionary) -> Array[Dictionary]:
 	if paint.get("network_result", {}).get("entry_error", false):
 		if paint.get("window_state", 0) in UI.BODY_PHASES:
 			var layout := network_message_layout(paint)
-			var component = load("res://scenes/components/network_message.tscn").instantiate()
+			var component = load("res://ui/network_message/network_message.tscn").instantiate()
 			result.append(UI._region(TouchCode.Key.OK, component.okay_rect(layout)))
 			component.free()
 		return result
@@ -138,7 +138,7 @@ static func network_message_layout(paint: Dictionary) -> Dictionary:
 		paint.get("network_result", {}).get("payload", {}).get("message", ""))
 	if text.is_empty():
 		text = "网络连接失败。"
-	var component = load("res://scenes/components/network_message.tscn").instantiate()
+	var component = load("res://ui/network_message/network_message.tscn").instantiate()
 	var layout := UI.TextLayout.layout(text, UI.UI_FONT, UI.FONT_SIZE, component.text_width(), true)
 	var measured: Dictionary = component.measure(layout.lines, waiting)
 	component.free()

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/message_choice.gd" id="1"]
+
+[ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="2"]
+
+[ext_resource type="PackedScene" path="res://ui/plain_label/plain_label.tscn" id="3"]
+
+[node name="MessageChoice" type="Control"]
+script = ExtResource("1")
+offset_right = 44.0
+offset_bottom = 16.0
+mouse_filter = 2
+
+[node name="Highlight" parent="." instance=ExtResource("2")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+border_width = 0
+background_color = Color(1.0, 0.5725490196078431, 0.0, 1)
+
+[node name="Caption" parent="." instance=ExtResource("3")]
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 3.0
+offset_bottom = 3.0
+anchor = 1

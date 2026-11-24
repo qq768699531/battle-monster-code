@@ -1,0 +1,456 @@
+[gd_scene format=3]
+[ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
+
+[ext_resource type="Script" path="res://scripts/battle_ui/field.gd" id="script"]
+[ext_resource type="PackedScene" path="res://battle/actor/actor.tscn" id="actor"]
+[ext_resource type="PackedScene" path="res://battle/castle_back/castle_back.tscn" id="back"]
+[ext_resource type="PackedScene" path="res://battle/castle_ground/castle_ground.tscn" id="ground"]
+[ext_resource type="PackedScene" path="res://battle/castle_front/castle_front.tscn" id="front"]
+[ext_resource type="PackedScene" path="res://battle/b_icon2/b_icon2.tscn" id="cursor"]
+[ext_resource type="PackedScene" path="res://battle/vitals/vitals.tscn" id="vitals"]
+[ext_resource type="PackedScene" path="res://battle/party_card/party_card.tscn" id="card"]
+[ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://battle/skill_banner/skill_banner.tscn" id="skill_banner"]
+
+[sub_resource type="AtlasTexture" id="Atlas_headings"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(844, 53, 197, 5)
+[sub_resource type="AtlasTexture" id="Atlas_arrows"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(1266, 53, 12, 7)
+[sub_resource type="AtlasTexture" id="SkillHeading"]
+atlas = SubResource("Atlas_headings")
+region = Rect2(163, 0, 34, 5)
+[sub_resource type="AtlasTexture" id="Arrow"]
+atlas = SubResource("Atlas_arrows")
+region = Rect2(6, 0, 6, 7)
+[sub_resource type="StyleBoxFlat" id="SkillOuter"]
+bg_color = Color(0.054902, 0.105882, 0.184314, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+[sub_resource type="StyleBoxFlat" id="SkillInner"]
+bg_color = Color(0.054902, 0.105882, 0.184314, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.811765, 0.8, 0.8, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+
+[sub_resource type="Animation" id="ExpandParty"]
+resource_name = "expand"
+length = 0.45
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Current:offset_top")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [266.0, 251.0, 238.0, 227.0, 218.0, 211.0, 206.0, 203.0, 202.0]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Current:offset_bottom")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [303.0, 288.0, 275.0, 264.0, 255.0, 248.0, 243.0, 240.0, 239.0]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Skill:offset_top")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [266.0, 251.0, 238.0, 227.0, 218.0, 211.0, 206.0, 203.0, 202.0]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Skill:offset_bottom")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [303.0, 288.0, 275.0, 264.0, 255.0, 248.0, 243.0, 240.0, 239.0]
+}
+
+[sub_resource type="Animation" id="CollapseParty"]
+resource_name = "collapse"
+length = 0.45
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Current:offset_top")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [203.0, 206.0, 211.0, 218.0, 227.0, 238.0, 251.0, 266.0, 283.0]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Current:offset_bottom")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [240.0, 243.0, 248.0, 255.0, 264.0, 275.0, 288.0, 303.0, 320.0]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Skill:offset_top")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [203.0, 206.0, 211.0, 218.0, 227.0, 238.0, 251.0, 266.0, 283.0]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Skill:offset_bottom")
+tracks/3/interp = 0
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [240.0, 243.0, 248.0, 255.0, 264.0, 275.0, 288.0, 303.0, 320.0]
+}
+
+[sub_resource type="AnimationLibrary" id="HudAnimations"]
+_data = {
+&"expand": SubResource("ExpandParty"),
+&"collapse": SubResource("CollapseParty")
+}
+
+[sub_resource type="Animation" id="TargetShakeClip"]
+resource_name = "target_shake"
+length = 0.15
+step = 0.05
+loop_mode = 0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TargetInfo/Shake:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, -2), Vector2(0, 2), Vector2(0, -1), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="TargetShakeAnimations"]
+_data = {
+&"target_shake": SubResource("TargetShakeClip")
+}
+
+[sub_resource type="Animation" id="DimBackdrop"]
+resource_name = "dim"
+length = 0.2
+step = 0.05
+loop_mode = 0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Background:modulate")
+tracks/0/interp = 0
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Color(0.8125, 0.8125, 0.8125, 1), Color(0.625, 0.625, 0.625, 1), Color(0.4375, 0.4375, 0.4375, 1), Color(0.25, 0.25, 0.25, 1)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Ground:modulate")
+tracks/1/interp = 0
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Color(0.8125, 0.8125, 0.8125, 1), Color(0.625, 0.625, 0.625, 1), Color(0.4375, 0.4375, 0.4375, 1), Color(0.25, 0.25, 0.25, 1)]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Foreground:modulate")
+tracks/2/interp = 0
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Color(0.8125, 0.8125, 0.8125, 1), Color(0.625, 0.625, 0.625, 1), Color(0.4375, 0.4375, 0.4375, 1), Color(0.25, 0.25, 0.25, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="BackdropAnimations"]
+_data = {
+&"dim": SubResource("DimBackdrop")
+}
+
+[node name="Field" type="Control"]
+offset_right = 400.0
+offset_bottom = 240.0
+clip_contents = true
+mouse_filter = 2
+script = ExtResource("script")
+
+[node name="Background" parent="." instance=ExtResource("back")]
+position = Vector2(-2, -82)
+
+[node name="Ground" parent="." instance=ExtResource("ground")]
+position = Vector2(-2, -82)
+
+[node name="Actors" type="Control" parent="."]
+mouse_filter = 2
+
+[node name="Enemy0" parent="Actors" instance=ExtResource("actor")]
+offset_left = 118.0
+offset_top = 100.0
+[node name="Enemy1" parent="Actors" instance=ExtResource("actor")]
+offset_left = 109.0
+offset_top = 141.0
+[node name="Enemy2" parent="Actors" instance=ExtResource("actor")]
+offset_left = 118.0
+offset_top = 182.0
+[node name="Party0" parent="Actors" instance=ExtResource("actor")]
+offset_left = 281.0
+offset_top = 100.0
+[node name="Party1" parent="Actors" instance=ExtResource("actor")]
+offset_left = 290.0
+offset_top = 141.0
+[node name="Party2" parent="Actors" instance=ExtResource("actor")]
+offset_left = 281.0
+offset_top = 182.0
+
+[node name="Effects" type="Control" parent="."]
+mouse_filter = 2
+
+[node name="Hits" type="Control" parent="."]
+mouse_filter = 2
+
+[node name="Popups" type="Control" parent="."]
+mouse_filter = 2
+
+[node name="Foreground" parent="." instance=ExtResource("front")]
+position = Vector2(-2, -82)
+
+[node name="DimPlayer" type="AnimationPlayer" parent="."]
+libraries = { &"": SubResource("BackdropAnimations") }
+
+[node name="Cursor" parent="." instance=ExtResource("cursor")]
+visible = false
+
+[node name="SkillBanner" parent="." instance=ExtResource("skill_banner")]
+
+[node name="Hud" type="Control" parent="."]
+mouse_filter = 2
+
+[node name="TransitionPlayer" type="AnimationPlayer" parent="Hud"]
+libraries = { &"": SubResource("HudAnimations") }
+
+[node name="TargetShake" type="AnimationPlayer" parent="Hud"]
+libraries = { &"": SubResource("TargetShakeAnimations") }
+
+[node name="TopShade" type="ColorRect" parent="Hud"]
+offset_right = 400.0
+offset_bottom = 19.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.5)
+[node name="BottomShade" type="ColorRect" parent="Hud"]
+offset_top = 217.0
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="Enemy0" parent="Hud" instance=ExtResource("vitals")]
+offset_left = 86.0
+offset_top = 1.0
+offset_right = 153.0
+offset_bottom = 19.0
+[node name="Enemy1" parent="Hud" instance=ExtResource("vitals")]
+offset_left = 167.0
+offset_top = 1.0
+offset_right = 234.0
+offset_bottom = 19.0
+[node name="Enemy2" parent="Hud" instance=ExtResource("vitals")]
+offset_left = 247.0
+offset_top = 1.0
+offset_right = 314.0
+offset_bottom = 19.0
+
+[node name="Party0" parent="Hud" instance=ExtResource("card")]
+offset_left = 83.0
+offset_top = 202.0
+offset_right = 160.0
+offset_bottom = 239.0
+[node name="Food" type="ColorRect" parent="Hud/Party0"]
+offset_left = 2.0
+offset_top = 34.0
+offset_right = 77.0
+offset_bottom = 37.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+[node name="Track" type="ColorRect" parent="Hud/Party0/Food"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 74.0
+offset_bottom = 2.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+[node name="Fill" type="ColorRect" parent="Hud/Party0/Food/Track"]
+offset_right = 73.0
+offset_bottom = 1.0
+mouse_filter = 2
+color = Color(1, 1, 0.333333, 1)
+[node name="Party1" parent="Hud" instance=ExtResource("card")]
+offset_left = 162.0
+offset_top = 202.0
+offset_right = 239.0
+offset_bottom = 239.0
+[node name="Food" type="ColorRect" parent="Hud/Party1"]
+offset_left = 2.0
+offset_top = 34.0
+offset_right = 77.0
+offset_bottom = 37.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+[node name="Track" type="ColorRect" parent="Hud/Party1/Food"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 74.0
+offset_bottom = 2.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+[node name="Fill" type="ColorRect" parent="Hud/Party1/Food/Track"]
+offset_right = 73.0
+offset_bottom = 1.0
+mouse_filter = 2
+color = Color(1, 1, 0.333333, 1)
+[node name="Party2" parent="Hud" instance=ExtResource("card")]
+offset_left = 241.0
+offset_top = 202.0
+offset_right = 318.0
+offset_bottom = 239.0
+[node name="Food" type="ColorRect" parent="Hud/Party2"]
+offset_left = 2.0
+offset_top = 34.0
+offset_right = 77.0
+offset_bottom = 37.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+[node name="Track" type="ColorRect" parent="Hud/Party2/Food"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 74.0
+offset_bottom = 2.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+[node name="Fill" type="ColorRect" parent="Hud/Party2/Food/Track"]
+offset_right = 73.0
+offset_bottom = 1.0
+mouse_filter = 2
+color = Color(1, 1, 0.333333, 1)
+[node name="Current" parent="Hud" instance=ExtResource("card")]
+visible = false
+offset_left = 83.0
+offset_top = 202.0
+offset_right = 160.0
+offset_bottom = 239.0
+[node name="Food" type="ColorRect" parent="Hud/Current"]
+offset_left = 2.0
+offset_top = 34.0
+offset_right = 77.0
+offset_bottom = 37.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+[node name="Track" type="ColorRect" parent="Hud/Current/Food"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 74.0
+offset_bottom = 2.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+[node name="Fill" type="ColorRect" parent="Hud/Current/Food/Track"]
+offset_right = 73.0
+offset_bottom = 1.0
+mouse_filter = 2
+color = Color(1, 1, 0.333333, 1)
+
+[node name="Skill" type="Panel" parent="Hud"]
+visible = false
+offset_left = 162.0
+offset_top = 202.0
+offset_right = 318.0
+offset_bottom = 239.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SkillOuter")
+[node name="Inner" type="Panel" parent="Hud/Skill"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 155.0
+offset_bottom = 36.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SkillInner")
+[node name="Rule" type="ColorRect" parent="Hud/Skill"]
+offset_left = 1.0
+offset_top = 18.0
+offset_right = 155.0
+offset_bottom = 19.0
+mouse_filter = 2
+color = Color(0.811765, 0.8, 0.8, 1)
+[node name="Heading" type="TextureRect" parent="Hud/Skill"]
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 38.0
+offset_bottom = 13.0
+mouse_filter = 2
+texture = SubResource("SkillHeading")
+[node name="Arrow" type="TextureRect" parent="Hud/Skill"]
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 38.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = SubResource("Arrow")
+[node name="Name" parent="Hud/Skill" instance=ExtResource("label")]
+offset_left = 41.0
+offset_top = 5.0
+offset_right = 153.0
+offset_bottom = 15.0
+color = Color(1, 1, 0.666667, 1)
+clip_contents = true
+[node name="Description" parent="Hud/Skill" instance=ExtResource("label")]
+offset_left = 41.0
+offset_top = 22.0
+offset_right = 153.0
+offset_bottom = 32.0
+clip_contents = true
+
+[node name="TargetInfo" type="ColorRect" parent="Hud"]
+visible = false
+offset_top = 26.0
+offset_right = 400.0
+offset_bottom = 50.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.5)
+[node name="Shake" type="Control" parent="Hud/TargetInfo"]
+offset_right = 400.0
+offset_bottom = 24.0
+mouse_filter = 2
+[node name="Name" parent="Hud/TargetInfo/Shake" instance=ExtResource("label")]
+offset_top = 7.0
+offset_right = 400.0
+offset_bottom = 17.0
+outline = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+

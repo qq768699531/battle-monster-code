@@ -6,9 +6,9 @@ signal target_accepted(index: int)
 ## 战斗结果阶段：底部友方怪物信息按原生平方序列滑出屏幕后发出。
 signal hud_exit_finished
 
-const PoseScene = preload("res://scenes/battle_ui/pose.tscn")
-const DamageNumberScene = preload("res://scenes/battle_ui/damage_number.tscn")
-const HitEffectScene = preload("res://scenes/battle_ui/hit_effect.tscn")
+const PoseScene = preload("res://battle/pose/pose.tscn")
+const DamageNumberScene = preload("res://battle/damage_number/damage_number.tscn")
+const HitEffectScene = preload("res://battle/hit_effect/hit_effect.tscn")
 const HitEffect = preload("res://scripts/battle_ui/hit_effect.gd")
 const TextLayout = preload("res://scripts/native_text_layout.gd")
 const ItemEffect = preload("res://scripts/data/item_effect.gd")

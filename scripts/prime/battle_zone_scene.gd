@@ -6,7 +6,7 @@ const UI_THEME = preload("res://assets/fonts/ui_theme.tres")
 const TextLayout = preload("res://scripts/native_text_layout.gd")
 const UI = preload("res://scripts/prime/layout.gd")
 const BUTTON_COUNT := 6
-const SCENE_PATH := "res://scenes/prime/battle_zone.tscn"
+const SCENE_PATH := "res://prime/battle_zone/battle_zone.tscn"
 
 var last_error := ""
 var _battle_headings: Dictionary = {}

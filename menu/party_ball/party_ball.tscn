@@ -1,0 +1,31 @@
+[gd_scene format=3]
+[ext_resource type="Texture2D" path="res://ui/window/ui_window.webp" id="Sheet_common_ui_window"]
+
+[ext_resource type="PackedScene" path="res://ui/item_cell/item_cell.tscn" id="cell"]
+
+[sub_resource type="AtlasTexture" id="Atlas_markers"]
+atlas = ExtResource("Sheet_common_ui_window")
+region = Rect2(1320, 210, 27, 9)
+[sub_resource type="AtlasTexture" id="PartyMarker"]
+atlas = SubResource("Atlas_markers")
+region = Rect2(0, 0, 9, 9)
+[sub_resource type="AtlasTexture" id="EquipmentMarker"]
+atlas = SubResource("Atlas_markers")
+region = Rect2(9, 0, 9, 9)
+
+[node name="PartyBall" instance=ExtResource("cell")]
+
+[node name="Marker" parent="."]
+offset_top = 2.0
+offset_bottom = 11.0
+texture = SubResource("PartyMarker")
+
+[node name="EquipmentMarker" type="TextureRect" parent="."]
+visible = false
+offset_left = 19.0
+offset_top = 2.0
+offset_right = 28.0
+offset_bottom = 11.0
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("EquipmentMarker")

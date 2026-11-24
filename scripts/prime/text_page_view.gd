@@ -19,7 +19,7 @@ func configure(view: Object, catalog: Object) -> bool:
 
 
 static func page_regions(paint: Dictionary) -> Array[Dictionary]:
-	var page = load("res://scenes/prime/text_page_view.tscn").instantiate()
+	var page = load("res://prime/text_page_view/text_page_view.tscn").instantiate()
 	var result: Array[Dictionary] = page.live_regions(paint)
 	page.free()
 	return result
@@ -31,7 +31,7 @@ func live_regions(paint: Dictionary) -> Array[Dictionary]:
 
 
 static func page_scroll_origin(scene: int) -> Vector2i:
-	var navigation = load("res://scenes/components/page_navigation.tscn").instantiate()
+	var navigation = load("res://ui/page_navigation/page_navigation.tscn").instantiate()
 	var origin: Vector2i = UI.control_rect(navigation.get_node("MethodScroll" if scene == 13 else "InfoScroll")).position
 	navigation.free()
 	return origin

@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3]
+[ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
+[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="1"]
+[ext_resource type="Shader" path="res://shaders/native_number_palette.gdshader" id="2"]
+[ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="3"]
+[sub_resource type="AtlasTexture" id="Atlas_4"]
+atlas = ExtResource("Sheet_common_ui_number")
+region = Rect2(0, 0, 87, 28)
+[sub_resource type="ShaderMaterial" id="NumberPalette"]
+shader = ExtResource("2")
+[sub_resource type="StyleBoxFlat" id="Fill"]
+bg_color = Color(0.027451, 0.0588235, 0.105882, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+anti_aliasing = false
+[node name="Metric" type="Panel"]
+offset_right = 52.0
+offset_bottom = 7.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Fill")
+[node name="Icon" type="TextureRect" parent="."]
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 31.0
+offset_bottom = 6.0
+mouse_filter = 2
+texture_filter = 1
+expand_mode = 1
+stretch_mode = 2
+[node name="Number" parent="." instance=ExtResource("1")]
+material = SubResource("NumberPalette")
+use_parent_material = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1.0
+offset_bottom = 0.0
+mouse_filter = 2
+source_y = 0
+texture = SubResource("Atlas_4")
+
+[node name="Unknown" parent="." instance=ExtResource("3")]
+visible = false
+anchor_right = 1.0
+offset_right = -1.0
+offset_bottom = 7.0
+text = "--"
+horizontal_alignment = 2
+vertical_alignment = 1

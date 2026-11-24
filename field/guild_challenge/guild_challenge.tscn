@@ -1,0 +1,191 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/field/guild_challenge.gd" id="script"]
+[ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://ui/window_footer/window_footer.tscn" id="footer"]
+[ext_resource type="PackedScene" path="res://ui/message_choice/message_choice.tscn" id="choice"]
+[ext_resource type="PackedScene" path="res://ui/dotted_line/dotted_line.tscn" id="rule"]
+
+[sub_resource type="StyleBoxFlat" id="PanelFrame"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0980392, 0.392157, 0.521569, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="PanelFill"]
+bg_color = Color(0.882353, 0.698039, 0.184314, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="GuildChallenge" type="Control"]
+visible = false
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+script = ExtResource("script")
+
+[node name="Window" parent="." instance=ExtResource("window")]
+window_size = Vector2i(180, 136)
+screen_shade = true
+
+[node name="Subtitle" parent="Window/Content" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 74.0
+offset_right = 280.0
+offset_bottom = 84.0
+color = Color(1, 1, 0.666667, 1)
+horizontal_alignment = 1
+
+[node name="Panel" type="Panel" parent="Window/Content"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 95.0
+offset_right = 280.0
+offset_bottom = 169.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("PanelFrame")
+
+[node name="Fill" type="Panel" parent="Window/Content"]
+layout_mode = 0
+offset_left = 121.0
+offset_top = 96.0
+offset_right = 279.0
+offset_bottom = 168.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("PanelFill")
+
+[node name="RankCurrent" parent="Window/Content" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 102.0
+offset_right = 280.0
+offset_bottom = 112.0
+horizontal_alignment = 1
+
+[node name="RankOpponent" parent="Window/Content" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 122.0
+offset_right = 280.0
+offset_bottom = 132.0
+horizontal_alignment = 1
+
+[node name="Up" parent="Window/Content" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 142.0
+offset_right = 280.0
+offset_bottom = 152.0
+color = Color(1, 1, 0.333333, 1)
+horizontal_alignment = 1
+
+[node name="Accept" parent="Window/Content" instance=ExtResource("footer")]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 173.0
+offset_right = 156.0
+offset_bottom = 185.0
+
+[node name="Back" parent="Window/Content" instance=ExtResource("footer")]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 173.0
+offset_right = 286.0
+offset_bottom = 185.0
+
+[node name="AcceptHit" type="Button" parent="Window/Content"]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 173.0
+offset_right = 156.0
+offset_bottom = 185.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="BackHit" type="Button" parent="Window/Content"]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 173.0
+offset_right = 286.0
+offset_bottom = 185.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Confirm" parent="." instance=ExtResource("window")]
+visible = false
+kind = 1
+
+[node name="Prompt" parent="Confirm/Content" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 102.0
+offset_right = 272.0
+offset_bottom = 112.0
+
+[node name="Rule" parent="Confirm/Content" instance=ExtResource("rule")]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 120.0
+offset_right = 276.0
+offset_bottom = 121.0
+
+[node name="Yes" type="Button" parent="Confirm/Content"]
+layout_mode = 0
+offset_left = 138.0
+offset_top = 125.0
+offset_right = 182.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Choice" parent="Confirm/Content/Yes" instance=ExtResource("choice")]
+
+[node name="No" type="Button" parent="Confirm/Content"]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 125.0
+offset_right = 262.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Choice" parent="Confirm/Content/No" instance=ExtResource("choice")]
+
+[node name="Error" parent="." instance=ExtResource("label")]
+visible = false
+layout_mode = 0
+offset_top = 226.0
+offset_right = 400.0
+offset_bottom = 236.0
+color = Color(1, 0.4, 0.4, 1)
+horizontal_alignment = 1
+
+[editable path="Window"]
+[editable path="Confirm"]
+[editable path="Confirm/Bounds/Outline"]

@@ -1,0 +1,69 @@
+[gd_scene format=3]
+[ext_resource type="Texture2D" path="res://ui/window/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
+
+[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="number"]
+[ext_resource type="Shader" path="res://shaders/native_number_palette.gdshader" id="key"]
+
+[sub_resource type="AtlasTexture" id="Atlas_icons"]
+atlas = ExtResource("Sheet_common_ui_window")
+region = Rect2(0, 70, 49, 7)
+[sub_resource type="AtlasTexture" id="Atlas_small_digits"]
+atlas = ExtResource("Sheet_common_ui_number")
+region = Rect2(87, 0, 51, 10)
+[sub_resource type="AtlasTexture" id="Atlas_digits"]
+atlas = ExtResource("Sheet_common_ui_number")
+region = Rect2(0, 0, 87, 28)
+[sub_resource type="StyleBoxFlat" id="Background"]
+bg_color = Color(0.00784314, 0.270588, 0.384314, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_left = 2
+corner_radius_bottom_right = 2
+anti_aliasing = false
+
+[sub_resource type="AtlasTexture" id="GoldIcon"]
+atlas = SubResource("Atlas_icons")
+region = Rect2(11, 0, 5, 5)
+
+[sub_resource type="ShaderMaterial" id="Palette"]
+shader = ExtResource("key")
+
+[node name="CurrencyAmount" type="Panel"]
+offset_right = 92.0
+offset_bottom = 7.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Background")
+
+[node name="Icon" type="TextureRect" parent="."]
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 8.0
+offset_bottom = 6.0
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("GoldIcon")
+
+[node name="Number" parent="." instance=ExtResource("number")]
+material = SubResource("Palette")
+use_parent_material = false
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 1.0
+offset_right = -3.0
+offset_bottom = 6.0
+source_y = 0
+glyph_height = 5
+fixed_advance = 6
+compact_dot = true
+texture = SubResource("Atlas_small_digits")
+
+[node name="Unknown" parent="." instance=ExtResource("number")]
+visible = false
+material = SubResource("Palette")
+use_parent_material = false
+anchor_right = 1.0
+offset_left = 10.0
+offset_right = -3.0
+source_y = 0
+texture = SubResource("Atlas_digits")

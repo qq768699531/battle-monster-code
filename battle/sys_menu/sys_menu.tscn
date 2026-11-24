@@ -1,0 +1,102 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle_ui/sys_menu.gd" id="script"]
+[ext_resource type="PackedScene" path="res://ui/screen_shade/screen_shade.tscn" id="shade"]
+[ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://menu/option_card/option_card.tscn" id="card"]
+[ext_resource type="PackedScene" path="res://prime/settings_view/settings_view.tscn" id="settings"]
+[ext_resource type="PackedScene" path="res://prime/text_page_view/text_page_view.tscn" id="method"]
+[ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://ui/dotted_line/dotted_line.tscn" id="line"]
+[ext_resource type="PackedScene" path="res://ui/message_choice/message_choice.tscn" id="choice"]
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="SysMenu" type="Control"]
+custom_minimum_size = Vector2(400, 240)
+offset_right = 400.0
+offset_bottom = 240.0
+script = ExtResource("script")
+
+[node name="Shade" parent="." instance=ExtResource("shade")]
+visible = false
+
+[node name="List" parent="." instance=ExtResource("window")]
+visible = false
+window_size = Vector2i(228, 208)
+
+[node name="Option0" parent="List/Content" instance=ExtResource("card")]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 61.0
+offset_right = 259.0
+offset_bottom = 81.0
+
+[node name="Option1" parent="List/Content" instance=ExtResource("card")]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 95.0
+offset_right = 259.0
+offset_bottom = 115.0
+
+[node name="Option2" parent="List/Content" instance=ExtResource("card")]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 129.0
+offset_right = 259.0
+offset_bottom = 149.0
+
+[node name="Option3" parent="List/Content" instance=ExtResource("card")]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 163.0
+offset_right = 259.0
+offset_bottom = 183.0
+
+[node name="Settings" parent="." instance=ExtResource("settings")]
+visible = false
+
+[node name="Method" parent="." instance=ExtResource("method")]
+
+[node name="Prompt" parent="." instance=ExtResource("window")]
+visible = false
+kind = 1
+window_size = Vector2i(160, 57)
+
+[node name="Prompt" parent="Prompt/Content" instance=ExtResource("label")]
+offset_left = 128.0
+offset_top = 102.0
+offset_right = 272.0
+offset_bottom = 112.0
+
+[node name="Divider" parent="Prompt/Content" instance=ExtResource("line")]
+offset_left = 124.0
+offset_top = 120.0
+offset_right = 276.0
+offset_bottom = 121.0
+
+[node name="Yes" type="Button" parent="Prompt/Content"]
+offset_left = 138.0
+offset_top = 125.0
+offset_right = 182.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Choice" parent="Prompt/Content/Yes" instance=ExtResource("choice")]
+
+[node name="No" type="Button" parent="Prompt/Content"]
+offset_left = 218.0
+offset_top = 125.0
+offset_right = 262.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Choice" parent="Prompt/Content/No" instance=ExtResource("choice")]

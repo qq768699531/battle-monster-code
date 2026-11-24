@@ -3,7 +3,7 @@ extends Node2D
 
 const UI = preload("res://scripts/prime/layout.gd")
 const BUTTON_COUNT := 3
-const SCENE_PATH := "res://scenes/prime/market_view.tscn"
+const SCENE_PATH := "res://prime/market_view/market_view.tscn"
 
 var last_error := ""
 var _messages: Dictionary = {}

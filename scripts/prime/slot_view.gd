@@ -18,7 +18,7 @@ static var _scene_geometry: Dictionary = {}
 
 static func geometry() -> Dictionary:
 	if _scene_geometry.is_empty():
-		var scene = load("res://scenes/prime/slot_view.tscn").instantiate()
+		var scene = load("res://prime/slot_view/slot_view.tscn").instantiate()
 		var cards: Array[Rect2i] = []
 		for card: Node2D in [scene.get_node("Card0"), scene.get_node("Card1")]:
 			cards.append(UI.control_rect(card.get_node("Hit"), Rect2i(Vector2i(card.position), Vector2i.ZERO)))

@@ -1,0 +1,131 @@
+[gd_scene load_steps=19 format=3]
+[ext_resource type="Texture2D" path="res://ui/number/ui_number.webp" id="Sheet_common_ui_number"]
+
+[ext_resource type="Script" path="res://scripts/field_runtime.gd" id="1"]
+[ext_resource type="PackedScene" path="res://field/map_renderer/map_renderer.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://field/field_actors/field_actors.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://field/chat_view/chat_view.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://ui/touch_controls/touch_controls.tscn" id="5"]
+[ext_resource type="Theme" path="res://assets/fonts/ui_theme.tres" id="6"]
+[ext_resource type="PackedScene" path="res://field/map_name_view/map_name_view.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://field/map_effect/map_effect.tscn" id="14"]
+[ext_resource type="PackedScene" path="res://field/hero_summary/hero_summary.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://field/minimap/minimap.tscn" id="9"]
+[ext_resource type="Shader" path="res://shaders/map_filter.gdshader" id="10"]
+[ext_resource type="PackedScene" path="res://field/narration_view/narration_view.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://field/mastery_view/mastery_view.tscn" id="12"]
+[ext_resource type="PackedScene" path="res://menu/book_monster/book_monster.tscn" id="book_monster"]
+[ext_resource type="PackedScene" path="res://field/save_view/save_view.tscn" id="13"]
+[ext_resource type="PackedScene" path="res://ui/atlas_number/atlas_number.tscn" id="exp_number"]
+[ext_resource type="PackedScene" path="res://ui/item_icon/item_icon.tscn" id="exp_icon"]
+
+[sub_resource type="AtlasTexture" id="Atlas_exp_digits"]
+atlas = ExtResource("Sheet_common_ui_number")
+region = Rect2(0, 0, 87, 28)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tint"]
+shader = ExtResource("10")
+shader_parameter/mode = 1
+shader_parameter/dark_color = Vector3(0.5647059, 0.5647059, 0.5647059)
+
+[node name="FieldRuntime" type="Node2D"]
+script = ExtResource("1")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="MapView" parent="World" instance=ExtResource("2")]
+
+[node name="MapEffect" parent="World" instance=ExtResource("14")]
+
+[node name="Actors" parent="World" instance=ExtResource("3")]
+
+[node name="HeroSummary" parent="." instance=ExtResource("8")]
+z_index = 98
+
+[node name="ExpBonus" type="Control" parent="."]
+visible = false
+z_index = 98
+mouse_filter = 2
+texture_filter = 1
+
+[node name="Icon" parent="ExpBonus" instance=ExtResource("exp_icon")]
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 76.0
+offset_bottom = 25.0
+
+[node name="Minutes" parent="ExpBonus" instance=ExtResource("exp_number")]
+offset_left = 61.0
+offset_top = 33.0
+offset_right = 81.0
+offset_bottom = 40.0
+texture = SubResource("Atlas_exp_digits")
+source_y = 0
+
+[node name="Minimap" parent="." instance=ExtResource("9")]
+z_index = 98
+
+[node name="MapNameView" parent="." instance=ExtResource("7")]
+z_index = 99
+
+[node name="WarpBlockedBar" parent="." instance=ExtResource("7")]
+z_index = 99
+bar_index = 0
+
+[node name="ChatView" parent="." instance=ExtResource("4")]
+z_index = 200
+
+[node name="TouchView" parent="." instance=ExtResource("5")]
+z_index = 199
+
+[node name="Fade" type="ColorRect" parent="."]
+visible = false
+z_index = 100
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+
+[node name="Cover" type="ColorRect" parent="."]
+visible = false
+z_index = 101
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+
+[node name="MapTint" type="ColorRect" parent="."]
+visible = false
+z_index = 150
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+material = SubResource("ShaderMaterial_tint")
+
+[node name="Narration" parent="." instance=ExtResource("11")]
+z_index = 201
+
+[node name="Mastery" parent="." instance=ExtResource("12")]
+z_index = 201
+
+[node name="Starter" parent="." instance=ExtResource("book_monster")]
+z_index = 201
+
+[node name="Save" parent="." instance=ExtResource("13")]
+z_index = 202
+
+[node name="Boundary" type="ColorRect" parent="."]
+visible = false
+z_index = 200
+offset_left = 8.0
+offset_top = 150.0
+offset_right = 392.0
+offset_bottom = 232.0
+mouse_filter = 2
+color = Color(0.0627451, 0.117647, 0.188235, 1)
+
+[node name="Message" type="Label" parent="Boundary"]
+offset_left = 8.0
+offset_top = 5.0
+offset_right = 376.0
+offset_bottom = 77.0
+theme = ExtResource("6")
+theme_override_font_sizes/font_size = 10
+autowrap_mode = 3

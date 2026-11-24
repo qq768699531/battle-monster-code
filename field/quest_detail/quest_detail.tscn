@@ -1,0 +1,233 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/field/quest_detail.gd" id="script"]
+[ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://ui/menu_list_button/menu_list_button.tscn" id="button"]
+[ext_resource type="PackedScene" path="res://ui/dotted_line/dotted_line.tscn" id="line"]
+[ext_resource type="PackedScene" path="res://ui/message_choice/message_choice.tscn" id="choice"]
+[ext_resource type="PackedScene" path="res://menu/world_map/world_map.tscn" id="world_map"]
+
+[sub_resource type="StyleBoxFlat" id="Frame"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.811765, 0.8, 0.8, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="QuestDetail" instance=ExtResource("window")]
+visible = false
+script = ExtResource("script")
+window_size = Vector2i(228, 212)
+screen_shade = true
+
+[node name="TypeBar" type="ColorRect" parent="Content"]
+offset_left = 95.0
+offset_top = 53.0
+offset_right = 305.0
+offset_bottom = 64.0
+mouse_filter = 2
+color = Color(0.0156863, 0.027451, 0.0470588, 1)
+
+[node name="BodyFill" type="ColorRect" parent="Content"]
+offset_left = 95.0
+offset_top = 64.0
+offset_right = 305.0
+offset_bottom = 207.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+
+[node name="Frame" type="Panel" parent="Content"]
+offset_left = 94.0
+offset_top = 52.0
+offset_right = 306.0
+offset_bottom = 208.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Frame")
+
+[node name="Name" parent="Content" instance=ExtResource("label")]
+offset_left = 98.0
+offset_top = 66.0
+offset_right = 302.0
+offset_bottom = 76.0
+color = Color(1, 1, 0.666667, 1)
+
+[node name="Desc0" parent="Content" instance=ExtResource("label")]
+offset_left = 98.0
+offset_top = 80.0
+offset_right = 302.0
+offset_bottom = 90.0
+
+[node name="Desc1" parent="Content" instance=ExtResource("label")]
+offset_left = 98.0
+offset_top = 92.0
+offset_right = 302.0
+offset_bottom = 102.0
+
+[node name="Desc2" parent="Content" instance=ExtResource("label")]
+offset_left = 98.0
+offset_top = 104.0
+offset_right = 302.0
+offset_bottom = 114.0
+
+[node name="NpcCaption" parent="Content" instance=ExtResource("label")]
+offset_left = 98.0
+offset_top = 124.0
+offset_right = 302.0
+offset_bottom = 134.0
+color = Color(0.427451, 0.713725, 1, 1)
+
+[node name="NpcName" parent="Content" instance=ExtResource("label")]
+offset_left = 98.0
+offset_top = 138.0
+offset_right = 302.0
+offset_bottom = 148.0
+
+[node name="GoalCaption" parent="Content" instance=ExtResource("label")]
+offset_left = 98.0
+offset_top = 96.0
+offset_right = 302.0
+offset_bottom = 106.0
+color = Color(0.427451, 0.713725, 1, 1)
+
+[node name="GoalText" parent="Content" instance=ExtResource("label")]
+offset_left = 98.0
+offset_top = 110.0
+offset_right = 302.0
+offset_bottom = 120.0
+
+[node name="RegionCaption" parent="Content" instance=ExtResource("label")]
+offset_left = 98.0
+offset_top = 152.0
+offset_right = 148.0
+offset_bottom = 162.0
+color = Color(0.713725, 1, 0.333333, 1)
+
+[node name="RegionNames" parent="Content" instance=ExtResource("label")]
+offset_left = 98.0
+offset_top = 166.0
+offset_right = 302.0
+offset_bottom = 176.0
+
+[node name="Reward" parent="Content" instance=ExtResource("label")]
+offset_left = 126.0
+offset_top = 152.0
+offset_right = 302.0
+offset_bottom = 162.0
+horizontal_alignment = 2
+
+[node name="Notice" parent="Content" instance=ExtResource("label")]
+visible = false
+offset_left = 98.0
+offset_top = 194.0
+offset_right = 306.0
+offset_bottom = 204.0
+color = Color(1, 0.313726, 0.313726, 1)
+
+[node name="Divider" type="ColorRect" parent="Content"]
+offset_left = 97.0
+offset_top = 180.0
+offset_right = 303.0
+offset_bottom = 181.0
+mouse_filter = 2
+color = Color(0.152941, 0.203922, 0.282353, 1)
+
+[node name="MapButton" parent="Content" instance=ExtResource("button")]
+offset_left = 98.0
+offset_top = 183.0
+offset_right = 147.0
+offset_bottom = 205.0
+button_pressed = true
+tooltip_text = "打开世界地图，定位任务关联地域。"
+
+[node name="Caption" parent="Content/MapButton" index="0"]
+text = "世界地图"
+
+[node name="ActionButton" parent="Content" instance=ExtResource("button")]
+offset_left = 253.0
+offset_top = 183.0
+offset_right = 302.0
+offset_bottom = 205.0
+tooltip_text = "接受这项任务。"
+
+[node name="Caption" parent="Content/ActionButton" index="0"]
+text = "接受"
+
+[node name="BackHit" type="Button" parent="Content"]
+offset_left = 268.0
+offset_top = 209.0
+offset_right = 310.0
+offset_bottom = 221.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Confirm" parent="." instance=ExtResource("window")]
+visible = false
+kind = 1
+
+[node name="Content" parent="Confirm" index="2"]
+visible = true
+
+[node name="ModalLayer" type="Control" parent="Confirm" index="1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Prompt" parent="Confirm/Content" instance=ExtResource("label")]
+offset_left = 128.0
+offset_top = 102.0
+offset_right = 272.0
+offset_bottom = 112.0
+horizontal_alignment = 1
+
+[node name="Divider" parent="Confirm/Content" instance=ExtResource("line")]
+offset_left = 124.0
+offset_top = 120.0
+offset_right = 276.0
+offset_bottom = 121.0
+
+[node name="Yes" type="Button" parent="Confirm/Content"]
+offset_left = 138.0
+offset_top = 125.0
+offset_right = 182.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Choice" parent="Confirm/Content/Yes" instance=ExtResource("choice")]
+
+[node name="No" type="Button" parent="Confirm/Content"]
+offset_left = 218.0
+offset_top = 125.0
+offset_right = 262.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Choice" parent="Confirm/Content/No" instance=ExtResource("choice")]
+
+[node name="WorldMap" parent="." instance=ExtResource("world_map")]
+visible = false
+
+[editable path="Confirm"]
+[editable path="Confirm/Bounds"]

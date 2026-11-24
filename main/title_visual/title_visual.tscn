@@ -1,0 +1,349 @@
+[gd_scene format=3 uid="uid://dkkm4um34f8dk"]
+[ext_resource type="Texture2D" path="res://main/title_visual/ui_grade.webp" id="Sheet_common_ui_grade"]
+
+[ext_resource type="Script" uid="uid://qgw48kxhkey5" path="res://scripts/main_ui/title_visual.gd" id="1"]
+[ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="2"]
+[ext_resource type="Shader" uid="uid://d25u12r1vph71" path="res://shaders/prime_screen.gdshader" id="3"]
+[ext_resource type="PackedScene" path="res://main/title_item/title_item.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://main/elogo/elogo.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://main/ensony/ensony.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://main/title/title.tscn" id="7"]
+
+[sub_resource type="AtlasTexture" id="Atlas_8"]
+atlas = ExtResource("Sheet_common_ui_grade")
+region = Rect2(0, 0, 79, 87)
+[sub_resource type="AtlasTexture" id="Atlas_9"]
+atlas = ExtResource("Sheet_common_ui_grade")
+region = Rect2(79, 0, 76, 87)
+[sub_resource type="Animation" id="Animation_logo"]
+resource_name = "logo"
+length = 7.45
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Logo/ElLogo:visible")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Logo/EnsOny:visible")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.35, 4.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Logo/Grade:visible")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 4.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Logo/GradeDetail:visible")
+tracks/3/interp = 0
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 4.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Logo/ElLogo/AnimationPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["action_000"],
+"method": &"play"
+}]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Logo/EnsOny/AnimationPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.35),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["action_000"],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_title"]
+resource_name = "title"
+length = 1.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitleGroup/Idle:visible")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TitleGroup/Loop:visible")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TitleGroup/Detail:visible")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Fade:visible")
+tracks/3/interp = 0
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Fade:color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.8, 1.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.0976563)]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TitleGroup/Idle/AnimationPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["action_000"],
+"method": &"play"
+}]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TitleGroup/Loop/AnimationPlayer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["action_001"],
+"method": &"play"
+}]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("TitleGroup/Detail/AnimationPlayer")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["action_002"],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="Library"]
+_data = {
+&"logo": SubResource("Animation_logo"),
+&"title": SubResource("Animation_title")
+}
+
+[sub_resource type="ShaderMaterial" id="Material"]
+shader = ExtResource("3")
+
+[node name="Title" type="Node2D" unique_id=776554764]
+script = ExtResource("1")
+
+[node name="Logo" type="Node2D" parent="." unique_id=1082499501]
+visible = false
+
+[node name="ElLogo" parent="Logo" unique_id=1404645316 instance=ExtResource("5")]
+z_index = 20
+position = Vector2(200, 120)
+
+[node name="EnsOny" parent="Logo" unique_id=1234227600 instance=ExtResource("6")]
+visible = false
+z_index = 20
+position = Vector2(200, 120)
+
+[node name="Grade" type="Sprite2D" parent="Logo" unique_id=1580000233]
+visible = false
+z_index = 21
+texture_filter = 1
+position = Vector2(241, 2)
+texture = SubResource("Atlas_8")
+centered = false
+
+[node name="GradeDetail" type="Sprite2D" parent="Logo" unique_id=1223934500]
+visible = false
+z_index = 20
+texture_filter = 1
+position = Vector2(322, 2)
+texture = SubResource("Atlas_9")
+centered = false
+
+[node name="TitleGroup" type="Node2D" parent="." unique_id=831615175]
+visible = false
+
+[node name="Idle" parent="TitleGroup" unique_id=1698667678 instance=ExtResource("7")]
+z_index = 20
+position = Vector2(124, 128)
+
+[node name="Loop" parent="TitleGroup" unique_id=1078743487 instance=ExtResource("7")]
+visible = false
+z_index = 20
+position = Vector2(124, 128)
+
+[node name="Detail" parent="TitleGroup" unique_id=358203160 instance=ExtResource("7")]
+visible = false
+z_index = 21
+position = Vector2(124, 128)
+
+[node name="Player" type="AnimationPlayer" parent="." unique_id=251512124]
+libraries/ = SubResource("Library")
+
+[node name="Menu" type="Node2D" parent="." unique_id=184544102]
+
+[node name="Item0" parent="Menu" unique_id=1291804177 instance=ExtResource("4")]
+position = Vector2(200, 52)
+
+[node name="Item1" parent="Menu" unique_id=950362328 instance=ExtResource("4")]
+position = Vector2(200, 80)
+
+[node name="Item2" parent="Menu" unique_id=1672492285 instance=ExtResource("4")]
+position = Vector2(200, 108)
+
+[node name="Item3" parent="Menu" unique_id=1706966019 instance=ExtResource("4")]
+position = Vector2(200, 136)
+
+[node name="Item4" parent="Menu" unique_id=1714735332 instance=ExtResource("4")]
+position = Vector2(200, 164)
+
+[node name="CaptureTemplate" type="SubViewport" parent="." unique_id=1178456652]
+disable_3d = true
+size = Vector2i(400, 240)
+render_target_update_mode = 0
+
+[node name="Background" type="ColorRect" parent="CaptureTemplate" unique_id=526722709]
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+color = Color(0.0313726, 0.0431373, 0.0705882, 1)
+
+[node name="Layers" type="Node2D" parent="CaptureTemplate" unique_id=1279440148]
+
+[node name="Dim" type="ColorRect" parent="CaptureTemplate" unique_id=1564115781]
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="Fade" type="ColorRect" parent="." unique_id=595019443]
+visible = false
+z_index = 250
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+
+[node name="Flash" type="Node2D" parent="." unique_id=1921460183]
+visible = false
+z_index = 450
+
+[node name="Phases" type="Node2D" parent="Flash" unique_id=2096622451]
+
+[node name="Phase0" type="Marker2D" parent="Flash/Phases" unique_id=581559654]
+position = Vector2(-39, 1)
+
+[node name="Backing" type="Marker2D" parent="Flash/Phases/Phase0" unique_id=1368274951]
+
+[node name="Phase1" type="Marker2D" parent="Flash/Phases" unique_id=1335661354]
+position = Vector2(-15, 1)
+
+[node name="Backing" type="Marker2D" parent="Flash/Phases/Phase1" unique_id=1694915712]
+position = Vector2(-24, 0)
+
+[node name="Phase2" type="Marker2D" parent="Flash/Phases" unique_id=857288470]
+position = Vector2(-13, 1)
+
+[node name="Backing" type="Marker2D" parent="Flash/Phases/Phase2" unique_id=1872918759]
+position = Vector2(27, 0)
+
+[node name="Phase3" type="Marker2D" parent="Flash/Phases" unique_id=1873680140]
+position = Vector2(19, 1)
+
+[node name="Backing" type="Marker2D" parent="Flash/Phases/Phase3" unique_id=605913733]
+
+[node name="Backing" parent="Flash" unique_id=2050524931 instance=ExtResource("2")]
+offset_right = 25.0
+offset_bottom = 21.0
+border_colors = PackedColorArray()
+background_color = Color(1, 1, 1, 1)
+border_width = 0
+
+[node name="Copy" type="BackBufferCopy" parent="Flash" unique_id=1934150397]
+
+[node name="Sprite" type="Sprite2D" parent="Flash" unique_id=2079219385]
+texture_filter = 1
+material = SubResource("Material")
+centered = false

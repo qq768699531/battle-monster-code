@@ -6,9 +6,9 @@ extends Node2D
 ## Optionally set_visible_world_rect(camera_bounds) to freeze offscreen emotions.
 
 const HERO := "hero/h_f_01"
-const ACTOR_SCENE = preload("res://scenes/field/actor.tscn")
+const ACTOR_SCENE = preload("res://field/actor/actor.tscn")
 # 地图物件只需要绘制体，不需要 actor 场景里的 Emotion（它内部还会再实例化一套 ANI）。
-const LAYERS_SCENE = preload("res://scenes/field/actor_layers.tscn")
+const LAYERS_SCENE = preload("res://field/actor_layers/actor_layers.tscn")
 ## MIF 物件 `frame_id` 里不走 `% 100` 取图的那几个码：传送门由 `Map_portalCREATE` 单独处理。
 const PORTAL_FRAME_IDS := [164, 165]
 ## 物件绘制锚点按尺寸分档（原生 `Map_objCREATE`）：16×8 与 12×5 两组，其余 8×8。

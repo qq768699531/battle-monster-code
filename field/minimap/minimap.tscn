@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/field/minimap.gd" id="1"]
+[ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="panel"]
+
+[sub_resource type="Animation" id="Animation_slide"]
+resource_local_to_scene = true
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bounds:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [268.0, 189.0, 149.5, 129.75, 119.875, 114.9375, 112.46875, 111.234375, 110.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_minimap"]
+resource_local_to_scene = true
+_data = {
+&"slide": SubResource("Animation_slide")
+}
+
+[node name="Minimap" type="Control"]
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+texture_filter = 1
+script = ExtResource("1")
+terrain_opacity = 0.625
+player_color = Color(0, 0.988235, 0, 1)
+monster_color = Color(0.972549, 0, 0, 1)
+enabled_warp_color = Color(0, 0, 0.972549, 1)
+disabled_warp_color = Color(0.972549, 0, 0, 1)
+marker_border_color = Color(0, 0, 0, 1)
+
+[node name="RightAnchor" type="Marker2D" parent="."]
+position = Vector2(348, 6)
+
+[node name="LeftAnchor" type="Marker2D" parent="."]
+position = Vector2(110, 6)
+
+[node name="Slide" type="AnimationPlayer" parent="."]
+libraries/ = SubResource("AnimationLibrary_minimap")
+
+[node name="Bounds" type="Control" parent="."]
+show_behind_parent = true
+offset_left = 268.0
+offset_top = 6.0
+offset_right = 348.0
+offset_bottom = 82.0
+mouse_filter = 2
+
+[node name="Terrain" type="Sprite2D" parent="Bounds"]
+modulate = Color(1, 1, 1, 0.625)
+centered = false
+
+[node name="Warps" type="Node2D" parent="Bounds"]
+
+[node name="Outer" parent="Bounds" instance=ExtResource("panel")]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+border_color = Color(0, 0, 0, 1)
+background_color = Color(0, 0, 0, 0)
+
+[node name="Middle" parent="Bounds" instance=ExtResource("panel")]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+border_color = Color(0.784314, 0.784314, 0.784314, 1)
+background_color = Color(0, 0, 0, 0)
+
+[node name="Inner" parent="Bounds" instance=ExtResource("panel")]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1.0
+offset_bottom = 1.0
+border_color = Color(0, 0, 0, 1)
+background_color = Color(0, 0, 0, 0)

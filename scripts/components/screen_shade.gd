@@ -20,7 +20,7 @@ const GROUP := &"screen_shade"
 ## 放大后步长仍是 1 个逻辑像素。
 const LOGICAL_SIZE := Vector2i(400, 240)
 ## 场景按路径读，避免 `screen_shade.tscn` 与本脚本互相 preload 成环。
-const SCENE_PATH := "res://scenes/components/screen_shade.tscn"
+const SCENE_PATH := "res://ui/screen_shade/screen_shade.tscn"
 
 ## 定格快照：本层可见期内只抓一次（原生一次 `Field_Basic_Capture` 之后全部 `Map_Copy()`）。
 var _snapshot: ImageTexture

@@ -3,8 +3,8 @@ extends CanvasLayer
 
 const LOGICAL_RECT := Rect2(0, 0, 400, 240)
 const EFFECT_CAPACITY := 4
-const TOUCH_SCENE: PackedScene = preload("res://scenes/ani/touch/ui_touch.tscn")
-const EFFECT_SCENE = preload("res://scenes/field/components/touch_effect.tscn")
+const TOUCH_SCENE: PackedScene = preload("res://main/ui_touch/ui_touch.tscn")
+const EFFECT_SCENE = preload("res://field/touch_effect/touch_effect.tscn")
 
 ## 基准 50ms；Main 会按速度档位改写（120/100/80/60/50），退出时不再还原。
 const DEFAULT_FRAME_INTERVAL_MS := 50

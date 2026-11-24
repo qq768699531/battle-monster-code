@@ -2,7 +2,7 @@ extends Node2D
 ## 邮箱主页（四入口）。
 
 const UI = preload("res://scripts/prime/layout.gd")
-const SCENE_PATH := "res://scenes/prime/mail_view.tscn"
+const SCENE_PATH := "res://prime/mail_view/mail_view.tscn"
 
 var last_error := ""
 var _messages: Dictionary = {}

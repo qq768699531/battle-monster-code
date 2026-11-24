@@ -1,0 +1,36 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/battle_ui/actor.gd" id="script"]
+[ext_resource type="PackedScene" path="res://battle/pose/pose.tscn" id="pose"]
+[ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="effect"]
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="Actor" type="Control"]
+mouse_filter = 2
+script = ExtResource("script")
+
+[node name="Pose" parent="." instance=ExtResource("pose")]
+
+[node name="Statuses" type="Node2D" parent="."]
+position = Vector2(0, 20)
+
+[node name="Weakness" parent="Statuses" instance=ExtResource("effect")]
+visible = false
+position = Vector2(-36, 0)
+
+[node name="Seal" parent="Statuses" instance=ExtResource("effect")]
+visible = false
+position = Vector2(-36, 0)
+
+[node name="TargetHit" type="Button" parent="."]
+visible = false
+offset_left = -28.0
+offset_top = -64.0
+offset_right = 28.0
+offset_bottom = 5.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")

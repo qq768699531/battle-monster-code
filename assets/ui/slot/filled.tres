@@ -1,7 +1,10 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3]
+[ext_resource type="Texture2D" path="res://ui/window/ui_window.webp" id="Sheet_common_ui_window"]
 
-[ext_resource type="Texture2D" path="res://assets/sprite/common/ui_window/frame-016.webp" id="1_sheet"]
 
+[sub_resource type="AtlasTexture" id="Atlas_1_sheet"]
+atlas = ExtResource("Sheet_common_ui_window")
+region = Rect2(330, 210, 120, 30)
 [resource]
-atlas = ExtResource("1_sheet")
+atlas = SubResource("Atlas_1_sheet")
 region = Rect2(0, 0, 30, 30)

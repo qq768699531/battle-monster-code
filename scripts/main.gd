@@ -10,7 +10,7 @@ const SaveStore = preload("res://scripts/save_store.gd")
 const Story = preload("res://scripts/story.gd")
 const WorldResources = preload("res://scripts/world_resources.gd")
 const EventScripts = preload("res://scripts/data/event_scripts.gd")
-const FIELD_SCENE = preload("res://scenes/field/field_runtime.tscn")
+const FIELD_SCENE = preload("res://field/field_runtime/field_runtime.tscn")
 const PrimeView = preload("res://scripts/prime_view.gd")
 const TouchControls = preload("res://scripts/components/touch_controls.gd")
 const NativeTextLayout = preload("res://scripts/native_text_layout.gd")
@@ -23,7 +23,7 @@ const SETTING_VIBRATION_MS := [0, 60, 100, 200]
 ## （`wiki\index.md`「音量 0–5、声音模式及标题 101／试听 123 的既有模式例外」）。
 const VOLUME_PREVIEW_RESOURCE_ID := 123
 ## 战斗视图由野外运行时自己实例化，启动层按这个场景路径认出它来接设置项即时生效的信号。
-const BATTLE_SCENE_PATH := "res://scenes/battle.tscn"
+const BATTLE_SCENE_PATH := "res://ui/battle/battle.tscn"
 ## 调试入口（仅验收用）：Prime 页面下按 F9 回到启动欢迎页，用来核对原生
 ## `Menu_win_Box2_DrawPROGRESS@0x4AEF8` 的框体、点线与进度条。这一页不是「正常流程无法触发」的
 ## 死分支——原生每次启动都会经过它（`Prime_Init_mRun@0x6ADDC:3` → `Prime_Beta_init@0x6ADD0:3`

@@ -1,0 +1,203 @@
+[gd_scene format=3 uid="uid://cv8i2uostdo35"]
+[ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
+
+[ext_resource type="Script" path="res://scripts/menu/party_detail.gd" id="script"]
+[ext_resource type="PackedScene" path="res://ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://menu/status_monster/status_monster.tscn" id="monster"]
+[ext_resource type="PackedScene" path="res://menu/status_portrait/status_portrait.tscn" id="portrait"]
+[ext_resource type="PackedScene" path="res://ui/native_label/native_label.tscn" id="label"]
+
+[sub_resource type="AtlasTexture" id="Atlas_attributes"]
+atlas = ExtResource("Sheet_common_ui_battle")
+region = Rect2(0, 0, 78, 13)
+[sub_resource type="StyleBoxFlat" id="Outline"]
+draw_center = false
+border_width_left = 1
+border_width_right = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0.0980392, 0.392157, 0.521569, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+anti_aliasing = false
+[sub_resource type="AtlasTexture" id="Wind"]
+atlas = SubResource("Atlas_attributes")
+region = Rect2(39, 0, 13, 13)
+
+[node name="party_detail" unique_id=263495455 instance=ExtResource("window")]
+visible = false
+script = ExtResource("script")
+header_height = 16
+side_width = 1
+window_size = Vector2i(228, 199)
+
+[node name="Title" parent="Bounds" index="5"]
+text = "详细情报"
+
+[node name="Heading" type="Panel" parent="Content"]
+offset_left = 94.0
+offset_top = 42.0
+offset_right = 306.0
+offset_bottom = 65.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outline")
+[node name="Center" type="CenterContainer" parent="Content/Heading"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+[node name="Row" type="HBoxContainer" parent="Content/Heading/Center"]
+mouse_filter = 2
+theme_override_constants/separation = 7
+[node name="Attribute" type="TextureRect" parent="Content/Heading/Center/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(13, 13)
+mouse_filter = 2
+texture_filter = 1
+texture = SubResource("Wind")
+[node name="Caption" parent="Content/Heading/Center/Row" instance=ExtResource("label")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 10)
+size_flags_vertical = 4
+text = "--"
+
+[node name="Portrait" parent="Content" instance=ExtResource("portrait")]
+offset_top = -15.0
+offset_bottom = 225.0
+
+[node name="Monster" parent="Content" instance=ExtResource("monster")]
+unique_name_in_owner = true
+party_view = true
+detail_view = true
+controller_path = NodePath("../..")
+[node name="Nickname" parent="Content/Monster"]
+visible = false
+[node name="Name" parent="Content/Monster"]
+visible = false
+[node name="Rarity" parent="Content/Monster"]
+offset_top = 70.0
+offset_bottom = 80.0
+[node name="TopRule" parent="Content/Monster"]
+visible = false
+[node name="Rule" parent="Content/Monster"]
+offset_top = 84.0
+offset_bottom = 85.0
+[node name="StatsRule" parent="Content/Monster"]
+visible = true
+offset_top = 114.0
+offset_bottom = 115.0
+[node name="Level" parent="Content/Monster"]
+offset_top = 87.0
+offset_right = 219.0
+offset_bottom = 94.0
+[node name="Brain" parent="Content/Monster"]
+offset_top = 87.0
+offset_bottom = 94.0
+[node name="Party" parent="Content/Monster"]
+offset_top = 96.0
+offset_right = 219.0
+offset_bottom = 103.0
+[node name="Experience" parent="Content/Monster"]
+offset_top = 96.0
+offset_bottom = 103.0
+[node name="Food" parent="Content/Monster"]
+offset_top = 105.0
+offset_right = 219.0
+offset_bottom = 112.0
+[node name="Feel" parent="Content/Monster"]
+offset_top = 105.0
+offset_bottom = 112.0
+[node name="Stats" parent="Content/Monster"]
+offset_top = 117.0
+offset_bottom = 142.0
+[node name="Vitals" parent="Content/Monster"]
+offset_top = 124.0
+offset_bottom = 141.0
+
+[node name="Skills" parent="Content/Monster"]
+offset_top = 144.0
+offset_bottom = 201.0
+[node name="Active" parent="Content/Monster/Skills"]
+offset_top = 4.0
+offset_bottom = 9.0
+[node name="Passive" parent="Content/Monster/Skills"]
+offset_top = 12.0
+offset_bottom = 17.0
+[node name="Arrow" parent="Content/Monster/Skills"]
+offset_top = 7.0
+offset_bottom = 14.0
+[node name="ActiveClip" parent="Content/Monster/Skills"]
+offset_top = 4.0
+offset_bottom = 17.0
+[node name="Slots" parent="Content/Monster/Skills"]
+offset_left = 10.0
+offset_top = 19.0
+offset_right = 202.0
+offset_bottom = 41.0
+theme_override_constants/separation = 12
+[node name="Skill0" parent="Content/Monster/Skills/Slots"]
+custom_minimum_size = Vector2(22, 22)
+[node name="Frame" parent="Content/Monster/Skills/Slots/Skill0"]
+visible = false
+[node name="CompactFrame" parent="Content/Monster/Skills/Slots/Skill0"]
+visible = true
+[node name="CompactSelection" parent="Content/Monster/Skills/Slots/Skill0"]
+visible = true
+[node name="Skill1" parent="Content/Monster/Skills/Slots"]
+custom_minimum_size = Vector2(22, 22)
+[node name="Frame" parent="Content/Monster/Skills/Slots/Skill1"]
+visible = false
+[node name="CompactFrame" parent="Content/Monster/Skills/Slots/Skill1"]
+visible = true
+[node name="Skill2" parent="Content/Monster/Skills/Slots"]
+custom_minimum_size = Vector2(22, 22)
+[node name="Frame" parent="Content/Monster/Skills/Slots/Skill2"]
+visible = false
+[node name="CompactFrame" parent="Content/Monster/Skills/Slots/Skill2"]
+visible = true
+[node name="Skill3" parent="Content/Monster/Skills/Slots"]
+custom_minimum_size = Vector2(22, 22)
+[node name="Frame" parent="Content/Monster/Skills/Slots/Skill3"]
+visible = false
+[node name="CompactFrame" parent="Content/Monster/Skills/Slots/Skill3"]
+visible = true
+[node name="Skill4" parent="Content/Monster/Skills/Slots"]
+custom_minimum_size = Vector2(22, 22)
+[node name="Frame" parent="Content/Monster/Skills/Slots/Skill4"]
+visible = false
+[node name="CompactFrame" parent="Content/Monster/Skills/Slots/Skill4"]
+visible = true
+[node name="Skill5" parent="Content/Monster/Skills/Slots"]
+custom_minimum_size = Vector2(22, 22)
+[node name="Frame" parent="Content/Monster/Skills/Slots/Skill5"]
+visible = false
+[node name="CompactFrame" parent="Content/Monster/Skills/Slots/Skill5"]
+visible = true
+[node name="Description" parent="Content/Monster/Skills"]
+offset_top = 43.0
+offset_bottom = 53.0
+
+[node name="Equipment" parent="Content/Monster"]
+offset_top = 144.0
+offset_bottom = 201.0
+[node name="Empty" parent="Content/Monster/Equipment"]
+offset_top = 5.0
+offset_bottom = 15.0
+[node name="Name" parent="Content/Monster/Equipment"]
+offset_top = 5.0
+offset_bottom = 15.0
+[node name="Item" parent="Content/Monster/Equipment"]
+offset_top = 21.0
+offset_bottom = 51.0
+[node name="Toggle" parent="Content/Monster"]
+offset_top = 204.0
+offset_bottom = 216.0
+
+[node name="Error" parent="Content" instance=ExtResource("label")]
+unique_name_in_owner = true
+visible = false
+offset_left = 98.0
+offset_top = 75.0
+offset_right = 302.0
+offset_bottom = 85.0

@@ -1,0 +1,91 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/battle_ui/party_card.gd" id="script"]
+[ext_resource type="PackedScene" path="res://battle/vitals/vitals.tscn" id="vitals"]
+[ext_resource type="PackedScene" path="res://ui/monster_animation/monster_animation.tscn" id="monster"]
+
+[sub_resource type="StyleBoxFlat" id="Outer"]
+bg_color = Color(0.52549, 0.521569, 0.521569, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_left = 2
+corner_radius_bottom_right = 2
+[sub_resource type="StyleBoxFlat" id="Inner"]
+bg_color = Color(0.054902, 0.105882, 0.184314, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.811765, 0.8, 0.8, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+[sub_resource type="Gradient" id="PortraitGradient"]
+colors = PackedColorArray(0.282353, 0, 0, 1, 0.8000, 0.2, 0, 1)
+[sub_resource type="GradientTexture2D" id="PortraitFill"]
+gradient = SubResource("PortraitGradient")
+width = 31
+height = 31
+fill_from = Vector2(0, 0)
+fill_to = Vector2(0, 1)
+
+[node name="PartyCard" type="Control"]
+offset_right = 77.0
+offset_bottom = 37.0
+mouse_filter = 2
+script = ExtResource("script")
+
+[node name="Outer" type="Panel" parent="."]
+offset_right = 35.0
+offset_bottom = 35.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Outer")
+
+[node name="Inner" type="Panel" parent="."]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 34.0
+offset_bottom = 34.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Inner")
+
+[node name="Gradient" type="TextureRect" parent="."]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 33.0
+offset_bottom = 33.0
+mouse_filter = 2
+texture = SubResource("PortraitFill")
+
+[node name="Clip" type="Control" parent="."]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 33.0
+offset_bottom = 33.0
+mouse_filter = 2
+clip_contents = true
+
+[node name="Monster" parent="Clip" instance=ExtResource("monster")]
+position = Vector2(19, 31)
+
+[node name="Vitals" parent="." instance=ExtResource("vitals")]
+offset_left = 34.0
+offset_top = 18.0
+offset_right = 77.0
+offset_bottom = 36.0
+
+[node name="Attribute" parent="Vitals" index="1"]
+offset_top = -15.0
+offset_bottom = 0.0
+
+[node name="Metrics" parent="Vitals" index="2"]
+offset_left = 0.0
+offset_right = 43.0
+
+[editable path="Vitals"]

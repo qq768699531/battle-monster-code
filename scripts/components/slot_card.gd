@@ -2,7 +2,7 @@ extends Node2D
 ## 存档槽卡片：原生面板、选中框、三只队伍精灵与文字。
 
 const MenuModel = preload("res://scripts/menu_model.gd")
-const MONSTER_SCENE = preload("res://scenes/components/monster_animation.tscn")
+const MONSTER_SCENE = preload("res://ui/monster_animation/monster_animation.tscn")
 const PORTRAIT_COUNT := 3
 const SELECTED_BORDER := Color("#7AD0FA")
 const IDLE_BORDER := Color("#196485")

@@ -11,7 +11,7 @@ extends "res://scripts/components/window_transition.gd"
 
 const PrimeLayout = preload("res://scripts/prime/layout.gd")
 const TouchControls = preload("res://scripts/components/touch_controls.gd")
-const TOUCH_CONTROLS := preload("res://scenes/components/touch_controls.tscn")
+const TOUCH_CONTROLS := preload("res://ui/touch_controls/touch_controls.tscn")
 const SCENE := 12
 const ROW_COUNT := PrimeLayout.SETTINGS_ROW_COUNT
 const OPEN_PHASE := 4

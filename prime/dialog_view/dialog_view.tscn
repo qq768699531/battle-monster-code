@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/prime/dialog_view.gd" id="1"]
+[ext_resource type="PackedScene" path="res://ui/dialog_message/dialog_message.tscn" id="2"]
+
+[node name="Dialogs" type="Node2D"]
+z_index = 3
+script = ExtResource("1")
+
+[node name="Modal" parent="." instance=ExtResource("2")]
+visible = false
+metadata/default_width = 200
+metadata/network_width = 160
+
+[node name="Warning" parent="." instance=ExtResource("2")]
+visible = false
+metadata/default_width = 160
+metadata/wide_width = 170
