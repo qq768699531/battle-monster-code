@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://data/npc_definition/npc_definition.gd" id="1_object"]
+
+[resource]
+script = ExtResource("1_object")
+id = 48
+field_sprite_id = 48
+interaction_code = 3

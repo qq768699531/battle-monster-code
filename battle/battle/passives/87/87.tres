@@ -1,0 +1,10 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://data/passive_definition/passive_definition.gd" id="1_object"]
+
+[resource]
+script = ExtResource("1_object")
+id = 87
+base = 50
+effect = 29
+increment = 1
