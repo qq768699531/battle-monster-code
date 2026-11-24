@@ -1,6 +1,6 @@
 [gd_scene format=3]
+[ext_resource type="Texture2D" path="res://core/ui_parts/party_heading/party_heading.webp" id="part_party_heading"]
 [ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
 
 [ext_resource type="Script" path="res://menu/party/party.gd" id="1"]
 [ext_resource type="PackedScene" path="res://menu/party_ball/party_ball.tscn" id="2"]
@@ -15,13 +15,10 @@
 [sub_resource type="AtlasTexture" id="Atlas_digits"]
 atlas = ExtResource("Sheet_common_ui_number")
 region = Rect2(0, 0, 87, 28)
-[sub_resource type="AtlasTexture" id="Atlas_headings"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(660, 70, 29, 50)
 [sub_resource type="ShaderMaterial" id="NumberKey"]
 shader = ExtResource("key")
 [sub_resource type="AtlasTexture" id="PartyHeading"]
-atlas = SubResource("Atlas_headings")
+atlas = ExtResource("part_party_heading")
 region = Rect2(0, 10, 29, 5)
 [sub_resource type="StyleBoxFlat" id="Outline"]
 bg_color = Color(0, 0, 0, 0)

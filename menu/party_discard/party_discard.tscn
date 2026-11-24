@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3]
+[ext_resource type="Texture2D" path="res://core/ui_parts/plus_minus/plus_minus.webp" id="part_plus_minus"]
 [ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
 
 [ext_resource type="Script" path="res://menu/party_discard/party_discard.gd" id="1"]
 [ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="2"]
@@ -14,17 +14,14 @@
 [sub_resource type="AtlasTexture" id="Atlas_7"]
 atlas = ExtResource("Sheet_common_ui_number")
 region = Rect2(0, 0, 87, 28)
-[sub_resource type="AtlasTexture" id="Atlas_8"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(0, 210, 50, 48)
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 
 [sub_resource type="AtlasTexture" id="Minus"]
-atlas = SubResource("Atlas_8")
+atlas = ExtResource("part_plus_minus")
 region = Rect2(0, 0, 25, 24)
 
 [sub_resource type="AtlasTexture" id="Plus"]
-atlas = SubResource("Atlas_8")
+atlas = ExtResource("part_plus_minus")
 region = Rect2(25, 0, 25, 24)
 
 [node name="party_discard" type="Control"]

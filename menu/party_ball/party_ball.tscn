@@ -1,16 +1,13 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://core/ui_parts/mix_marker/mix_marker.webp" id="part_mix_marker"]
 
 [ext_resource type="PackedScene" path="res://menu/item_cell/item_cell.tscn" id="cell"]
 
-[sub_resource type="AtlasTexture" id="Atlas_markers"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(1320, 210, 27, 9)
 [sub_resource type="AtlasTexture" id="PartyMarker"]
-atlas = SubResource("Atlas_markers")
+atlas = ExtResource("part_mix_marker")
 region = Rect2(0, 0, 9, 9)
 [sub_resource type="AtlasTexture" id="EquipmentMarker"]
-atlas = SubResource("Atlas_markers")
+atlas = ExtResource("part_mix_marker")
 region = Rect2(9, 0, 9, 9)
 
 [node name="PartyBall" instance=ExtResource("cell")]

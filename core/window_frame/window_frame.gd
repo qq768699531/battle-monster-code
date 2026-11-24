@@ -1,10 +1,10 @@
 extends NinePatchRect
-## 通用窗框：持有窗框图集与切片边距，界面场景实例化它而不是各自引用贴图。
-## `frame` 选择图集里的整帧区域；边距按 8 像素九宫格切，改这里即可全局生效。
+## 通用窗框：持有拆出来的两张窗框图片（box4 带标题条、box2 是确认框），
+## 界面场景实例化本场景切换 `frame` 即可，不再引用整张大图集。
 
 const FRAMES := {
-	"box4": Rect2(0, 0, 87, 28),
-	"box2": Rect2(0, 210, 50, 48),
+	"box4": "res://core/window_frame/box4.webp",
+	"box2": "res://core/window_frame/box2.webp",
 }
 
 @export var frame := "box4":
@@ -20,8 +20,4 @@ func _ready() -> void:
 func _apply() -> void:
 	if not FRAMES.has(frame):
 		return
-	var region: Rect2 = FRAMES[frame]
-	var atlas := AtlasTexture.new()
-	atlas.atlas = texture
-	atlas.region = region
-	texture = atlas
+	texture = load(FRAMES[frame])

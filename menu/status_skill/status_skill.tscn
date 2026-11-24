@@ -1,20 +1,13 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://menu/status_skill/status_header.webp" id="part_status_header"]
+[ext_resource type="Texture2D" path="res://menu/status_skill/empty_book.webp" id="part_empty_book"]
+[ext_resource type="Texture2D" path="res://menu/status_skill/lock.webp" id="part_lock"]
 [ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
-[sub_resource type="AtlasTexture" id="Atlas_sheet"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(0, 140, 60, 30)
-[sub_resource type="AtlasTexture" id="Atlas_book"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(330, 70, 15, 19)
-[sub_resource type="AtlasTexture" id="Atlas_lock"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(330, 140, 10, 13)
 [sub_resource type="AtlasTexture" id="Frame"]
-atlas = SubResource("Atlas_sheet")
+atlas = ExtResource("part_status_header")
 region = Rect2(30, 0, 30, 30)
 [sub_resource type="AtlasTexture" id="SelectedFrame"]
-atlas = SubResource("Atlas_sheet")
+atlas = ExtResource("part_status_header")
 region = Rect2(0, 0, 30, 30)
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 [sub_resource type="StyleBoxFlat" id="Compact"]
@@ -84,7 +77,7 @@ offset_right = 8.0
 offset_bottom = 10.0
 mouse_filter = 2
 texture_filter = 1
-texture = SubResource("Atlas_book")
+texture = ExtResource("part_empty_book")
 [node name="Lock" type="TextureRect" parent="."]
 visible = false
 anchors_preset = 8
@@ -98,7 +91,7 @@ offset_right = 5.0
 offset_bottom = 7.0
 mouse_filter = 2
 texture_filter = 1
-texture = SubResource("Atlas_lock")
+texture = ExtResource("part_lock")
 [node name="Unknown" parent="." instance=ExtResource("label")]
 visible = false
 anchors_preset = 15

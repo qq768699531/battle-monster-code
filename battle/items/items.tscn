@@ -1,5 +1,5 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://core/ui_parts/tab_cell/tab_cell.webp" id="part_tab_cell"]
 
 [ext_resource type="PackedScene" path="res://menu/party_equipment/party_equipment.tscn" id="layout"]
 [ext_resource type="Script" path="res://battle/items/items.gd" id="script"]
@@ -8,14 +8,11 @@
 [ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://core/screen_shade/screen_shade.tscn" id="shade"]
 
-[sub_resource type="AtlasTexture" id="Atlas_categories"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(1320, 140, 198, 60)
 [sub_resource type="AtlasTexture" id="ItemCategory"]
-atlas = SubResource("Atlas_categories")
+atlas = ExtResource("part_tab_cell")
 region = Rect2(0, 0, 33, 30)
 [sub_resource type="AtlasTexture" id="CaptureCategory"]
-atlas = SubResource("Atlas_categories")
+atlas = ExtResource("part_tab_cell")
 region = Rect2(132, 0, 33, 30)
 
 [node name="Items" instance=ExtResource("layout")]

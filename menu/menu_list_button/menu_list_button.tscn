@@ -1,16 +1,13 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://menu/menu_list_button/list_button.webp" id="part_list_button"]
 
 [ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
 
-[sub_resource type="AtlasTexture" id="Atlas_sheet"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(990, 210, 98, 22)
 [sub_resource type="AtlasTexture" id="Selected"]
-atlas = SubResource("Atlas_sheet")
+atlas = ExtResource("part_list_button")
 region = Rect2(0, 0, 49, 22)
 [sub_resource type="AtlasTexture" id="Normal"]
-atlas = SubResource("Atlas_sheet")
+atlas = ExtResource("part_list_button")
 region = Rect2(49, 0, 49, 22)
 [sub_resource type="StyleBoxTexture" id="SelectedStyle"]
 texture = SubResource("Selected")

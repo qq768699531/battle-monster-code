@@ -1,5 +1,5 @@
 [gd_scene load_steps=17 format=3]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://core/ui_parts/tab_cell/tab_cell.webp" id="part_tab_cell"]
 
 [ext_resource type="Script" path="res://field/food_shop/food_shop.gd" id="script"]
 [ext_resource type="PackedScene" path="res://core/window_transition/window_transition.tscn" id="window"]
@@ -13,11 +13,8 @@
 [ext_resource type="Texture2D" path="res://core/window_frame/slot/empty.tres" id="cell_empty"]
 [ext_resource type="Texture2D" path="res://core/window_frame/slot/empty_focused.tres" id="cell_empty_focused"]
 
-[sub_resource type="AtlasTexture" id="Atlas_tab_sheet"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(1320, 140, 198, 60)
 [sub_resource type="AtlasTexture" id="TabCell"]
-atlas = SubResource("Atlas_tab_sheet")
+atlas = ExtResource("part_tab_cell")
 region = Rect2(0, 30, 33, 30)
 
 [sub_resource type="StyleBoxFlat" id="ListBorder"]

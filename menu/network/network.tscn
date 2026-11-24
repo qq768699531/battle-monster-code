@@ -1,5 +1,5 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://core/ui_parts/gold_icon/gold_icon.webp" id="part_gold_icon"]
 [ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://menu/network/network.gd" id="script"]
@@ -9,14 +9,11 @@
 [ext_resource type="PackedScene" path="res://core/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://core/currency_amount/currency_amount.tscn" id="currency"]
 
-[sub_resource type="AtlasTexture" id="Atlas_icons"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(0, 70, 49, 7)
 [sub_resource type="AtlasTexture" id="Atlas_digits"]
 atlas = ExtResource("Sheet_common_ui_number")
 region = Rect2(0, 0, 87, 28)
 [sub_resource type="AtlasTexture" id="CashIcon"]
-atlas = SubResource("Atlas_icons")
+atlas = ExtResource("part_gold_icon")
 region = Rect2(16, 0, 7, 7)
 
 [sub_resource type="StyleBoxFlat" id="Outline"]

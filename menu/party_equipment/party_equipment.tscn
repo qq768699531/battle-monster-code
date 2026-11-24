@@ -1,5 +1,5 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://core/ui_parts/tab_cell/tab_cell.webp" id="part_tab_cell"]
 [ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://menu/party_equipment/party_equipment.gd" id="script"]
@@ -11,9 +11,6 @@
 [ext_resource type="PackedScene" path="res://menu/item_description/item_description.tscn" id="description"]
 [ext_resource type="Shader" path="res://core/shaders/native_number_palette.gdshader" id="palette"]
 
-[sub_resource type="AtlasTexture" id="Atlas_categories"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(1320, 140, 198, 60)
 [sub_resource type="AtlasTexture" id="Atlas_digits"]
 atlas = ExtResource("Sheet_common_ui_number")
 region = Rect2(0, 0, 87, 28)
@@ -31,7 +28,7 @@ corner_radius_bottom_right = 2
 anti_aliasing = false
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 [sub_resource type="AtlasTexture" id="EquipmentCategory"]
-atlas = SubResource("Atlas_categories")
+atlas = ExtResource("part_tab_cell")
 region = Rect2(33, 0, 33, 30)
 [sub_resource type="ShaderMaterial" id="NumberPalette"]
 shader = ExtResource("palette")

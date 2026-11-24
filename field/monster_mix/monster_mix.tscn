@@ -1,5 +1,5 @@
 [gd_scene load_steps=22 format=3]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://core/ui_parts/mix_marker/mix_marker.webp" id="part_mix_marker"]
 [ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://field/monster_mix/monster_mix.gd" id="script"]
@@ -17,14 +17,11 @@
 [ext_resource type="Texture2D" path="res://core/window_frame/slot/empty.tres" id="cell_empty"]
 [ext_resource type="Texture2D" path="res://core/window_frame/slot/empty_focused.tres" id="cell_empty_focused"]
 
-[sub_resource type="AtlasTexture" id="Atlas_mix_markers"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(1320, 210, 27, 9)
 [sub_resource type="AtlasTexture" id="Atlas_digits"]
 atlas = ExtResource("Sheet_common_ui_number")
 region = Rect2(0, 0, 87, 28)
 [sub_resource type="AtlasTexture" id="MixMarker"]
-atlas = SubResource("Atlas_mix_markers")
+atlas = ExtResource("part_mix_marker")
 region = Rect2(18, 0, 9, 9)
 
 [sub_resource type="StyleBoxFlat" id="WindowBorder"]

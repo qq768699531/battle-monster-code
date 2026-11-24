@@ -1,6 +1,6 @@
 [gd_scene format=3]
+[ext_resource type="Texture2D" path="res://core/ui_parts/gold_icon/gold_icon.webp" id="part_gold_icon"]
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
 [ext_resource type="Texture2D" path="res://core/number/ui_number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Script" path="res://battle/result/result.gd" id="script"]
@@ -18,9 +18,6 @@
 [sub_resource type="AtlasTexture" id="Atlas_icons"]
 atlas = ExtResource("Sheet_common_ui_battle")
 region = Rect2(844, 0, 422, 7)
-[sub_resource type="AtlasTexture" id="Atlas_window_icons"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(0, 70, 49, 7)
 [sub_resource type="AtlasTexture" id="Atlas_digits"]
 atlas = ExtResource("Sheet_common_ui_number")
 region = Rect2(0, 0, 87, 28)
@@ -34,7 +31,7 @@ region = Rect2(59, 0, 16, 7)
 atlas = SubResource("Atlas_icons")
 region = Rect2(26, 0, 14, 7)
 [sub_resource type="AtlasTexture" id="MoneyIcon"]
-atlas = SubResource("Atlas_window_icons")
+atlas = ExtResource("part_gold_icon")
 region = Rect2(11, 0, 5, 5)
 [sub_resource type="StyleBoxFlat" id="RowBox"]
 bg_color = Color(0.0941176, 0.0509804, 0.0156863, 1)

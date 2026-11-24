@@ -1,14 +1,11 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://core/window_frame/ui_window.webp" id="Sheet_common_ui_window"]
+[ext_resource type="Texture2D" path="res://core/ui_parts/stat_icon/stat_icon.webp" id="part_stat_icon"]
 [ext_resource type="Texture2D" path="res://battle/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 
 [ext_resource type="Script" path="res://menu/item_description/item_description.gd" id="script"]
 [ext_resource type="PackedScene" path="res://core/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://menu/status_metric/status_metric.tscn" id="metric"]
 
-[sub_resource type="AtlasTexture" id="Atlas_stats"]
-atlas = ExtResource("Sheet_common_ui_window")
-region = Rect2(990, 70, 23, 70)
 [sub_resource type="AtlasTexture" id="Atlas_arrows"]
 atlas = ExtResource("Sheet_common_ui_battle")
 region = Rect2(1266, 53, 12, 7)
@@ -30,46 +27,46 @@ corner_radius_bottom_right = 2
 anti_aliasing = false
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 [sub_resource type="AtlasTexture" id="Stat0"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 0, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat1"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 5, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat2"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 10, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat3"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 15, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat4"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 20, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat5"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 25, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat6"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 30, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat7"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 35, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat8"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 40, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat9"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 45, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat10"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 50, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat11"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 55, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat12"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 60, 23, 5)
 [sub_resource type="AtlasTexture" id="Stat13"]
-atlas = SubResource("Atlas_stats")
+atlas = ExtResource("part_stat_icon")
 region = Rect2(0, 65, 23, 5)
 
 [node name="ItemDescription" type="Panel"]

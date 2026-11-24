@@ -91,3 +91,17 @@ godot --headless --path . --import
 | `skt/` `ktf/` `lgt/` … | `monsters/text/creature_names.tres` | 10 条 / 39 KB |
 
 拆表前后 149 条正文逐条比对 sha1 一致。
+
+## 窗框图集的拆分
+
+`ui_window.webp` 原本是 12 个控件区域混在一张图里，19 个场景各自用 AtlasTexture 裁不同区域。
+现在按实际使用的区域拆开：
+
+| 区域 | 去处 | 说明 |
+| --- | --- | --- |
+| 被多个场景使用 | `core/ui_parts/<name>/` | `gold_icon`、`plus_minus`、`tab_cell`、`stat_icon`、`party_heading`、`mix_marker`，每个目录内 `.webp` + `.tscn` + `.gd` |
+| 只被一个场景使用 | 该场景同目录 | `status_header`、`empty_book`、`lock`、`quest_row`、`list_button`、`rarity_bar` |
+| 窗框本体 | `core/window_frame/box4.webp`、`box2.webp` | 由 `window_frame.tscn` 持有 |
+
+整张 `ui_window.webp` 仍保留，仅作为运行时精灵 id（`common/ui_window/frame-NNN`）的图集，
+供 6 个数据驱动脚本按 id 取帧；界面场景已不再引用它。
