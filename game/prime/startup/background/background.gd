@@ -10,7 +10,7 @@ var captured: Texture2D
 func present(next_scene: int, texture: Texture2D, state: int) -> void:
 	scene = next_scene
 	captured = texture
-	$Fill.color = Color.WHITE if scene == Runtime.LOGO else Color("#080b12")
+	$Fill.color = Color.WHITE if scene == Runtime.LOGO else Color.BLACK
 	$Capture.texture = captured
 	$Capture.visible = scene >= Runtime.SAVE_SELECT and captured != null
 	box.visible = scene == Runtime.SAVE_SELECT and state not in [0, -4]
