@@ -93,15 +93,6 @@ var _slot_progress: Array[Dictionary] = []
 var _title_flash: Node2D:
 	get: return _title._title_flash
 	set(value): _title._title_flash = value
-var _title_flash_sprite: Sprite2D:
-	get: return _title._title_flash_sprite
-	set(value): _title._title_flash_sprite = value
-var _title_flash_texture: Texture2D:
-	get: return _title._title_flash_texture
-	set(value): _title._title_flash_texture = value
-var _title_flash_phase: int:
-	get: return _title._title_flash_phase
-	set(value): _title._title_flash_phase = value
 
 
 func _ready() -> void:
@@ -297,13 +288,6 @@ func _load_resources() -> void:
 			push_warning("标题菜单底条贴图缺失：%s" % bar_path)
 			continue
 		_title_textures.append(bar)
-	# 斜光是原版 common/ui_title2.fbm 的第 2 帧（28×21），不是标题图集里的菜单底条：
-	# 图集只装了评级徽标和两条底条。缺这个本地资源时高亮画不出来，但不阻断启动。
-	var flash: Variant = load("res://game/prime/title/title_visual/title_flash.webp")
-	_title_flash_texture = flash if flash is Texture2D else null
-	if _title_flash_texture == null:
-		push_warning("标题高亮的斜光贴图缺失：game/prime/title/title_visual/title_flash.webp")
-
 
 func _load_prime_pages() -> void:
 	var font := PrimeView.UI_FONT

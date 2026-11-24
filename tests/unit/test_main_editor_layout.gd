@@ -17,10 +17,7 @@ func _run() -> void:
 		atlas.region = region
 		textures.append(atlas)
 	title._title_textures.assign(textures)
-	var flash := AtlasTexture.new()
-	flash.atlas = sheet
-	flash.region = Rect2(0, 87, 28, 21)
-	title._title_flash_texture = flash
+
 	var layout := Runtime.title_layout(0, 99, 4)
 	var paint := {"scene": Runtime.TITLE, "frame": 30, "title_animation_frame": 0,
 		"menu_open": true, "opening_frame": 99, "items": layout.items}

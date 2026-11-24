@@ -15,8 +15,6 @@ var _title_sprites: Array[Sprite2D] = []
 var _menu_labels: Array[Label] = []
 var _menu_text: Array[String] = []
 var _title_textures: Array[Texture2D] = []
-var _title_flash_texture: Texture2D
-var _title_flash_phase := -1
 var _flash_selection := -1
 var _capture_viewport: SubViewport
 var _captured_background: Texture2D
@@ -28,8 +26,7 @@ var _playing := ""
 var _shown_frame := 0
 @onready var _fade_overlay: ColorRect = $Fade
 @onready var _title_flash: Node2D = $Flash
-@onready var _title_flash_sprite: Sprite2D = $Flash/Sprite
-@onready var _flash_player: AnimationPlayer = $Flash/Shine
+@onready var _flash_player: AnimationPlayer = $Flash/Player
 @onready var _player: AnimationPlayer = $Player
 @onready var _logo: Node2D = $Logo
 @onready var _title_group: Node2D = $TitleGroup
@@ -67,7 +64,6 @@ func reset() -> void:
 	for item in $Menu.get_children(): item.hide()
 	_fade_overlay.visible = false
 	_title_flash.visible = false
-	_title_flash_phase = -1
 	_flash_selection = -1
 
 
@@ -188,16 +184,21 @@ func _render_menu(items: Array) -> void:
 		_play_shine(selected)
 
 
+## 把扫光挂到选中按钮的底条节点下：底条 `clip_children` 一开，扫光就被底条的 alpha
+## （含圆角）裁住，不会溢到按钮外面。
 func _play_shine(index: int) -> void:
 	if index < 0 or index >= $Menu.get_child_count():
 		_title_flash.visible = false
 		return
 	var display: Node2D = $Menu.get_child(index)
-	_title_flash.position = display.position
+	var bar: Sprite2D = display.get_node("Image")
+	# 遮罩节点与底条同贴图、只画子节点：扫光被底条的 alpha（含圆角）裁住。
+	var mask: Sprite2D = display.get_node("ShineMask")
+	mask.texture = bar.texture
+	if _title_flash.get_parent() != mask:
+		_title_flash.reparent(mask, false)
+	_title_flash.position = Vector2.ZERO
 	_title_flash.visible = true
-	_title_flash_sprite.texture = _title_flash_texture
-	_title_flash_sprite.flip_h = false
-	_title_flash_sprite.flip_v = false
 	_flash_player.stop()
 	_flash_player.play("shine")
 

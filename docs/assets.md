@@ -68,8 +68,6 @@ engine/ui/theme/
 <各功能目录>/<对象>/<对象>.webp
 audio/ogg/*.ogg
 core/theme/*.ttf
-game/prime/title/title_visual/title_bar_{0,1}.webp   （原版 ui_title2.fbm 第 0／1 帧，菜单底条 80×23）
-game/prime/title/title_visual/title_flash.webp   （原版 ui_title2.fbm 第 2 帧的斜光，标题菜单高亮用）
 ```
 
 放好后导入一次：
