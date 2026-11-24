@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" path="res://ui/native_panel/native_panel.tscn" id="panel"]
 [ext_resource type="PackedScene" path="res://ui/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://ui/number/number_top.tscn" id="num_top"]
-[ext_resource type="Theme" path="res://ui/ui_theme.tres" id="theme"]
+[ext_resource type="Theme" path="res://ui/theme/ui_theme.tres" id="theme"]
 
 [sub_resource type="AtlasTexture" id="Atlas_portrait"]
 atlas = ExtResource("Sheet_common_ui_battle")

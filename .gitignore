@@ -47,7 +47,7 @@ desktop.ini
 # --- 原版游戏二进制资源（本地放置，不入库；数据层 .tres 照常入库）---
 /assets/sprite/
 /audio/**/*.ogg
-/assets/fonts/*.ttf
+/ui/theme/*.ttf
 /assets/**/*.import
 
 
@@ -57,4 +57,4 @@ desktop.ini
 **/*.jpg
 **/*.jpeg
 /audio/**/*.import
-
+/ui/theme/*.import

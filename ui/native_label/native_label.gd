@@ -2,7 +2,7 @@
 extends Control
 ## 原生点阵文字：按原文字单元逐字形绘制，支持对齐与描边。
 
-const UI_THEME = preload("res://ui/ui_theme.tres")
+const UI_THEME = preload("res://ui/theme/ui_theme.tres")
 const TextLayout = preload("res://ui/native_text_layout/native_text_layout.gd")
 const TEXT_CELL_HEIGHT := 10
 

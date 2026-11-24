@@ -17,6 +17,9 @@ maps/m0/
 ui/number/
   number_default.tscn / number_top.tscn / number_small.tscn / number_compact.tscn
   ui_number.webp    数字图集，由预设场景自身持有
+ui/theme/
+  ui_theme.tres     全局主题（字号、字体槽位）
+  boutique-*.ttf    原版字体，本地补齐
 ```
 
 ## 顶层目录
@@ -25,7 +28,7 @@ ui/number/
 | --- | --- |
 | `core/` | 跨功能运行时：`story`、`save_store`、`world_resources`、`resource_catalog`、`sprite_index`、`gameplay.tres`、`shaders/` |
 | `data/` | 跨功能数据类型定义（`ItemDefinition`、`MonsterDefinition` 等 Resource 脚本） |
-| `ui/` | 通用界面组件、字体主题、文案表、数字与窗框图集 |
+| `ui/` | 通用界面组件、文案表、数字与窗框图集；`ui/theme/` 放主题与本地字体 |
 | `battle/` `field/` `menu/` `prime/` `main/` | 各自功能的场景、脚本、数据 |
 | `actors/` `monsters/` `maps/` | 按对象/地图组存放的角色、怪物、地图 |
 | `audio/` | 音频三位一体：`audio_manager.tscn` + `audio_manager.gd` + `default_bus_layout.tres` + 本地 `ogg/` |
@@ -39,7 +42,7 @@ ui/number/
 | --- | --- | --- |
 | `**/*.tscn` `**/*.gd` `**/*.tres` `**/*.gdshader` | 是 | 场景、脚本、数据表、着色器 |
 | `**/*.webp` `**/*.png` `**/*.jpg` | 否 | 原版美术，版权归原开发方，本地补齐 |
-| `audio/ogg/*.ogg` `assets/fonts/*.ttf` | 否 | 原版音频与字体 |
+| `audio/ogg/*.ogg` `ui/theme/*.ttf` | 否 | 原版音频与字体 |
 | `**/*.import` | 否 | Godot 导入缓存 |
 
 ## 精灵图约定
@@ -61,7 +64,7 @@ ui/number/
 ```text
 <各功能目录>/<对象>/<对象>.webp
 audio/ogg/*.ogg
-assets/fonts/*.ttf
+ui/theme/*.ttf
 ```
 
 放好后导入一次：

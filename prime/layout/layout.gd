@@ -5,7 +5,7 @@ extends RefCounted
 const PANEL := Rect2i(86, 14, 228, 212)
 const SETTINGS_ROW_COUNT := 5
 const TEXT_CELL_HEIGHT := 10
-const UI_THEME = preload("res://ui/ui_theme.tres")
+const UI_THEME = preload("res://ui/theme/ui_theme.tres")
 const TextLayout = preload("res://ui/native_text_layout/native_text_layout.gd")
 const ICON_WIDTHS := [15, 31, 36, 38, 40, 24, 42, 36, 42, 35, 15, 29, 10]
 ## prime 页面的面板按钮键码（正数）。负数码统一用 `TouchCode.Key`／`TouchCode.Pad`；

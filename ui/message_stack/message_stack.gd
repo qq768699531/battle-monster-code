@@ -178,7 +178,7 @@ const PALETTE_RGB := {
 const PALETTE_RED_SHIFT := 16
 const PALETTE_GREEN_SHIFT := 8
 const PALETTE_BYTE_MASK := 0xFF
-const UI_THEME = preload("res://ui/ui_theme.tres")
+const UI_THEME = preload("res://ui/theme/ui_theme.tres")
 ## 原生 `ItemRes.item_ui_resource` 就是 `common/ui_item`（`Item_Initialize:20`），帧号即图标号。
 const ICON_IDENTITY := "common/ui_item/frame-%03d"
 const ICON_PATH := "res://assets/sprite/common/ui_item/frame-%03d.webp"

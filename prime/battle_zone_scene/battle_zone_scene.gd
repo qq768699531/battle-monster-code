@@ -2,7 +2,7 @@
 extends Control
 ## 战斗区域页面的展示层。
 
-const UI_THEME = preload("res://ui/ui_theme.tres")
+const UI_THEME = preload("res://ui/theme/ui_theme.tres")
 const TextLayout = preload("res://ui/native_text_layout/native_text_layout.gd")
 const UI = preload("res://prime/layout/layout.gd")
 const BUTTON_COUNT := 6
