@@ -330,11 +330,16 @@ menu/status_portrait/status_portrait_effect.tscn + .webp
 
 ## 地图物件贴图归入 maps
 
-`actors/objects/` 已删除，7 个物件图集移到 `maps/objects/`：
+`actors/objects/` 已删除，7 个物件移到 `maps/objects/`：
 
 ```text
 maps/objects/obj_f_01  obj_f_02  obj_f_03  obj_f_04  obj_f_07  obj_f_89  obj_f_99
 ```
 
-它们是地图物件（`obj/obj_f_%02d`）的贴图，由 `field/field_actors/field_actors.gd`
-按 `GROUP_OBJECT_SELECTORS = [1, 2, 3, 4, 7, 99]` 选择。
+这些是**地图上的可交互物品**（宝箱、告示牌等），不是纯装饰：
+
+- 当前已用部分：`field/field_actors/field_actors.gd` 按
+  `GROUP_OBJECT_SELECTORS = [1, 2, 3, 4, 7, 99]` 取 `obj/obj_f_%02d` 作静态绘制。
+- 每个目录里的 `.tscn` 是**待实现的交互对象场景**，暂无人实例化，属于未完成功能，
+  不要当成死资源删除。
+- `obj/obj_f_89` 是 `obj_f_02` / `obj_f_04` 共用的帧包。
