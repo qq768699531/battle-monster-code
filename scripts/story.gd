@@ -1638,21 +1638,10 @@ func _party_indices() -> Array:
 
 
 ## 原生 `Map_tileSetMove` 的最终通行判定：事件矩形内可走，其余按地形标志。
+## 规则实现只有一份，在 BattleMap.blocked()；这里只提供地图载荷与事件矩形。
 func tile_blocked(x: int, y: int) -> bool:
-	for rect: Array in _move_rects:
-		if int(rect[0]) != int(progress["mapId"]):
-			continue
-		if x >= int(rect[1]) and y >= int(rect[2]) and \
-				x < int(rect[1]) + int(rect[3]) and y < int(rect[2]) + int(rect[4]):
-			return false
 	var terrain: Dictionary = map.get("terrain", {})
-	var rows: Variant = terrain.get("cell_flags")
-	if not rows is Array or y < 0 or y >= rows.size() or not rows[y] is Array:
-		return true
-	var row: Array = rows[y]
-	if x < 0 or x >= row.size():
-		return true
-	return (int(row[x]) & 7) != 0
+	return BattleMap.blocked(terrain, _move_rects, int(progress["mapId"]), Vector2i(x, y))
 
 
 func map_filter() -> int:

@@ -1,8 +1,10 @@
 [gd_scene format=4]
+[ext_resource type="Script" path="res://maps/map.gd" id="MapRoot"]
 
 [ext_resource type="PackedScene" path="res://maps/m5/t5_17.tscn" id="1_i7q5n"]
 
 [node name="Map_139" type="Node2D" unique_id=928440372]
+script = ExtResource("MapRoot")
 metadata/map_id = 139
 metadata/map_group = 5
 metadata/map_index = 17
