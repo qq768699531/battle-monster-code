@@ -21,6 +21,9 @@
 param(
 	[string[]]$Tests,
 	[switch]$List,
+	## 只跑关键项（默认）：约 5 秒，覆盖战斗结算／战斗核心／存档／事件任务／提示栈／任务数据／数据完整性。
+	[switch]$Key,
+	## 全量回归基线：57 个脚本、109 项，约 30 秒。只在发布前或大改后跑。
 	[switch]$All,
 	[switch]$Full,
 	[string]$Godot = ""
@@ -32,6 +35,17 @@ $unit = Join-Path $PSScriptRoot "unit"
 
 # 一轮能跑几个用例文件：测试范围 = 本轮改动直接覆盖的用例，不是「跑一遍心里踏实」。
 $MaxTests = 3
+
+## 关键项：改动最容易踩到、且跑得快的用例。加项前先量一次总时间，别超过 5 秒。
+$KeyTests = @(
+	"test_battle_settlement",   # 战斗结算：掉落、金币、经验写回
+	"test_battle",              # 战斗核心：行动、伤害、终局
+	"test_save_store",          # 存档读写与槽位校验
+	"test_story",               # 事件/任务流程与稳定快照
+	"test_message_stack",       # 提示栈：绘制、图标、颜色
+	"test_quests",              # 任务数据装载
+	"test_original_resource_export"  # 资源完整性：数据表条数与启动错误
+)
 
 if ($List) {
 	Get-ChildItem $unit -Filter "test_*.gd" |
@@ -53,8 +67,13 @@ if (-not $Godot) {
 }
 
 $targets = ""
+$useKey = $Key -or (-not $All -and (-not $Tests -or $Tests.Count -eq 0))
 if ($All) {
-	Write-Host "=== 回归基线：tests/unit 全量 ==="
+	Write-Host "=== 全量回归基线：tests/unit（约 30 秒）==="
+} elseif ($useKey) {
+	$Tests = $KeyTests
+	$targets = ($Tests | ForEach-Object { "res://tests/unit/$_.gd" }) -join ","
+	Write-Host "=== 关键项（$($Tests.Count) 个文件，约 5 秒）==="
 } else {
 	if (-not $Tests -or $Tests.Count -eq 0) {
 		throw "必须显式给出测试文件名（或用 -All 跑回归基线；-List 只列清单）。"
