@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
-const GuildMenuScene = preload("res://field/guild_menu/guild_menu.tscn")
-const GuildInfoScene = preload("res://field/guild_info/guild_info.tscn")
+const GuildMenuScene = preload("res://game/field/guild/guild_menu/guild_menu.tscn")
+const GuildInfoScene = preload("res://game/field/guild/guild_info/guild_info.tscn")
 
 
 func _settle(page: Control) -> void:

@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
-const ChatView = preload("res://field/chat_view/chat_view.gd")
-const CHAT_SCENE = preload("res://field/chat_view/chat_view.tscn")
+const ChatView = preload("res://game/field/dialogue/chat_view/chat_view.gd")
+const CHAT_SCENE = preload("res://game/field/dialogue/chat_view/chat_view.tscn")
 const MessageText = preload("res://engine/ui/message_stack/message_stack.gd")
 
 

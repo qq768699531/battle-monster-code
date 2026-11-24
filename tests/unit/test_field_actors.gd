@@ -1,9 +1,9 @@
 extends "res://tests/unit/gut_case.gd"
 
-const FieldActors = preload("res://field/field_actors/field_actors.gd")
-const ACTORS_SCENE = preload("res://field/field_actors/field_actors.tscn")
-const Minimap = preload("res://field/minimap/minimap.gd")
-const Followers = preload("res://field/party_followers/party_followers.gd")
+const FieldActors = preload("res://game/field/runtime/field_actors/field_actors.gd")
+const ACTORS_SCENE = preload("res://game/field/runtime/field_actors/field_actors.tscn")
+const Minimap = preload("res://game/field/map/minimap/minimap.gd")
+const Followers = preload("res://game/field/actors/party_followers/party_followers.gd")
 
 
 func _actor(id: int = 0, y: float = 5.0) -> Dictionary:

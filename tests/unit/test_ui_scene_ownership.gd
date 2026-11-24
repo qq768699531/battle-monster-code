@@ -42,9 +42,9 @@ func test_legacy_suite() -> void:
 	var unowned: Array[String] = []
 	for script in ["res://scripts/main.gd", "res://prime/prime_view/prime_view.gd",
 			"res://menu/menu_view/menu_view.gd", "res://battle/battle_view/battle_view.gd",
-			"res://field/chat_view/chat_view.gd", "res://field/map/map_renderer.gd",
-			"res://field/field_actors/field_actors.gd", "res://field/touch_controls/touch_controls.gd",
-			"res://field/field_runtime/field_runtime.gd", "res://field/native_touch_feedback/native_touch_feedback.gd"]:
+			"res://game/field/dialogue/chat_view/chat_view.gd", "res://game/field/map/map/map_renderer.gd",
+			"res://game/field/runtime/field_actors/field_actors.gd", "res://game/field/runtime/touch_controls/touch_controls.gd",
+			"res://game/field/runtime/field_runtime/field_runtime.gd", "res://game/field/runtime/native_touch_feedback/native_touch_feedback.gd"]:
 		if not _owners.has(script):
 			unowned.append(script)
 	assert_true(_violations.is_empty(), "Every Scene script owns its own Scene: %s" % [_violations])
@@ -55,9 +55,9 @@ func test_legacy_suite() -> void:
 	var cursor_dialogs: Array[String] = []
 	for path: String in ["res://menu/item_discard/item_discard.tscn",
 			"res://menu/party_discard/party_discard.tscn", "res://scenes/menu/quest_detail.tscn",
-			"res://field/warp_confirm/warp_confirm.tscn", "res://field/shop_select/shop_select.tscn",
-			"res://field/inn/inn.tscn", "res://field/mastery_view/mastery_view.tscn",
-			"res://field/guild_challenge/guild_challenge.tscn"]:
+			"res://game/field/map/warp_confirm/warp_confirm.tscn", "res://game/field/shops/shop_select/shop_select.tscn",
+			"res://game/field/shops/inn/inn.tscn", "res://game/field/monsters/mastery_view/mastery_view.tscn",
+			"res://game/field/guild/guild_challenge/guild_challenge.tscn"]:
 		var state := (load(path) as PackedScene).get_state()
 		for node in range(state.get_node_count()):
 			for property in range(state.get_node_property_count(node)):

@@ -3,8 +3,8 @@ extends "res://tests/unit/gut_case.gd"
 ## 原生 `Field_Warp1_mKeyPressed`：−3／−4 把光标 `(光标 + 1) % 2`；−5 只在光标 0（是）时
 ## 写 `warp_saved_*` 并登船（本页只发 `board_requested`）；光标 1 与 −16 都只是关窗。
 
-const WarpConfirmScene = preload("res://field/warp_confirm/warp_confirm.tscn")
-const WarpConfirm = preload("res://field/warp_confirm/warp_confirm.gd")
+const WarpConfirmScene = preload("res://game/field/map/warp_confirm/warp_confirm.tscn")
+const WarpConfirm = preload("res://game/field/map/warp_confirm/warp_confirm.gd")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
 

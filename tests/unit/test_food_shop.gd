@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const FoodShopScene = preload("res://field/food_shop/food_shop.tscn")
+const FoodShopScene = preload("res://game/field/shops/food_shop/food_shop.tscn")
 const Story = preload("res://engine/data/story/story.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 
@@ -94,7 +94,7 @@ func test_legacy_suite() -> void:
 
 	# ④ 食谱来自 `assets/food-recipes.tres`（`FoodRecipes`，`script\export_food_recipes.py` 从
 	# `item_food.dat` 原字节导出），不再有脚本常量。
-	var recipes: FoodRecipes = load("res://field/food_shop/food-recipes.tres")
+	var recipes: FoodRecipes = load("res://game/field/shops/food_shop/food-recipes.tres")
 	var materials: Array = recipes.get_recipe(1025).get("materials", [])
 	assert_true(recipes != null and recipes.size() == 12 and materials.size() == 3 and
 		int(materials[0].id) == 3024 and int(materials[0].count) == 3 and

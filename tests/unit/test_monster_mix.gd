@@ -3,7 +3,7 @@ extends "res://tests/unit/gut_case.gd"
 ## 原生 `GAME_STATE_MONSTER_MIX`(22)：`Game_Monster_Mix_Percent` 的成功率、
 ## `_Proc` 的品级 ±1、两只的删除、200 金币与合成石的消耗、新精灵入包。
 
-const MixScene = preload("res://field/monster_mix/monster_mix.tscn")
+const MixScene = preload("res://game/field/monsters/monster_mix/monster_mix.tscn")
 const MixScript = preload("res://scripts/field/monster_mix.gd")
 const Story = preload("res://engine/data/story/story.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")

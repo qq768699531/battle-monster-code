@@ -1,0 +1,397 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="Script" path="res://game/field/monsters/mastery_view/mastery_view.gd" id="script"]
+[ext_resource type="PackedScene" path="res://engine/anim/monster_animation/monster_animation.tscn" id="monster"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/dotted_line/dotted_line.tscn" id="rule"]
+[ext_resource type="PackedScene" path="res://engine/ui/message_choice/message_choice.tscn" id="choice"]
+
+[sub_resource type="StyleBoxFlat" id="SelectionOutline"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="FrameOutline"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0980392, 0.392157, 0.521569, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_left = 2
+corner_radius_bottom_right = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="MasteryView" instance=ExtResource("window")]
+visible = false
+script = ExtResource("script")
+window_size = Vector2i(228, 214)
+screen_shade = true
+
+[node name="MasteryPage" type="Control" parent="Content"]
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+
+[node name="Frame" type="Panel" parent="Content/MasteryPage"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 35.0
+offset_right = 306.0
+offset_bottom = 189.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("FrameOutline")
+
+[node name="Headline" parent="Content/MasteryPage" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 42.0
+offset_right = 306.0
+offset_bottom = 52.0
+color = Color(0.803922, 0.803922, 0.803922, 1)
+horizontal_alignment = 1
+
+[node name="Rule" parent="Content/MasteryPage" instance=ExtResource("rule")]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 58.0
+offset_right = 303.0
+offset_bottom = 59.0
+
+[node name="FooterFrame" type="Panel" parent="Content/MasteryPage"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 191.0
+offset_right = 306.0
+offset_bottom = 209.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("FrameOutline")
+
+[node name="Notice" parent="Content/MasteryPage" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 195.0
+offset_right = 306.0
+offset_bottom = 205.0
+color = Color(0.803922, 0.803922, 0.803922, 1)
+horizontal_alignment = 1
+
+[node name="Row0" type="Control" parent="Content/MasteryPage"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 61.0
+offset_right = 129.0
+offset_bottom = 169.0
+mouse_filter = 2
+
+[node name="Fill" type="ColorRect" parent="Content/MasteryPage/Row0"]
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+
+[node name="Selected" type="TextureRect" parent="Content/MasteryPage/Row0"]
+visible = false
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Outline" type="Panel" parent="Content/MasteryPage/Row0"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 34.0
+offset_bottom = 94.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SelectionOutline")
+
+[node name="Clip" type="Control" parent="Content/MasteryPage/Row0"]
+clip_contents = true
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+
+[node name="Portrait" parent="Content/MasteryPage/Row0/Clip" instance=ExtResource("monster")]
+position = Vector2(32, 83)
+
+[node name="Row1" type="Control" parent="Content/MasteryPage"]
+layout_mode = 0
+offset_left = 131.0
+offset_top = 61.0
+offset_right = 164.0
+offset_bottom = 169.0
+mouse_filter = 2
+
+[node name="Fill" type="ColorRect" parent="Content/MasteryPage/Row1"]
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+
+[node name="Selected" type="TextureRect" parent="Content/MasteryPage/Row1"]
+visible = false
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Outline" type="Panel" parent="Content/MasteryPage/Row1"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 34.0
+offset_bottom = 94.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SelectionOutline")
+
+[node name="Clip" type="Control" parent="Content/MasteryPage/Row1"]
+clip_contents = true
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+
+[node name="Portrait" parent="Content/MasteryPage/Row1/Clip" instance=ExtResource("monster")]
+position = Vector2(22, 83)
+
+[node name="Row2" type="Control" parent="Content/MasteryPage"]
+layout_mode = 0
+offset_left = 166.0
+offset_top = 61.0
+offset_right = 199.0
+offset_bottom = 169.0
+mouse_filter = 2
+
+[node name="Fill" type="ColorRect" parent="Content/MasteryPage/Row2"]
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+
+[node name="Selected" type="TextureRect" parent="Content/MasteryPage/Row2"]
+visible = false
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Outline" type="Panel" parent="Content/MasteryPage/Row2"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 34.0
+offset_bottom = 94.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SelectionOutline")
+
+[node name="Clip" type="Control" parent="Content/MasteryPage/Row2"]
+clip_contents = true
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+
+[node name="Portrait" parent="Content/MasteryPage/Row2/Clip" instance=ExtResource("monster")]
+position = Vector2(17, 78)
+
+[node name="Row3" type="Control" parent="Content/MasteryPage"]
+layout_mode = 0
+offset_left = 201.0
+offset_top = 61.0
+offset_right = 234.0
+offset_bottom = 169.0
+mouse_filter = 2
+
+[node name="Fill" type="ColorRect" parent="Content/MasteryPage/Row3"]
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+
+[node name="Selected" type="TextureRect" parent="Content/MasteryPage/Row3"]
+visible = false
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Outline" type="Panel" parent="Content/MasteryPage/Row3"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 34.0
+offset_bottom = 94.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SelectionOutline")
+
+[node name="Clip" type="Control" parent="Content/MasteryPage/Row3"]
+clip_contents = true
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+
+[node name="Portrait" parent="Content/MasteryPage/Row3/Clip" instance=ExtResource("monster")]
+position = Vector2(32, 83)
+
+[node name="Row4" type="Control" parent="Content/MasteryPage"]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 61.0
+offset_right = 269.0
+offset_bottom = 169.0
+mouse_filter = 2
+
+[node name="Fill" type="ColorRect" parent="Content/MasteryPage/Row4"]
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+
+[node name="Selected" type="TextureRect" parent="Content/MasteryPage/Row4"]
+visible = false
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Outline" type="Panel" parent="Content/MasteryPage/Row4"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 34.0
+offset_bottom = 94.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SelectionOutline")
+
+[node name="Clip" type="Control" parent="Content/MasteryPage/Row4"]
+clip_contents = true
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+
+[node name="Portrait" parent="Content/MasteryPage/Row4/Clip" instance=ExtResource("monster")]
+position = Vector2(50, 83)
+
+[node name="Row5" type="Control" parent="Content/MasteryPage"]
+layout_mode = 0
+offset_left = 271.0
+offset_top = 61.0
+offset_right = 304.0
+offset_bottom = 169.0
+mouse_filter = 2
+
+[node name="Fill" type="ColorRect" parent="Content/MasteryPage/Row5"]
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+
+[node name="Selected" type="TextureRect" parent="Content/MasteryPage/Row5"]
+visible = false
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Outline" type="Panel" parent="Content/MasteryPage/Row5"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 34.0
+offset_bottom = 94.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SelectionOutline")
+
+[node name="Clip" type="Control" parent="Content/MasteryPage/Row5"]
+clip_contents = true
+layout_mode = 0
+offset_right = 33.0
+offset_bottom = 93.0
+mouse_filter = 2
+
+[node name="Portrait" parent="Content/MasteryPage/Row5/Clip" instance=ExtResource("monster")]
+position = Vector2(43, 83)
+
+[node name="Caption" parent="Content/MasteryPage" instance=ExtResource("label")]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 170.0
+offset_right = 306.0
+offset_bottom = 180.0
+color = Color(0.803922, 0.803922, 0.803922, 1)
+horizontal_alignment = 1
+
+[node name="Confirm" parent="." instance=ExtResource("window")]
+visible = false
+kind = 1
+
+[node name="Prompt" parent="Confirm/Content" instance=ExtResource("label")]
+offset_left = 128.0
+offset_top = 102.0
+offset_right = 272.0
+offset_bottom = 112.0
+
+[node name="Rule" parent="Confirm/Content" instance=ExtResource("rule")]
+offset_left = 124.0
+offset_top = 120.0
+offset_right = 276.0
+offset_bottom = 121.0
+
+[node name="Yes" type="Button" parent="Confirm/Content"]
+offset_left = 138.0
+offset_top = 125.0
+offset_right = 182.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Choice" parent="Confirm/Content/Yes" instance=ExtResource("choice")]
+
+[node name="No" type="Button" parent="Confirm/Content"]
+offset_left = 218.0
+offset_top = 125.0
+offset_right = 262.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Choice" parent="Confirm/Content/No" instance=ExtResource("choice")]
+
+[editable path="Confirm"]

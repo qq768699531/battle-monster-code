@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const LocalServiceProcess = preload("res://field/local_service_process/local_service_process.gd")
+const LocalServiceProcess = preload("res://game/field/network/local_service_process/local_service_process.gd")
 
 const PORT_ENV := "BATTLEMONSTER_LOCAL_SERVICE_PORT"
 const DATA_DIR_ENV := "BATTLEMONSTER_LOCAL_SERVICE_DATA_DIR"

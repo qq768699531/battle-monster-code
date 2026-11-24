@@ -20,7 +20,7 @@ config/icon="uid://b20ukqkf5ogsq"
 
 AssetCatalog="*res://engine/data/resource_catalog/resource_catalog.gd"
 AudioManager="*res://audio/audio_manager/audio_manager.tscn"
-NativeTouchFeedback="*res://field/native_touch_feedback/native_touch_feedback.tscn"
+NativeTouchFeedback="*res://game/field/runtime/native_touch_feedback/native_touch_feedback.tscn"
 
 [display]
 

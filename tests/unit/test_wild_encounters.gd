@@ -1,9 +1,9 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Wild = preload("res://field/wild_encounters/wild_encounters.gd")
+const Wild = preload("res://game/field/encounters/wild_encounters/wild_encounters.gd")
 const Battle = preload("res://battle/combat/battle.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
-const EncounterDefinition = preload("res://field/encounter_definition/encounter_definition.gd")
+const EncounterDefinition = preload("res://game/field/encounters/encounter_definition/encounter_definition.gd")
 
 
 func _monster(point: Vector2, state: int = 5) -> Dictionary:

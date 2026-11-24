@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
-const TouchControls = preload("res://field/touch_controls/touch_controls.gd")
-const Minimap = preload("res://field/minimap/minimap.gd")
+const TouchControls = preload("res://game/field/runtime/touch_controls/touch_controls.gd")
+const Minimap = preload("res://game/field/map/minimap/minimap.gd")
 ## 任意 NPC 段 id（1 ≤ id < 1000）。
 const NPC_ID := 12
 
@@ -17,9 +17,9 @@ func _map(width: int, height: int, group: int = 2) -> Dictionary:
 
 
 func test_legacy_suite() -> void:
-	var summary: Control = load("res://field/hero_summary/hero_summary.tscn").instantiate()
-	var minimap: Control = load("res://field/minimap/minimap.tscn").instantiate()
-	var touch: Node2D = load("res://field/touch_controls/touch_controls.tscn").instantiate()
+	var summary: Control = load("res://game/field/monsters/hero_summary/hero_summary.tscn").instantiate()
+	var minimap: Control = load("res://game/field/map/minimap/minimap.tscn").instantiate()
+	var touch: Node2D = load("res://game/field/runtime/touch_controls/touch_controls.tscn").instantiate()
 	add_child(summary)
 	add_child(minimap)
 	add_child(touch)

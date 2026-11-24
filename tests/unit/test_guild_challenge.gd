@@ -3,9 +3,9 @@ extends "res://tests/unit/gut_case.gd"
 ## `Field_Guild_Challenge_*`（状态 7）与 `Game_Guild_Battle_init` 的关键路径。
 
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
-const GuildBattle = preload("res://field/guild_battle/guild_battle.gd")
+const GuildBattle = preload("res://game/field/guild/guild_battle/guild_battle.gd")
 const ItemKind = preload("res://menu/item_kind/item_kind.gd")
-const GuildChallengeScene = preload("res://field/guild_challenge/guild_challenge.tscn")
+const GuildChallengeScene = preload("res://game/field/guild/guild_challenge/guild_challenge.tscn")
 const WindowTransitionScript = preload("res://engine/ui/window_transition/window_transition.gd")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 

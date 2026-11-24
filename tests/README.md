@@ -33,7 +33,7 @@ GUT 9.6.1（`addons/gut`，MIT）＋ `tests/unit/` 下的用例，从旧仓库 `
 
 | 类别 | 用例 | 现象 |
 | --- | --- | --- |
-| 地图载荷装配失败（连锁） | `test_field_runtime`（大半）、`test_map_switch_keeps_camera_origin`、`test_message_icons`、`test_quest_gate` | `Map rules rejected the payload: res://field/map_set/m0/m0.tscn`，后续断言全挂 |
+| 地图载荷装配失败（连锁） | `test_field_runtime`（大半）、`test_map_switch_keeps_camera_origin`、`test_message_icons`、`test_quest_gate` | `Map rules rejected the payload: res://game/field/map/map_set/m0/m0.tscn`，后续断言全挂 |
 | 数据表/存档加载失败 | `test_quests`、`test_story`、`test_guild_quest`、`test_save_store`、`test_original_resource_export` | `Condition "err != OK"` ＋ 对 null 调用，疑 `.tres` 路径或接口变化 |
 | 用例已过期 | `test_main_editor_layout`、`test_ui_scene_ownership`、`test_prime_title_resources` | 仍在取已删除的 `common/ui_title2` 帧、仍在扫 `res://scripts/` |
 | 环境限制 | `test_prime_settings_store` 等 | `user://` 不可写（沙箱）时会失败，真机未必复现 |

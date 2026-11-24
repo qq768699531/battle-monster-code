@@ -1,8 +1,8 @@
 extends "res://tests/unit/gut_case.gd"
 
-const ShopListScene = preload("res://field/shop_list/shop_list.tscn")
-const ShopGoodsScene = preload("res://field/shop_goods/shop_goods.tscn")
-const Shops = preload("res://field/shop_goods/shops.tres")
+const ShopListScene = preload("res://game/field/shops/shop_list/shop_list.tscn")
+const ShopGoodsScene = preload("res://game/field/shops/shop_goods/shop_goods.tscn")
+const Shops = preload("res://game/field/shops/shop_goods/shops.tres")
 const Story = preload("res://engine/data/story/story.gd")
 
 

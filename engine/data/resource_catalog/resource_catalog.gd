@@ -6,11 +6,11 @@ const GameplayData = preload("res://engine/data/gameplay_data/gameplay_data.gd")
 const WorldMapData = preload("res://menu/world_map_data/world_map_data.gd")
 const SpriteOrigins = preload("res://engine/data/sprite_origins/sprite_origins.gd")
 const TextTables = preload("res://engine/data/text_tables/text_tables.gd")
-const QuestSet = preload("res://field/quest_set/quest_set.gd")
+const QuestSet = preload("res://game/field/quests/quest_set/quest_set.gd")
 ## 文本表按来源前缀拆到各功能目录：只有第一次查某个来源时才加载对应文件。
 ## `qst`/`evt` 由 `QuestSet` 从 `field/quest_set/` 的切片合并；其余在这里登记单文件。
 const TEXT_TABLE_FILES := {
-	"npc": "res://field/dialogue_window/npc.tres",
+	"npc": "res://game/field/dialogue/dialogue_window/npc.tres",
 	"common": "res://engine/ui/message_stack/common.tres",
 }
 const TEXT_TABLE_FALLBACK := "res://engine/anim/monster_animation/creature_names.tres"
@@ -27,7 +27,7 @@ const GAMEPLAY_OBJECT_DIRS := {
 const GAMEPLAY_PARTS := {
 	"passives": "res://battle/passives/passives.tres",
 	"items": "res://menu/items/items.tres",
-	"encounters": "res://field/field_runtime/encounters.tres",
+	"encounters": "res://game/field/runtime/field_runtime/encounters.tres",
 	"script_battles": "res://battle/combat/script_battles.tres",
 }
 const WORLD_MAP_DATA: WorldMapData = preload("res://menu/world_map/world-map.tres")
@@ -46,7 +46,7 @@ const TEXT_TRANSLATION: Translation = preload("res://engine/ui/message_stack/zh_
 ## 地图实体节点放在格子中心，position / 16 还原成格子坐标。
 const CELL := 16.0
 ## 地图 Scene 目录：`m<地图id>.tscn`，地形在 `terrain/t<组>_<号>.tscn`。
-const MAP_SCENE_DIR := "res://field/map_set"
+const MAP_SCENE_DIR := "res://game/field/map/map_set"
 
 var _origins: Dictionary = {}
 var _text_tables: Dictionary = {}
@@ -195,7 +195,7 @@ func item_icon(icon_id: int) -> Texture2D:
 
 
 func load_map(map_id: int) -> Variant:
-	var path := "res://field/map_set/m%d/m%d.tscn" % [map_id, map_id]
+	var path := "res://game/field/map/map_set/m%d/m%d.tscn" % [map_id, map_id]
 	if not ResourceLoader.exists(path):
 		_report_error("Map scene is not registered: %d" % map_id)
 		return null
@@ -255,7 +255,7 @@ func load_map(map_id: int) -> Variant:
 
 ## 地图 Scene 里实例化的地形子场景；不实例化地图本身。
 func _terrain_packed(map_id: int) -> Variant:
-	var path := "res://field/map_set/m%d/m%d.tscn" % [map_id, map_id]
+	var path := "res://game/field/map/map_set/m%d/m%d.tscn" % [map_id, map_id]
 	if not ResourceLoader.exists(path):
 		_report_error("Map scene is missing: %s" % path)
 		return null

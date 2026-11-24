@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://game/field/quests/quest_detail/quest_detail.tscn" id="detail"]
+[ext_resource type="Script" path="res://game/field/guild/guild_quest/guild_quest.gd" id="script"]
+
+[node name="GuildQuest" instance=ExtResource("detail")]
+script = ExtResource("script")

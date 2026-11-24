@@ -3,7 +3,7 @@ extends "res://tests/unit/gut_case.gd"
 ## 原生 `Game_Monster_List_mKeyPressed`：−1／−2 同一式 `(游标 + 1) % 2`；
 ## −5 按游标进 22（合成）／23（强化）；−16 立刻回野外，不播关窗。
 
-const MonsterMenuScene = preload("res://field/monster_menu/monster_menu.tscn")
+const MonsterMenuScene = preload("res://game/field/monsters/monster_menu/monster_menu.tscn")
 
 ## `Game_Menu_List_Draw` 的填充色：`JC_grpSetRGB(0xE1B2F)`（24 位 `#0E1B2F`）。
 const ROW_FILL := Color("#0e1b2f")

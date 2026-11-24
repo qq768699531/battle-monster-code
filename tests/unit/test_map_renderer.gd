@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const MAP_SCENE = preload("res://field/map/map_renderer.tscn")
+const MAP_SCENE = preload("res://game/field/map/map/map_renderer.tscn")
 
 
 func test_legacy_suite() -> void:

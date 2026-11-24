@@ -39,7 +39,7 @@ func test_legacy_suite() -> void:
 	hero.free()
 	# 野外物件图层 mode 235 的低 4 位是原生 op 11（Object_drawBUFFER0 的
 	# case GRP_MODE_GRAYCOLOR），已落成灰度材质，不再进「未实现的混合模式」列表。
-	var gray_object: Node2D = (load("res://field/map_actor/obj_f_99/obj_f_99.tscn") as PackedScene).instantiate()
+	var gray_object: Node2D = (load("res://game/field/map/map_actor/obj_f_99/obj_f_99.tscn") as PackedScene).instantiate()
 	get_tree().root.add_child(gray_object)
 	assert_false(gray_object.has_meta("unapplied_blend_modes"),
 		"gray-color layers render instead of being reported as unapplied")

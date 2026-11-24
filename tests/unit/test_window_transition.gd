@@ -50,7 +50,7 @@ func test_discard_window_hides_its_buttons_while_the_frame_is_a_bar() -> void:
 
 
 func test_save_view_keeps_its_confirm_button_under_the_tracked_content() -> void:
-	var page := _page("res://field/save_view/save_view.tscn")
+	var page := _page("res://game/field/runtime/save_view/save_view.tscn")
 	var content := page.get_node("Window/Content") as Control
 	var confirm := page.get_node("Window/Content/Confirm") as Button
 	assert_true(content.is_ancestor_of(confirm), "the confirm button must ride `Window/Content`")

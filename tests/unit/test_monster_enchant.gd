@@ -3,8 +3,8 @@ extends "res://tests/unit/gut_case.gd"
 ## 原生 `GAME_STATE_MONSTER_ENCHANT`(23)：`Game_Monster_Enchant_Percent` 的成功率、
 ## `_Get` 的强化剂消耗与 `_Proc` 的 `Ball_stdBrain` 结算。
 
-const EnchantScene = preload("res://field/monster_enchant/monster_enchant.tscn")
-const EnchantScript = preload("res://field/monster_enchant/monster_enchant.gd")
+const EnchantScene = preload("res://game/field/monsters/monster_enchant/monster_enchant.tscn")
+const EnchantScript = preload("res://game/field/monsters/monster_enchant/monster_enchant.gd")
 const Story = preload("res://engine/data/story/story.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 

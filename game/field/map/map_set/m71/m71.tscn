@@ -1,0 +1,74 @@
+[gd_scene format=4]
+[ext_resource type="Script" path="res://game/field/map/map/map.gd" id="MapRoot"]
+
+[ext_resource type="PackedScene" path="res://game/field/map/map_set/m0/t0_23.tscn" id="1_11nrv"]
+
+[node name="Map_71" type="Node2D" unique_id=1817250624]
+script = ExtResource("MapRoot")
+metadata/map_id = 71
+metadata/map_group = 0
+metadata/map_index = 23
+metadata/map_size_tiles = Vector2i(25, 45)
+metadata/map_palette_indices = PackedInt32Array(0, 0, 0, 0, 0, 0)
+metadata/map_objects = PackedInt32Array(100, 2, 44, 0, 0, 44, 100, 3, 39, 0, 1, 40, 100, 0, 34, 0, 9, 40, 10, 18, 39, 101, 19, 40, 104, 16, 33, 0, 12, 33, 0, 2, 34, 0, 0, 32, 0, 1, 29, 101, 0, 23, 100, 4, 25, 10, 6, 25, 101, 10, 21, 0, 9, 20, 0, 11, 14, 0, 13, 15, 101, 23, 15, 0, 19, 26, 0, 1, 13, 0, 0, 11, 100, 1, 5, 10, 0, 3, 10, 7, 3, 101, 5, 2, 0, 3, 1, 100, 10, 2, 100, 11, 1, 100, 9, 0, 0, 13, 0, 0, 15, 2, 100, 23, 7, 104, 23, 6, 0, 24, 4, 170, 20, 4, 0, 19, 11, 101, 13, 9, 0, 14, 8, 104, 9, 10, 5, 24, 13, 164, 24, 36, 152, 5, 4, 152, 16, 10, 152, 14, 19, 152, 19, 32, 152, 20, 33, 152, 12, 41, 152, 4, 36, 152, 3, 37, 176, 3, 18)
+
+[node name="Warps" type="Node2D" parent="." unique_id=218813366]
+
+[node name="Warp_0" type="Marker2D" parent="Warps" unique_id=1717653986]
+position = Vector2(392, 568)
+metadata/map_warp = {
+"target_map_id": 68,
+"target_tile": Vector2i(1, 10)
+}
+
+[node name="Warp_1" type="Marker2D" parent="Warps" unique_id=1337446027]
+position = Vector2(392, 584)
+metadata/map_warp = {
+"target_map_id": 68,
+"target_tile": Vector2i(1, 11)
+}
+
+[node name="Warp_2" type="Marker2D" parent="Warps" unique_id=1962474719]
+position = Vector2(392, 600)
+metadata/map_warp = {
+"target_map_id": 68,
+"target_tile": Vector2i(1, 12)
+}
+
+[node name="Warp_3" type="Marker2D" parent="Warps" unique_id=1193784169]
+position = Vector2(328, 72)
+metadata/map_warp = {
+"target_map_id": 72,
+"target_tile": Vector2i(10, 28)
+}
+
+[node name="Warp_4" type="Marker2D" parent="Warps" unique_id=1822961563]
+position = Vector2(344, 72)
+metadata/map_warp = {
+"target_map_id": 72,
+"target_tile": Vector2i(11, 28)
+}
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1625853698]
+
+[node name="Spawn_0" type="Marker2D" parent="Spawns" unique_id=475168462]
+position = Vector2(200, 600)
+metadata/map_spawn = {}
+
+[node name="Spawn_1" type="Marker2D" parent="Spawns" unique_id=291128451]
+position = Vector2(136, 408)
+metadata/map_spawn = {}
+
+[node name="Spawn_2" type="Marker2D" parent="Spawns" unique_id=35859221]
+position = Vector2(248, 200)
+metadata/map_spawn = {}
+
+[node name="Spawn_3" type="Marker2D" parent="Spawns" unique_id=1975795247]
+position = Vector2(152, 88)
+metadata/map_spawn = {}
+
+[node name="Terrain" type="Node2D" parent="." unique_id=1208186621 instance=ExtResource("1_11nrv")]
+texture_filter = 1
+metadata/source_layout = "mdt/m0_23"
+metadata/map_size_tiles = Vector2i(25, 45)
+metadata/map_cell_flags = PackedByteArray("AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAAAEBAQEAAAEBAQEBAQEBAQEBAQEBAQEBAAAAAQEAAQEBAQEBAQEBAQEBAQEBAAAAAQEBAAAAAAAAAAEBAQEAAAEBAQEAAAAAAAAAAAAAAAAAAAAAAAEBAAABAQEBAQEAAAAAAAAAAAAAAQEBAAAAAAAAAAEBAQEAAAAAAAAAAAAAAQEBAQEAAAAAAAABAQEAAAAAAAAAAAEAAAEBAQEBAAAAAAAAAQEBAQAAAAAAAAABAQEBAQEBAQEBAQEBAQEBAQEBAAAAAAABAQEBAQEBAAABAQEBAQEBAQEBAQAAAAAAAQAAAAAAAAAAAAAAAQEBAQEBAAEAAAAAAAEAAAAAAAAAAAABAQEBAQEBAQABAQAAAAEBAAAAAAAAAAAAAAAAAQEBAQEAAAEAAAABAAAAAAAAAAAAAAAAAAEBAQEBAAABAAAAAAAAAQEBAAAAAAAAAAAAAAEBAQEAAAAAAAAAAAABAQEBAAAAAAAAAAEBAQEBAAAAAAAAAAAAAAEBAQAAAAAAAAAAAQEBAAAAAAAAAAEBAQEBAQEBAAAAAAAAAAABAQAAAAAAAAEBAQEBAQEBAQEAAAABAAAAAQEAAAAAAAABAAAAAAAAAAABAAAAAQAAAAEBAAAAAAAAAQEBAQAAAAAAAAAAAAEAAAABAQEBAQEBAQEBAQEAAAAAAAAAAAABAAAAAQEBAQEBAQEAAAABAQAAAAAAAAAAAQAAAAEBAQEAAAAAAAAAAAAAAAAAAAAAAAEBAQEBAQEAAAAAAAAAAAAAAAAAAAAAAAEBAQEBAQEBAAABAQEBAAAAAAABAQEAAAEBAAABAQEBAQEBAAAAAAAAAAABAQEBAAABAAEBAQEBAQEBAQAAAAAAAAABAQEBAQAAAQEBAQEBAQEBAQEAAAAAAAEAAQEBAQEAAAEBAQEBAQEBAQEAAAAAAAAAAQEBAQEBAQEBAQEBAQEBAQEBAAAAAAAAAAABAQEBAQEBAQEBAQEBAQEBAQAAAAAAAAEBAQEBAQEBAQEBAQEBAQEBAQEAAAAAAAAAAAEBAQEBAQEBAQABAQEBAQEBAQEAAAAAAAEBAQEAAAEBAAAAAQEBAQEBAQEBAQAAAAEBAAAAAAAAAAAAAAAAAAEBAQABAAEAAAABAAAAAAAAAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQEAAQEAAAAAAAAAAAEBAAEBAQAAAAAAAQEBAQEBAQAAAQEBAAAAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQAAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB")

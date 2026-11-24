@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="QuestTable" format=3]
+
+[ext_resource type="Script" path="res://game/field/quests/quests_def/quests.gd" id="1_ml5eh"]
+
+[resource]
+script = ExtResource("1_ml5eh")
+entries = Array[Dictionary]([{
+"event_high": 0,
+"event_low": 0,
+"goal_count": 1,
+"goal_kind": 1,
+"goal_target": 106,
+"guild_rank": 18,
+"id": 28,
+"npc": 46,
+"prereq2_kind": 0,
+"prereq2_quest": 0,
+"prereq_kind": 0,
+"prereq_quest": 0,
+"repeatable": 0,
+"reward_experience": 109265,
+"reward_item": 0,
+"reward_item_count": 0,
+"reward_money": 28000
+}])

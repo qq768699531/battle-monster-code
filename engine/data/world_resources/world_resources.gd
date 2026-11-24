@@ -4,7 +4,7 @@ extends RefCounted
 ## Loaders return null on failure; last_error contains the diagnostic (no timing or I/O here).
 
 const GameplayData = preload("res://engine/data/gameplay_data/gameplay_data.gd")
-const NpcDefinition = preload("res://field/npc_definition/npc_definition.gd")
+const NpcDefinition = preload("res://game/field/actors/npc_definition/npc_definition.gd")
 
 var map_ids: Array[int] = []
 var event_ids: Array[int] = []
@@ -28,9 +28,9 @@ func initialize(asset_catalog: Node, event_scripts: Variant = null) -> bool:
 		_fail("转换资源清单格式不受支持")
 		return false
 	# 地图注册直接从 Godot 场景目录推导：一个地图组一个目录 `m<id>/`，里面是 `m<id>.tscn`。
-	var directory := DirAccess.open("res://field/map_set")
+	var directory := DirAccess.open("res://game/field/map/map_set")
 	if directory == null:
-		_fail("地图场景目录缺失：res://field/map_set")
+		_fail("地图场景目录缺失：res://game/field/map/map_set")
 		return false
 	for name: String in directory.get_directories():
 		if not name.begins_with("m"):
@@ -38,7 +38,7 @@ func initialize(asset_catalog: Node, event_scripts: Variant = null) -> bool:
 		var digits := name.substr(1)
 		if not digits.is_valid_int():
 			continue
-		if not ResourceLoader.exists("res://field/map_set/%s/%s.tscn" % [name, name]):
+		if not ResourceLoader.exists("res://game/field/map/map_set/%s/%s.tscn" % [name, name]):
 			continue
 		var id := digits.to_int()
 		_map_scenes[id] = true
@@ -46,7 +46,7 @@ func initialize(asset_catalog: Node, event_scripts: Variant = null) -> bool:
 	map_ids.sort()
 	# 事件脚本总表：Scene 传入优先；没传就用共享的 `assets/events.tres`。
 	if _event_scripts == null:
-		_event_scripts = load("res://field/event_scripts/event_scripts.tres")
+		_event_scripts = load("res://game/field/runtime/event_scripts/event_scripts.tres")
 	if _event_scripts != null and not _event_scripts.scripts.is_empty():
 		for id: Variant in _event_scripts.scripts.keys():
 			_events[int(id)] = _event_scripts.scripts[id]

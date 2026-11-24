@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
-const LocalServiceClient = preload("res://field/local_service_client/local_service_client.gd")
-const LocalServiceProcess = preload("res://field/local_service_process/local_service_process.gd")
+const LocalServiceClient = preload("res://game/field/network/local_service_client/local_service_client.gd")
+const LocalServiceProcess = preload("res://game/field/network/local_service_process/local_service_process.gd")
 const Story = preload("res://engine/data/story/story.gd")
 
 ## 这套用例打的是真实回环服务（见 `script/local_service/README.md`）。没人在 8765 上跑着的时候，

@@ -1,0 +1,76 @@
+[gd_scene format=4]
+[ext_resource type="Script" path="res://game/field/map/map/map.gd" id="MapRoot"]
+
+[ext_resource type="PackedScene" path="res://game/field/map/map_set/m0/t0_4.tscn" id="1_ihasl"]
+
+[node name="Map_5" type="Node2D" unique_id=2078641042]
+script = ExtResource("MapRoot")
+metadata/map_id = 5
+metadata/map_group = 0
+metadata/map_index = 4
+metadata/map_size_tiles = Vector2i(25, 30)
+metadata/map_palette_indices = PackedInt32Array(0, 0, 0, 0, 0)
+metadata/map_objects = PackedInt32Array(5, 1, 29, 103, 4, 29, 100, 6, 29, 0, 17, 29, 0, 0, 24, 0, 2, 22, 100, 5, 22, 0, 5, 21, 10, 2, 20, 10, 0, 18, 0, 2, 16, 103, 4, 16, 0, 0, 13, 10, 3, 12, 106, 6, 13, 0, 7, 12, 0, 3, 9, 100, 0, 3, 10, 0, 2, 104, 3, 3, 100, 5, 4, 103, 5, 3, 0, 5, 2, 0, 2, 0, 0, 8, 4, 100, 11, 2, 103, 12, 4, 22, 15, 5, 10, 13, 1, 5, 19, 2, 10, 18, 8, 0, 18, 12, 104, 18, 13, 103, 14, 12, 103, 10, 19, 0, 13, 18, 10, 12, 22, 105, 12, 23, 5, 19, 19, 0, 17, 18, 10, 16, 16, 5, 16, 24, 100, 15, 25, 10, 19, 26, 26, 7, 23, 0, 15, 10, 164, 0, 6, 164, 11, 29, 0, 22, 3, 0, 24, 5, 0, 21, 7, 0, 23, 12, 0, 22, 15, 0, 23, 17, 0, 23, 22, 0, 21, 26, 0, 23, 29, 27, 14, 8, 27, 16, 26, 152, 7, 16, 152, 6, 15, 176, 19, 22)
+
+[node name="Warps" type="Node2D" parent="." unique_id=569000626]
+
+[node name="Warp_0" type="Marker2D" parent="Warps" unique_id=1199296272]
+position = Vector2(8, 88)
+metadata/map_warp = {
+"target_map_id": 4,
+"target_tile": Vector2i(38, 8)
+}
+
+[node name="Warp_1" type="Marker2D" parent="Warps" unique_id=1165170913]
+position = Vector2(8, 104)
+metadata/map_warp = {
+"target_map_id": 4,
+"target_tile": Vector2i(38, 9)
+}
+
+[node name="Warp_2" type="Marker2D" parent="Warps" unique_id=257736852]
+position = Vector2(8, 120)
+metadata/map_warp = {
+"target_map_id": 4,
+"target_tile": Vector2i(38, 10)
+}
+
+[node name="Warp_3" type="Marker2D" parent="Warps" unique_id=1232021647]
+position = Vector2(168, 472)
+metadata/map_warp = {
+"target_map_id": 6,
+"target_tile": Vector2i(14, 2)
+}
+
+[node name="Warp_4" type="Marker2D" parent="Warps" unique_id=1258565470]
+position = Vector2(184, 472)
+metadata/map_warp = {
+"target_map_id": 6,
+"target_tile": Vector2i(15, 2)
+}
+
+[node name="Warp_5" type="Marker2D" parent="Warps" unique_id=369747171]
+position = Vector2(200, 472)
+metadata/map_warp = {
+"target_map_id": 6,
+"target_tile": Vector2i(16, 2)
+}
+
+[node name="Warp_6" type="Marker2D" parent="Warps" unique_id=1774523468]
+position = Vector2(232, 72)
+metadata/map_warp = {
+"target_map_id": 141,
+"target_tile": Vector2i(4, 7)
+}
+
+[node name="Spawns" type="Node2D" parent="." unique_id=329905444]
+
+[node name="Spawn_0" type="Marker2D" parent="Spawns" unique_id=532229496]
+position = Vector2(184, 184)
+metadata/map_spawn = {}
+
+[node name="Terrain" type="Node2D" parent="." unique_id=378980719 instance=ExtResource("1_ihasl")]
+texture_filter = 1
+metadata/source_layout = "mdt/m0_4"
+metadata/map_size_tiles = Vector2i(25, 30)
+metadata/map_cell_flags = PackedByteArray("AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAAAAAQEBAAAAAAEBAQEBAQEBAQEBAQEBAQAAAQEAAAAAAAAAAAEBAQEBAQEBAQEBAQEAAAAAAQEBAQEAAAEBAAEBAQEBAQEBAQEAAAAAAAAAAAAAAAEBAAABAQEBAQEBAQEBAAAAAAAAAAAAAAAAAAAAAQEBAQEBAQEBAQAAAAAAAAAAAAAAAAAAAAAAAQEBAQEBAQEBAAAAAAAAAAAAAAAAAQAAAAEBAQEBAQEBAQEBAQEAAAAAAAAAAAAAAAABAQEBAQEBAQEBAQAAAAAAAAAAAAAAAQEBAQEBAQEBAQEBAQEAAAAAAAAAAAAAAAAAAAEBAQEBAQEBAQEBAQAAAQEBAAAAAAABAQABAQEBAQEBAQEBAQAAAAEBAQAAAAAAAAAAAQEBAQEBAQEBAQEAAAAAAAAAAAAAAAAAAAEBAQEBAQEBAQEBAAAAAAAAAAAAAAAAAAABAQEBAQEBAQEBAQABAQAAAAAAAAAAAAAAAQEBAQEBAQEBAQEAAAAAAAAAAAAAAAAAAAEBAQEBAQEBAQEBAAAAAAAAAAAAAQEBAAEBAQEBAQEBAQEBAQAAAAAAAAAAAAAAAQEAAQEBAQEBAQEBAQEAAAAAAAAAAAAAAAAAAAAAAQEBAQEBAQEBAAEBAQAAAAAAAAAAAAAAAAABAQEBAQEBAQEBAQEAAAAAAQEBAAAAAAAAAQEBAQEBAQEBAQEAAQAAAAEBAQAAAAAAAAEBAQEBAQEBAQEBAQEBAAAAAQEAAQEBAAABAQEBAQEBAQEBAQEBAQEAAAAAAQAAAAAAAQEBAQEBAQEBAQEBAQEAAAAAAAABAAABAQEBAQEBAQEBAQEBAQEBAAAAAAABAAAAAAABAQEBAQEBAQEBAQEAAQAAAAAAAQAAAAAAAQEBAQEBAQEBAQEBAQEBAAAAAQEBAQEBAQEBAQEB")

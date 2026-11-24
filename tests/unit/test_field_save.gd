@@ -3,7 +3,7 @@ extends "res://tests/unit/gut_case.gd"
 ## 原生 `Field_Save_*`（`Field_Save_init` / `mRun` / `mPaint`）：
 ## 开窗画 msg 39「数据存档ing...」→ 写盘 → msg 41「已存档」＋确认，确认后才关窗。
 
-const SaveViewScene = preload("res://field/save_view/save_view.tscn")
+const SaveViewScene = preload("res://game/field/runtime/save_view/save_view.tscn")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
 

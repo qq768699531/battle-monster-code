@@ -70,7 +70,7 @@ static var _scene_paths: Dictionary = {}
 ## 少数对象的场景文件名与 identity 不同：`obj/f_emoticon` 是野外 NPC 头顶的任务图标，
 ## 重组后与 `field/emotion/emotion.tscn` 合并（同一张图集，动画已转换）。
 const SCENE_ALIASES := {
-	"obj/f_emoticon": "res://field/emotion/emotion.tscn",
+	"obj/f_emoticon": "res://game/field/actors/emotion/emotion.tscn",
 }
 
 
@@ -96,7 +96,7 @@ static func scene_path(identity: String) -> String:
 			# 地图交互物件 `obj/obj_f_*` 移入 `field/map_actor/`；共用特效 `obj/b_*` 仍在 `monsters/`；
 			# 其余 `obj/*` 是标题页 ANI，在 `prime/`。
 			if name.begins_with("obj_f_"):
-				dir = "res://field/map_actor/" + name + "/"
+				dir = "res://game/field/map/map_actor/" + name + "/"
 			elif name.begins_with("b_"):
 				dir = "res://monsters/" + name + "/"
 			else:

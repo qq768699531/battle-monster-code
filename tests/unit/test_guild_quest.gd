@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const GuildQuestScene = preload("res://field/guild_quest/guild_quest.tscn")
+const GuildQuestScene = preload("res://game/field/guild/guild_quest/guild_quest.tscn")
 
 ## 任务表里唯一的公会 NPC：`npc:46`（「公会会长」，`qstlist.sub` 里带 38 条任务、档位 97→2）。
 const GUILD_NPC := 46

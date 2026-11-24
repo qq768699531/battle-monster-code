@@ -2,7 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const Runtime = preload("res://prime/prime_title_runtime/prime_title_runtime.gd")
 const MainScript = preload("res://scripts/main.gd")
-const TouchControls = preload("res://field/touch_controls/touch_controls.gd")
+const TouchControls = preload("res://game/field/runtime/touch_controls/touch_controls.gd")
 
 
 func _key(runtime: RefCounted, key: int) -> Dictionary:

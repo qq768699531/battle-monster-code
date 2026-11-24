@@ -3,7 +3,7 @@ extends "res://tests/unit/gut_case.gd"
 ## 原生 `Field_Item_DrawSelect:60-62`：窗高 = 常量表[n2] + 33（丢弃 75、买／卖 87）；
 ## 买／卖在道具行与正文之间多 12 px 价格行，金额 = 单价 × 数量（`:117-138`）。
 
-const ShopSelectScene = preload("res://field/shop_select/shop_select.tscn")
+const ShopSelectScene = preload("res://game/field/shops/shop_select/shop_select.tscn")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
 

@@ -1,6 +1,6 @@
 extends "res://tests/unit/gut_case.gd"
 
-const NARRATION = preload("res://field/narration_view/narration_view.tscn")
+const NARRATION = preload("res://game/field/dialogue/narration_view/narration_view.tscn")
 
 
 ## opcode 4 的叙事字幕（`Evt_scrDRAW`）：版式 3 不盖背景、块心在 `height / 3`；1–3 之外的版式号

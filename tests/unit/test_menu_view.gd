@@ -4,7 +4,7 @@ const ViewScene = preload("res://menu/menu/menu.tscn")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 const SlotFrame = preload("res://menu/slot_frame/slot_frame.gd")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
-const Box2Prompt = preload("res://field/box2_prompt/box2_prompt.gd")
+const Box2Prompt = preload("res://game/field/runtime/box2_prompt/box2_prompt.gd")
 const Layout = preload("res://prime/layout/layout.gd")
 
 ## 任务页夹具：公会槽 1 条、普通槽 5 条（行数 > 3，滚动条出现）。

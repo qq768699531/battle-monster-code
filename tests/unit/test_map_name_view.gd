@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
-const ViewScene = preload("res://field/map_name_view/map_name_view.tscn")
-const MapNameView = preload("res://field/map_name_view/map_name_view.gd")
+const ViewScene = preload("res://game/field/map/map_name_view/map_name_view.tscn")
+const MapNameView = preload("res://game/field/map/map_name_view/map_name_view.gd")
 
 
 func test_legacy_suite() -> void:

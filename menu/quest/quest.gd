@@ -14,7 +14,7 @@ extends Control
 ## `qst/qstlist.fxt` 的六段正文（行标题与 `Menu_Quest_DrawDetail` 用的是同一份）；
 ## 拆段规则复用野外详情页的同名 helper，避免同一份格式在两处各写一遍。
 ## 源标识本身只认 `TextTables.QUEST_SOURCE`，本页不再自带常量。
-const FieldQuestDetail = preload("res://field/quest_detail/quest_detail.gd")
+const FieldQuestDetail = preload("res://game/field/quests/quest_detail/quest_detail.gd")
 
 ## 段序：0 标题、1 说明、2 目标、3 地图号（`JC_fxtQINDEX(slot, 3, i)`）。
 const TITLE_PAGE := 0

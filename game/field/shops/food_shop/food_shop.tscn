@@ -1,0 +1,306 @@
+[gd_scene load_steps=17 format=3]
+[ext_resource type="Texture2D" path="res://engine/ui/tab_cell/tab_cell.webp" id="part_tab_cell"]
+
+[ext_resource type="Script" path="res://game/field/shops/food_shop/food_shop.gd" id="script"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="PackedScene" path="res://menu/item_cell/item_cell.tscn" id="cell"]
+[ext_resource type="PackedScene" path="res://engine/ui/item_icon/item_icon.tscn" id="icon"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_footer/window_footer.tscn" id="footer"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
+[ext_resource type="PackedScene" path="res://engine/ui/currency_amount/currency_amount.tscn" id="money"]
+[ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_filled.tres" id="cell_filled"]
+[ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_filled_focused.tres" id="cell_filled_focused"]
+[ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_empty.tres" id="cell_empty"]
+[ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_empty_focused.tres" id="cell_empty_focused"]
+
+[sub_resource type="AtlasTexture" id="TabCell"]
+atlas = ExtResource("part_tab_cell")
+region = Rect2(0, 30, 33, 30)
+
+[sub_resource type="StyleBoxFlat" id="ListBorder"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0980392, 0.392157, 0.521569, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="PanelBorder"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0980392, 0.392157, 0.521569, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="FoodShop" instance=ExtResource("window")]
+visible = false
+script = ExtResource("script")
+window_size = Vector2i(228, 240)
+cell_frames = Array[Texture2D]([ExtResource("cell_filled"), ExtResource("cell_filled_focused"), ExtResource("cell_empty"), ExtResource("cell_empty_focused")])
+screen_shade = true
+
+[node name="Tab" type="TextureRect" parent="Content"]
+texture_filter = 1
+offset_left = 95.0
+offset_top = 21.0
+offset_right = 128.0
+offset_bottom = 51.0
+mouse_filter = 2
+texture = SubResource("TabCell")
+
+[node name="ListFrame" type="Panel" parent="Content"]
+offset_left = 95.0
+offset_top = 52.0
+offset_right = 307.0
+offset_bottom = 131.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("ListBorder")
+
+[node name="InfoStrip" type="ColorRect" parent="Content"]
+offset_left = 96.0
+offset_top = 119.0
+offset_right = 306.0
+offset_bottom = 130.0
+mouse_filter = 2
+color = Color(0.054902, 0.105882, 0.184314, 1)
+
+[node name="Cell0" parent="Content" instance=ExtResource("cell")]
+offset_left = 99.0
+offset_top = 55.0
+offset_right = 129.0
+offset_bottom = 85.0
+
+[node name="Cell1" parent="Content" instance=ExtResource("cell")]
+offset_left = 131.0
+offset_top = 55.0
+offset_right = 161.0
+offset_bottom = 85.0
+
+[node name="Cell2" parent="Content" instance=ExtResource("cell")]
+offset_left = 163.0
+offset_top = 55.0
+offset_right = 193.0
+offset_bottom = 85.0
+
+[node name="Cell3" parent="Content" instance=ExtResource("cell")]
+offset_left = 195.0
+offset_top = 55.0
+offset_right = 225.0
+offset_bottom = 85.0
+
+[node name="Cell4" parent="Content" instance=ExtResource("cell")]
+offset_left = 227.0
+offset_top = 55.0
+offset_right = 257.0
+offset_bottom = 85.0
+
+[node name="Cell5" parent="Content" instance=ExtResource("cell")]
+offset_left = 259.0
+offset_top = 55.0
+offset_right = 289.0
+offset_bottom = 85.0
+
+[node name="Cell6" parent="Content" instance=ExtResource("cell")]
+offset_left = 99.0
+offset_top = 87.0
+offset_right = 129.0
+offset_bottom = 117.0
+
+[node name="Cell7" parent="Content" instance=ExtResource("cell")]
+offset_left = 131.0
+offset_top = 87.0
+offset_right = 161.0
+offset_bottom = 117.0
+
+[node name="Cell8" parent="Content" instance=ExtResource("cell")]
+offset_left = 163.0
+offset_top = 87.0
+offset_right = 193.0
+offset_bottom = 117.0
+
+[node name="Cell9" parent="Content" instance=ExtResource("cell")]
+offset_left = 195.0
+offset_top = 87.0
+offset_right = 225.0
+offset_bottom = 117.0
+
+[node name="Cell10" parent="Content" instance=ExtResource("cell")]
+offset_left = 227.0
+offset_top = 87.0
+offset_right = 257.0
+offset_bottom = 117.0
+
+[node name="Cell11" parent="Content" instance=ExtResource("cell")]
+offset_left = 259.0
+offset_top = 87.0
+offset_right = 289.0
+offset_bottom = 117.0
+
+[node name="Name" parent="Content" instance=ExtResource("label")]
+offset_left = 99.0
+offset_top = 120.0
+offset_right = 209.0
+offset_bottom = 130.0
+
+[node name="Money" parent="Content" instance=ExtResource("money")]
+offset_left = 212.0
+offset_top = 121.0
+offset_right = 304.0
+offset_bottom = 128.0
+
+[node name="Panel" type="Panel" parent="Content"]
+offset_left = 95.0
+offset_top = 132.0
+offset_right = 307.0
+offset_bottom = 223.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("PanelBorder")
+
+[node name="Title" parent="Content/Panel" instance=ExtResource("label")]
+offset_left = 2.0
+offset_top = 5.0
+offset_right = 210.0
+offset_bottom = 15.0
+color = Color(1, 1, 0.666667, 1)
+
+[node name="Row0" type="Control" parent="Content/Panel"]
+offset_right = 210.0
+offset_bottom = 36.0
+mouse_filter = 2
+
+[node name="Icon" parent="Content/Panel/Row0" instance=ExtResource("icon")]
+layout_mode = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 4.0
+offset_top = 16.0
+offset_right = 34.0
+offset_bottom = 46.0
+
+[node name="Name" parent="Content/Panel/Row0" instance=ExtResource("label")]
+offset_left = 38.0
+offset_top = 26.0
+offset_right = 133.0
+offset_bottom = 36.0
+
+[node name="Count" parent="Content/Panel/Row0" instance=ExtResource("label")]
+offset_left = 60.0
+offset_top = 26.0
+offset_right = 133.0
+offset_bottom = 36.0
+horizontal_alignment = 2
+
+[node name="Row1" type="Control" parent="Content/Panel"]
+offset_right = 210.0
+offset_bottom = 58.0
+mouse_filter = 2
+
+[node name="Icon" parent="Content/Panel/Row1" instance=ExtResource("icon")]
+layout_mode = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 4.0
+offset_top = 38.0
+offset_right = 34.0
+offset_bottom = 68.0
+
+[node name="Name" parent="Content/Panel/Row1" instance=ExtResource("label")]
+offset_left = 38.0
+offset_top = 48.0
+offset_right = 133.0
+offset_bottom = 58.0
+
+[node name="Count" parent="Content/Panel/Row1" instance=ExtResource("label")]
+offset_left = 60.0
+offset_top = 48.0
+offset_right = 133.0
+offset_bottom = 58.0
+horizontal_alignment = 2
+
+[node name="Row2" type="Control" parent="Content/Panel"]
+offset_right = 210.0
+offset_bottom = 80.0
+mouse_filter = 2
+
+[node name="Icon" parent="Content/Panel/Row2" instance=ExtResource("icon")]
+layout_mode = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 4.0
+offset_top = 60.0
+offset_right = 34.0
+offset_bottom = 90.0
+
+[node name="Name" parent="Content/Panel/Row2" instance=ExtResource("label")]
+offset_left = 38.0
+offset_top = 70.0
+offset_right = 133.0
+offset_bottom = 80.0
+
+[node name="Count" parent="Content/Panel/Row2" instance=ExtResource("label")]
+offset_left = 60.0
+offset_top = 70.0
+offset_right = 133.0
+offset_bottom = 80.0
+horizontal_alignment = 2
+
+[node name="Notice" parent="Content/Panel" instance=ExtResource("label")]
+offset_left = 120.0
+offset_top = 5.0
+offset_right = 210.0
+offset_bottom = 15.0
+color = Color(1, 0.572549, 0, 1)
+horizontal_alignment = 2
+
+[node name="Price" parent="Content" instance=ExtResource("money")]
+offset_left = 256.0
+offset_top = 210.0
+offset_right = 304.0
+offset_bottom = 219.0
+
+[node name="Accept" parent="Content" instance=ExtResource("footer")]
+offset_left = 90.0
+offset_top = 226.0
+offset_right = 132.0
+offset_bottom = 238.0
+
+[node name="Back" parent="Content" instance=ExtResource("footer")]
+offset_left = 268.0
+offset_top = 226.0
+offset_right = 310.0
+offset_bottom = 238.0
+
+[node name="AcceptHit" type="Button" parent="Content"]
+offset_left = 90.0
+offset_top = 226.0
+offset_right = 132.0
+offset_bottom = 238.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="BackHit" type="Button" parent="Content"]
+offset_left = 268.0
+offset_top = 226.0
+offset_right = 310.0
+offset_bottom = 238.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")

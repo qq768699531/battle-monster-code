@@ -4,8 +4,8 @@ extends "res://tests/unit/gut_case.gd"
 ## `Ball_stdHP／Ball_stdSP(party_monsters[0..2], 100)` + `Param_moneySET(-50)`，否则只写
 ## fxt 79（`n79` 的默认值）；两种情况都 `Field_Warp1_mKeyPressed(-16)` 关窗。
 
-const InnScene = preload("res://field/inn/inn.tscn")
-const Inn = preload("res://field/inn/inn.gd")
+const InnScene = preload("res://game/field/shops/inn/inn.tscn")
+const Inn = preload("res://game/field/shops/inn/inn.gd")
 const Layout = preload("res://prime/layout/layout.gd")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 const Story = preload("res://engine/data/story/story.gd")

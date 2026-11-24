@@ -1,16 +1,16 @@
 extends "res://tests/unit/gut_case.gd"
 
-const Field = preload("res://field/field_runtime/field_runtime.gd")
+const Field = preload("res://game/field/runtime/field_runtime/field_runtime.gd")
 const Story = preload("res://engine/data/story/story.gd")
 const Book = preload("res://menu/book_model/book_model.gd")
 const Store = preload("res://engine/data/save_store/save_store.gd")
 const World = preload("res://engine/data/world_resources/world_resources.gd")
-const NpcDefinition = preload("res://field/npc_definition/npc_definition.gd")
+const NpcDefinition = preload("res://game/field/actors/npc_definition/npc_definition.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
-const MapEffectCatalog = preload("res://field/map/map_effect.gd")
+const MapEffectCatalog = preload("res://game/field/map/map/map_effect.gd")
 const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
-const MasteryScript = preload("res://field/mastery_view/mastery_view.gd")
-const Followers = preload("res://field/party_followers/party_followers.gd")
+const MasteryScript = preload("res://game/field/monsters/mastery_view/mastery_view.gd")
+const Followers = preload("res://game/field/actors/party_followers/party_followers.gd")
 const StackScene = preload("res://engine/ui/message_stack/message_stack.tscn")
 ## `item_basic.dat` 第 6 组第 4 号（材料）在原生表里的 `ui_item` 帧号（记录第 133 字节，`gameplay.tres` 同值）。
 const MATERIAL_ICON_FRAME := 111
@@ -108,7 +108,7 @@ func test_legacy_suite() -> void:
 			_record(20), _record(15, [2, 0, 0, 0, 0])]},
 		1: {"records": [_record(1, [99, 0, 0, 0, 0]), _record(21)]},
 	}
-	var field := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var field := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(field)
 	assert_true(field.start_slot(store, 0, provider, assets) and
 		field._map_view.tile_count > 0 and not field._actors.snapshot().is_empty(),
@@ -121,7 +121,7 @@ func test_legacy_suite() -> void:
 		field.advance(0.08)
 	var saved: bool = field.save_game() == OK
 	field.free()
-	var continued := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var continued := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(continued)
 	var resumed: bool = continued.start_slot(store, 0, provider, assets) and \
 		continued.story.trace[0].contains("Game_Continue") and \
@@ -448,7 +448,7 @@ func test_legacy_suite() -> void:
 	var file := FileAccess.open(store.slot_path(0), FileAccess.WRITE)
 	file.store_string('[save]\nformat="bad"\n')
 	file.close()
-	var corrupt := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var corrupt := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(corrupt)
 	assert_true(not corrupt.start_slot(store, 0, provider, assets) and corrupt.story == null,
 		"a corrupt occupied slot never silently becomes a new game")
@@ -459,7 +459,7 @@ func test_legacy_suite() -> void:
 ## 战斗内系统菜单的「是」＝原生 `Game_out()`（`EFC_mainSetNEXT(CANVAS_PRIME, PRIME_STATE_TITLE)`）：
 ## 收到 `battle_view.title_requested` 时回标题，不回野外地图（回地图那条会发 `music_requested`）。
 func test_battle_exit_to_title() -> void:
-	var field := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var field := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(field)
 	var stub := StoryStub.new()
 	field.story = stub
@@ -480,7 +480,7 @@ func test_battle_exit_to_title() -> void:
 
 ## 全屏地图特效层（原生 `Map_eft*`）：静态档位立刻铺满，分级档位走 Scene 的爬坡片段。
 func test_map_effect_layer() -> void:
-	var layer: Node2D = load("res://field/map/map_effect.tscn").instantiate()
+	var layer: Node2D = load("res://game/field/map/map/map_effect.tscn").instantiate()
 	get_tree().root.add_child(layer)
 	var blend := layer.get_node("Blend") as ColorRect
 	var timeline := layer.get_node("AnimationPlayer") as AnimationPlayer
@@ -527,7 +527,7 @@ func test_map_switch_keeps_camera_origin() -> void:
 	provider.world.info.npcs = []
 	provider.world.info.monster_spawns = []
 	provider.events = {0: {"records": [_record(Story.Trigger.ALWAYS)]}}
-	var field := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var field := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(field)
 	assert_true(field.start_slot(store, 0, provider, assets), "空脚本的存档能开档：%s" % field.boundary)
 	var origin := Vector2(64, 48)
@@ -600,7 +600,7 @@ func test_follower_hidden_after_event_screen_black() -> void:
 		_record(Story.Trigger.ITEM_COUNT, [MATERIAL_ITEM, 9999, 0, 0, 0]),
 		_record(Story.Op.FADE, [1, 0, 0, 0, 0]),
 		_record(Story.Op.WAIT, [60, 0, 0, 0, 0])]}}
-	var field := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var field := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(field)
 	assert_true(field.start_slot(Store.new(directory), 0, provider, assets), "field starts")
 	field.story.progress.monsters = [{"species": 49}, {"species": 62}]
@@ -636,7 +636,7 @@ static func _actor_ids(field: Object) -> Array:
 ## 「物种 × 动作」各 `instantiate()` 一次，而 PackedScene 的首次实例化会深拷贝整份动画库
 ## （实测 6 只的首次开战 0.90 s，预读后 0.14 s，与同进程第二场持平）。
 func test_battle_animation_warmup() -> void:
-	var field := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var field := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(field)
 	field._queue_battle_animations([{"species": 93}, {"species": 93}, {}, {"species": 49}])
 	assert_eq(field._battle_warmup.size(), 2, "同一物种只排一次，空球跳过")
@@ -667,7 +667,7 @@ func test_mastery_touch() -> void:
 	provider.world.info.npcs = []
 	provider.world.info.monster_spawns = []
 	provider.events = {0: {"records": [_record(Story.Trigger.ALWAYS), _record(Story.Op.MASTERY_SELECT)]}}
-	var field := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var field := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(field)
 	assert_true(field.start_slot(store, 0, provider, assets) and not field.mastery.is_empty(),
 		"opcode 32 打开初始选择的事件门")
@@ -726,7 +726,7 @@ func test_message_icons() -> void:
 	provider.events = {0: {"records": [_record(Story.Trigger.ALWAYS)]}}
 	var stack: Control = StackScene.instantiate()
 	get_tree().root.add_child(stack)
-	var field := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var field := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(field)
 	var started: bool = field.start_slot(store, 0, provider, assets)
 	assert_true(started, "空脚本的存档能开档：%s" % field.boundary)
@@ -788,7 +788,7 @@ func test_quest_gate() -> void:
 	provider.world.info.npcs = []
 	provider.world.info.monster_spawns = []
 	provider.events = {0: {"records": [_record(Story.Trigger.ALWAYS)]}}
-	var field := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var field := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(field)
 	assert_true(field.start_slot(store, 0, provider, assets), "空脚本的存档能开档：%s" % field.boundary)
 	# 任务页没有交互码路由：`SERVICE_ROUTES` 的每一行都不指向它。
@@ -824,7 +824,7 @@ func test_quest_gate() -> void:
 ## `GameCanvas_mPaint:29-40` 与 `Field_Basic_hero_DrawUI:64-73`：经验加成窗口按本帧耗时递减、
 ## 到点清零；HUD 用 `(剩余 + 59999) / 60000` 显示剩余分钟。
 func test_exp_bonus_countdown_and_hud() -> void:
-	var field := load("res://field/field_runtime/field_runtime.tscn").instantiate() as Field
+	var field := load("res://game/field/runtime/field_runtime/field_runtime.tscn").instantiate() as Field
 	get_tree().root.add_child(field)
 	var stub := StoryStub.new()
 	stub.progress = {"parameter": {Story.EXP_BONUS_KEY: Story.EXP_BONUS_MILLISECONDS}}

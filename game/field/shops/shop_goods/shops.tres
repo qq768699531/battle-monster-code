@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopTable" format=3]
+
+[ext_resource type="Script" path="res://game/field/shops/shop_table/shop_table.gd" id="1_shop_table"]
+
+[resource]
+script = ExtResource("1_shop_table")
+stocks = {
+0: {-1: [1000, 1001, 1002, 1003, 1005, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1017, 1037, 5000], 148: [1000, 1001, 1005, 1037, 5000]},
+1: {-1: [2000, 2002, 2004, 2006, 2008, 2010, 2001, 2003, 2005, 2007, 2009, 2011], 6: [2000, 2002, 2004, 2006, 2008, 2010], 97: {"dynamic": "ParamData.event_map_npc_count+1..+5（第 2 组，装备）"}},
+3: {-1: [], 97: {"dynamic": "ParamData.event_map_npc_count+11..+15（第 4 组，技能书）"}},
+}

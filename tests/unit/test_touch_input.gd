@@ -1,7 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
-const FIELD_TOUCH_SCENE = preload("res://field/touch_controls/touch_controls.tscn")
-const TouchControls = preload("res://field/touch_controls/touch_controls.gd")
+const FIELD_TOUCH_SCENE = preload("res://game/field/runtime/touch_controls/touch_controls.tscn")
+const TouchControls = preload("res://game/field/runtime/touch_controls/touch_controls.gd")
 
 
 func _mouse(point: Vector2, pressed: bool) -> void:
