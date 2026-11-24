@@ -23,3 +23,8 @@ Battle Monster 的公开代码仓库，用于管理源码、测试与文档。
 ## 许可证
 
 本项目以 [GNU General Public License v3.0](LICENSE) 发布。
+
+## 本地资源
+
+仓库不包含原版游戏的贴图、音频与字体：`assets/` 只提交自产的数据表（`.tres`）。
+首次运行前按 [docs/assets.md](docs/assets.md) 补齐二进制资源，否则贴图与字体加载会失败。
