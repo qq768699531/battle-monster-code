@@ -541,8 +541,7 @@ func _load_native_ui() -> void:
 		Vector2(29, 50))
 	var status_choice_sheet := _load_window_frame(3,
 		Vector2(41, 26))
-	var status_growth_sheet := _load_ui_sprite("common/ui_window/frame-005",
-		Vector2(49, 7))
+	var status_growth_sheet := _load_window_frame(5, Vector2(49, 7))
 	for index in range(6):
 		var frame := _slice_sprite(status_indicator_sheet,
 			Rect2i(0, index * 5, 29, 5))
