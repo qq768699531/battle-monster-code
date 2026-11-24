@@ -22,7 +22,7 @@ GUT 9.6.1（`addons/gut`，MIT）＋ `tests/unit/` 下的用例，从旧仓库 `
 
 ## 当前基线
 
-110 个用例、82 通过、27 失败、1 pending（2026-11-24，Godot 4.7.2）。
+110 个用例、87 通过、23 失败（2026-11-24，Godot 4.7.2）。
 
 迁移方式见 `tests/tools/migrate_from_legacy.py`：旧用例的 `res://scripts/<名>.gd`、`res://scenes/**/<名>.tscn`
 按 basename 改写为新目录，格式串与目录引用留人工处理。
@@ -36,9 +36,9 @@ GUT 9.6.1（`addons/gut`，MIT）＋ `tests/unit/` 下的用例，从旧仓库 `
 | 地图载荷装配失败（连锁） | `test_field_runtime`（大半）、`test_map_switch_keeps_camera_origin`、`test_message_icons`、`test_quest_gate` | `Map rules rejected the payload: res://field/map_set/m0/m0.tscn`，后续断言全挂 |
 | 数据表/存档加载失败 | `test_quests`、`test_story`、`test_guild_quest`、`test_save_store`、`test_original_resource_export` | `Condition "err != OK"` ＋ 对 null 调用，疑 `.tres` 路径或接口变化 |
 | 用例已过期 | `test_main_editor_layout`、`test_ui_scene_ownership`、`test_prime_title_resources` | 仍在取已删除的 `common/ui_title2` 帧、仍在扫 `res://scripts/` |
-| 环境限制 | `test_prime_startup`、`test_prime_settings_store`、`test_prime_completion` | `user://` 不可写（沙箱），真机未必复现 |
+| 环境限制 | `test_prime_settings_store` 等 | `user://` 不可写（沙箱）时会失败，真机未必复现 |
 | 像素/绘制断言 | `test_message_stack`（3）、`test_world_map`（2）、`test_warp_world`、`test_menu_map_blur` | 帧缓冲差分，绘制实现与原生不一致 |
-| 单点缺失 | `test_field_actors`（`obj/f_emoticon` 动作号）、`test_map_renderer`（TileMapLayer 为空）、`test_local_service_autostart`（服务脚本不在仓库） | 见各用例消息 |
+| 单点缺失 | `test_field_actors`（`obj/f_emoticon` 动作号）、`test_map_renderer`（TileMapLayer 为空） | 见各用例消息 |
 
 ## 迁回过程中改掉的代码问题
 
