@@ -221,3 +221,14 @@ battle/
 `menu/slot_frame`、`menu/slot_frames`、`menu/slot_grade`、`menu/world_map_data`。
 `audio/` 的散落文件收进 `audio/audio_manager/`，`core/text_sources.gd` 并入
 `core/resource_catalog/`，`core/window_frame/frames/` 的图片平铺回模块根。
+
+## 一个模块一张图
+
+每个模块只保留一张 `<模块名>.webp`，多张图合并成图集，引用改用 `AtlasTexture` 区域：
+
+- `main/main/main.webp`：标题图 0/1 + 标题闪光，`main.gd` 里按 `Rect2` 切
+- `menu/status_skill/status_skill.webp`：状态页标题条、空图鉴位、锁标记，场景内用 `AtlasTexture`
+- `core/window_frame/window_frame.webp`：窗框 box2/box4 与 13 个原生帧
+
+地图排除：`maps/mN/` 下每张图层仍是独立文件，TileSet 不接受 `AtlasTexture`。
+平台图标（`main/platform-images/`）也保持独立，运行时按相对路径取。

@@ -6015,8 +6015,8 @@ const FRAMES := {
 	"common/ui_item/frame-163": ["res://core/message_stack/message_stack.webp", Rect2(147, 240, 16, 16)],
 	"common/ui_item/frame-164": ["res://core/message_stack/message_stack.webp", Rect2(168, 240, 16, 16)],
 	"common/ui_item/frame-165": ["res://core/message_stack/message_stack.webp", Rect2(189, 240, 19, 13)],
-	"common/ui_title2/frame-000": ["res://main/main/main_title_flash.webp", Rect2(0, 0, 80, 23)],
-	"common/ui_title2/frame-001": ["res://main/main/main_title_flash.webp", Rect2(80, 0, 80, 23)],
-	"common/ui_title2/frame-002": ["res://main/main/main_title_flash.webp", Rect2(0, 23, 28, 21)],
-	"common/ui_title2/slice-frame-002-x008-y000-w020-h021": ["res://main/main/main_title_flash.webp", Rect2(80, 23, 20, 21)],
+	"common/ui_title2/frame-000": ["res://main/main/main.webp", Rect2(0, 46, 80, 23)],
+	"common/ui_title2/frame-001": ["res://main/main/main.webp", Rect2(80, 46, 80, 23)],
+	"common/ui_title2/frame-002": ["res://main/main/main.webp", Rect2(0, 69, 28, 21)],
+	"common/ui_title2/slice-frame-002-x008-y000-w020-h021": ["res://main/main/main.webp", Rect2(80, 69, 20, 21)],
 }
