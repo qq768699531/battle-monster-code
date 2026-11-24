@@ -261,3 +261,17 @@ battle/
 - 删除自造的 `flash_glow.gdshader`，`prime_screen.gdshader` 不再需要
 - 其余着色器各归其模块（`native_number_palette` 在 `core/number/`、
   `native_touch_blend` 在 `core/touch_button/`、`ani_brightness` 在 `core/monster_animation/` 等）
+
+## main 只留入口，展示模块并入 prime
+
+`main/` 现在只有一个模块：
+
+```text
+main/main/
+  main.tscn   main.gd   main.webp
+```
+
+原 `main/` 下的展示内容全部并入 `prime/`：`background`、`boundary`、`elogo`、
+`ensony`、`loading`、`platform-images`、`title`、`title_item`、`title_visual`、
+`ui_select`、`ui_touch`。标题闪光仍在 `prime/title_visual/`，材质用
+`menu/menu/native_menu_brightness.gdshader`。

@@ -10,7 +10,7 @@
 
 [ext_resource type="PackedScene" path="res://core/native_panel/native_panel.tscn" id="5"]
 
-[ext_resource type="PackedScene" path="res://main/ui_select/ui_select.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://prime/ui_select/ui_select.tscn" id="6"]
 
 [sub_resource type="ShaderMaterial" id="Gray"]
 resource_local_to_scene = true

@@ -535,7 +535,7 @@ func load_platform_image(relative_path: String) -> Texture2D:
 	if not relative_path.ends_with(".webp") or not _is_safe_relative_path(relative_path):
 		_report_error("Platform image is not registered: %s" % relative_path)
 		return null
-	var path: String = "res://main/platform-images/".path_join(relative_path)
+	var path: String = "res://prime/platform-images/".path_join(relative_path)
 	if not ResourceLoader.exists(path):
 		_report_error("Platform image is not registered: %s" % relative_path)
 		return null
