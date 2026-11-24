@@ -1,0 +1,16 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://data/item_definition/item_definition.gd" id="1_object"]
+
+[resource]
+script = ExtResource("1_object")
+id = 4016
+type = 4
+index = 16
+grade_index = 1
+icon = 75
+purchase_price = 0
+name_record = "item_skill.group.16.name"
+detail_slots = Array[int]([272, 1027, 516, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+result_name_record = "item_skill.group.16.name"
+result_description_record = "item_skill.group.15.entry.0.name"

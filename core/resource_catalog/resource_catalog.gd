@@ -18,8 +18,12 @@ const TextSources = preload("res://core/text_sources.gd")
 const TEXT_SOURCES: Dictionary = TextSources.IDS
 const SPRITE_ORIGINS: SpriteOrigins = preload("res://core/monster_animation/sprite-origins.tres")
 ## 玩法数值按功能拆成六份，各自放在使用它的功能目录；这里只在首次访问时拼回一个门面对象。
+## 逐对象存放的表按目录扫描，入口是 objects/，每个对象一个子目录。
+const GAMEPLAY_OBJECT_DIRS := {
+	"items": "res://menu/items/objects",
+}
+
 const GAMEPLAY_PARTS := {
-	"items": "res://menu/items/items.tres",
 	"monsters": "res://core/monster_animation/monsters.tres",
 	"passives": "res://battle/battle/passives.tres",
 	"encounters": "res://field/field_runtime/encounters.tres",
@@ -399,9 +403,38 @@ func _grid_from_state(terrain_state: SceneState) -> Variant:
 	return {"width_tiles": width, "height_tiles": height, "cell_flags": grid}
 
 
+
+## 扫描 "objects/<id>/<id>.tres" 布局，按 id 排序返回。
+func _scan_objects(dir_path: String) -> Array:
+	var records: Array = []
+	var dir := DirAccess.open(dir_path)
+	if dir == null:
+		return records
+	for sub: String in dir.get_directories():
+		var inner := DirAccess.open(dir_path.path_join(sub))
+		if inner == null:
+			continue
+		for file_name: String in inner.get_files():
+			if not file_name.ends_with(".tres"):
+				continue
+			var record: Variant = load(dir_path.path_join(sub).path_join(file_name))
+			if record != null:
+				records.append(record)
+	records.sort_custom(func(a: Object, b: Object) -> bool: return a.get("id") < b.get("id"))
+	return records
+
+
 func load_gameplay_catalog() -> GameplayData:
 	if _gameplay_data == null:
 		var data := GameplayData.new()
+		for key: String in GAMEPLAY_OBJECT_DIRS:
+			var loaded := _scan_objects(GAMEPLAY_OBJECT_DIRS[key])
+			if loaded.is_empty():
+				_report_error("Gameplay object directory is empty: %s" % GAMEPLAY_OBJECT_DIRS[key])
+				return null
+			var target: Array = data.get(key)
+			for record: Variant in loaded:
+				target.append(record)
 		for key: String in GAMEPLAY_PARTS:
 			var path: String = GAMEPLAY_PARTS[key]
 			var part: Variant = load(path)
