@@ -534,12 +534,12 @@ func _process(_delta: float) -> void:
 
 
 func _load_native_ui() -> void:
-	_window_texture = _load_ui_sprite("common/ui_window/frame-000", Vector2(210, 70))
-	var tab_label_strip := _load_ui_sprite("common/ui_window/frame-001", Vector2(159, 10))
-	var status_sheet := _load_ui_sprite("common/ui_window/frame-002", Vector2(330, 30))
-	var status_indicator_sheet := _load_ui_sprite("common/ui_window/frame-007",
+	_window_texture = _load_window_frame(0, Vector2(210, 70))
+	var tab_label_strip := _load_window_frame(1, Vector2(159, 10))
+	var status_sheet := _load_window_frame(2, Vector2(330, 30))
+	var status_indicator_sheet := _load_window_frame(7,
 		Vector2(29, 50))
-	var status_choice_sheet := _load_ui_sprite("common/ui_window/frame-003",
+	var status_choice_sheet := _load_window_frame(3,
 		Vector2(41, 26))
 	var status_growth_sheet := _load_ui_sprite("common/ui_window/frame-005",
 		Vector2(49, 7))
@@ -574,9 +574,9 @@ func _load_native_ui() -> void:
 			_status_attribute_frames.append(frame)
 	else:
 		_status_attribute_error = "Native status attribute icon sheet is unavailable or too small."
-	_quest_labels = _load_ui_sprite("common/ui_window/frame-013", Vector2(202, 6))
-	_item_texture = _load_ui_sprite("common/ui_window/frame-014", Vector2(198, 60))
-	_quest_status_icons = _load_ui_sprite("common/ui_window/frame-017", Vector2(51, 17))
+	_quest_labels = _load_window_frame(13, Vector2(202, 6))
+	_item_texture = _load_window_frame(14, Vector2(198, 60))
+	_quest_status_icons = _load_window_frame(17, Vector2(51, 17))
 	_number_texture = _load_ui_sprite("common/ui_number/frame-000", Vector2(87, 28))
 	if not _native_ui_error.is_empty():
 		return
@@ -656,6 +656,17 @@ func _load_ui_sprite(sprite_id: String, expected_size: Vector2) -> Texture2D:
 	var texture: Variant = _assets.call("load_sprite", sprite_id)
 	if not texture is Texture2D or texture.get_size() != expected_size:
 		_native_ui_error = "Native menu sprite is unavailable or has invalid size: %s" % sprite_id
+		return null
+	return texture
+
+
+func _load_window_frame(index: int, expected_size: Vector2) -> Texture2D:
+	if _assets == null or not _assets.has_method("load_window_frame"):
+		_native_ui_error = "Native menu asset catalog is unavailable."
+		return null
+	var texture: Variant = _assets.call("load_window_frame", index)
+	if not texture is Texture2D or texture.get_size() != expected_size:
+		_native_ui_error = "Native window frame is unavailable or has invalid size: %d" % index
 		return null
 	return texture
 

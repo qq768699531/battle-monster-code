@@ -11,7 +11,7 @@ var _title_delta_y := 0
 
 func configure(catalog: Object, messages: Dictionary) -> bool:
 	_messages = messages
-	var icons: Texture2D = catalog.load_sprite("common/ui_window/frame-007")
+	var icons: Texture2D = catalog.load_window_frame(7)
 	if icons == null or not $Bounds/Accept.configure(catalog, 0) or not $Bounds/Back.configure(catalog, 1):
 		last_error = "Unknown-island interface sprites are unavailable."
 		push_error(last_error)

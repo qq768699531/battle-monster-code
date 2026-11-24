@@ -24,7 +24,7 @@ func _ready() -> void:
 
 func configure(catalog: Object) -> bool:
 	$Empty.texture.atlas = catalog.load_sprite("common/ui_name/frame-003")
-	var icons: Texture2D = catalog.load_sprite("common/ui_window/frame-007")
+	var icons: Texture2D = catalog.load_window_frame(7)
 	for icon in [$Occupied/LevelCaption, $Occupied/TimeCaption, $Occupied/TimeUnit]:
 		icon.texture.atlas = icons
 	$Occupied/Trait.texture.atlas = catalog.load_sprite("common/ui_battle/frame-000")

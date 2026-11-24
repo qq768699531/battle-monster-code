@@ -103,8 +103,12 @@ godot --headless --path . --import
 | 只被一个场景使用 | 该场景同目录 | `status_header`、`empty_book`、`lock`、`quest_row`、`list_button`、`rarity_bar` |
 | 窗框本体 | `core/window_frame/box4.webp`、`box2.webp` | 由 `window_frame.tscn` 持有 |
 
-整张 `ui_window.webp` 仍保留，仅作为运行时精灵 id（`common/ui_window/frame-NNN`）的图集，
-供 6 个数据驱动脚本按 id 取帧；界面场景已不再引用它。
+整张 `ui_window.webp` 已删除，不再有脚本从图集取帧：
+
+- 运行时仍需要的 13 个原生帧裁成独立图片，放在 `core/window_frame/frames/window-NNN.webp`；
+- 脚本改用 `ResourceCatalog.load_window_frame(N)` 取图，不再经过精灵 id；
+- `core/sprite_index` 里 22 条 `common/ui_window/frame-NNN` 记录一并删除；
+- `core/window_frame/slot/` 的四个 30×30 格底样式改为直接引用 `frames/window-016.webp`。
 
 ## 玩法数据表
 

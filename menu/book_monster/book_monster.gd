@@ -33,11 +33,11 @@ const GRAY_SHADER := preload("res://core/shaders/ani_brightness.gdshader")
 const MONSTER_TEXT_SOURCE := "common/item_mon.dat"
 const TAB_SHEET := "common/ui_battle/frame-014"
 ## `Menu_winDrawIcon4` 的 6 张稀有度标签（宽度随字长）。
-const RARITY_SHEET := "common/ui_window/frame-004"
+const RARITY_FRAME := 4
 const RARITY_REGIONS := [Rect2i(0, 0, 53, 10), Rect2i(53, 0, 69, 10), Rect2i(122, 0, 37, 10),
 	Rect2i(159, 0, 56, 10), Rect2i(215, 0, 53, 10), Rect2i(268, 0, 29, 10)]
 ## `Menu_winDrawIcon8`：ui_window 帧 8 每 5 像素一行，顺序 ATK/DEF/MATK/MDEF/HP/SPD 在 10/11/12/13/6/5。
-const STAT_LABEL_SHEET := "common/ui_window/frame-008"
+const STAT_LABEL_FRAME := 8
 const STAT_LABEL_ROWS := [10, 11, 12, 13, 6, 5]
 const ATTRIBUTE_SHEET := "common/ui_battle/frame-000"
 ## `Menu_Party_GetRGB` → `Ball_stdGradeRGB`：已获得的格子外面再套一圈 1 px 稀有度描边，
@@ -425,11 +425,11 @@ func _load_frames() -> void:
 	for index in range(Book.MONSTER_CATEGORIES):
 		_tab_frames.append(_slice(tabs, Rect2i(index * 33, 0, 33, 30)))
 	_rarity_frames.clear()
-	var rarity: Texture2D = _assets.load_sprite(RARITY_SHEET)
+	var rarity: Texture2D = _assets.load_window_frame(RARITY_FRAME)
 	for region: Rect2i in RARITY_REGIONS:
 		_rarity_frames.append(_slice(rarity, region))
 	_stat_labels.clear()
-	var labels: Texture2D = _assets.load_sprite(STAT_LABEL_SHEET)
+	var labels: Texture2D = _assets.load_window_frame(STAT_LABEL_FRAME)
 	for row: int in STAT_LABEL_ROWS:
 		_stat_labels.append(_slice(labels, Rect2i(0, row * 5, 23, 5)))
 	_attribute_frames.clear()

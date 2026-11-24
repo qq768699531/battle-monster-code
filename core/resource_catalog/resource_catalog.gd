@@ -481,6 +481,26 @@ func _has_text_payload(source_id: String) -> bool:
 	return TEXT_SOURCES.has(source_id)
 
 
+## 窗框图集拆分后的帧入口：按原生帧号取图，不再经过 `common/ui_window` 图集。
+const WindowFrames = preload("res://core/window_frame/window_frames.gd")
+var _window_frame_cache: Dictionary = {}
+
+
+func load_window_frame(index: int) -> Texture2D:
+	if _window_frame_cache.has(index):
+		return _window_frame_cache[index]
+	var path: String = WindowFrames.FRAMES.get(index, "")
+	if path.is_empty():
+		_report_error("Window frame is not registered: %d" % index)
+		return null
+	var texture: Variant = load(path)
+	if not texture is Texture2D:
+		_report_error("Window frame could not be loaded: %s" % path)
+		return null
+	_window_frame_cache[index] = texture
+	return texture
+
+
 func load_platform_image(relative_path: String) -> Texture2D:
 	if not relative_path.ends_with(".webp") or not _is_safe_relative_path(relative_path):
 		_report_error("Platform image is not registered: %s" % relative_path)

@@ -71,7 +71,7 @@ const DISABLED_DOT := Color(0.753, 0.502, 0.753)
 const BOX_COLOR := Color8(0xC0, 0xC0, 0x00)
 ## 任务标记图标：`Menu_winDrawIcon12` 从 `common/ui_window` 第 12 帧裁 21×25，
 ## 源 x = `21 * a3`（`a3 = mark - 1`），锚点 `GRP_IMAGE_ANCHOR_MIDDLE_CENTER`。
-const MARK_SHEET := "common/ui_window/frame-012"
+const MARK_FRAME := 12
 const MARK_SIZE := Vector2i(21, 25)
 const MARK_SLOT_OFFSET := 1
 ## `Menu_winDrawIcon12(x + 15, y - 10 + 浮动)` 的锚点位置（`JC_grpGetANCHOR` 减半宽半高）。
@@ -160,7 +160,7 @@ func present(catalog: Object, data: Variant, map_id: int, enabled: Dictionary, p
 	for index in range(DISABLED_ICON + 1):
 		_icons.append(catalog.load_sprite(ICON_FORMAT % index))
 	_gray_icons.clear()
-	_mark_sheet = catalog.load_sprite(MARK_SHEET)
+	_mark_sheet = catalog.load_window_frame(MARK_FRAME)
 	_marks = QuestMark.marks_from_pages(quest_pages)
 	_ticks = 0
 	_cells.clear()
