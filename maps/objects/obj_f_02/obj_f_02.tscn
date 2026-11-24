@@ -1,7 +1,7 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://actors/objects/obj_f_02/obj_f_02.webp" id="Sheet_obj_obj_f_02"]
+[ext_resource type="Texture2D" path="res://maps/objects/obj_f_02/obj_f_02.webp" id="Sheet_obj_obj_f_02"]
 [ext_resource type="Texture2D" path="res://field/fx/obj_f_effect.webp" id="Sheet_obj_obj_f_effect"]
-[ext_resource type="Texture2D" path="res://actors/objects/obj_f_89/obj_f_89.webp" id="Sheet_obj_obj_f_89"]
+[ext_resource type="Texture2D" path="res://maps/objects/obj_f_89/obj_f_89.webp" id="Sheet_obj_obj_f_89"]
 
 [ext_resource type="Shader" path="res://core/touch_button/native_touch_blend.gdshader" id="BlendShader"]
 
