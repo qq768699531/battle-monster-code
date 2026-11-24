@@ -4,7 +4,7 @@ extends "res://tests/unit/gut_case.gd"
 ## `_Proc` 的品级 ±1、两只的删除、200 金币与合成石的消耗、新精灵入包。
 
 const MixScene = preload("res://game/field/monsters/monster_mix/monster_mix.tscn")
-const MixScript = preload("res://scripts/field/monster_mix.gd")
+const MixScript = preload("res://game/field/monsters/monster_mix/monster_mix.gd")
 const Story = preload("res://engine/data/story/story.gd")
 const SlotFrame = preload("res://game/menu/party/slot_frame/slot_frame.gd")
 

@@ -5,8 +5,8 @@ const MenuFixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 ## `qst/qstlist.fxt:2` 的地图段是 `15,16,17`，详情页左按钮才会真的开世界地图。
 const REGION_QUEST_ID := 2
 
-const QuestDetailScene = preload("res://scenes/field/quest_detail.tscn")
-const QuestDetailScript = preload("res://scripts/field/quest_detail.gd")
+const QuestDetailScene = preload("res://game/menu/quest/quest_detail/quest_detail.tscn")
+const QuestDetailScript = preload("res://game/menu/quest/quest_detail/quest_detail.gd")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 const QuestCompleteScene = preload("res://game/field/quests/quest_complete/quest_complete.tscn")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
@@ -20,7 +20,7 @@ const GOAL_COUNT := 5
 ## 出战怪的物种号（`gameplay.tres` 里真实存在、属性组 1..6 的那一类）。
 const PARTY_SPECIES := 49
 ## 「半透明 + 模糊」层用的 shader（`Field_Basic_Capture` 的 `JC_grpFillBLUR`）。
-const BLUR_SHADER := "res://shaders/menu_map_blur.gdshader"
+const BLUR_SHADER := "res://engine/ui/screen_shade/menu_map_blur.gdshader"
 
 
 func _settle(page: Control) -> void:
@@ -100,7 +100,7 @@ func test_menu_detail_world_map_entry() -> void:
 ## T-C3：`Qst_chtDRAW`／`Qst_chtKeyPress` 的详情页与 `Field_Quest_Complete_SetResult` 的完成页。
 func test_legacy_suite() -> void:
 	var assets := get_node("/root/AssetCatalog")
-	var table: QuestTable = load("res://assets/quests.tres")
+	var table: QuestTable = QuestSet.load_table()
 	var log := QuestLog.new(QuestLog.empty_dict())
 	# 一名出战怪（属性组见 `MonsterDefinition.attribute_group`）：完成页要给它的属性格记经验。
 	var species: MonsterDefinition = assets.load_gameplay_catalog().monster(PARTY_SPECIES)
@@ -236,7 +236,7 @@ func _click(control: Control) -> void:
 ## P2-69／P2-70／P2-72：接受确认框的三条原生边界。
 func test_confirm_guards() -> void:
 	var assets := get_node("/root/AssetCatalog")
-	var table: QuestTable = load("res://assets/quests.tres")
+	var table: QuestTable = QuestSet.load_table()
 	# 普通槽 1..10 先占满：`Qst_stdEmpty` 模式 3 抢不到槽，走 `Qst_chtKeyPress:84-89` 的失败分支。
 	var quests := QuestLog.empty_dict()
 	for slot in range(QuestLog.SLOT_FIRST_NORMAL, QuestLog.SLOT_LAST_NORMAL + 1):

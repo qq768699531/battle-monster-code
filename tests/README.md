@@ -22,7 +22,7 @@ GUT 9.6.1（`addons/gut`，MIT）＋ `tests/unit/` 下的用例，从旧仓库 `
 
 ## 当前基线
 
-110 个用例、87 通过、23 失败（2026-11-24，Godot 4.7.2）。
+110 个用例全绿（111 项断言集，Godot 4.7.2，2026-11-24）。
 
 迁移方式见 `tests/tools/migrate_from_legacy.py`：旧用例的 `res://scripts/<名>.gd`、`res://scenes/**/<名>.tscn`
 按 basename 改写为新目录，格式串与目录引用留人工处理。

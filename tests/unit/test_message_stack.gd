@@ -5,12 +5,19 @@ const StackScene = preload("res://engine/ui/message_stack/message_stack.tscn")
 const Msg = preload("res://engine/ui/msg/msg.gd")
 
 var _stack: Control
+## 像素断言放在独立 SubViewport 里跑：整跑时根视口会叠上别的用例留下的画面，
+## 白底/底板的取样就不是本用例控制的那一张了。
+var _viewport: SubViewport
 
 
 func before_each() -> void:
 	super()
+	_viewport = SubViewport.new()
+	_viewport.size = Vector2i(400, 240)
+	_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	add_child_autofree(_viewport)
 	_stack = StackScene.instantiate()
-	add_child_autofree(_stack)
+	_viewport.add_child(_stack)
 	_stack.set_process(false)
 
 
@@ -40,12 +47,12 @@ func test_pushed_message_is_drawn() -> void:
 	_stack.clear_all()
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
-	var before := _bright_pixels(get_viewport().get_texture().get_image(), MESSAGE_BAND)
+	var before := _bright_pixels(_viewport.get_texture().get_image(), MESSAGE_BAND)
 	_stack.push(-1, "消息提示")
 	_stack.advance_frames(2)
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
-	var after := _bright_pixels(get_viewport().get_texture().get_image(), MESSAGE_BAND)
+	var after := _bright_pixels(_viewport.get_texture().get_image(), MESSAGE_BAND)
 	assert_gt(after, before, "推送后消息栈真的往帧缓冲里画了字")
 
 
@@ -71,13 +78,13 @@ func test_message_icon_frame_draws_item_sprite() -> void:
 	_stack.advance_frames(4)
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
-	var plain := get_viewport().get_texture().get_image()
+	var plain := _viewport.get_texture().get_image()
 	_stack.clear_all()
 	_stack.push(QUEST_ICON_FRAME, "")
 	_stack.advance_frames(4)
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
-	var with_icon := get_viewport().get_texture().get_image()
+	var with_icon := _viewport.get_texture().get_image()
 	assert_eq(MessageStack.text_indent(-1), 0, "无图标时文字不缩进")
 	assert_eq(MessageStack.text_indent(QUEST_ICON_FRAME), MessageStack.ICON_INDENT,
 		"有图标时文字右移 21 px（`(~icon >> 31) & 0x15`）")
@@ -102,7 +109,7 @@ func _non_white_bounds(image: Image, area: Rect2i) -> Rect2i:
 func _capture() -> Image:
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
-	return get_viewport().get_texture().get_image()
+	return _viewport.get_texture().get_image()
 
 
 ## `bm-368`：三处都按帧缓冲取样。字段对不代表画得出来——道具名的品级色曾被
@@ -113,7 +120,7 @@ func test_rendered_pixels_follow_native() -> void:
 	background.color = Color.WHITE
 	background.size = Vector2(400, 240)
 	background.z_index = -1
-	add_child_autofree(background)
+	_viewport.add_child(background)
 	# 剩余 80 帧：`Game_infoDraw:44-69` 的第一档底板 alpha 44。
 	_stack.clear_all()
 	_stack.push(-1, "")

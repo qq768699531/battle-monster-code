@@ -216,7 +216,7 @@ func test_map_box_open() -> void:
 ## T-C2 任务槽：`ParamData.quests[11]`（槽 0 公会任务、1..10 普通任务）的接取／推进／完成，
 ## 判定照 `Qst_stdQuest`（前置／公会档／事件号区间）与 `Qst_stdEmpty` 的区间选择。
 func test_quest_slots() -> void:
-	var table: QuestTable = load("res://assets/quests.tres")
+	var table: QuestTable = QuestSet.load_table()
 	var context := {"guild_code": 0, "event_id": 0}
 	var log: QuestLog = _story(_provider([])).quest_log()
 	# NPC 33 的链上只有 46 号（goal_kind 0、目标物种 6、数量 5），接取后落在普通槽。

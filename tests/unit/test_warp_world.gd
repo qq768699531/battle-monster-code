@@ -8,7 +8,7 @@ const WarpConfirmScript = preload("res://game/field/map/warp_confirm/warp_confir
 ## 开合相位枚举（`Menu_win_Box4_DrawWindow@0x4F82C` 的 `n4`）在父脚本里。
 const WindowTransitionScript = preload("res://engine/ui/window_transition/window_transition.gd")
 ## 「半透明 + 模糊」层用的 shader（`Field_Basic_Capture` 的 `JC_grpFillBLUR`）。
-const BLUR_SHADER := "res://shaders/menu_map_blur.gdshader"
+const BLUR_SHADER := "res://engine/ui/screen_shade/menu_map_blur.gdshader"
 
 ## 上船时记下的位置（原生 `ParamData.warp_saved_*`），即候选下标 3。
 const SAVED_MAP_ID := 41

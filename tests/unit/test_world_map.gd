@@ -5,7 +5,7 @@ const MenuScene = preload("res://game/menu/screen/menu/menu.tscn")
 const WorldMapScene = preload("res://game/menu/world_map/world_map/world_map.tscn")
 const WindowTransitionScript = preload("res://engine/ui/window_transition/window_transition.gd")
 ## 「半透明 + 模糊」层用的 shader（`Field_Basic_Capture` 的 `JC_grpFillBLUR`）。
-const BLUR_SHADER := "res://shaders/menu_map_blur.gdshader"
+const BLUR_SHADER := "res://engine/ui/screen_shade/menu_map_blur.gdshader"
 
 ## `Map_worldDRAW` 画当前地图用的 `Object_drawBASIC(..., 1026, ...)`，`% 100` = 动作 26。
 const HERO_MARKER_ANIMATION_ID := 1026
@@ -177,8 +177,14 @@ func test_legacy_suite() -> void:
 	var hero_player: AnimationPlayer = marker.get_node("AnimationPlayer")
 	assert_eq(AniAction.action_of_clip(hero_player.current_animation),
 		AniAction.action_of(HERO_MARKER_ANIMATION_ID), "当前地图画的是动作 26")
-	assert_true(marker.get_node("Layer000").texture.resource_path.ends_with("h_f_01/frame-083.webp")
-		and marker.get_node("Layer001").texture.resource_path.ends_with("h_f_01/frame-082.webp"),
+	# 帧图已经合成单张图集：路径是图集 h_f_01.webp，帧尺寸从 AtlasTexture 的 region 读。
+	var layer0: Texture2D = marker.get_node("Layer000").texture
+	var layer1: Texture2D = marker.get_node("Layer001").texture
+	assert_true(layer0 is AtlasTexture and layer1 is AtlasTexture and
+		layer0.atlas.resource_path.ends_with("h_f_01/h_f_01.webp") and
+		layer1.atlas.resource_path.ends_with("h_f_01/h_f_01.webp") and
+		(layer0 as AtlasTexture).region.size == Vector2(17, 8) and
+		(layer1 as AtlasTexture).region.size == Vector2(25, 22),
 		"角色图标只有 frame-083／frame-082 两层")
 	var image: Image = viewport.get_texture().get_image()
 	var header := image.get_pixel(100, 25)

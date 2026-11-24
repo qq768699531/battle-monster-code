@@ -20,7 +20,7 @@ func _settle(page: Control) -> void:
 ## `Qst_chtINIT(2, quest_id)` → 状态 8；接受写 `Qst_stdEmpty` 模式 2 的专用槽 0。
 func test_legacy_suite() -> void:
 	var assets := get_node("/root/AssetCatalog")
-	var table: QuestTable = load("res://assets/quests.tres")
+	var table: QuestTable = QuestSet.load_table()
 	var context := {"guild_code": 0, "event_id": 0}
 	var log := QuestLog.new(QuestLog.empty_dict())
 

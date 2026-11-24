@@ -2,7 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 
 func test_legacy_suite() -> void:
-	var table: QuestTable = load("res://assets/quests.tres")
+	var table: QuestTable = QuestSet.load_table()
 	assert_gt(table.size(), 0, "任务表非空")
 	# 任务 43（NPC 30）的两个前置都是「必须已完成」，分别指向任务 39／40（`Qst_stdCHECK` 的
 	# `v11[6] == 2` 分支），另要求累计进度 5。

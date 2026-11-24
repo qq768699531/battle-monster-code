@@ -1,8 +1,16 @@
 extends "res://tests/unit/gut_case.gd"
 
 const Runtime = preload("res://game/prime/title/prime_title_runtime/prime_title_runtime.gd")
-const MainScript = preload("res://scripts/main.gd")
+const MainScript = preload("res://game/prime/entry/entry/entry.gd")
 const TouchControls = preload("res://game/field/runtime/touch_controls/touch_controls.gd")
+## 组件场景按使用方归档后不再集中在一个目录：这张表就是它们的新位置。
+const WIDGET_SCENES := {
+	"native_label": "res://engine/ui/native_label/native_label.tscn",
+	"native_panel": "res://engine/ui/native_panel/native_panel.tscn",
+	"native_button": "res://game/prime/ui/native_button/native_button.tscn",
+	"native_gradient": "res://game/prime/ui/native_gradient/native_gradient.tscn",
+	"battle_stat_row": "res://game/prime/title/battle_stat_row/battle_stat_row.tscn",
+}
 
 
 func _key(runtime: RefCounted, key: int) -> Dictionary:
@@ -14,7 +22,7 @@ func _key(runtime: RefCounted, key: int) -> Dictionary:
 func _verify_widget_scenes() -> void:
 	for name in ["native_label", "native_panel", "native_button", "native_gradient",
 			"battle_stat_row"]:
-		var scene: PackedScene = load("res://scenes/components/%s.tscn" % name)
+		var scene: PackedScene = load(_widget_scene(name))
 		var state := scene.get_state()
 		var script_count := 0
 		for node in range(state.get_node_count()):
@@ -113,3 +121,13 @@ func _run() -> void:
 
 func test_legacy_suite() -> void:
 	await _run()
+
+## 组件场景按使用方归档后不再集中在一个目录：这里给出名字到新路径的映射。
+func _widget_scene(name: String) -> String:
+	match name:
+		"native_label": return "res://engine/ui/native_label/native_label.tscn"
+		"native_panel": return "res://engine/ui/native_panel/native_panel.tscn"
+		"native_button": return "res://game/prime/ui/native_button/native_button.tscn"
+		"native_gradient": return "res://game/prime/ui/native_gradient/native_gradient.tscn"
+		"battle_stat_row": return "res://game/prime/title/battle_stat_row/battle_stat_row.tscn"
+	return ""
