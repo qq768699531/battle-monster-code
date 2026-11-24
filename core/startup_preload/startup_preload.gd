@@ -33,15 +33,15 @@ const MAIN_THREAD_LOADS_PER_FRAME := 3
 ## `main.gd` 的 preload 链缓存、走不到这里，这条是兜底。
 const REQUEST_TIMEOUT_MS := 8000
 
-const GROUP_COMPONENTS := "res://scenes/components"
-const GROUP_ANI := "res://scenes/ani"
+const GROUP_COMPONENTS := "res://ui"
+const GROUP_ANI := "res://main"
 const GROUP_AUDIO := "res://assets/audio/ogg"
-const GROUP_BATTLE_UI := "res://scenes/battle_ui"
-const GROUP_MENU := "res://scenes/menu"
-const GROUP_FIELD := "res://scenes/field"
-const GROUP_MAPS := "res://scenes/maps"
-const GROUP_ACTORS := "res://scenes/actors"
-const GROUP_MONSTERS := "res://scenes/monsters"
+const GROUP_BATTLE_UI := "res://battle"
+const GROUP_MENU := "res://menu"
+const GROUP_FIELD := "res://field"
+const GROUP_MAPS := "res://maps"
+const GROUP_ACTORS := "res://actors"
+const GROUP_MONSTERS := "res://monsters"
 
 ## 第一档线程化部分（欢迎页期间走完，进度条反映它）：共用组件、开场 ANI、音乐、战斗 UI、
 ## 菜单、野外。顺序即优先级。

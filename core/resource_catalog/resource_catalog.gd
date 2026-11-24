@@ -25,7 +25,7 @@ const TEXT_TRANSLATION: Translation = preload("res://ui/translations/zh_CN.tres"
 ## 地图实体节点放在格子中心，position / 16 还原成格子坐标。
 const CELL := 16.0
 ## 地图 Scene 目录：`m<地图id>.tscn`，地形在 `terrain/t<组>_<号>.tscn`。
-const MAP_SCENE_DIR := "res://scenes/maps"
+const MAP_SCENE_DIR := "res://maps"
 
 var _origins: Dictionary = {}
 var _audio_ids: Dictionary = {}
@@ -173,7 +173,7 @@ func item_icon(icon_id: int) -> Texture2D:
 
 
 func load_map(map_id: int) -> Variant:
-	var path := "res://scenes/maps/m%d.tscn" % map_id
+	var path := "res://maps/m%d/m%d.tscn" % [map_id, map_id]
 	if not ResourceLoader.exists(path):
 		_report_error("Map scene is not registered: %d" % map_id)
 		return null
@@ -233,7 +233,7 @@ func load_map(map_id: int) -> Variant:
 
 ## 地图 Scene 里实例化的地形子场景；不实例化地图本身。
 func _terrain_packed(map_id: int) -> Variant:
-	var path := "res://scenes/maps/m%d.tscn" % map_id
+	var path := "res://maps/m%d/m%d.tscn" % [map_id, map_id]
 	if not ResourceLoader.exists(path):
 		_report_error("Map scene is missing: %s" % path)
 		return null

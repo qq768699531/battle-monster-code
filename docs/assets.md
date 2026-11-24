@@ -1,30 +1,36 @@
 # 目录与资源约定
 
-仓库按**用途**分目录，不按文件类型分层。一个对象的场景、脚本、数据与贴图放在一起：
+仓库按**用途**分目录，不按文件类型分层。一个对象的场景、脚本、数据与贴图放在同一个目录：
 
 ```text
 monsters/mon1/m_f_000/
   m_f_000.tscn      场景
   m_f_000.webp      该对象整张精灵图（无损 WebP）
+field/food_shop/
+  food_shop.tscn    场景
+  food_shop.gd      该场景的脚本
 maps/m0/
-  m0.tscn           地图场景（脚本 maps/map.gd，BattleMap 基类）
+  m0.tscn           地图场景（挂 scripts maps/map.gd 的 BattleMap 基类）
   t0_0.tscn         地形层
   m0_0.tres         TileSet（普通 Texture2D 引用，不能用 AtlasTexture）
   m0_0.webp         地图图层
-ui/window_transition/
-  window_transition.tscn  通用窗框组件，被 19 个界面场景实例化
+ui/number/
+  number_default.tscn / number_top.tscn / number_small.tscn / number_compact.tscn
+  ui_number.webp    数字图集，由预设场景自身持有
 ```
 
 ## 顶层目录
 
 | 目录 | 用途 |
 | --- | --- |
-| `core/` | 跨功能的运行时与共享资源：`story`、`save_store`、`world_resources`、`resource_catalog`、`gameplay.tres`、`shaders/` |
-| `data/` | 跨功能的数据类型定义（`ItemDefinition`、`MonsterDefinition` 等 Resource 脚本） |
+| `core/` | 跨功能运行时：`story`、`save_store`、`world_resources`、`resource_catalog`、`sprite_index`、`gameplay.tres`、`shaders/` |
+| `data/` | 跨功能数据类型定义（`ItemDefinition`、`MonsterDefinition` 等 Resource 脚本） |
 | `ui/` | 通用界面组件、字体主题、文案表、数字与窗框图集 |
 | `battle/` `field/` `menu/` `prime/` `main/` | 各自功能的场景、脚本、数据 |
 | `actors/` `monsters/` `maps/` | 按对象/地图组存放的角色、怪物、地图 |
 | `assets/` | 只放本地二进制资源（音频、字体、未使用的原版贴图），不入库 |
+
+脚本与场景同级：共享脚本也有同名目录（`core/story/story.gd`）。
 
 ## 入库范围
 
@@ -43,8 +49,9 @@ ui/window_transition/
   `values` 从 `ExtResource` 换成 `SubResource`。
 - **地图图层例外**：每层本来就是单帧整图，直接 `<对象名>.webp`，TileSet 用普通
   `Texture2D`——`AtlasTexture` 会让 Godot 拒绝创建任何 tile。
-- 多场景共用的贴图放在对应**通用场景**的目录里（如 `ui/window_transition/`），
-  由该组件拥有，其余场景实例化组件，而不是各自引用贴图。
+- 运行时按 id 取帧走 `core/sprite_index.gd`：`对象/frame-NNN` → `[图集路径, 帧矩形]`，
+  共 5,835 帧；`ResourceCatalog.load_sprite()` 据此切 `AtlasTexture`。
+- 通用组件自带图集（如 `ui/number/number_*.tscn`），其余场景实例化组件，而不是各自引用贴图。
 
 ## 本地补齐二进制资源
 

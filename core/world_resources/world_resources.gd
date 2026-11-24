@@ -27,16 +27,18 @@ func initialize(asset_catalog: Node, event_scripts: Variant = null) -> bool:
 	if not is_instance_valid(asset_catalog):
 		_fail("转换资源清单格式不受支持")
 		return false
-	# 地图注册直接从 Godot 场景目录推导：一张地图一个 `m<id>.tscn`。
-	var directory := DirAccess.open("res://scenes/maps")
+	# 地图注册直接从 Godot 场景目录推导：一个地图组一个目录 `m<id>/`，里面是 `m<id>.tscn`。
+	var directory := DirAccess.open("res://maps")
 	if directory == null:
-		_fail("地图场景目录缺失：res://scenes/maps")
+		_fail("地图场景目录缺失：res://maps")
 		return false
-	for name: String in directory.get_files():
-		if not name.begins_with("m") or not name.ends_with(".tscn"):
+	for name: String in directory.get_directories():
+		if not name.begins_with("m"):
 			continue
-		var digits := name.substr(1, name.length() - 6)
+		var digits := name.substr(1)
 		if not digits.is_valid_int():
+			continue
+		if not ResourceLoader.exists("res://maps/%s/%s.tscn" % [name, name]):
 			continue
 		var id := digits.to_int()
 		_map_scenes[id] = true
