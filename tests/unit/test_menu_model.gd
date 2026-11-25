@@ -134,6 +134,16 @@ func _run() -> void:
 		and int(use_progress.monsters[0]["hp"]) > 5
 		and int(use_progress.inventory["1001"]) == 1,
 		"menu HP items heal through the shared Ball_stdUse rule and consume one")
+	# 原生的二级选择列全部持有精灵（`Ball_bagList`），不限于出战队伍的三只。
+	var stored_progress := {"monsters": [{"nativeArguments": [49, 5, 0, -1, 0],
+		"nickname": 0, "hp": 5, "sp": 5}, {"nativeArguments": [49, 5, 0, -1, 0],
+		"nickname": 0, "hp": 5, "sp": 5}], "partyOrder": [0], "inventory": {"1001": 1},
+		"parameter": {}}
+	var stored_heal := Menu.use_item(stored_progress, use_catalog, 1001, 1)
+	assert_true(stored_heal.get("code") == ItemEffect.Code.HP
+		and int(stored_progress.monsters[1]["hp"]) > 5
+		and not stored_progress.inventory.has("1001"),
+		"item use targets any stored monster, matching the native party selector")
 	var alive := Menu.use_item(use_progress, use_catalog, 1017, 0)
 	use_progress.monsters[0]["hp"] = 0
 	var revived := Menu.use_item(use_progress, use_catalog, 1017, 0)

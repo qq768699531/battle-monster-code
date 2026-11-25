@@ -79,7 +79,9 @@ func _confirm_mix() -> void:
 		host.notice = "当前没有可选择的出战成员。"
 		host._render_content()
 		return
+	host.selected_party_member_index = 0
 	host.selected_item_target_slot = 0
+	host.party_navigation_open = true
 	host.item_target_open = true
 	host.notice = ""
 	host._render_content()

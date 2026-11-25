@@ -554,12 +554,12 @@ static func item_use_supported(item: Dictionary) -> bool:
 ## `random_seed` 只给宿主的回放校验用：同一种子重算随机球／技能书的抽取结果。
 static func use_item(progress: Dictionary, catalog: GameplayData,
 		item_id: int, member_index: int, random_seed: int = -1) -> Dictionary:
-	var order := native_party_order(progress)
+	# 原生二级选择是 `Menu_Party_Draw` 的 `Ball_bagList`：全部持有精灵都能当目标，
+	# 不限于 `partyOrder` 的三只出战队伍。
 	var monsters: Variant = progress.get("monsters")
-	if not order.has(member_index) or not monsters is Array or \
-			member_index < 0 or member_index >= monsters.size() or \
+	if not monsters is Array or member_index < 0 or member_index >= monsters.size() or \
 			not monsters[member_index] is Dictionary:
-		return {"ok": false, "error": "此成员不在当前出战队伍中"}
+		return {"ok": false, "error": "此精灵不在当前队伍中"}
 	var rows := native_inventory_rows(progress, catalog, 0)
 	var selected: Dictionary = {}
 	for row: Dictionary in rows:
@@ -801,9 +801,9 @@ static func material_recipe_possible(progress: Dictionary, item: Dictionary) -> 
 ## `ItemEffect.supports`，不支持就直接返回提示、不扣钱，避免白扣 200。
 static func mix_item(progress: Dictionary, item: Dictionary, member_index: int) -> Dictionary:
 	var monsters: Variant = progress.get("monsters")
-	if not native_party_order(progress).has(member_index) or not monsters is Array or \
-			member_index < 0 or member_index >= monsters.size():
-		return {"ok": false, "error": "此成员不在当前出战队伍中"}
+	if not monsters is Array or member_index < 0 or member_index >= monsters.size() or \
+			not monsters[member_index] is Dictionary:
+		return {"ok": false, "error": "此精灵不在当前队伍中"}
 	var parameter: Variant = progress.get("parameter")
 	var balance: Variant = parameter.get("moneyBalance") if parameter is Dictionary else null
 	if not balance is int:

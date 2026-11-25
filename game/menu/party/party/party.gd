@@ -16,6 +16,10 @@ func _ready() -> void:
 
 func slot_count() -> int:
 	var count: int = host._party_display_members().size()
+	# 道具使用／合成的二级选择只列真实持有的精灵（原生 `Ball_bagList`），
+	# 不把 monsterCapacity 的空格画出来。
+	if host.item_target_open:
+		return maxi(1, ceili(float(count) / 6.0)) * 6
 	var capacity: Variant = host.story_progress.get("monsterCapacity")
 	if capacity is int and capacity >= 0:
 		count = maxi(count, capacity)
@@ -27,6 +31,8 @@ func _move_selection(direction: int) -> void:
 
 
 func handle_key(key: String) -> bool:
+	if host.item_target_open:
+		return _handle_item_target_key(key)
 	if host.party_discard_open:
 		return host._pages.party_discard.handle_key(key)
 	if host.party_actions_open:
@@ -67,6 +73,24 @@ func handle_key(key: String) -> bool:
 	return false
 
 
+## 道具使用／合成的二级选择（原生 `MENU_STATE_PARTY` 的 quest_layer 9／10）：
+## 只移动光标、确认、取消，不打开队伍动作表。
+func _handle_item_target_key(key: String) -> bool:
+	if key in ["Escape", "Backspace"]:
+		host.cancel_item_target()
+		return true
+	if key in ["Enter", "Space"]:
+		host.confirm_item_target()
+		return true
+	if key in ["ArrowLeft", "ArrowRight"]:
+		host._select_item_target(-1 if key == "ArrowLeft" else 1)
+		return true
+	if key in ["ArrowUp", "ArrowDown"]:
+		host._select_item_target(-6 if key == "ArrowUp" else 6)
+		return true
+	return true
+
+
 func _render_party() -> void:
 	if host.party_equip_open:
 		$Portrait.hide()
@@ -78,6 +102,8 @@ func _render_party() -> void:
 		monsters = []
 	var order: Array = host.Menu.native_party_order(host.story_progress)
 	var capacity: Variant = host.story_progress.get("monsterCapacity")
+	if host.item_target_open:
+		capacity = -1
 	_present_summary(monsters, order)
 	host.selected_party_member_index = clampi(host.selected_party_member_index, 0, slot_count() - 1)
 	var selected_index: int = host.selected_party_member_index
@@ -87,6 +113,8 @@ func _render_party() -> void:
 		var cell := $Slots.get_child(slot) as ItemCell
 		var display_index := _first_index + slot
 		var has_member: bool = display_index < monsters.size()
+		# 原生道具二级选择只画 `Ball_bagList` 里的真实球，不补 monsterCapacity 的空格。
+		cell.visible = not host.item_target_open or has_member
 		var member_index := display_index if has_member else -1
 		var selected: bool = host.party_navigation_open and display_index == selected_index
 		cell.disabled = host.party_actions_open or host.party_discard_open
@@ -110,6 +138,8 @@ func _render_party() -> void:
 	$EmptyNotice.visible = not has_slots
 	$Monster.hide()
 	$Error.hide()
+	# 道具二级选择不显示队伍页的装备栏。
+	$Monster.get_node("Equipment").visible = not host.item_target_open
 	var has_selected_member: bool = host.party_navigation_open and selected_index < monsters.size()
 	$Scrollbar/UpHit.disabled = host.party_actions_open or host.party_discard_open
 	$Scrollbar/DownHit.disabled = host.party_actions_open or host.party_discard_open
@@ -133,6 +163,8 @@ func _render_party() -> void:
 	if details.get("ok", false):
 		$Monster.present(member, details)
 		$Monster.visible = not host.party_equip_open
+		$Monster.get_node("Equipment").visible = not host.item_target_open
+		$Monster.get_node("Toggle").visible = not host.item_target_open
 	else:
 		$Error.text = "成员详情不可用：%s" % str(details.get("error", "未知原因"))
 		$Error.show()

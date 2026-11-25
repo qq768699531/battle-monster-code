@@ -2948,7 +2948,8 @@ func _menu_party_order_valid(proposed: Dictionary) -> bool:
 
 
 func _menu_expected_item_use(proposed: Dictionary, item_id: int) -> Dictionary:
-	for member_index: int in MenuModel.native_party_order(story.progress):
+	var monsters: Variant = story.progress.get("monsters", [])
+	for member_index in range(monsters.size() if monsters is Array else 0):
 		var candidate: Dictionary = story.progress.duplicate(true)
 		var result := MenuModel.use_item(candidate, menu_view.gameplay_catalog,
 			item_id, member_index)

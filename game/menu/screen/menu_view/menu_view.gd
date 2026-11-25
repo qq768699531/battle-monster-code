@@ -719,7 +719,8 @@ func _render_content() -> void:
 	$Frame.visible = chrome_visible
 	for index in range(_tab_buttons.size()):
 		var button := _tab_buttons[index]
-		button.visible = chrome_visible
+		# 使用／合成的二级选择是原生 `MENU_STATE_PARTY` 全窗，不再画六个页签。
+		button.visible = chrome_visible and not item_target_open
 		button.disabled = status_modal or party_actions_open or party_modal or item_actions_open \
 			or item_discard_open or party_discard_open or quest_detail_open or option_return_open
 		var native_index: int = TAB_NATIVE_INDICES[index]
@@ -734,16 +735,21 @@ func _render_content() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE if option_modal else Control.MOUSE_FILTER_STOP
 	for page in _pages.values():
 		page.hide()
-	var name: String = Menu.TAB_PAGE_NAMES[selected_tab]
-	if selected_tab == MenuModel.Tab.PARTY and party_details_open:
-		name = "party_detail"
-	var page: Control = _pages[name]
-	page.show()
-	page.call("_render_" + name)
-	if option_modal:
-		page.hide()
 	if item_target_open and selected_tab == MenuModel.Tab.ITEMS:
-		_pages.item_target.show()
+		# 原生状态 9／10 复用 `Menu_Party_Draw`：球列表＋怪物资料，确认后回到道具页。
+		party_navigation_open = true
+		party_actions_open = false
+		_pages.party.show()
+		_pages.party.call("_render_party")
+	else:
+		var name: String = Menu.TAB_PAGE_NAMES[selected_tab]
+		if selected_tab == MenuModel.Tab.PARTY and party_details_open:
+			name = "party_detail"
+		var page: Control = _pages[name]
+		page.show()
+		page.call("_render_" + name)
+		if option_modal:
+			page.hide()
 	if party_equip_open and selected_tab == MenuModel.Tab.PARTY and not party_details_open:
 		_pages.party.hide()
 		_pages.party_equipment.show()
@@ -778,7 +784,8 @@ func open_selected_item_actions() -> bool:
 	return true
 
 
-## 原生状态 11 选「使用」：消耗类进入出战成员选择（状态 9），其余道具没有可选目标。
+## 原生状态 11 选「使用」：进 `MENU_STATE_PARTY` 的二级选择（quest_layer 9），
+## 候选是 `Ball_bagList` 的全部持有精灵（不是只列出战队伍）。
 func use_selected_item() -> bool:
 	var item := _selected_inventory_item()
 	if item.is_empty():
@@ -789,12 +796,14 @@ func use_selected_item() -> bool:
 		notice = _menu_text(Msg.Id.ITEM_UNUSABLE)
 		_render_content()
 		return false
-	var order := Menu.native_party_order(story_progress)
-	if order.is_empty():
-		notice = "当前没有可选择的出战成员。"
+	var monsters: Variant = story_progress.get("monsters")
+	if not monsters is Array or monsters.is_empty():
+		notice = "当前没有可选择的精灵。"
 		_render_content()
 		return false
+	selected_party_member_index = 0
 	selected_item_target_slot = 0
+	party_navigation_open = true
 	item_target_open = true
 	notice = ""
 	_render_content()
@@ -842,17 +851,70 @@ func _selected_inventory_item() -> Dictionary:
 	return rows[selected_item_index]
 
 
+## 二级选择的确认入口：使用走 `Ball_stdUseEx`，合成走 `MenuModel.mix_item`。
+func confirm_item_target() -> bool:
+	if not item_target_open:
+		return false
+	var item := _selected_inventory_item()
+	if not Menu.item_actions(item).has(Menu.ITEM_ACTION_MIX):
+		return use_selected_item_on_target()
+	return _confirm_item_mix(item)
+
+
+## 原生 `Menu_Item_mKeyPressed` 的 quest_layer 10：先查余额（199 以下 79 且不扣钱），
+## 再扣 200 并走 `Ball_stdUseEx` 的第 4 组分支。
+func _confirm_item_mix(item: Dictionary) -> bool:
+	if item.is_empty():
+		item_target_open = false
+		notice = "道具已不可用。"
+		_render_content()
+		return false
+	var result := Menu.mix_item(story_progress, item, selected_party_member_index)
+	notice = _menu_text(int(result["message_id"])) if result.has("message_id") \
+		else str(result.get("error", "道具合成失败"))
+	if not result.get("ok", false):
+		_render_content()
+		return false
+	item_target_open = false
+	party_navigation_open = false
+	last_progress_operation = {"kind": "mix", "item_id": int(item.id),
+		"member": selected_party_member_index, "category": selected_bag_category}
+	progress_changed.emit(story_progress.duplicate(true))
+	_render_content()
+	return true
+
+
+func cancel_item_target() -> void:
+	item_target_open = false
+	party_navigation_open = false
+	notice = ""
+	_render_content()
+
+
+## 二级选择的移动：候选是全部持有精灵；越界按原生取模。
+func _select_item_target(step: int) -> void:
+	var monsters: Variant = story_progress.get("monsters")
+	if not monsters is Array or monsters.is_empty() or step == 0:
+		return
+	selected_party_member_index = posmod(selected_party_member_index + step, monsters.size())
+	selected_item_target_slot = selected_party_member_index
+	notice = ""
+	_render_content()
+
+
 func use_selected_item_on_target() -> bool:
 	if not item_target_open:
 		return false
 	var rows := Menu.native_inventory_rows(story_progress, gameplay_catalog,
 		selected_bag_category)
-	var order := Menu.native_party_order(story_progress)
-	if selected_item_index < 0 or selected_item_index >= rows.size() or order.is_empty():
-		notice = "道具或出战成员已不可用。"
+	var monsters: Variant = story_progress.get("monsters")
+	if selected_item_index < 0 or selected_item_index >= rows.size() or \
+			not monsters is Array or selected_party_member_index < 0 or \
+			selected_party_member_index >= monsters.size():
+		notice = "道具或精灵已不可用。"
 		_render_content()
 		return false
-	var member_index := int(order[posmod(selected_item_target_slot, order.size())])
+	var member_index := selected_party_member_index
 	var item: Dictionary = rows[selected_item_index]
 	var random_seed := randi()
 	var result := Menu.use_item(story_progress, gameplay_catalog, int(item.id), member_index,
@@ -871,6 +933,7 @@ func use_selected_item_on_target() -> bool:
 		_render_content()
 		return false
 	item_target_open = false
+	party_navigation_open = false
 	last_progress_operation = {"kind": "use", "item_id": int(item.id),
 		"member": member_index, "seed": random_seed}
 	progress_changed.emit(story_progress.duplicate(true))
@@ -1251,6 +1314,9 @@ func _select_inventory_item(index: int) -> void:
 func _select_party_slot(index: int) -> void:
 	if party_actions_open or party_equip_open or party_details_open or party_discard_open \
 			or index < 0 or index >= _pages.party.slot_count():
+		return
+	# 二级选择只列真实持有的精灵：补齐格点中也不允许把空格当目标。
+	if item_target_open and index >= _party_display_members().size():
 		return
 	party_navigation_open = true
 	selected_party_member_index = index
