@@ -26,10 +26,11 @@ func test_item_target_opens_as_single_window() -> void:
 		"ability_inputs": [14, 13, 12, 11, 17, 16],
 		"attribute_inputs": [16, 4, 22, 2, 11, 2]}]})
 	assert_eq(window.get_script(), WindowScript, "二级选择继承 WindowTransition")
-	assert_eq(window.window_size, Vector2i(228, 240), "与队伍页同高的窗口")
+	assert_eq(window.window_size, Vector2i(228, 214), "原生 Menu_Monster_DrawList 窗宽高")
 	assert_false(window.visible, "初始不显示")
 	assert_eq(window_party.get_script(), PartyScript, "正文复用 party.gd，不另写一套")
 	assert_ne(window_party, menu_party, "窗口自带独立实例")
+	menu.selected_tab = MenuModel.Tab.ITEMS
 	menu.party_navigation_open = true
 	menu.selected_party_member_index = 0
 	menu.item_target_open = true
@@ -42,6 +43,8 @@ func test_item_target_opens_as_single_window() -> void:
 	# 与 PARTY 页一致：立绘与六个精灵格位都要画出来，不能裁剪。
 	assert_true(window_party.visible, "窗口内的队伍页已挂上")
 	assert_true(window_party.get_node("Portrait").visible, "精灵立绘显示")
+	assert_true(window_party.get_node("Portrait/StatusPortraitLayers/Monster").visible,
+		"窗口内那份 party 的立绘已 present")
 	var slots: Control = window_party.get_node("Slots")
 	for index in range(6):
 		assert_true(slots.get_child(index).visible, "第 %d 个精灵格位显示" % index)

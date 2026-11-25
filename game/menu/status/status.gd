@@ -314,10 +314,14 @@ func _status_portrait_request() -> Dictionary:
 func _sync_status_portrait() -> void:
 	if not is_instance_valid(host._status_portrait_node):
 		return
+	var item_target_active: bool = host.item_target_open or host._pages.item_target.is_active()
 	var portrait_view: Control = $Portrait
 	if host.selected_tab == MenuModel.Tab.PARTY:
 		portrait_view = host._pages.party_detail.get_node("Content/Portrait") \
 			if host.party_details_open else host._pages.party.get_node("Portrait")
+	elif item_target_active:
+		# 道具二级选择窗里是另一份 `party` 实例，立绘要单独驱动。
+		portrait_view = host._pages.item_target.get_node("Content/Party/Portrait")
 	var layers: Control = portrait_view.get_node("StatusPortraitLayers")
 	var monster: Node2D = portrait_view.get_node("StatusPortraitLayers/Monster")
 	var hero: Node2D = portrait_view.get_node("StatusPortraitLayers/Hero")
@@ -327,7 +331,8 @@ func _sync_status_portrait() -> void:
 		host._status_portrait_frame_key = ""
 	var error: Control = portrait_view.get_node("PortraitError")
 	error.hide()
-	var party_visible: bool = host.selected_tab == MenuModel.Tab.PARTY and not host.party_equip_open
+	var party_visible: bool = (host.selected_tab == MenuModel.Tab.PARTY or item_target_active) \
+		and not host.party_equip_open
 	var request = _status_portrait_request() if host.selected_tab == MenuModel.Tab.STATUS or party_visible else {}
 	monster.visible = not request.is_empty() and bool(request.get("monster", false))
 	hero.visible = not request.is_empty() and request.key == "hero"

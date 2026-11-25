@@ -6,9 +6,11 @@ extends "res://engine/ui/window_transition/window_transition.gd"
 ## `WindowTransition` 窗口，正文直接放一份 `party.tscn`，渲染、选中、滚动、确认全部由
 ## `party.gd` 负责，本脚本不复制任何列表／资料逻辑，也不再裁剪界面的任何部件。
 ##
-## 窗口取与队伍页一致的 228×240（原生该层是 228×214 并裁掉立绘与空格，这里按与 PARTY 页
-## 一致的要求不复刻裁剪），`Party` 保持原坐标，所以立绘、六个精灵格位、球数／PARTY 点、
-## 装备／被动开关与 PARTY 页逐像素一致；窗口只负责开合动画与标题。
+## 窗口保持原生的 228×214（`Menu_Monster_DrawList`），只容纳队伍页里与精灵相关的中段：
+## 立绘、球列表与怪物资料；上下留白按本窗的 `DrawList(rect+8, rect+24)`／
+## `Menu_Monster_Draw2(rect+8, rect+73)` 定位，不再沿用 PARTY 页原坐标。
+## `Party` 挂在本窗口 `Content` 下并整体上移 13，立绘的 `present()` 由
+## `status.gd::_sync_status_portrait` 按本实例驱动（与队伍页共用同一套绘制）。
 
 const Msg = preload("res://engine/ui/msg/msg.gd")
 
