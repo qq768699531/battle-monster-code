@@ -1330,7 +1330,7 @@ func _select_party_slot(index: int) -> void:
 	if party_actions_open or party_equip_open or party_details_open or party_discard_open \
 			or index < 0 or index >= _pages.party.slot_count():
 		return
-	# 二级选择只列真实持有的精灵：补齐格点中也不允许把空格当目标。
+	# 二级选择与 PARTY 页一样补齐格点，但空格仍不能当目标。
 	if item_target_open and index >= _party_display_members().size():
 		return
 	party_navigation_open = true

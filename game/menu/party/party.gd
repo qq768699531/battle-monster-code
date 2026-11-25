@@ -16,10 +16,6 @@ func _ready() -> void:
 
 func slot_count() -> int:
 	var count: int = host._party_display_members().size()
-	# 道具使用／合成的二级选择只列真实持有的精灵（原生 `Ball_bagList`），
-	# 不把 monsterCapacity 的空格画出来。
-	if host.item_target_open:
-		return maxi(1, ceili(float(count) / 6.0)) * 6
 	var capacity: Variant = host.story_progress.get("monsterCapacity")
 	if capacity is int and capacity >= 0:
 		count = maxi(count, capacity)
@@ -102,8 +98,6 @@ func _render_party() -> void:
 		monsters = []
 	var order: Array = host.Menu.native_party_order(host.story_progress)
 	var capacity: Variant = host.story_progress.get("monsterCapacity")
-	if host.item_target_open:
-		capacity = -1
 	_present_summary(monsters, order)
 	host.selected_party_member_index = clampi(host.selected_party_member_index, 0, slot_count() - 1)
 	var selected_index: int = host.selected_party_member_index
@@ -113,8 +107,6 @@ func _render_party() -> void:
 		var cell := $Slots.get_child(slot) as ItemCell
 		var display_index := _first_index + slot
 		var has_member: bool = display_index < monsters.size()
-		# 原生道具二级选择只画 `Ball_bagList` 里的真实球，不补 monsterCapacity 的空格。
-		cell.visible = not host.item_target_open or has_member
 		var member_index := display_index if has_member else -1
 		var selected: bool = host.party_navigation_open and display_index == selected_index
 		cell.disabled = host.party_actions_open or host.party_discard_open

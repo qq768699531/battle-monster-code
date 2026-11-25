@@ -2,14 +2,13 @@ extends "res://engine/ui/window_transition/window_transition.gd"
 ## 道具使用／合成的二级选择窗。
 ##
 ## 原生 `Menu_Item_mPaint` 的 quest_layer 9／10（选「使用」的目标、技能书合成）不再调
-## `Menu_win_DrawBasic`，而是 `Menu_Monster_DrawList(JC_fxt2Return(184), ...)`：
-## 开一个 228×214 的 Box4 窗（`Menu_win_Box4_DrawWindow(..., 228, 214, ..., 1, 16)`，标题
-## `common/msg.fxt` 184「精灵球」），正文是 `Menu_Party_DrawList` 的球列表 + `Menu_Monster_Draw2`
-## 的怪物资料。所以这一层在场景里独立成一个窗口，菜单窗框与页签同时收起，屏幕上只留它。
+## `Menu_win_DrawBasic`，而是走 `Menu_Monster_DrawList` 的独立窗。重制里这一层是
+## `WindowTransition` 窗口，正文直接放一份 `party.tscn`，渲染、选中、滚动、确认全部由
+## `party.gd` 负责，本脚本不复制任何列表／资料逻辑，也不再裁剪界面的任何部件。
 ##
-## 正文直接放一份 `party.tscn`，渲染与按键都转发给 `party.gd`，本脚本不复制任何列表／资料逻辑。
-## 原生两处的绘制只有窗口内 y 偏移不同（队伍页 `DrawList(rect+8, rect+50)`、本窗
-## `DrawList(rect+8, rect+24)`，资料同理差 13），所以场景里把 `Party` 上移 13 即可对齐。
+## 窗口取与队伍页一致的 228×240（原生该层是 228×214 并裁掉立绘与空格，这里按与 PARTY 页
+## 一致的要求不复刻裁剪），`Party` 保持原坐标，所以立绘、六个精灵格位、球数／PARTY 点、
+## 装备／被动开关与 PARTY 页逐像素一致；窗口只负责开合动画与标题。
 
 const Msg = preload("res://engine/ui/msg/msg.gd")
 
@@ -60,11 +59,6 @@ func handle_key(key: String) -> bool:
 
 func refresh() -> void:
 	_party.call("_render_party")
-	# 原生这一层只画 `Menu_Party_DrawList` 与 `Menu_Monster_Draw2`：队伍页的立绘、空位提示、
-	# 动作表与装备栏都不在窗内（列装／被动的切换只属于队伍页）。
-	for path: String in ["Portrait", "ActionAnchor", "EmptyNotice",
-			"Monster/Equipment", "Monster/Toggle"]:
-		(_party.get_node(path) as Control).hide()
 
 
 func _transition_finished(opened: bool) -> void:
