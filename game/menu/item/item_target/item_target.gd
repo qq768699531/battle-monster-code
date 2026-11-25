@@ -53,6 +53,8 @@ func _confirm_mix() -> void:
 	host.notice = _mix_notice(result)
 	if bool(result.get("ok", false)):
 		host.item_target_open = false
+		host.last_progress_operation = {"kind": "mix", "item_id": int(item.id),
+			"member": member_index, "category": host.selected_bag_category}
 		host.progress_changed.emit(host.story_progress.duplicate(true))
 	host._render_content()
 

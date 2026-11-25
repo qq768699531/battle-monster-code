@@ -170,6 +170,8 @@ enum Id {
 	ITEM_TARGET_DOWN = 508,   ## 无法对死去的精灵使用.
 	## `Ball_stdUseEx:205-208` 的 `case 36`：经验加成窗口已经在生效时只提示这一条（不扣道具）。
 	ITEM_BONUS_ACTIVE = 509,  ## 已在使用中.
+	## `Ball_stdUseEx` 的 default：返回码 0 与未登记分支一律取这一条（不扣道具）。
+	ITEM_UNUSABLE = 510,      ## 现在无法使用.
 	ITEM_MIX_DONE = 504,       ## 合成成功.（第 4 组返回码 31，`Ball_stdUse:169-185`）
 	ITEM_MIX_DUPLICATE = 505,  ## 已经学会这个被动了.（返回码 32，`LABEL_96`）
 	ITEM_MIX_NO_MATERIAL = 506, ## 材料不足.（`Ball_stdUseEx` 返回码 33，技能书合成用）

@@ -837,15 +837,21 @@ func _use_item() -> void:
 	# 原生 `Battle_Target_mKeyPressed` 是 `Game_infoInit` 的调用点之一：道具结果的记录
 	# （msg.fxt 482／483／484 等）由 `_item_message` 取出后进提示栈。
 	_set_note(_item_message(code))
-	# 原生 `Ball_stdUse:1067` 的 `v6 = 1` → `Item_stdDels`（`:370`）：开经验加成窗口的这一支同样要扣道具。
+	# 扣道具只看 `Ball_stdUse` 的 `v6`：经验窗口、随机生成等分支也要扣，并不止会播特效的那几种。
+	var item_id := int(selected_item.get("id", -1))
+	if bool(response.get("consumed", false)) and item_id >= 0:
+		_used_items[item_id] = int(_used_items.get(item_id, 0)) + 1
+	# 原生 switch 只处理 0..17；18（吃不下了）及更大的返回码同样走 `LABEL_21`：不播特效，
+	# 但道具回合已经用掉。`Battle_Target_mKeyPressed` 的 18 也不例外。
+	if code > ItemEffect.Code.FOOD_RESTORED:
+		selected_item = {}
+		_next()
+		return
 	if not [ItemEffect.Code.HP, ItemEffect.Code.SP, ItemEffect.Code.BOTH, ItemEffect.Code.REVIVED,
 			ItemEffect.Code.CURED, ItemEffect.Code.FEEL_GOOD, ItemEffect.Code.FEEL_BAD,
-			ItemEffect.Code.FOOD_RESTORED, ItemEffect.Code.EXP_BONUS].has(code):
+			ItemEffect.Code.FOOD_RESTORED].has(code):
 		_refresh_display()
 		return
-	var item_id := int(selected_item.get("id", -1))
-	if item_id >= 0:
-		_used_items[item_id] = int(_used_items.get(item_id, 0)) + 1
 	_begin_item_action(code)
 
 

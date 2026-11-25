@@ -551,8 +551,9 @@ static func item_use_supported(item: Dictionary) -> bool:
 ## 菜单侧使用道具：菜单记录与战斗球的字段形状不同，这里先把记录适配成 `ItemEffect` 的 `subject`，
 ## 再走与战斗相同的一份 `Ball_stdUse` 分派（战斗侧是 `BattleModel.use_item`），
 ## 最后把 HP／SP／心情／饱食度与觉醒档写回记录。原始返回码与提示记录号一并带出去。
+## `random_seed` 只给宿主的回放校验用：同一种子重算随机球／技能书的抽取结果。
 static func use_item(progress: Dictionary, catalog: GameplayData,
-		item_id: int, member_index: int) -> Dictionary:
+		item_id: int, member_index: int, random_seed: int = -1) -> Dictionary:
 	var order := native_party_order(progress)
 	var monsters: Variant = progress.get("monsters")
 	if not order.has(member_index) or not monsters is Array or \
@@ -595,10 +596,12 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 	ball["statuses"] = {}
 	var parameter: Variant = progress.get("parameter", {})
 	var standard := standard_level(progress)
+	var context := {"catalog": catalog, "standard_level": standard if standard > 0 else 1,
+		"level": int(parameter.get("level", 1)) if parameter is Dictionary else 1}
+	if random_seed >= 0:
+		context["random_seed"] = random_seed
 	var result := ItemEffect.apply(ball, selected,
-		func(target: Dictionary) -> String: return Battle.awaken_ball(target, catalog),
-		{"catalog": catalog, "standard_level": standard if standard > 0 else 1,
-			"level": int(parameter.get("level", 1)) if parameter is Dictionary else 1})
+		func(target: Dictionary) -> String: return Battle.awaken_ball(target, catalog), context)
 	if not result.get("ok", false):
 		return result
 	# 第 7 组 9–12：原生 `Ball_stdAddEx` 成功才 `v6 = 1` 扣道具；怪包满时返回 22、不扣。
@@ -608,7 +611,7 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 		if capacity is int and monsters.size() >= int(capacity):
 			return _generated_failure(selected, member_index, ItemEffect.Code.RANDOM_BALL_FULL)
 		var species := int(generated_monster.get("species", 0))
-		monsters.append(_generated_monster_record(generated_monster))
+		monsters.append(_generated_monster_record(generated_monster, random_seed))
 		Book.discover_monster(progress, species)
 	# 第 7 组 13–14：书袋满时 `Item_stdAddEx` 返回 0 → 24、不扣。
 	var generated_item: Variant = result.get("generated_item")
@@ -640,6 +643,44 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 		"hp_restored": int(result.get("hp_restored", 0)),
 		"sp_restored": int(result.get("sp_restored", 0)),
 		"evolved": bool(result.get("evolved", false))}
+
+
+## 菜单宿主只认「菜单自己声明的操作」而不信任提交上来的快照：用活状态重放同一操作，
+## 结果必须逐字段等于快照。随机球／技能书带 `seed`，重抽结果才能对齐（`ItemEffect._roll`）。
+## kind：`use`（`item_id`／`member`／`seed`）、`mix`（`item_id`／`member`）、
+## `discard`（`item_id`／`count`／`category`）。
+static func replay_operation(progress: Dictionary, catalog: GameplayData,
+		operation: Dictionary) -> Dictionary:
+	var candidate: Dictionary = progress.duplicate(true)
+	var kind := str(operation.get("kind", ""))
+	var item_id := int(operation.get("item_id", -1))
+	var member := int(operation.get("member", -1))
+	if kind == "use":
+		var used := use_item(candidate, catalog, item_id, member,
+			int(operation.get("seed", -1)))
+		return {"ok": bool(used.get("ok", false)), "progress": candidate,
+			"result": used}
+	var category := int(operation.get("category", ItemKind.Bag.ITEMS))
+	var row := _inventory_row(candidate, catalog, item_id, category)
+	if row.is_empty():
+		return {"ok": false, "progress": candidate, "result": {"error": "背包中没有该道具"}}
+	if kind == "mix":
+		var mixed := mix_item(candidate, row, member)
+		return {"ok": bool(mixed.get("ok", false)), "progress": candidate,
+			"result": mixed}
+	if kind == "discard":
+		var dropped := discard_inventory_item(candidate, row, int(operation.get("count", 1)))
+		return {"ok": bool(dropped.get("ok", false)), "progress": candidate,
+			"result": dropped}
+	return {"ok": false, "progress": candidate, "result": {"error": "未知的道具操作"}}
+
+
+static func _inventory_row(progress: Dictionary, catalog: GameplayData,
+		item_id: int, category: int) -> Dictionary:
+	for row: Dictionary in native_inventory_rows(progress, catalog, category):
+		if int(row.get("id", -1)) == item_id:
+			return row
+	return {}
 
 
 static func native_main_quest(progress: Dictionary, text: Variant) -> Dictionary:
@@ -825,7 +866,11 @@ static func _deduct_mix_materials(progress: Dictionary, item: Dictionary) -> voi
 ## 第 7 组 9–12 的 `Ball_stdSet` 记录：`nativeArguments` 与捕获记录同形
 ## `[物种, 等级, 觉醒档, 装备, 成长]`，0 号被动槽写随机被动 1 级；`brain_limit` 恒 99、
 ## `feel_value` 0、`food_value` 100（`Ball_stdSet@0x85E20:29-47`）。
-static func _generated_monster_record(generated: Dictionary) -> Dictionary:
+## `random_seed` 同时决定随机球那只新个体的性格；宿主回放用同一种子复现整条记录。
+static func _generated_monster_record(generated: Dictionary, random_seed: int = -1) -> Dictionary:
+	var nickname_rng := RandomNumberGenerator.new()
+	if random_seed >= 0:
+		nickname_rng.seed = random_seed
 	var species := int(generated.get("species", 0))
 	var level := int(generated.get("level", 1))
 	var passive_slots: Array = []
@@ -834,7 +879,8 @@ static func _generated_monster_record(generated: Dictionary) -> Dictionary:
 	passive_slots[0] = [int(generated.get("passive_id", 0)), 1]
 	return {"species": species, "level": level,
 		"nativeArguments": [species, level, 0, -1, -1],
-		"nickname": Battle.roll_nickname(func(count: int) -> int: return randi() % count),
+		"nickname": Battle.roll_nickname(func(count: int) -> int: return (
+			nickname_rng.randi() if random_seed >= 0 else randi()) % count),
 		"experience": 0, "feel": 0, "food": ItemEffect.FOOD_MAX,
 		"brainCurrent": int(generated.get("brain_current", Battle.BRAIN_CURRENT_INITIAL)),
 		"brainLimit": Battle.BRAIN_LIMIT, "passiveSlots": passive_slots}

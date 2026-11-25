@@ -249,6 +249,8 @@ var _mastery_view: Control
 var _starter_view: Control
 ## 当前显示的是哪一级：原生 `current_state_index_bits` 的 15／16 两位。
 var _mastery_stage := Story.MasteryStage.MASTERY
+## 第 7 组 16「专家的印章」打开的流派页：不走剧情事件门，只写 `preferredMastery`。
+var _mastery_item_active := false
 var _save_view: Control
 var _panel: ColorRect
 var _label: Label
@@ -667,7 +669,7 @@ func advance(delta: float) -> void:
 		_advance_narration()
 		_refresh()
 		return
-	if not mastery.is_empty():
+	if _mastery_item_active or not mastery.is_empty():
 		_refresh()
 		return
 	if not _encounter.is_empty() and _encounter.stage != "battle":
@@ -1240,7 +1242,7 @@ func handle_touch(position: Vector2, phase: String) -> bool:
 		if phase == "down" and _save_view.accepts(Vector2(position)):
 			_save_view.press("Enter")
 		return true
-	if not mastery.is_empty():
+	if _mastery_item_active or not mastery.is_empty():
 		if _starter_active():
 			# 二级页的格、滚动条与确认框都是真实 Button（`Menu_mon_DrawBookList`／
 			# `Menu_win_Box2_DrawSelect`），`down` 已被它们吃掉；这里只吞掉落在空处的触点
@@ -2732,6 +2734,7 @@ func _open_menu() -> void:
 	menu_view.progress_changed.connect(_menu_progress_changed)
 	menu_view.settings_changed.connect(_menu_settings_changed)
 	menu_view.touch_key_pressed.connect(_menu_touch_key_pressed)
+	menu_view.mastery_change_requested.connect(_menu_mastery_change_requested)
 	menu_view.option_save_blocked = story_unsettled()
 	menu_view.bind(story.progress.duplicate(true) if story != null else {}, catalog, quest)
 	menu_open = true
@@ -2757,6 +2760,25 @@ func _menu_shared_page_requested(page: int) -> void:
 
 func _menu_touch_key_pressed(key: int) -> void:
 	_touch_key = key
+
+
+## 第 7 组 16 的页面：原生 `Ball_stdUse` 扣道具后 `SetNext(CHARACTER_SELECT_17)`，
+## 选完回 FIELD；本工程复用初始流派页，只把结果写进 `preferredMastery`。
+func _menu_mastery_change_requested() -> void:
+	if not menu_open or menu_view == null or story == null:
+		return
+	_close_menu()
+	_mastery_stage = Story.MasteryStage.MASTERY
+	var parameter: Variant = story.progress.get("parameter")
+	var choice := int(parameter.get("preferredMastery", 0)) \
+		if parameter is Dictionary else 0
+	if not _mastery_view.present(_mastery_names(Story.MASTERY_SPECIES), choice):
+		_mastery_item_active = false
+		_stop("原流派选择无法显示：%s" % _mastery_view.last_error)
+		return
+	_mastery_item_active = true
+	story.paused = true
+	_refresh()
 
 
 func _close_menu() -> void:
@@ -2798,6 +2820,22 @@ func _menu_settings_changed(settings: Dictionary, saved: bool) -> void:
 ## 其余一律拒绝并提示用户，避免菜单写入伪造的进度或绕过原版限制。
 func _menu_progress_changed(progress: Dictionary) -> void:
 	if not menu_open or menu_view == null or story == null:
+		return
+	# 菜单声明的道具操作（用／合成／丢弃）：用活存档重放同一操作，结果必须逐字段等于提交快照。
+	# 必须放在通用 parameter 差异之前：合成扣钱、经验窗口、能力点退回都会改 parameter。
+	var operation: Dictionary = menu_view.take_progress_operation()
+	if not operation.is_empty():
+		var replay: Dictionary = MenuModel.replay_operation(story.progress,
+			menu_view.gameplay_catalog, operation)
+		var replayed: Variant = replay.get("progress")
+		if not bool(replay.get("ok", false)) or not replayed is Dictionary or \
+				replayed != progress or not focused or not boundary.is_empty() or \
+				not dialogue.is_empty() or not _motions.is_empty() or battle_view != null or \
+				story.stable_state().is_empty() or \
+				not Story.validate_progress(replayed, int(story.progress.slot)):
+			_reject_menu_progress()
+			return
+		story.progress = (replayed as Dictionary).duplicate(true)
 		return
 	if progress.get("parameter") != story.progress.get("parameter"):
 		var status_change := MenuModel.status_allocation_change(story.progress, progress)
@@ -3271,7 +3309,7 @@ func press(key: int) -> void:
 			_advance_narration()
 			_refresh()
 		return
-	if not mastery.is_empty():
+	if _mastery_item_active or not mastery.is_empty():
 		if _starter_active():
 			# 状态 16 是图鉴页实例：四方向、OK 与 CLR 都在页内按 `Game_Book_Monster_mKeyPressed`
 			# 分派（含确认框的翻项与关框）。
@@ -3388,9 +3426,27 @@ func _advance_narration() -> void:
 ## （`mastery_view._choose`／`book_monster._choose`，原生 `Menu_win_Box2_DrawSelect:90` 的 −5）
 ## 都走这里，视图不再直调私有实现。一级确认框收拢期间（已选「否」）不提交。
 func submit_mastery() -> void:
+	if _mastery_item_active:
+		_submit_mastery_item()
+		return
 	if not _starter_active() and _mastery_view != null and _mastery_view.confirm_closing():
 		return
 	_complete_mastery()
+
+
+## 第 7 组 16 的确认：页面已由 `_menu_mastery_change_requested` 打开，道具在菜单侧已扣。
+## 原生 `Game_Character_Select_mKeyPressed:64-65` 选完回 FIELD；这里只落 `preferredMastery`。
+func _submit_mastery_item() -> void:
+	var index: int = _mastery_view.selected()
+	var parameter: Variant = story.progress.get("parameter") if story != null else null
+	if index < 0 or index >= Story.MASTERY_SPECIES.size() or not parameter is Dictionary:
+		_stop("流派选择结果无法写回存档参数")
+		return
+	parameter["preferredMastery"] = index
+	_mastery_item_active = false
+	_mastery_view.clear()
+	_restore_field_pause()
+	_refresh()
 
 
 ## 选择确认：一级把流派写进 `progress.parameter.preferredMastery` 后换发二级页的同一条事件门
@@ -3446,6 +3502,7 @@ func _present_starter(effect: Dictionary, catalog: GameplayData) -> bool:
 
 ## 两级页都收起（事件门结束或提交失败）：原生换回 FIELD 时两级窗口都不再画。
 func _clear_mastery_pages() -> void:
+	_mastery_item_active = false
 	_mastery_view.clear()
 	_starter_view.clear()
 

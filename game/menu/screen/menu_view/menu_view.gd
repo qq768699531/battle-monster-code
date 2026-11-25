@@ -14,6 +14,8 @@ signal save_requested(progress: Dictionary)
 signal progress_changed(progress: Dictionary)
 signal settings_changed(settings: Dictionary, saved: bool)
 signal touch_key_pressed(key: int)
+## 第 7 组 16「专家的印章」：道具已扣，宿主须关菜单、开原生 `CHARACTER_SELECT_17` 流派页。
+signal mastery_change_requested
 
 const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const TouchControls = preload("res://game/field/runtime/touch_controls/touch_controls.gd")
@@ -53,6 +55,9 @@ const ITEM_SINGLE_ROW_BAG := 3
 const WINDOW_RULE := Color("#196485")
 
 var story_progress: Dictionary = {}
+## 菜单只声明「做了哪个操作」，宿主持活状态用 `MenuModel.replay_operation` 重放对账；
+## 随机球／技能书把本次种子一并带出，回放才能得到同一只怪／同一本书。
+var last_progress_operation: Dictionary = {}
 ## 原生 `Menu_Option_mKeyPressed:37-40`：`ParamData.current_event_resource_id <= 2` 时存档项
 ## 不开窗（层号不置 1），只推一条 `common/msg.fxt` 198「现在无法存档」。本项目事件号推进与
 ## 原生不等价，宿主按 `field_runtime.story_unsettled()`（没有稳定快照＝剧情／对话／战斗期间）
@@ -821,6 +826,8 @@ func discard_selected_item() -> bool:
 		_render_content()
 		return false
 	notice = "已丢弃 %s ×%d" % [_native_item_name(item_discard_item), item_discard_count]
+	last_progress_operation = {"kind": "discard", "item_id": int(item_discard_item.id),
+		"count": item_discard_count, "category": selected_bag_category}
 	progress_changed.emit(story_progress.duplicate(true))
 	_render_content()
 	return true
@@ -846,24 +853,38 @@ func use_selected_item_on_target() -> bool:
 		return false
 	var member_index := int(order[posmod(selected_item_target_slot, order.size())])
 	var item: Dictionary = rows[selected_item_index]
-	var result := Menu.use_item(story_progress, gameplay_catalog, int(item.id), member_index)
+	var random_seed := randi()
+	var result := Menu.use_item(story_progress, gameplay_catalog, int(item.id), member_index,
+		random_seed)
 	if not result.get("ok", false):
 		notice = str(result.get("error", "道具使用失败"))
 		_render_content()
 		return false
 	# 原生 `Ball_stdUseEx` 用返回码选 `common/msg.fxt`；拼装与战斗侧共用 `ItemEffect.describe`。
-	notice = ItemEffect.describe(int(result.get("code", 0)), item.get("detail_slots", []),
+	var code := int(result.get("code", 0))
+	notice = ItemEffect.describe(code, item.get("detail_slots", []),
 		func(id: int) -> String: return _menu_text(id))
-	if notice.is_empty():
+	if notice.is_empty() and code != ItemEffect.Code.MASTERY_SELECT:
 		notice = "已使用 %s" % _native_item_name(result.item)
 	if not bool(result.get("consumed", false)):
 		# 原生这几支返回码不扣道具（HP 已满／没有可治疗的异常状态……），停在选目标。
 		_render_content()
 		return false
 	item_target_open = false
+	last_progress_operation = {"kind": "use", "item_id": int(item.id),
+		"member": member_index, "seed": random_seed}
 	progress_changed.emit(story_progress.duplicate(true))
 	_render_content()
+	if code == ItemEffect.Code.MASTERY_SELECT:
+		mastery_change_requested.emit()
 	return true
+
+
+## 宿主取走本轮的菜单操作令牌；取过即清，避免下一轮按钮刷新时被重放。
+func take_progress_operation() -> Dictionary:
+	var operation := last_progress_operation
+	last_progress_operation = {}
+	return operation
 
 
 func _native_item_explanation(item: Dictionary) -> String:

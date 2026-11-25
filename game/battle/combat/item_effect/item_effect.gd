@@ -47,6 +47,7 @@ enum Code {
 	RANDOM_BALL_FULL = 22, ## 第 7 组 9–12：`Ball_stdAddEx` 返回空（怪包满，`1441792 >> 16`），不扣
 	RANDOM_BOOK_ADDED = 23, ## 第 7 组 13–14：`Item_stdAddEx` 成功（`1507328 >> 16`），原生无提示
 	RANDOM_BOOK_FULL = 24, ## 第 7 组 13–14：`Item_stdAddEx` 返回 0（书袋满，`1572864 >> 16`），不扣
+	MASTERY_SELECT = 27, ## 第 7 组 16：扣一件后开 `CHARACTER_SELECT_17`（`1769472 >> 16`），无提示
 }
 
 ## `MonsterState.feel_state_code`：`Ball_stdSet` 写 `3 × 觉醒档`，`Ball_stdFeel`
@@ -97,6 +98,10 @@ const BRAIN_BOOSTED := 99
 ## 第 7 组 15：`Ball_stdUse:1039-1049` 先 `Param_abilRecovery`（`ParamData.ability_values[0..2]`
 ## 退回 `ability_points` 并清零），点数仍为 0 时返回 26，否则 25 并扣道具。
 const ABILITY_RECOVERY_INDEX := 15
+## 第 7 组 16「专家的印章」：扣一件后开原生 `CHARACTER_SELECT_17` 流派选择页；返回码 27。
+const MASTERY_CHANGE_INDEX := 16
+## 第 7 组 17：原生没有效果分支，`Ball_stdUse` 返回 0 且不扣；`Ball_stdUseEx` 取默认文案 510。
+const UNUSABLE_INDEX := 17
 ## 第 7 组 21「去除被动」：`Ball_stdUse:1092-1117` 逐槽看等级，> 0 才
 ## `Ball_stdPassive(球, 槽, 0, 0)` 清零，六个槽走完再 `Ball_stdBasic` 重算；
 ## 清过至少一条返回 29，六槽本来就空返回 30 且不扣道具。
@@ -153,11 +158,10 @@ static func slots_of(item: Dictionary) -> Array:
 	return slots
 
 
-## `Ball_stdUse` 覆盖到的种类：第 1 组索引 0–18、19–24 与 31–37，以及第 7 组的 18（经验加成窗口）
-## 、20（超级大理石）与 21（去除被动）。第 1 组 25–30 仍是强化剂（走 `MonsterGrowth`，
-## 不在这里）；第 7 组 16（换流派）要开原生 `CHARACTER_SELECT_17` 页，本工程无此页；
-## 17／19 原生落 `LABEL_11` 返回 0（`Ball_stdUseEx` 默认 510「无法使用」、不扣道具）。
-## 这三条都不放行。
+## `Ball_stdUse` 覆盖到的种类：第 1 组索引 0–18、19–24 与 31–37，以及第 7 组的 3、9–18、20、21。
+## 第 1 组 25–30 是强化剂（走 `MonsterGrowth` 的强化页，不在道具使用里）；第 7 组 16 扣一件后由
+## 菜单宿主开原生 `CHARACTER_SELECT_17` 页（返回码 27）；17 原生落 `LABEL_11` 返回 0 且不扣
+## （`Ball_stdUseEx` 默认 510「无法使用」）。19 没有「使用」动作，`item_actions` 不会放行。
 static func supports(item: Dictionary) -> bool:
 	var item_id: Variant = item.get("id")
 	if not item_id is int:
@@ -169,8 +173,8 @@ static func supports(item: Dictionary) -> bool:
 		return index > 0
 	if kind == ItemKind.Kind.GROUP_7:
 		return index in [BRAIN_BOOST_INDEX, ABILITY_RECOVERY_INDEX, CLEAR_PASSIVES_INDEX,
-			EXP_BONUS_INDEX, ItemKind.SUPER_MARBLE_INDEX] or \
-			(index >= ITEM_FIRST_RANDOM_BALL and index <= ITEM_LAST_RANDOM_BOOK)
+			EXP_BONUS_INDEX, ItemKind.SUPER_MARBLE_INDEX, MASTERY_CHANGE_INDEX,
+			UNUSABLE_INDEX] or (index >= ITEM_FIRST_RANDOM_BALL and index <= ITEM_LAST_RANDOM_BOOK)
 	if kind != ItemKind.Kind.CONSUMABLE:
 		return false
 	if index >= ITEM_FIRST_PASSIVE_UPGRADE and index <= ITEM_LAST_PASSIVE_UPGRADE:
@@ -248,6 +252,8 @@ static func message_id(code: int) -> int:
 			return Msg.Id.ITEM_PASSIVES_CLEARED
 		Code.PASSIVES_NONE:
 			return Msg.Id.ITEM_PASSIVES_NONE
+		Code.FAILED:
+			return Msg.Id.ITEM_UNUSABLE
 		Code.MIX_DONE:
 			return Msg.Id.ITEM_MIX_DONE
 		Code.MIX_DUPLICATE:
@@ -305,6 +311,9 @@ static func apply(subject: Dictionary, item: Dictionary,
 		return _mix(subject, index)
 	var hp := int(subject.get("hp", 0))
 	if ItemKind.kind_of(int(item["id"])) == ItemKind.Kind.GROUP_7:
+		# `Ball_stdUse:123-127` 的「倒下对象」守卫在整张分派表之前，第 7 组全部适用。
+		if hp <= 0:
+			return {"ok": true, "code": Code.TARGET_DOWN, "consumed": false}
 		if index == CLEAR_PASSIVES_INDEX:
 			return _clear_passives(subject)
 		if index == BRAIN_BOOST_INDEX or index == ABILITY_RECOVERY_INDEX:
@@ -316,6 +325,12 @@ static func apply(subject: Dictionary, item: Dictionary,
 			return _exp_bonus(item, hp)
 		if index >= ITEM_FIRST_RANDOM_BALL and index <= ITEM_LAST_RANDOM_BOOK:
 			return _random_grant(index, context)
+		# 第 7 组 16：原生先扣一件再 `SetNext(CHARACTER_SELECT_17)`；页面由菜单宿主打开。
+		if index == MASTERY_CHANGE_INDEX:
+			return {"ok": true, "code": Code.MASTERY_SELECT, "consumed": true}
+		# 第 7 组 17：原生走 `LABEL_11`，返回 0 且不扣道具（`Ball_stdUseEx` 默认提示 510）。
+		if index == UNUSABLE_INDEX:
+			return {"ok": true, "code": Code.FAILED, "consumed": false}
 		# `SHIWORD(n4) == 20`：超级大理石。原生在「对象已倒下」的检查之后，加心情前叠加被动 21。
 		if hp <= 0:
 			return {"ok": true, "code": Code.TARGET_DOWN, "consumed": false}
@@ -456,9 +471,19 @@ static func _random_book(index: int, catalog: GameplayData, context: Dictionary)
 
 
 ## 原生 `EFC_mainGetRAND()`；测试可传固定 `RandomNumberGenerator` 复现同一次抽取。
+## 菜单侧另传 `random_seed`：宿主回放同一操作时用同一种子重抽，随机道具的结果才能逐字段对账。
 static func _roll(context: Dictionary) -> int:
 	var rng: Variant = context.get("rng")
-	return rng.randi() if rng is RandomNumberGenerator else randi()
+	if rng is RandomNumberGenerator:
+		return rng.randi()
+	if context.has("random_seed"):
+		var replay: Variant = context.get("_replay_rng")
+		if not replay is RandomNumberGenerator:
+			replay = RandomNumberGenerator.new()
+			replay.seed = int(context["random_seed"])
+			context["_replay_rng"] = replay
+		return (replay as RandomNumberGenerator).randi()
+	return randi()
 
 
 ## 第 7 组第 18 号：开「经验 +20%」窗口（`Ball_stdUse:1060-1070`）。窗口已在生效时返回 36

@@ -83,6 +83,16 @@ func _run() -> void:
 	assert_true(Menu.discard_inventory_item(bag, {"id": 1001}, 2).ok
 		and bag.inventory == {"3000": 1},
 		"discard drops the key when the stack is emptied")
+	# 丢弃也走宿主回放：同一件道具、同一数量重做一次，快照必须一致。
+	var discard_source := {"inventory": {"1001": 3}}
+	var discard_direct := discard_source.duplicate(true)
+	Menu.discard_inventory_item(discard_direct, {"id": 1001}, 2)
+	var discard_catalog := Fixtures.data({"items": [{"id": 1001, "type": 1, "index": 1,
+		"icon": 1, "detail_slots": [0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0]}]})
+	var discard_replay := Menu.replay_operation(discard_source, discard_catalog,
+		{"kind": "discard", "item_id": 1001, "count": 2, "category": 0})
+	assert_true(discard_replay.get("ok", false) and discard_replay.progress == discard_direct,
+		"replay_operation reproduces an item discard")
 	# 菜单侧使用道具与战斗共用 `ItemEffect`（`Ball_stdUse`）：HP 药扣一个并回血；
 	# 复活道具对活着的成员返回 10 且不扣、对倒下的成员回满并扣掉最后一个；未接的效果直接拒绝。
 	var use_catalog := Fixtures.data({"items": [
@@ -102,8 +112,12 @@ func _run() -> void:
 		{"id": 7012, "type": 7, "index": 12, "icon": 12},
 		{"id": 7013, "type": 7, "index": 13, "icon": 13},
 		{"id": 7014, "type": 7, "index": 14, "icon": 14},
+		{"id": 7016, "type": 7, "index": 16, "icon": 16},
+		{"id": 7017, "type": 7, "index": 17, "icon": 17},
+		{"id": 7021, "type": 7, "index": 21, "icon": 21},
 		{"id": 4000, "type": 4, "index": 0, "grade_index": 0},
-		{"id": 4001, "type": 4, "index": 1, "grade_index": 1}],
+		{"id": 4001, "type": 4, "index": 1, "grade_index": 1,
+			"detail_slots": [0, 0x0201, 0x0002]}],
 		"monsters": [{"id": 49, "kind": 0, "attribute_group": 3, "attribute_entry": 0,
 			"ability_inputs": [14, 13, 12, 11, 17, 16],
 			"attribute_inputs": [16, 4, 22, 2, 11, 2]},
@@ -200,6 +214,24 @@ func _run() -> void:
 		and int(bare_progress.inventory["7021"]) == 1
 		and bare.get("message_id") == Msg.Id.ITEM_PASSIVES_NONE,
 		"group-7 index 21 with no passives reports code 30 and keeps the item")
+	# 第 7 组 16 扣一件并返回码 27（页面由宿主打开）；17 原生无分支，返回 0／提示 510 且不扣。
+	var mastery_progress := {"monsters": [{"nativeArguments": [49, 5, 0, -1, 0], "nickname": 0,
+			"hp": 5, "sp": 5}], "partyOrder": [0], "inventory": {"7016": 1},
+		"parameter": {}}
+	var mastery := Menu.use_item(mastery_progress, use_catalog, 7016, 0)
+	assert_true(mastery.get("code") == ItemEffect.Code.MASTERY_SELECT
+		and mastery.get("consumed") and not mastery_progress.inventory.has("7016")
+		and mastery.get("message_id") == 0,
+		"group-7 index 16 consumes one and reports code 27 without a prompt")
+	var unusable_progress := {"monsters": [{"nativeArguments": [49, 5, 0, -1, 0], "nickname": 0,
+			"hp": 5, "sp": 5}], "partyOrder": [0], "inventory": {"7017": 1},
+		"parameter": {}}
+	var unusable := Menu.use_item(unusable_progress, use_catalog, 7017, 0)
+	assert_true(unusable.get("code") == ItemEffect.Code.FAILED
+		and not unusable.get("consumed")
+		and unusable.get("message_id") == Msg.Id.ITEM_UNUSABLE
+		and int(unusable_progress.inventory["7017"]) == 1,
+		"group-7 index 17 reports code 0 with msg 510 and keeps the item")
 	# 技能书袋（原生袋 3）的「合成」：`Menu_Item_SetMenuList` 的 case 3 给合成＋丢弃，
 	# `Menu_Item_Mix_IsPossible` 按 detail[1]／[2]（低字节材料、高字节数量，0 即不需要）核材料，
 	# 确认时原生先查余额（199 以下报 79）；第 4 组效果未落地，所以扣钱之前就拒绝、钱不动。
@@ -224,6 +256,15 @@ func _run() -> void:
 		and not book_progress.inventory.has("3001")
 		and book_progress.monsters[0]["passiveSlots"][0] == [1, 1],
 		"mix charges 200 first, then writes the passive into slot 0 and consumes the materials")
+	# 宿主回放合成：同一份活存档重做扣钱、扣料与写被动，快照必须逐字段相同。
+	var mix_source := {"partyOrder": [0], "monsters": [{"nativeArguments": [49, 5, 0, -1, 0]}],
+		"inventory": {"3001": 2, "4001": 1}, "parameter": {"moneyBalance": 500}}
+	var mix_direct := mix_source.duplicate(true)
+	Menu.mix_item(mix_direct, book, 0)
+	var mix_replay := Menu.replay_operation(mix_source, use_catalog,
+		{"kind": "mix", "item_id": 4001, "member": 0, "category": 3})
+	assert_true(mix_replay.get("ok", false) and mix_replay.progress == mix_direct,
+		"replay_operation reproduces the mix fee, materials and passive slot")
 	var again := Menu.mix_item(book_progress, book, 0)
 	assert_true(again.get("code") == ItemEffect.Code.MIX_NO_MATERIAL,
 		"spent materials make the second mix report 33")
@@ -333,6 +374,19 @@ func _run() -> void:
 		and full_roll.monsters.size() == 1
 		and int(full_roll.inventory["7009"]) == 1,
 		"a full monster bag reports 22 with msg 498 and keeps the ball")
+	# 宿主回放：同一种子的随机球必须生成同一只怪，菜单提交的快照才能逐字段对账。
+	var replay_seed := 424242
+	var replay_source := {"monsters": [{"nativeArguments": [49, 5, 0, -1, 0],
+			"nickname": 0, "hp": 5, "sp": 5}], "partyOrder": [0],
+		"inventory": {"7009": 1}, "parameter": {"level": 3}, "monsterCapacity": 20,
+		"itemCapacity": [0, 0, 0, 0, 0, 0]}
+	var direct := replay_source.duplicate(true)
+	Menu.use_item(direct, use_catalog, 7009, 0, replay_seed)
+	var replayed := Menu.replay_operation(replay_source, use_catalog,
+		{"kind": "use", "item_id": 7009, "member": 0, "seed": replay_seed})
+	assert_true(replayed.get("ok", false) and replayed.progress == direct
+		and replayed.progress.monsters.size() == 2,
+		"replay_operation regenerates the same random ball from the carried seed")
 	var full_book := {"monsters": [{"nativeArguments": [49, 5, 0, -1, 0], "nickname": 0,
 			"hp": 5, "sp": 5}], "partyOrder": [0], "inventory": {"7013": 1},
 		"parameter": {"level": 7}, "monsterCapacity": 20,
@@ -346,10 +400,10 @@ func _run() -> void:
 	assert_true(Menu.item_use_supported({"id": 7009, "type": 7, "index": 9})
 		and Menu.item_use_supported({"id": 7014, "type": 7, "index": 14})
 		and Menu.item_use_supported({"id": 7021, "type": 7, "index": 21})
-		and not Menu.item_use_supported({"id": 7016, "type": 7, "index": 16})
-		and not Menu.item_use_supported({"id": 7017, "type": 7, "index": 17})
+		and Menu.item_use_supported({"id": 7016, "type": 7, "index": 16})
+		and Menu.item_use_supported({"id": 7017, "type": 7, "index": 17})
 		and not Menu.item_use_supported({"id": 7019, "type": 7, "index": 19}),
-		"supports() admits group-7 9-14 and 21, still rejects 16/17/19")
+		"supports() admits every native use branch; 19 has no 使用 action")
 
 func test_legacy_suite() -> void:
 	_run()
