@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3]
 
-[ext_resource type="Script" path="res://game/menu/status/status/status.gd" id="1"]
+[ext_resource type="Script" path="res://game/menu/status/status.gd" id="1"]
 [ext_resource type="PackedScene" path="res://game/menu/item/item_category/item_category.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://game/menu/status/status_card/status_card.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://game/menu/status/status_growth/status_growth.tscn" id="4"]

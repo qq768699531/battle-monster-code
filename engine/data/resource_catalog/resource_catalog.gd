@@ -28,9 +28,9 @@ const GAMEPLAY_PARTS := {
 	"passives": "res://game/battle/combat/passives/passives.tres",
 	"items": "res://game/menu/item/items/items.tres",
 	"encounters": "res://game/field/runtime/field_runtime/encounters.tres",
-	"script_battles": "res://game/battle/combat/combat/script_battles.tres",
+	"script_battles": "res://game/battle/combat/script_battles.tres",
 }
-const WORLD_MAP_DATA: WorldMapData = preload("res://game/menu/world_map/world_map/world-map.tres")
+const WORLD_MAP_DATA: WorldMapData = preload("res://game/menu/world_map/world-map.tres")
 const ASSET_ROOT := "res://assets/"
 const SPRITE_ROOT := ASSET_ROOT + "sprite/"
 ## 精灵帧索引：图集合并后，`对象/frame-NNN` → [图集路径, 帧矩形]。

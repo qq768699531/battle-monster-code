@@ -6,7 +6,7 @@ signal closed
 const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
-const Battle = preload("res://game/battle/combat/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/battle.gd")
 const ItemEffect = preload("res://game/battle/combat/item_effect/item_effect.gd")
 
 var selected_skill := 0

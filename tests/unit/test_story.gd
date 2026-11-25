@@ -1,10 +1,10 @@
 extends "res://tests/unit/gut_case.gd"
 
 const Story = preload("res://engine/data/story/story.gd")
-const Battle = preload("res://game/battle/combat/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/battle.gd")
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
-const MapEffectCatalog = preload("res://game/field/map/map/map_effect.gd")
+const MapEffectCatalog = preload("res://game/field/map/map_effect.gd")
 const QuestMarkModel = preload("res://game/field/quests/quest_mark/quest_mark.gd")
 const ItemKind = preload("res://game/menu/item/item_kind/item_kind.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")

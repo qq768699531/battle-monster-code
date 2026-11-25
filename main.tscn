@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dgbq1degp7yg"]
 
-[ext_resource type="Script" path="res://game/prime/entry/entry/entry.gd" id="1"]
+[ext_resource type="Script" path="res://game/prime/entry/entry.gd" id="1"]
 [ext_resource type="PackedScene" path="res://game/prime/startup/background/background.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://dkkm4um34f8dk" path="res://game/prime/title/title_visual/title_visual.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://game/prime/startup/prime_view/prime_view.tscn" id="6"]

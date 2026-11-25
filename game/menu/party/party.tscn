@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://engine/ui/party_heading/party_heading.webp" id="part_party_heading"]
 [ext_resource type="Texture2D" path="res://engine/ui/number/number.webp" id="Sheet_common_ui_number"]
 
-[ext_resource type="Script" path="res://game/menu/party/party/party.gd" id="1"]
+[ext_resource type="Script" path="res://game/menu/party/party.gd" id="1"]
 [ext_resource type="PackedScene" path="res://game/menu/party/party_ball/party_ball.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://game/menu/screen/scrollbar/scrollbar.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://game/menu/status/status_monster/status_monster.tscn" id="monster"]

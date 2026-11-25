@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" path="res://game/prime/title/title_item/title_item.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://game/prime/title/elogo/elogo.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://game/prime/title/ensony/ensony.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://game/prime/title/title/title.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://game/prime/title/title.tscn" id="7"]
 
 [sub_resource type="AtlasTexture" id="Atlas_8"]
 atlas = ExtResource("Sheet_common_ui_grade")

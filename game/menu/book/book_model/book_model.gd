@@ -13,7 +13,7 @@ extends RefCounted
 ## 而光标取模 `6 * ((22 + 5) / 6) = 24`，所以每类末两格是 X（`Menu_winDrawIcon16` 帧 2，
 ## 落在这两格时详情显示空记录 NO.000）。
 
-const Battle = preload("res://game/battle/combat/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/battle.gd")
 
 const MONSTER_CATEGORIES := 6
 const MONSTER_SLOTS := 22

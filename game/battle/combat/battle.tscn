@@ -2,7 +2,7 @@
 [ext_resource type="Texture2D" path="res://engine/ui/touch_button/touch_button.webp" id="Sheet_touch_ui_button"]
 
 [ext_resource type="Script" path="res://game/battle/presentation/battle_view/battle_view.gd" id="1"]
-[ext_resource type="PackedScene" path="res://game/battle/arena/field/field.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://game/battle/field/field.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://game/battle/presentation/message/message.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://game/battle/combat/actions/actions.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://game/field/runtime/touch_controls/touch_controls.tscn" id="touch"]

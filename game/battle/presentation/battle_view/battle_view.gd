@@ -25,10 +25,10 @@ signal setting_changed(settings: Dictionary, key: String, previous_value: int)
 ## 调用方在这一刻写回掉落（`story.apply_battle_drops`），确认离开战斗时只写回其余结算。
 signal settlement_drops(settlement: RefCounted)
 
-const Battle = preload("res://game/battle/combat/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/battle.gd")
 const Resources = preload("res://engine/data/world_resources/world_resources.gd")
 const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
-const Presentation = preload("res://game/battle/presentation/presentation/presentation.gd")
+const Presentation = preload("res://game/battle/presentation/presentation.gd")
 const Settlement = preload("res://game/battle/combat/battle_settlement/battle_settlement.gd")
 const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const HitEffect = preload("res://game/battle/presentation/hit_effect/hit_effect.gd")

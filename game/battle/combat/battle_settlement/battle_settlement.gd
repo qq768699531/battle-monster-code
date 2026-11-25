@@ -14,7 +14,7 @@ class_name BattleSettlement
 ##   升级上限两者都是 99，满级后经验归零。
 ## 掉落表全部是 .rodata 固定表（0x97940–0x97BB8），没有可导出数据源，这里逐字节照抄。
 
-const Battle = preload("res://game/battle/combat/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/battle.gd")
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")

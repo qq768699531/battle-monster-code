@@ -13,7 +13,7 @@ game/field/shops/food_shop/
   food_shop.tscn    场景
   food_shop.gd      该场景的脚本
 game/field/map/map_set/m0/
-  m0.tscn           地图场景（挂 `game/field/map/map/map.gd` 的 BattleMap 基类）
+  m0.tscn           地图场景（挂 `game/field/map/map.gd` 的 BattleMap 基类）
   t0_0.tscn         地形层
   m0_0.tres         TileSet（普通 Texture2D 引用，不能用 AtlasTexture）
   m0_0.webp         地图图层
@@ -321,12 +321,12 @@ main/main/
 
 ## 入口只有根目录的 main.tscn
 
-`main/` 目录已删除：入口场景是仓库根的 `main.tscn`，它的控制器在 `prime/entry/entry.gd`
+`main/` 目录已删除：入口场景是仓库根的 `main.tscn`，它的控制器在 `prime/entry.gd`
 （类名 `Main`），标题图并入 `prime/title_visual/title_visual.webp` 的底部两格。
 
 ```text
 main.tscn                    入口（project.godot 的 run/main_scene）
-prime/entry/entry.gd         入口逻辑
+prime/entry.gd               入口逻辑
 prime/title_visual/          标题可视层、标题图、闪光
 ```
 

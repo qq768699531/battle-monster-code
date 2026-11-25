@@ -15,7 +15,7 @@ extends "res://game/battle/presentation/result/result.gd"
 signal rewarded(quest_id: int, model: RefCounted)
 
 const QuestReward = preload("res://game/field/quests/quest_reward/quest_reward.gd")
-const Presentation = preload("res://game/battle/presentation/presentation/presentation.gd")
+const Presentation = preload("res://game/battle/presentation/presentation.gd")
 
 ## `common/msg.fxt:14`［任务结束］。
 const MESSAGE_QUEST_END := 14

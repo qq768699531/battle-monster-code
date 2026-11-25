@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://game/menu/book/book_list/book_list.tscn" id="list"]
 [ext_resource type="PackedScene" path="res://game/menu/book/book_monster/book_monster.tscn" id="monster"]
-[ext_resource type="Script" uid="uid://dshq3rft5i5b5" path="res://game/menu/book/book/book.gd" id="script"]
+[ext_resource type="Script" uid="uid://dshq3rft5i5b5" path="res://game/menu/book/book.gd" id="script"]
 [ext_resource type="PackedScene" path="res://game/menu/book/book_skill/book_skill.tscn" id="skill"]
 [ext_resource type="PackedScene" path="res://engine/ui/screen_shade/screen_shade.tscn" id="shade"]
 

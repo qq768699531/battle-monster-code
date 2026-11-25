@@ -9,7 +9,7 @@ engine/          与玩法无关、可复用的底层
   anim/          ANI 播放器：monster_animation、ani_action、ani_back_buffer
 
 game/            玩法模块（每个模块内部按子域分组）
-  battle/        combat（逻辑与数据）／presentation（画面与表现）／arena（战场场景）
+  battle/        combat（逻辑与数据）／presentation（画面与表现）／field（战场场景）
   field/         runtime／map／quests／guild／shops／dialogue／encounters／monsters／actors／network
   menu/          screen／book／item／party／status／quest／world_map／options／network
   prime/         entry／startup／title／network／settings／slots／pages／ui／data
@@ -42,6 +42,7 @@ addons/          GUT 9.6.1（vendored，MIT）
 2. **模块内部再分一层子域**：一个子域放同一功能的若干对象目录（例如 `game/field/quests/` 下的
    `quest_complete`、`quest_detail`、`quest_set`），不再把 40 多个目录平铺在一层。
 3. **对象目录不拆**：`<对象>/` 里放它自己的 `.tscn`、`.gd`、`.tres`、`.webp`，方便整目录移动。
+   子域名与对象名相同时不再套一层（如 `menu/party/party/` 收成 `menu/party/`），对象文件直接与同级对象目录并列。
 
 ## 与原版无关的内容不进这个仓库
 

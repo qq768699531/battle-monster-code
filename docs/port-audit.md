@@ -8,7 +8,7 @@
 | 维度 | 旧 | 新 | 说明 |
 | --- | --- | --- | --- |
 | `.tscn` | 826 | 861 | 缺 2：`f_emoticon.tscn` 并入 `field/emotion/emotion.tscn`；`ui_eff.tscn` 拆给图鉴页与状态页 |
-| `.gd` | 260 | 358 | 缺 1：`scripts/main.gd` → `prime/entry/entry.gd`（其余差额是迁回的 GUT 与新增用例） |
+| `.gd` | 260 | 358 | 缺 1：`scripts/main.gd` → `prime/entry.gd`（其余差额是迁回的 GUT 与新增用例） |
 | `.gdshader` | 11 | 10 | 缺 `prime_screen.gdshader`，被 `native_menu_brightness` 取代 |
 | 玩法数据记录 | — | — | `item_definition` 367=367、`passive_definition` 168=168、`encounter_definition` 149=149、`encounter_entry` 337=337、`script_battle_definition` 98=98、`npc_definition` 52=52、`monster_definition` 131=131 |
 | 文本正文 | 5069 条 | 5069 条 | 旧的 10 个来源拆成 138 张表，条目数一致 |
@@ -53,6 +53,6 @@
 
 ## 三、连带修掉的问题
 
-- `prime/entry/entry.gd`：本地服务脚本路径改为仓库内 `tools/local_service/local_server.py`；
+- `prime/entry.gd`：本地服务脚本路径改为仓库内 `tools/local_service/local_server.py`；
   `test_local_service_autostart`、`test_local_service_client` 由失败转为通过（回环服务真正可用了）。
 - `tools/` 带 `.gdignore`，Godot 不扫描该目录的 `.py`。

@@ -8,10 +8,10 @@ class_name StoryRuntime
 ## with complete_effect(id); camera pans with complete_camera(id); battle effects
 ## with complete_battle(id).
 ## Call advance(_process delta in seconds). Paused/external waits accrue no time.
-const Battle = preload("res://game/battle/combat/combat/battle.gd")
+const Battle = preload("res://game/battle/combat/battle.gd")
 const BattleSettlementModel = preload("res://game/battle/combat/battle_settlement/battle_settlement.gd")
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
-const MapEffectCatalog = preload("res://game/field/map/map/map_effect.gd")
+const MapEffectCatalog = preload("res://game/field/map/map_effect.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
 const QuestLogModel = preload("res://game/field/quests/quest_log/quest_log.gd")
 ## 事件记录的等待、淡入淡出、闪光与抖动都按帧计数（`Evt_stdPROC` 的 `step_count`），

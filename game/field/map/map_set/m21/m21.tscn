@@ -1,5 +1,5 @@
 [gd_scene format=4]
-[ext_resource type="Script" path="res://game/field/map/map/map.gd" id="MapRoot"]
+[ext_resource type="Script" path="res://game/field/map/map.gd" id="MapRoot"]
 
 [ext_resource type="PackedScene" path="res://game/field/map/map_set/m0/t0_11.tscn" id="1_7v2qh"]
 

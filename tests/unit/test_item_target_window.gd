@@ -7,7 +7,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const MenuScene = preload("res://game/menu/screen/menu/menu.tscn")
 const WindowScript = preload("res://game/menu/item/item_target/item_target_window.gd")
-const PartyScript = preload("res://game/menu/party/party/party.gd")
+const PartyScript = preload("res://game/menu/party/party.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
 
 
