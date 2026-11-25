@@ -538,7 +538,9 @@ func _render_detail() -> void:
 		# 空记录（未获得或 X 格）原生画 0，不是隐藏。
 		metric.get_node("Number").present(str(_stat_value(ball, index)))
 	_present_active(str(_messages.get("item_mon.group.%d.entry.0.name" % species, ""))
-		if species >= 0 else "")
+		if species >= 0 and mode == Mode.BOOK else "")
+	if mode == Mode.STARTER:
+		_present_prompt()
 
 
 func _stat_value(ball: Dictionary, index: int) -> int:
@@ -553,10 +555,25 @@ func _stat_value(ball: Dictionary, index: int) -> int:
 			return Battle.effective_stat(ball, index)
 
 
+## 状态 16（初始精灵选择）走 `Menu_Monster_Draw3` 的 book 分支：底栏不画 ACTIVE SKILL，
+## 只在窗口中心画 `common/msg.fxt:152`「请选择精灵」。状态 19（图鉴）才画技能文本。
+func _present_prompt() -> void:
+	_active_width = 0.0
+	$Content/Detail/Skills/Arrow.visible = false
+	$Content/Detail/Skills/Active.visible = false
+	$Content/Detail/Skills/ActiveClip.visible = false
+	var prompt: Control = $Content/Detail/Skills/Prompt
+	prompt.text = _assets.text_message(Msg.SOURCE, 152) if _assets != null else "请选择精灵"
+	prompt.visible = true
+
+
 ## `Menu_Monster_Draw3@0x575E8:98-102` 的 ACTIVE SKILL：`#PF95#C0[` 起技能名、`]#C6` 起说明。
 ## `#PF95` 是调色板定义（`(r << 20) | (g << 12) | (16 * b)` → `#F09050`），`#C0`／`#C6` 是字体
 ## 调色板下标；本工程把两段颜色直接写进 markup，颜色来源仍是场景里的 `Text.color`（与状态页同一份）。
 func _present_active(source: String) -> void:
+	$Content/Detail/Skills/Active.visible = true
+	$Content/Detail/Skills/Prompt.visible = false
+	$Content/Detail/Skills/ActiveClip.visible = true
 	if source == _active_text:
 		return
 	_active_text = source
