@@ -143,10 +143,17 @@ func handle_key(key: String) -> void:
 		else:
 			stage = "closed"
 			finished.emit()
-	elif key in ["ArrowLeft", "ArrowRight"] and settlement.items.size() > ITEM_ROWS:
-		scroll = clampi(scroll + (-1 if key == "ArrowLeft" else 1), 0,
-			settlement.items.size() - ITEM_ROWS)
-		_render()
+	elif key in ["ArrowUp", "ArrowDown"]:
+		# 原生 `Battle_Win_mKeyPressed` 子状态 2：-1（上）`--scroll`、-2（下）`++scroll`。
+		_scroll_by(1 if key == "ArrowDown" else -1)
+
+
+## 掉落列表滚动：三行可视，共 `items − 3` 个滚动位，上下都夹在两端。
+func _scroll_by(step: int) -> void:
+	if settlement == null or settlement.items.size() <= ITEM_ROWS:
+		return
+	scroll = clampi(scroll + step, 0, settlement.items.size() - ITEM_ROWS)
+	_render()
 
 
 func _render() -> void:
