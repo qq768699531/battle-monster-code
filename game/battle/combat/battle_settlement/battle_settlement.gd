@@ -145,6 +145,9 @@ func _init(combat: RefCounted, progress: Dictionary, catalog: GameplayData,
 				# 原生 `(v15 * v20 + 99) / 100 + v15`：队员经验加成被动。
 				amount = (gain * bonus + 99) / 100 + gain
 		row.experience_left = amount
+		# 原生 `Battle_Win_SetResult:586` 用 `BattleData+16`（本次主角经验总量）推 fxt415；
+		# `experience_left` 会被结果页动画消耗，所以单独留一份总量给战后提示。
+		row["experience_gain"] = amount
 	_build_feel_food(combat, progress)
 	_build_items(combat)
 	_build_money(combat)
