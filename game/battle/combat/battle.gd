@@ -1276,19 +1276,19 @@ func _frame_count_error(species: int, action_index: int) -> String:
 	return "缺少有效动画帧数：species=%d action=%d" % [species, action_index]
 
 
-## 原生冲刺（`Battle_Monster_00NN_procCurr` 的 `case 20／21`）：每帧 `x += dash * (n + k)`——
-## `(n + 1)`／`~n` 是 k = +1（首帧就冲出去）、`x -= dash * n` 是 k = 0（首帧位移为 0）、
-## `(n - 1)`／`(1 - n)` 是 k = −1、`(n + 2)` 是 k = +2（`Battle_Monster_0114_procCurr` 的 `case 21`）；
-## `dash` 与 k 都是 `battle-species.tres` 的段字段（`dash`／`dash_addend`，由
-## `script\export_battle_species.py` 的 `dash_term()` 从立即数导出）。位移是累加的，所以第 `step`
-## 帧（0 起）画出来的偏移是 `dash * Σ_{i=0..step} (i + k) = dash * (step + 1) * (step + 2k) / 2`
-## （k = +1、dash = 32 时 32、96、192…）。`dash` 来自该物种这一段分支里的立即数
-## （物种 0 是 16，其余多是 32）。我方（`direction == 1`）朝敌方是 −x，敌方朝我方是 +x。
+## 原生冲刺（`Battle_Monster_00NN_procCurr` 的 `case 20／21`）：每帧 `x += dash * (n + k)`。
+## 关键是 `Object_procCURR` 的调用顺序：先跑 `decode_frame_callback`＝`Battle_Monster_procPosition`
+## （把 x 写回落点），再跑 `current_frame_callback`＝物种 procCurr 的这次加法。所以只要该帧的
+## form 非 0，冲刺位移是**本帧单独的一项** `dash * (n + k)`，不是逐帧累加的和
+## （累加会把 16／32 放大成几百像素，怪物整只飞出画面）。
+## `(n + 1)`／`~n` 是 k = +1、`x -= dash * n` 是 k = 0、`(n - 1)`／`(1 - n)` 是 k = −1、
+## `(n + 2)` 是 k = +2；`dash` 与 k 来自 `battle-species.tres` 的 `dash`／`dash_addend`。
+## 我方（`direction == 1`）朝敌方是 −x，敌方朝我方是 +x。
 static func dash_offset(direction: int, step: int, dash: int, addend: int) -> float:
 	if dash <= 0:
 		return 0.0
 	var sign := -1 if direction == BattleSide.Code.PLAYER else 1
-	return float(sign * dash * (step + 1) * (step + 2 * addend)) / 2.0
+	return float(sign * dash * (step + addend))
 
 
 ## 该动作是否有「对所有敌方对象逐个结算」的命中（原生 `BattleData + 20676` 的循环）。

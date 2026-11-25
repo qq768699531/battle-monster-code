@@ -459,6 +459,15 @@ func test_legacy_suite() -> void:
 		"the percent-HP hit damages the target and the caster by the same share")
 
 
+## 原生 `Object_procCURR` 先跑 procPosition（把 x 写回落点）再跑物种 procCurr 的冲刺加法，
+## 所以每帧位移是单帧的 `dash * (n + k)`，不是逐帧累加（累加会让怪物飞出画面）。
+func test_dash_offset_is_per_frame() -> void:
+	assert_eq([Battle.dash_offset(1, 0, 16, 1), Battle.dash_offset(1, 1, 16, 1),
+		Battle.dash_offset(1, 6, 16, 1)], [-16.0, -32.0, -112.0],
+		"我方冲刺每帧 −dash×(n+k)，第 6 帧是 −112 而不是满和 −448")
+	assert_eq(Battle.dash_offset(2, 6, 32, 1), 224.0, "敌方朝 +x 冲刺")
+
+
 func _ball(species: int, level: int, equipment: int = -1) -> Dictionary:
 	return Battle.make_ball(CATALOG, [species, level, -1, 0, 0, 0, 0, 0, equipment, -1], 0)
 
