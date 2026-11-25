@@ -36,3 +36,15 @@ func test_translation_bodies_use_color_markup() -> void:
 
 func test_startup_reports_no_errors() -> void:
 	assert_eq(_assets.get_startup_errors(), [], "启动期没有资源错误")
+
+
+## 点阵字库没有「娲」「樨」两字（精灵 20／60 的名字），主题必须挂一个 CJK 回退字体，
+## 否则整条名字在 `native_label` 里报缺字并不绘制。
+func test_native_label_has_cjk_fallback() -> void:
+	var theme: Theme = load("res://engine/ui/native_label/ui_theme.tres")
+	var font := theme.default_font as FontVariation
+	assert_true(font != null and not font.fallbacks.is_empty(), "原生点阵字挂了回退字体")
+	assert_eq(_assets.text_message("common/item_mon.dat", "item_mon.group.59.name"), "木樨兽",
+		"No.060 的名字仍有原文，不靠改词规避缺字")
+	assert_eq(_assets.text_message("common/item_mon.dat", "item_mon.group.19.name"), "女娲",
+		"No.020 的名字仍有原文")

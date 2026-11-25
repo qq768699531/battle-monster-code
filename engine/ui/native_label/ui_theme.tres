@@ -1,12 +1,19 @@
-[gd_resource type="Theme" load_steps=2 format=3]
+[gd_resource type="Theme" load_steps=4 format=3]
 
 [ext_resource type="FontFile" path="res://engine/ui/theme/boutique-bitmap-regular-proportional-10px-round.ttf" id="1_font"]
 
+[sub_resource type="SystemFont" id="SystemFont_cjk"]
+font_names = PackedStringArray("Microsoft YaHei", "SimSun", "Noto Sans CJK SC", "Noto Sans CJK JP", "PingFang SC", "Hiragino Sans GB", "Arial Unicode MS")
+
+[sub_resource type="FontVariation" id="FontVariation_cjk"]
+base_font = ExtResource("1_font")
+fallbacks = [SubResource("SystemFont_cjk")]
+
 [resource]
-default_font = ExtResource("1_font")
+default_font = SubResource("FontVariation_cjk")
 default_font_size = 10
-RichTextLabel/fonts/normal_font = ExtResource("1_font")
-RichTextLabel/fonts/bold_font = ExtResource("1_font")
-RichTextLabel/fonts/italics_font = ExtResource("1_font")
-RichTextLabel/fonts/bold_italics_font = ExtResource("1_font")
-RichTextLabel/fonts/mono_font = ExtResource("1_font")
+RichTextLabel/fonts/normal_font = SubResource("FontVariation_cjk")
+RichTextLabel/fonts/bold_font = SubResource("FontVariation_cjk")
+RichTextLabel/fonts/italics_font = SubResource("FontVariation_cjk")
+RichTextLabel/fonts/bold_italics_font = SubResource("FontVariation_cjk")
+RichTextLabel/fonts/mono_font = SubResource("FontVariation_cjk")
