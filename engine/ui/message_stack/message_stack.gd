@@ -26,30 +26,7 @@ const SHIFT_STEP := 15
 const BASE_X := 90
 const BASE_Y := 220
 
-## `y` 基准（原生 `Game_infoDraw` 的 `v13`）随画面状态取哪一档。
-## 状态由宿主给出（`field_runtime` 按进出战斗／文字窗），**偏移只有本表一份**。
-enum State {
-	## 其余页面：`v13 = PixelData.viewport.height - 20`（`0x416D0` 第 22 行）。
-	FIELD,
-	## `GAME_STATE_BATTLE` 且战斗状态不在掩码 `0x788B` 内：`height - 51`（第 28／32 行）。
-	BATTLE,
-	## 掩码 `0x788B` 命中的战斗状态（19 资料／20 道具一／22 捕获道具／26 胜利／30 清屏／
-	## 31 设置／32 方式／33 主菜单）：不改基高，沿用 `height - 20`。
-	BATTLE_WINDOW,
-	## 文字窗打开（`*((_BYTE *)&EvtRes.dialog.page + 216) != 0`）：`height - 60`（第 35 行，
-	## 在战斗分支之后判断，覆盖前两支）。
-	DIALOG,
-}
-
-## 每档相对视口高度的让位，取自 `Game_infoDraw` 的三个 `base_y` 赋值。
-const STATE_MARGIN := {
-	State.FIELD: 20,
-	State.BATTLE: 51,
-	State.BATTLE_WINDOW: 20,
-	State.DIALOG: 60,
-}
-
-## `y` 基准的运行时值；出生取 `State.FIELD` 在 400×240 下的结果，进树后由宿主校正。
+## `y` 基准的固定档（400×240 下 220）。栈是全局顶层 HUD，位置不随地图／菜单改变。
 var base_y := BASE_Y
 
 ## 原生 `JC_fxt2Return` 的默认来源就是 `Msg.SOURCE`；绝大多数提示文本都是这个表里的记录号。
@@ -217,17 +194,6 @@ func _exit_tree() -> void:
 	active = autoload if autoload is Control and autoload != self else null
 
 
-## 按画面状态切 `y` 基准。原生 `Game_infoDraw` 每帧重算 `v13`；本移植的页面状态由宿主持有，
-## 所以由宿主在状态变化时给一次（`field_runtime._sync_message_state()`）。
-func set_state_base_y(state: int) -> void:
-	if not STATE_MARGIN.has(state):
-		push_error("消息提示栈：未知画面状态 %d" % state)
-		return
-	var value := int(get_viewport_rect().size.y) - int(STATE_MARGIN[state])
-	if value == base_y:
-		return
-	base_y = value
-	queue_redraw()
 
 
 func push(icon_frame: int, text: String) -> void:
