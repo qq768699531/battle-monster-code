@@ -167,6 +167,9 @@ enum Id {
 	ITEM_ABILITY_NONE = 501,  ## 没有可退回的能力点.（第 7 组 15，返回码 26）
 	ITEM_PASSIVES_CLEARED = 502, ## 已去除被动技能.（第 7 组 21，返回码 29）
 	ITEM_PASSIVES_NONE = 503,    ## 没有要去除的被动技能.（第 7 组 21，返回码 30）
+	## 道具使用／合成的二级选择窗标题：`Menu_Item_mPaint` 在 quest_layer 9／10 走
+	## `Menu_Monster_DrawList(JC_fxt2Return(184), ...)`，即 228×214 Box4 窗的标题。
+	ITEM_TARGET_TITLE = 184,  ## 精灵球
 	ITEM_TARGET_DOWN = 508,   ## 无法对死去的精灵使用.
 	## `Ball_stdUseEx:205-208` 的 `case 36`：经验加成窗口已经在生效时只提示这一条（不扣道具）。
 	ITEM_BONUS_ACTIVE = 509,  ## 已在使用中.

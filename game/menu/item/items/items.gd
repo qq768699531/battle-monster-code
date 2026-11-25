@@ -36,8 +36,7 @@ func handle_key(key: String) -> bool:
 	if host.item_actions_open:
 		return $ActionAnchor/Actions.handle_key(key)
 	if host.item_target_open:
-		# 二级选择复用队伍页（原生 `Menu_Party_Draw`：球列表＋怪物资料）。
-		return host._pages.party.handle_key(key)
+		return host._pages.item_target.handle_key(key)
 	if not host.item_navigation_open:
 		if key in ["ArrowDown", "Enter", "Space"]:
 			host.item_navigation_open = true
@@ -177,8 +176,6 @@ func _render_items() -> void:
 			minf(cell.get_global_rect().end.x,
 				get_viewport_rect().end.x - actions.position.x - actions.size.x),
 			cell.global_position.y)
-	if host.item_target_open:
-		host._pages.item_target._render_item_target()
 
 
 func _present_details(rows: Array, book: bool) -> void:

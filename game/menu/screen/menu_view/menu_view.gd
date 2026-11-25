@@ -519,6 +519,10 @@ func press(key: String) -> void:
 	if option_save_phase != OptionSavePhase.CLOSED:
 		_option_save_press(key)
 		return
+	# 二级选择窗（含开关动画）自己收键，菜单页签与道具页此时不可操作。
+	if _pages.item_target.is_active():
+		_pages.item_target.handle_key(key)
+		return
 	var page: Control = _pages[Menu.TAB_PAGE_NAMES[selected_tab]]
 	if page.handle_key(key):
 		return
@@ -715,12 +719,15 @@ func _render_content() -> void:
 	# `Menu_Quest_mPaint`：overlay 2（世界地图）连 `Menu_win_DrawBasic` 都不调，
 	# 菜单窗框、六个页签与页脚键提示整段不画，只剩 `Map_Copy` 的背景与世界地图窗口。
 	var world_map_modal := selected_tab == MenuModel.Tab.QUEST and world_map_open
-	var chrome_visible := not option_modal and not party_modal and not world_map_modal
+	# 道具使用／合成的二级选择是独立窗口（原生 quest_layer 9／10 不画 `Menu_win_DrawBasic`）：
+	# 它开着（含关窗动画）时菜单窗框与页签整段收起，屏幕上只有这一个窗口。
+	var item_target_active: bool = item_target_open or _pages.item_target.is_active()
+	var chrome_visible := not option_modal and not party_modal and not world_map_modal \
+		and not item_target_active
 	$Frame.visible = chrome_visible
 	for index in range(_tab_buttons.size()):
 		var button := _tab_buttons[index]
-		# 使用／合成的二级选择是原生 `MENU_STATE_PARTY` 全窗，不再画六个页签。
-		button.visible = chrome_visible and not item_target_open
+		button.visible = chrome_visible
 		button.disabled = status_modal or party_actions_open or party_modal or item_actions_open \
 			or item_discard_open or party_discard_open or quest_detail_open or option_return_open
 		var native_index: int = TAB_NATIVE_INDICES[index]
@@ -734,14 +741,9 @@ func _render_content() -> void:
 	# `live_regions`：菜单这一层不再收触控（原生此时只有 Prime 画布判点，见 `EFC_mainTouch`）。
 	mouse_filter = Control.MOUSE_FILTER_IGNORE if option_modal else Control.MOUSE_FILTER_STOP
 	for page in _pages.values():
-		page.hide()
-	if item_target_open and selected_tab == MenuModel.Tab.ITEMS:
-		# 原生状态 9／10 复用 `Menu_Party_Draw`：球列表＋怪物资料，确认后回到道具页。
-		party_navigation_open = true
-		party_actions_open = false
-		_pages.party.show()
-		_pages.party.call("_render_party")
-	else:
+		if page != _pages.item_target:
+			page.hide()
+	if not item_target_active:
 		var name: String = Menu.TAB_PAGE_NAMES[selected_tab]
 		if selected_tab == MenuModel.Tab.PARTY and party_details_open:
 			name = "party_detail"
@@ -768,9 +770,20 @@ func _render_content() -> void:
 		_pages.status_confirmation.show()
 		_pages.status_confirmation._render_confirmation()
 	_pages.status._sync_status_portrait()
+	_sync_item_target_window()
 	queue_redraw()
 	for child in _pages.values():
 		child.queue_redraw()
+
+
+## 二级选择窗开／关的驱动：`item_target_open` 为真时开窗并刷新，转假后走关窗动画，
+## 动画结束时窗口自己隐藏再回调本函数，把菜单窗框交还。
+func _sync_item_target_window() -> void:
+	if item_target_open:
+		_pages.item_target.open_target()
+		_pages.item_target.refresh()
+	else:
+		_pages.item_target.close_target()
 
 
 func open_selected_item_actions() -> bool:
@@ -784,8 +797,8 @@ func open_selected_item_actions() -> bool:
 	return true
 
 
-## 原生状态 11 选「使用」：进 `MENU_STATE_PARTY` 的二级选择（quest_layer 9），
-## 候选是 `Ball_bagList` 的全部持有精灵（不是只列出战队伍）。
+## 原生状态 11 选「使用」：进 quest_layer 9 的二级选择窗（`Menu_Item_mPaint` 在 9／10
+## 只开 `Menu_Monster_DrawList` 的 228×214 窗），候选是 `Ball_bagList` 的全部持有精灵。
 func use_selected_item() -> bool:
 	var item := _selected_inventory_item()
 	if item.is_empty():
@@ -804,6 +817,7 @@ func use_selected_item() -> bool:
 	selected_party_member_index = 0
 	selected_item_target_slot = 0
 	party_navigation_open = true
+	party_actions_open = false
 	item_target_open = true
 	notice = ""
 	_render_content()
