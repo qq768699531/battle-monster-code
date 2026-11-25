@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 [ext_resource type="Script" path="res://game/prime/title/title_item/title_item.gd" id="1"]
+[ext_resource type="Texture2D" path="res://game/prime/title/title_visual/title_bar_0.webp" id="2"]
 [node name="TitleItem" type="Node2D"]
 visible = false
 script = ExtResource("1")
@@ -17,6 +18,13 @@ offset_bottom = 21.0
 theme_override_font_sizes/font_size = 10
 horizontal_alignment = 1
 vertical_alignment = 1
+[node name="Shine" type="Sprite2D" parent="."]
+visible = false
+z_index = 500
+position = Vector2(-40, 0)
+centered = false
+texture_filter = 1
+texture = ExtResource("2")
 [node name="HitArea" type="Control" parent="."]
 offset_left = -50.0
 offset_top = -3.0

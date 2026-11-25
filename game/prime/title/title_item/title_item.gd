@@ -14,7 +14,9 @@ func _ready() -> void:
 	_shine_material.shader = TITLE_SHINE
 	_shine_material.set_shader_parameter("gleam_tex", TITLE_GLEAM)
 	_shine_material.set_shader_parameter("phase", -1)
-	$Image.material = _shine_material
+	# 闪光层压在文字之上：原生先 `JC_fntDrawChars` 再画白块/贴片，白块会盖住字。
+	$Shine.material = _shine_material
+	$Shine.hide()
 
 func present(item: Dictionary, text: String, texture: Texture2D) -> void:
 	# Native opening spread and selection bounce are offsets from the authored layout.
@@ -23,10 +25,12 @@ func present(item: Dictionary, text: String, texture: Texture2D) -> void:
 	_motion = next_motion
 	modulate.a = float(item.opacity)
 	$Image.texture = texture
+	$Shine.texture = texture
 	# 源码 `*p_n2` 每帧加一，n2=0..3 画闪光，第 4 帧起停止。
 	var phase := int(item.get("flash_phase", -1))
 	if _shine_material != null:
 		_shine_material.set_shader_parameter("phase", phase)
+	$Shine.visible = phase >= 0 and phase <= 3
 	$Image.show()
 	$Label.text = text
 	$Label.show()
