@@ -785,7 +785,8 @@ func use_selected_item() -> bool:
 		return false
 	item_actions_open = false
 	if not Menu.item_use_supported(item):
-		notice = "该道具的原使用流程尚未接通；未消耗道具。"
+		# 原生 `Ball_stdUseEx` 的 default 分支：只提示 510，不扣道具。
+		notice = _menu_text(Msg.Id.ITEM_UNUSABLE)
 		_render_content()
 		return false
 	var order := Menu.native_party_order(story_progress)
@@ -864,8 +865,7 @@ func use_selected_item_on_target() -> bool:
 	var code := int(result.get("code", 0))
 	notice = ItemEffect.describe(code, item.get("detail_slots", []),
 		func(id: int) -> String: return _menu_text(id))
-	if notice.is_empty() and code != ItemEffect.Code.MASTERY_SELECT:
-		notice = "已使用 %s" % _native_item_name(result.item)
+	# 原生无提示的返回码（随机球／书、经验窗口、换流派等）保持静默，不再补占位文案。
 	if not bool(result.get("consumed", false)):
 		# 原生这几支返回码不扣道具（HP 已满／没有可治疗的异常状态……），停在选目标。
 		_render_content()

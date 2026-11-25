@@ -1,10 +1,6 @@
 extends Control
 ## 道具使用目标选择层。
 
-## 成员选择层的操作提示：动作不同，Enter 做的事不同（`Menu_Item_mKeyPressed` 的
-## `quest_layer` 9 = 使用、10 = 合成）。
-const USE_INSTRUCTIONS := "Enter使用  ←/→选择  Esc返回"
-const MIX_INSTRUCTIONS := "Enter合成  ←/→选择  Esc返回"
 
 var host: Control
 
@@ -67,10 +63,9 @@ func _mix_notice(result: Dictionary) -> String:
 
 func _render_item_target() -> void:
 	var order = host.Menu.native_party_order(host.story_progress)
-	$Instructions.text = MIX_INSTRUCTIONS if _pending_action() == host.Menu.ITEM_ACTION_MIX \
-		else USE_INSTRUCTIONS
+	# 原生成员选择层没有键位提示文本；旧的重制占位提示已移除，只保留对象与 HP／SP。
+	$Instructions.visible = false
 	$Vitals.visible = not order.is_empty()
-	$Instructions.visible = not order.is_empty()
 	if order.is_empty():
 		$Target.text = "没有可选的出战成员。"
 		return

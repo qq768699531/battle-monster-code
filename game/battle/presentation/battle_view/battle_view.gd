@@ -841,12 +841,7 @@ func _use_item() -> void:
 	var item_id := int(selected_item.get("id", -1))
 	if bool(response.get("consumed", false)) and item_id >= 0:
 		_used_items[item_id] = int(_used_items.get(item_id, 0)) + 1
-	# 原生 switch 只处理 0..17；18（吃不下了）及更大的返回码同样走 `LABEL_21`：不播特效，
-	# 但道具回合已经用掉。`Battle_Target_mKeyPressed` 的 18 也不例外。
-	if code > ItemEffect.Code.FOOD_RESTORED:
-		selected_item = {}
-		_next()
-		return
+	# 原生 switch 只处理 0..17；18（吃不下了）不推进状态，只弹 495，仍停在选目标。
 	if not [ItemEffect.Code.HP, ItemEffect.Code.SP, ItemEffect.Code.BOTH, ItemEffect.Code.REVIVED,
 			ItemEffect.Code.CURED, ItemEffect.Code.FEEL_GOOD, ItemEffect.Code.FEEL_BAD,
 			ItemEffect.Code.FOOD_RESTORED].has(code):
