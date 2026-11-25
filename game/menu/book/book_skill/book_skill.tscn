@@ -260,6 +260,7 @@ mouse_filter = 2
 texture_filter = 1
 texture = SubResource("NoIcon")
 [node name="Number" parent="Content/Detail" instance=ExtResource("num_top")]
+alignment = 0
 layout_mode = 0
 offset_left = 20.0
 offset_top = 7.0
