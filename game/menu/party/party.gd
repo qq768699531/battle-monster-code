@@ -81,10 +81,10 @@ func _handle_item_target_key(key: String) -> bool:
 		host.confirm_item_target()
 		return true
 	if key in ["ArrowLeft", "ArrowRight"]:
-		host._select_item_target(-1 if key == "ArrowLeft" else 1)
+		_move_selection(-1 if key == "ArrowLeft" else 1)
 		return true
 	if key in ["ArrowUp", "ArrowDown"]:
-		host._select_item_target(-6 if key == "ArrowUp" else 6)
+		_move_selection(-6 if key == "ArrowUp" else 6)
 		return true
 	return true
 

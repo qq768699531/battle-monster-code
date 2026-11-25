@@ -84,7 +84,6 @@ var item_scroll_start := 0
 var item_target_open := false
 var item_actions_open := false
 var selected_item_action := 0
-var selected_item_target_slot := 0
 ## 二级选择窗锁定的道具（原生 `ItemData.item_action_record`）：进窗时快照一份，
 ## 连按 OK 时一直用同一件，不会因为背包行位置变化而换成别的道具。
 var item_target_item: Dictionary = {}
@@ -231,7 +230,6 @@ func bind(progress: Dictionary, catalog: GameplayData, text: Variant) -> void:
 	item_target_open = false
 	item_actions_open = false
 	selected_item_action = 0
-	selected_item_target_slot = 0
 	item_target_item = {}
 	item_discard_open = false
 	item_discard_item = {}
@@ -810,7 +808,6 @@ func use_selected_item() -> bool:
 		_render_content()
 		return false
 	selected_party_member_index = 0
-	selected_item_target_slot = 0
 	item_target_item = item.duplicate(true)
 	party_navigation_open = true
 	party_actions_open = false
@@ -865,6 +862,11 @@ func _selected_inventory_item() -> Dictionary:
 func confirm_item_target() -> bool:
 	if not item_target_open:
 		return false
+	# 与 PARTY 页一致：光标停在没有记录的格位时 OK 什么也不做（原生 `n2 > ::n2` 直接返回）。
+	var monsters: Variant = story_progress.get("monsters")
+	if not monsters is Array or selected_party_member_index < 0 or \
+			selected_party_member_index >= monsters.size():
+		return false
 	var item := item_target_item
 	if item.is_empty():
 		return false
@@ -902,15 +904,9 @@ func cancel_item_target() -> void:
 	_render_content()
 
 
-## 二级选择的移动：候选是全部持有精灵；越界按原生取模。
-func _select_item_target(step: int) -> void:
-	var monsters: Variant = story_progress.get("monsters")
-	if not monsters is Array or monsters.is_empty() or step == 0:
-		return
-	selected_party_member_index = posmod(selected_party_member_index + step, monsters.size())
-	selected_item_target_slot = selected_party_member_index
-	notice = ""
-	_render_content()
+## 二级选择的移动与 PARTY 页完全相同：走 `party.gd` 的 `_move_selection()`→`_select_party_slot()`，
+## 格位数由队伍页的 `slot_count()` 决定，所以空位也能停、能点。
+## （已删除旧的 `_select_item_target()`：它按持有数取模，把空位排除在外。）
 
 
 ## 二级选择的当前持有量（原生 `Item_fndCount`）：道具行消失后仍能用快照里的 id 查。
@@ -937,8 +933,6 @@ func use_selected_item_on_target() -> bool:
 		return false
 	if not monsters is Array or selected_party_member_index < 0 or \
 			selected_party_member_index >= monsters.size():
-		notice = "精灵已不可用。"
-		_render_content()
 		return false
 	var member_index := selected_party_member_index
 	var random_seed := randi()
@@ -1344,9 +1338,6 @@ func _select_inventory_item(index: int) -> void:
 func _select_party_slot(index: int) -> void:
 	if party_actions_open or party_equip_open or party_details_open or party_discard_open \
 			or index < 0 or index >= _pages.party.slot_count():
-		return
-	# 二级选择与 PARTY 页一样补齐格点，但空格仍不能当目标。
-	if item_target_open and index >= _party_display_members().size():
 		return
 	party_navigation_open = true
 	selected_party_member_index = index
