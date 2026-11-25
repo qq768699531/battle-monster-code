@@ -15,6 +15,8 @@ extends Control
 signal save_requested
 signal closed
 
+const ScreenShade = preload("res://engine/ui/screen_shade/screen_shade.gd")
+
 const Box2Prompt = preload("res://game/field/runtime/box2_prompt/box2_prompt.gd")
 
 @onready var _window: Control = $Window
@@ -39,7 +41,15 @@ func open(texts: Dictionary, message_id: int, saves: bool) -> void:
 	_saves = saves
 	_closing = false
 	_substate = 1 if saves else 3
+	# 先读回本层显示之前的完整一帧，再 show；`acquire_frozen` 的即时抓帧可能落在
+	# 「窗口刚可见、场景还没重绘」的空帧上，树木这类高 z 地图物件会被冻掉。
+	var viewport := get_viewport()
+	var image: Image = viewport.get_texture().get_image() \
+		if viewport != null else null
 	show()
+	var shade := ScreenShade.acquire_frozen(self)
+	if image != null and not image.is_empty():
+		shade.set_snapshot(image)
 	_window.present(_text(message_id),
 		Box2Prompt.Form.MESSAGE if saves else Box2Prompt.Form.OK)
 	_window.open_window()

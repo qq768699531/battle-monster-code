@@ -2,6 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const WindowScene = preload("res://engine/ui/window_transition/window_transition.tscn")
 const WindowScript = preload("res://engine/ui/window_transition/window_transition.gd")
+const ShadeScene = preload("res://engine/ui/screen_shade/screen_shade.tscn")
 ## 原生 `Menu_win_Box4_DrawWindow` 每帧推进 1／2／3／4 四个相位，每相位一帧；
 ## 动画把每相位摆成 0.05 s，所以 0.05 是相位 1／2 的条形，0.1 是相位 3 的条文。
 const BAR_PHASE_TIME := 0.05
@@ -111,4 +112,15 @@ func _content() -> Control:
 
 func _player() -> AnimationPlayer:
 	return _window.get_node("AnimationPlayer")
+
+
+## 开窗方在 `show()` 之前抓好的完整一帧可以直接作为背景快照，避免即时抓帧抓到空帧。
+func test_screen_shade_accepts_supplied_snapshot() -> void:
+	var shade: Control = ShadeScene.instantiate()
+	add_child_autofree(shade)
+	var image := Image.create(4, 4, false, Image.FORMAT_RGBA8)
+	image.fill(Color.RED)
+	shade.set_snapshot(image)
+	assert_true(shade.snapshot() != null and shade.snapshot().get_size() == Vector2(4, 4),
+		"调用方抓的帧被原样用作快照")
 

@@ -103,6 +103,16 @@ func snapshot() -> ImageTexture:
 	return _snapshot
 
 
+## 用调用方已经抓好的一帧替换快照。开窗脚本在 `show()` 之前读回上一帧完整画面，
+## 这样不会把「本层刚可见、场景还没重新绘制」的空帧或半帧冻进背景（树木等
+## `z_index` 较高的地图物件会因此消失）。
+func set_snapshot(image: Image) -> void:
+	_freeze_requested = true
+	_snapshot = ImageTexture.create_from_image(image) \
+		if image != null and not image.is_empty() else null
+	_apply_snapshot()
+
+
 func _grab_viewport() -> ImageTexture:
 	var viewport := get_viewport()
 	if viewport == null:
