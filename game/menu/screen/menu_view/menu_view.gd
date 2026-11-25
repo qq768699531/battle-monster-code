@@ -165,12 +165,6 @@ var _item_texture: Texture2D
 var _item_names: Dictionary = {}
 var _npc_records: Array = []
 var _settings: Dictionary = {}
-var _status_portrait_node: Control
-var _status_portrait_border_node: Control
-var _status_portrait_key := ""
-var _status_portrait_path := ""
-var _status_portrait_frame_key := ""
-var _status_portrait_error := ""
 var _native_ui_error := ""
 var _assets: Node
 var _native_outline_style: StyleBoxFlat
@@ -190,8 +184,6 @@ func _ready() -> void:
 	_load_status_npc_records()
 	if not _status_attribute_error.is_empty():
 		push_error(_status_attribute_error)
-	_status_portrait_node = _pages.status.get_node("Portrait/StatusPortraitLayers")
-	_status_portrait_border_node = _pages.status.get_node("Portrait/StatusPortraitBorder")
 	_pages.world_map.close_requested.connect(_close_world_map)
 	$OptionSaveLayer/Window.transition_finished.connect(_option_save_transition_finished)
 	$OptionSaveLayer/Window.confirmed.connect(_finish_option_save)
@@ -540,7 +532,6 @@ func press(key: String) -> void:
 
 func _process(_delta: float) -> void:
 	if visible and not closed:
-		_pages.status._sync_status_portrait()
 		queue_redraw()
 		for page in _pages.values():
 			page.queue_redraw()
@@ -774,7 +765,6 @@ func _render_content() -> void:
 	if selected_tab == MenuModel.Tab.STATUS and status_confirmation_open:
 		_pages.status_confirmation.show()
 		_pages.status_confirmation._render_confirmation()
-	_pages.status._sync_status_portrait()
 	_sync_item_target_window()
 	queue_redraw()
 	for child in _pages.values():

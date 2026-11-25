@@ -1,6 +1,8 @@
 extends Control
 ## 队伍页：球列表与怪物资料。
 
+const StatusPortrait = preload("res://game/menu/status/status_portrait/status_portrait.gd")
+
 var host: Control
 var _first_index := 0
 
@@ -142,6 +144,10 @@ func _render_party() -> void:
 				get_viewport_rect().end.x - actions.position.x - actions.size.x),
 			cell.global_position.y)
 	$Portrait.visible = has_slots and not host.party_details_open and not host.party_equip_open
+	# 立绘由持有它的本页自己画；道具二级窗用的是本页的另一个实例，也走这里。
+	var portrait_index: int = host.selected_party_member_index \
+		if host.party_navigation_open else -1
+	$Portrait.present_request(host, StatusPortrait.member_request(host, portrait_index))
 	if not has_selected_member:
 		if has_slots:
 			$Monster.present_empty()

@@ -9,8 +9,8 @@ extends "res://engine/ui/window_transition/window_transition.gd"
 ## 窗口保持原生的 228×214（`Menu_Monster_DrawList`），只容纳队伍页里与精灵相关的中段：
 ## 立绘、球列表与怪物资料；上下留白按本窗的 `DrawList(rect+8, rect+24)`／
 ## `Menu_Monster_Draw2(rect+8, rect+73)` 定位，不再沿用 PARTY 页原坐标。
-## `Party` 挂在本窗口 `Content` 下并整体上移 13，立绘的 `present()` 由
-## `status.gd::_sync_status_portrait` 按本实例驱动（与队伍页共用同一套绘制）。
+## `Party` 挂在本窗口 `Content` 下并整体上移 13；立绘由 `party.gd` 自己的 `_render_party`
+## 驱动（与队伍页共用同一套 `status_portrait` 绘制），窗口不再跨页去驱动别人的立绘。
 
 const Msg = preload("res://engine/ui/msg/msg.gd")
 

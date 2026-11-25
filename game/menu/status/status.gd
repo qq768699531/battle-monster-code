@@ -2,6 +2,7 @@ extends Control
 ## 状态页：顶部页签下的人物/怪物切换与能力分配入口。
 
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
+const StatusPortrait = preload("res://game/menu/status/status_portrait/status_portrait.gd")
 
 ## 六格流派进度条的几何：`Menu_Hero_Draw1` 逐格调 `Menu_Attr_Draw`，
 ## 每格传 `w = 99`（`a3`）与行高 13（`a4`）。内轨从 `x + 18` 起、宽 `w − 44`，
@@ -182,6 +183,7 @@ func _render_status() -> void:
 		else:
 			$Error.text = "成员详情不可用：%s" % details.get("error", "未知原因")
 			$Error.show()
+	_sync_status_portrait()
 
 
 func _render_hero(parameter: Dictionary, order: Array) -> void:
@@ -274,106 +276,19 @@ func _present_number(number: Control, value: Variant, denominator: int = -1) -> 
 func _status_portrait_request() -> Dictionary:
 	if host.status_confirmation_open:
 		return {}
-	var layers: Array[Dictionary] = [{
-		"path": "obj/ui_eff", "action": 1, "frame": 0, "direction": 0,
-	}]
-	if host.selected_tab == MenuModel.Tab.STATUS and host.selected_status_page == 0:
-		layers.append({"path": "face/fc00", "action": 0, "direction": 1})
-		return {"key": "hero", "layers": layers}
-	var order = host.Menu.native_party_order(host.story_progress)
-	var member_index: int = host.selected_party_member_index
-	if host.selected_tab == MenuModel.Tab.STATUS:
-		var member_slot = host.selected_status_page - 1
-		if member_slot < 0 or member_slot >= order.size():
-			return {}
-		member_index = int(order[member_slot])
-	var monsters: Variant = host.story_progress.get("monsters", [])
-	var capacity: Variant = host.story_progress.get("monsterCapacity")
-	if host.selected_tab == MenuModel.Tab.PARTY and monsters is Array \
-			and (not host.party_navigation_open or member_index >= monsters.size()) \
-			and (not monsters.is_empty() or (capacity is int and capacity >= 0)):
-		return {"key": "party:empty", "layers": layers}
-	if not monsters is Array or member_index < 0 or member_index >= monsters.size():
+	if host.selected_status_page == 0:
+		return {"key": "hero", "layers": [
+			{"path": "obj/ui_eff", "action": 1, "frame": 0, "direction": 0},
+			{"path": "face/fc00", "action": 0, "direction": 1}]}
+	var order: Array = host.Menu.native_party_order(host.story_progress)
+	var member_slot: int = host.selected_status_page - 1
+	if member_slot < 0 or member_slot >= order.size():
 		return {}
-	var member: Variant = monsters[member_index]
-	if not member is Dictionary:
-		return {}
-	var args: Variant = member.get("nativeArguments", [])
-	if not args is Array or args.is_empty() or not args[0] is int:
-		return {}
-	var species_id: int = args[0]
-	var base_species = species_id % 1000
-	var form = 2 if species_id > 999 else 1
-	var path = "mon2/m_b_%03d_%d" % [base_species, form]
-	var offset: Vector2 = host.portrait_offset(base_species, form - 1)
-	layers.append({"path": path, "action": 0,
-		"direction": 0, "offset": Vector2(offset.x, -offset.y)})
-	return {"key": "member:%d:%s" % [member_index, path], "layers": layers, "monster": true}
+	return StatusPortrait.member_request(host, int(order[member_slot]))
 
 
 func _sync_status_portrait() -> void:
-	if not is_instance_valid(host._status_portrait_node):
-		return
-	var item_target_active: bool = host.item_target_open or host._pages.item_target.is_active()
-	var portrait_view: Control = $Portrait
-	if host.selected_tab == MenuModel.Tab.PARTY:
-		portrait_view = host._pages.party_detail.get_node("Content/Portrait") \
-			if host.party_details_open else host._pages.party.get_node("Portrait")
-	elif item_target_active:
-		# 道具二级选择窗里是另一份 `party` 实例，立绘要单独驱动。
-		portrait_view = host._pages.item_target.get_node("Content/Party/Portrait")
-	var layers: Control = portrait_view.get_node("StatusPortraitLayers")
-	var monster: Node2D = portrait_view.get_node("StatusPortraitLayers/Monster")
-	var hero: Node2D = portrait_view.get_node("StatusPortraitLayers/Hero")
-	if host._status_portrait_node != layers:
-		host._status_portrait_node = layers
-		host._status_portrait_border_node = portrait_view.get_node("StatusPortraitBorder")
-		host._status_portrait_frame_key = ""
-	var error: Control = portrait_view.get_node("PortraitError")
-	error.hide()
-	var party_visible: bool = (host.selected_tab == MenuModel.Tab.PARTY or item_target_active) \
-		and not host.party_equip_open
-	var request = _status_portrait_request() if host.selected_tab == MenuModel.Tab.STATUS or party_visible else {}
-	monster.visible = not request.is_empty() and bool(request.get("monster", false))
-	hero.visible = not request.is_empty() and request.key == "hero"
-	if request.is_empty():
-		host._status_portrait_key = ""
-		host._status_portrait_path = ""
-		host._status_portrait_frame_key = ""
-		host._status_portrait_node.visible = false
-		host._status_portrait_border_node.visible = false
-		return
-	var requested_key: String = request.key
-	var layer_requests: Variant = request.get("layers", [])
-	if not layer_requests is Array or layer_requests.is_empty():
-		host._status_portrait_node.visible = false
-		host._status_portrait_border_node.visible = false
-		return
-	var requested_frame_key = requested_key
-	if host._status_portrait_key == requested_key and \
-			host._status_portrait_frame_key == requested_frame_key:
-		if not host._status_portrait_error.is_empty():
-			error.show()
-		return
-	host._status_portrait_key = requested_key
-	host._status_portrait_path = requested_key
-	host._status_portrait_frame_key = requested_frame_key
-	host._status_portrait_error = ""
-	for layer_request: Dictionary in layer_requests:
-		var path: String = layer_request.path
-		if path == "obj/ui_eff":
-			continue
-		var animation: Node2D = monster if path.begins_with("mon2/") else hero
-		if not animation.present(path, int(layer_request.action), int(layer_request.direction)):
-			host._status_portrait_error = animation.last_error
-			error.show()
-			host._status_portrait_node.visible = false
-			host._status_portrait_border_node.visible = false
-			return
-		if animation == monster:
-			monster.get_node("Content").position = layer_request.offset
-	host._status_portrait_node.visible = true
-	host._status_portrait_border_node.visible = true
+	$Portrait.present_request(host, _status_portrait_request())
 
 
 

@@ -2,6 +2,7 @@ extends "res://engine/ui/window_transition/window_transition.gd"
 ## 队伍页的详细情报窗口。
 
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
+const StatusPortrait = preload("res://game/menu/status/status_portrait/status_portrait.gd")
 
 var host: Control
 
@@ -46,6 +47,8 @@ func toggle_equipment() -> void:
 
 func _render_party_detail() -> void:
 	$Bounds/Title.text = host._menu_text(153)
+	$Content/Portrait.present_request(host,
+		StatusPortrait.member_request(host, host.selected_party_member_index))
 	var member: Dictionary = host.story_progress.monsters[host.selected_party_member_index]
 	var details: Dictionary = host.Menu.native_member_details(host.story_progress,
 		host.gameplay_catalog, host.selected_party_member_index)

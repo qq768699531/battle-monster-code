@@ -55,12 +55,21 @@ func test_item_target_opens_as_single_window() -> void:
 	await wait_seconds(0.3)
 	assert_false(window.visible, "关窗动画结束后隐藏")
 	assert_true(menu.get_node("Frame").visible, "关窗后菜单窗框回来")
-	# 回到 PARTY 页时技能与装备栏仍互斥（上一轮的重叠回归）。
+	# 回到 PARTY 页时技能与装备栏仍互斥（上一轮的重叠回归），立绘也由 party.gd 自己绘制。
+	menu.party_navigation_open = true
 	menu.selected_tab = MenuModel.Tab.PARTY
 	menu._render_content()
 	var monster: Control = menu_party.get_node("Monster")
+	assert_true(menu_party.get_node("Portrait/StatusPortraitLayers/Monster").visible,
+		"队伍页立绘由 party.gd 自己 present")
 	assert_true(monster.get_node("Skills").visible, "队伍页默认显示被动技能")
 	assert_false(monster.get_node("Equipment").visible, "队伍页不同时显示装备栏")
+	# STATUS 页的立绘也改由自己的 _render_status 驱动。
+	menu.selected_tab = MenuModel.Tab.STATUS
+	menu.selected_status_page = 0
+	menu._render_content()
+	assert_true(menu.get_node("status/Portrait/StatusPortraitLayers/Hero").visible,
+		"状态页立绘由 status.gd 自己 present")
 
 
 ## 原生 `Menu_Item_mKeyPressed` 的 quest_layer 9：OK 只调 `Ball_stdUseEx`，不改 layer，
