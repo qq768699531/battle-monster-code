@@ -85,6 +85,9 @@ var item_target_open := false
 var item_actions_open := false
 var selected_item_action := 0
 var selected_item_target_slot := 0
+## 二级选择窗锁定的道具（原生 `ItemData.item_action_record`）：进窗时快照一份，
+## 连按 OK 时一直用同一件，不会因为背包行位置变化而换成别的道具。
+var item_target_item: Dictionary = {}
 var item_discard_open := false
 var item_discard_item: Dictionary = {}
 var item_discard_count := 1
@@ -237,6 +240,7 @@ func bind(progress: Dictionary, catalog: GameplayData, text: Variant) -> void:
 	item_actions_open = false
 	selected_item_action = 0
 	selected_item_target_slot = 0
+	item_target_item = {}
 	item_discard_open = false
 	item_discard_item = {}
 	item_discard_count = 1
@@ -799,7 +803,7 @@ func open_selected_item_actions() -> bool:
 
 
 ## 原生状态 11 选「使用」：进 quest_layer 9 的二级选择窗（`Menu_Item_mPaint` 在 9／10
-## 只开 `Menu_Monster_DrawList` 的 228×214 窗），候选是 `Ball_bagList` 的全部持有精灵。
+## 开独立窗），候选是全部持有精灵；窗口一直开到 CLR 才退出。
 func use_selected_item() -> bool:
 	var item := _selected_inventory_item()
 	if item.is_empty():
@@ -817,6 +821,7 @@ func use_selected_item() -> bool:
 		return false
 	selected_party_member_index = 0
 	selected_item_target_slot = 0
+	item_target_item = item.duplicate(true)
 	party_navigation_open = true
 	party_actions_open = false
 	item_target_open = true
@@ -870,17 +875,19 @@ func _selected_inventory_item() -> Dictionary:
 func confirm_item_target() -> bool:
 	if not item_target_open:
 		return false
-	var item := _selected_inventory_item()
+	var item := item_target_item
+	if item.is_empty():
+		return false
 	if not Menu.item_actions(item).has(Menu.ITEM_ACTION_MIX):
 		return use_selected_item_on_target()
-	return _confirm_item_mix(item)
+	return _confirm_item_mix()
 
 
 ## 原生 `Menu_Item_mKeyPressed` 的 quest_layer 10：先查余额（199 以下 79 且不扣钱），
-## 再扣 200 并走 `Ball_stdUseEx` 的第 4 组分支。
-func _confirm_item_mix(item: Dictionary) -> bool:
+## 再扣 200 并走 `Ball_stdUseEx` 的第 4 组分支。成功后仍留在二级窗（原生不改 layer）。
+func _confirm_item_mix() -> bool:
+	var item := item_target_item
 	if item.is_empty():
-		item_target_open = false
 		notice = "道具已不可用。"
 		_render_content()
 		return false
@@ -890,8 +897,6 @@ func _confirm_item_mix(item: Dictionary) -> bool:
 	if not result.get("ok", false):
 		_render_content()
 		return false
-	item_target_open = false
-	party_navigation_open = false
 	last_progress_operation = {"kind": "mix", "item_id": int(item.id),
 		"member": selected_party_member_index, "category": selected_bag_category}
 	progress_changed.emit(story_progress.duplicate(true))
@@ -902,6 +907,7 @@ func _confirm_item_mix(item: Dictionary) -> bool:
 func cancel_item_target() -> void:
 	item_target_open = false
 	party_navigation_open = false
+	item_target_item = {}
 	notice = ""
 	_render_content()
 
@@ -917,20 +923,34 @@ func _select_item_target(step: int) -> void:
 	_render_content()
 
 
+## 二级选择的当前持有量（原生 `Item_fndCount`）：道具行消失后仍能用快照里的 id 查。
+func _item_target_quantity(item: Dictionary) -> int:
+	var inventory: Variant = story_progress.get("inventory")
+	if not inventory is Dictionary or not item.has("id"):
+		return 0
+	for key: Variant in inventory:
+		if key is String and key.is_valid_int() and int(key) == int(item["id"]):
+			var count: Variant = inventory[key]
+			return int(count) if count is int else 0
+	return 0
+
+
 func use_selected_item_on_target() -> bool:
 	if not item_target_open:
 		return false
-	var rows := Menu.native_inventory_rows(story_progress, gameplay_catalog,
-		selected_bag_category)
+	var item := item_target_item
 	var monsters: Variant = story_progress.get("monsters")
-	if selected_item_index < 0 or selected_item_index >= rows.size() or \
-			not monsters is Array or selected_party_member_index < 0 or \
+	if item.is_empty() or _item_target_quantity(item) <= 0:
+		# 原生 `Ball_stdUseEx` 的 default 分支：道具已用完／不可用只提示 510，不关窗。
+		notice = _menu_text(Msg.Id.ITEM_UNUSABLE)
+		_render_content()
+		return false
+	if not monsters is Array or selected_party_member_index < 0 or \
 			selected_party_member_index >= monsters.size():
-		notice = "道具或精灵已不可用。"
+		notice = "精灵已不可用。"
 		_render_content()
 		return false
 	var member_index := selected_party_member_index
-	var item: Dictionary = rows[selected_item_index]
 	var random_seed := randi()
 	var result := Menu.use_item(story_progress, gameplay_catalog, int(item.id), member_index,
 		random_seed)
@@ -947,13 +967,18 @@ func use_selected_item_on_target() -> bool:
 		# 原生这几支返回码不扣道具（HP 已满／没有可治疗的异常状态……），停在选目标。
 		_render_content()
 		return false
-	item_target_open = false
-	party_navigation_open = false
 	last_progress_operation = {"kind": "use", "item_id": int(item.id),
 		"member": member_index, "seed": random_seed}
 	progress_changed.emit(story_progress.duplicate(true))
+	# 原生 `Menu_Item_mKeyPressed` 的 quest_layer 9 按 OK 只调 `Ball_stdUseEx`，不改 layer：
+	# 二级窗保持打开，可连续对同一／其他精灵使用；只有 CLR 才走关窗回背包。
 	_render_content()
 	if code == ItemEffect.Code.MASTERY_SELECT:
+		# 该分支由宿主关菜单并切流派页，不属于可连续使用的情形。
+		item_target_open = false
+		party_navigation_open = false
+		item_target_item = {}
+		_render_content()
 		mastery_change_requested.emit()
 	return true
 

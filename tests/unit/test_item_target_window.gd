@@ -58,3 +58,45 @@ func test_item_target_opens_as_single_window() -> void:
 	var monster: Control = menu_party.get_node("Monster")
 	assert_true(monster.get_node("Skills").visible, "队伍页默认显示被动技能")
 	assert_false(monster.get_node("Equipment").visible, "队伍页不同时显示装备栏")
+
+
+## 原生 `Menu_Item_mKeyPressed` 的 quest_layer 9：OK 只调 `Ball_stdUseEx`，不改 layer，
+## 所以二级窗能连续使用；CLR（-16）才关窗回背包。
+func test_item_use_stays_open_until_clear() -> void:
+	var menu: Control = MenuScene.instantiate()
+	get_tree().root.add_child(menu)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	menu.story_progress = {"monsters": [
+		{"nativeArguments": [49, 5, 0, -1, 0], "nickname": 0, "hp": 5, "sp": 5},
+		{"nativeArguments": [49, 5, 0, -1, 0], "nickname": 0, "hp": 5, "sp": 5}],
+		"partyOrder": [0], "monsterCapacity": 6, "inventory": {"1001": 2, "1017": 1},
+		"parameter": {}}
+	menu.gameplay_catalog = Fixtures.data({
+		"items": [
+			{"id": 1001, "type": 1, "index": 1, "icon": 1,
+				"detail_slots": [0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0]},
+			{"id": 1017, "type": 1, "index": 17, "icon": 1,
+				"detail_slots": [0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0]}],
+		"monsters": [{"id": 49, "kind": 0, "attribute_group": 3, "attribute_entry": 0,
+			"ability_inputs": [14, 13, 12, 11, 17, 16],
+			"attribute_inputs": [16, 4, 22, 2, 11, 2]}]})
+	menu.selected_tab = MenuModel.Tab.ITEMS
+	menu.selected_item_index = 0
+	assert_true(menu.use_selected_item(), "进二级选择窗")
+	await wait_seconds(0.3)
+	assert_true(menu.confirm_item_target(), "第一次 OK 使用成功")
+	assert_true(menu.item_target_open, "OK 使用后不关窗")
+	assert_eq(int(menu.story_progress.inventory.get("1001", 0)), 1, "第一次扣掉一个")
+	menu._select_item_target(1)
+	assert_true(menu.confirm_item_target(), "换一只精灵继续 OK 使用")
+	assert_true(menu.item_target_open, "连续使用后仍停在二级窗")
+	assert_eq(int(menu.story_progress.inventory.get("1001", 0)), 0, "第二次扣掉最后一个")
+	# 道具用完后仍停在二级窗；锁定的是进入时的那件道具，不会误用到背包里别的道具。
+	menu.confirm_item_target()
+	assert_true(menu.item_target_open, "用完仍不自动退出，等 CLR")
+	assert_eq(int(menu.story_progress.inventory.get("1017", 0)), 1, "不会换成别的道具继续用")
+	menu.cancel_item_target()
+	await wait_seconds(0.3)
+	assert_false(menu.get_node("item_target").visible, "CLR 后关窗")
+	assert_true(menu.get_node("Frame").visible, "关窗后菜单窗框回来")
