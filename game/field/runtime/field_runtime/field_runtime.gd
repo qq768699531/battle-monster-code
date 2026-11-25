@@ -1167,7 +1167,6 @@ func handle_touch(position: Vector2, phase: String) -> bool:
 		_last_touch = NO_TOUCH
 		if TouchView.DIRECTIONS.has(_touch_key):
 			_release_walk_direction(TouchView.DIRECTIONS[_touch_key])
-			_running = false
 		_touch_key = 0
 		_chat_view.set_touch_key(0)
 		_touch_view.present(_field_touch_style(), 0)
@@ -1388,7 +1387,6 @@ func handle_key(event: InputEventKey) -> bool:
 	if DIRECTION_KEYS.has(key):
 		if not event.pressed:
 			_release_walk_direction(DIRECTION_KEYS[key])
-			_running = false
 		elif not event.echo:
 			if _field_touch_style() != 0 and focused:
 				_begin_walk(DIRECTION_KEYS[key])
