@@ -1335,12 +1335,10 @@ func _push_walk_direction(direction: Vector2i) -> void:
 	_apply_walk_top()
 
 
-## 松开一个方向：先结束跑步状态，再从栈里移除；栈空就停，栈非空则回到底下那个按着的方向
-## 并恢复走路（不能把松键前冲刺的 RUN 带给下面仍按着的方向）。
+## 松开一个方向：从栈里移除；栈空就停，栈非空则回到底下那个按着的方向。
 func _release_walk_direction(direction: Vector2i) -> void:
 	if not _walk_stack.has(direction):
 		return
-	_running = false
 	_walk_stack.erase(direction)
 	_walk_remainder_px = 0.0
 	_apply_walk_top()
