@@ -138,8 +138,6 @@ func _render_party() -> void:
 	$EmptyNotice.visible = not has_slots
 	$Monster.hide()
 	$Error.hide()
-	# 道具二级选择不显示队伍页的装备栏。
-	$Monster.get_node("Equipment").visible = not host.item_target_open
 	var has_selected_member: bool = host.party_navigation_open and selected_index < monsters.size()
 	$Scrollbar/UpHit.disabled = host.party_actions_open or host.party_discard_open
 	$Scrollbar/DownHit.disabled = host.party_actions_open or host.party_discard_open
@@ -163,8 +161,6 @@ func _render_party() -> void:
 	if details.get("ok", false):
 		$Monster.present(member, details)
 		$Monster.visible = not host.party_equip_open
-		$Monster.get_node("Equipment").visible = not host.item_target_open
-		$Monster.get_node("Toggle").visible = not host.item_target_open
 	else:
 		$Error.text = "成员详情不可用：%s" % str(details.get("error", "未知原因"))
 		$Error.show()

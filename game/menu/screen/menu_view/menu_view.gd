@@ -741,8 +741,12 @@ func _render_content() -> void:
 	# `live_regions`：菜单这一层不再收触控（原生此时只有 Prime 画布判点，见 `EFC_mainTouch`）。
 	mouse_filter = Control.MOUSE_FILTER_IGNORE if option_modal else Control.MOUSE_FILTER_STOP
 	for page in _pages.values():
-		if page != _pages.item_target:
-			page.hide()
+		# `item_target` 自己驱动显隐；二级选择期间 `party` 正挂在它的 Content 下，不能藏。
+		if page == _pages.item_target:
+			continue
+		if page == _pages.party and item_target_active:
+			continue
+		page.hide()
 	if not item_target_active:
 		var name: String = Menu.TAB_PAGE_NAMES[selected_tab]
 		if selected_tab == MenuModel.Tab.PARTY and party_details_open:
@@ -776,10 +780,11 @@ func _render_content() -> void:
 		child.queue_redraw()
 
 
-## 二级选择窗开／关的驱动：`item_target_open` 为真时开窗并刷新，转假后走关窗动画，
-## 动画结束时窗口自己隐藏再回调本函数，把菜单窗框交还。
+## 二级选择窗开／关的驱动：`item_target_open` 为真时把菜单里唯一的 `party` 页挂进窗口正文
+## 再开窗刷新；转假后走关窗动画，动画结束由窗口归还 `party` 并回调本函数恢复菜单窗框。
 func _sync_item_target_window() -> void:
 	if item_target_open:
+		_pages.item_target.attach_party(_pages.party)
 		_pages.item_target.open_target()
 		_pages.item_target.refresh()
 	else:
