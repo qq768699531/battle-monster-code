@@ -7,15 +7,15 @@ const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 signal completed(outcome: Dictionary)
 ## 逃跑／放弃：结局是回野外地图（`field_runtime._battle_abandoned()`）。边界页只在逃生战
 ## （`allow_flee`）才走这条；事件战的边界页回标题（`title_requested`）。
-## `items` 同 `title_requested`（道具号 → 个数）：原生在战斗内使用时就已经
-## `Item_stdDel`／`Item_stdDels` 写回（`Battle_Capture_Action_IsCapture:123`、
-## `Battle_Die_mKeyPressed` 的 `0x31DD0`），任何一条离开战斗的结局都得兑现。
-signal abandoned(items: Dictionary)
+## `outcome` 与 `completed` 同形：`items`（道具号 → 个数）是原生在战斗内使用时就已经
+## `Item_stdDel`／`Item_stdDels` 写回的东西（`Battle_Capture_Action_IsCapture:123`、
+## `Battle_Die_mKeyPressed` 的 `0x31DD0`），`captures` 是捕获成功、原生第 21 帧就
+## `Ball_stdAddEx` 入包的个体——逃跑之前的捕获不能因为这条出口就丢掉。
+signal abandoned(outcome: Dictionary)
 ## 原生 `Battle_MainMenu_mRun` 返回码 1 的 `Game_out()`：离开这一战**回标题**，
-## 与 `abandoned` 是两条不同结局（`wiki\battle\battle-exit.md`）。`items` 与 `completed` 的
-## `outcome["items"]` 同形（道具号 → 个数）：原生在战斗内使用时就已经 `Item_stdDel`／`Item_stdDels`
-## 写回，这条出口必须把本战用掉的道具一并交出，调用方才扣得掉。
-signal title_requested(items: Dictionary)
+## 与 `abandoned` 是两条不同结局（`wiki\battle\battle-exit.md`）。`outcome` 与 `completed` 同形：
+## 战斗内已经写回的已用道具与已捕获个体都得跟着这条出口交出。
+signal title_requested(outcome: Dictionary)
 ## 战斗内系统菜单的环境设定改值当场生效（原生 `Menu_Setup_mKeyPressed` 的
 ## `EFC_mdaVOLUME`／`EFC_mdaPlayDATA(123)`／`EFC_mdaVIBRATE`）。音频所有者与总线音量都在启动层，
 ## 所以本 Scene 只把 `sys_menu` 的请求原样转出去，由 `main.gd` 接（见 `wiki\battle\battle-sysmenu.md`）。
@@ -32,6 +32,7 @@ const Presentation = preload("res://game/battle/presentation/presentation.gd")
 const Settlement = preload("res://game/battle/combat/battle_settlement/battle_settlement.gd")
 const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const HitEffect = preload("res://game/battle/presentation/hit_effect/hit_effect.gd")
+const Box2Prompt = preload("res://game/field/runtime/box2_prompt/box2_prompt.gd")
 const BattlePoses = preload("res://game/battle/combat/battle_poses/battle-poses.tres")
 const STEP_SECONDS := 0.05
 ## 用了道具之后原生状态 21 ITEM2 空跑 16 帧（`Battle_Item2_mRun` 的 `run_counter > 15`）。
@@ -174,6 +175,12 @@ var settlement: RefCounted
 var event_drop: Callable = Callable()
 ## 本战捕获到的个体（原生 `Ball_stdAddEx` 在战斗内就入包；这里等战斗结束由调用方写回）。
 var _captures: Array[Dictionary] = []
+
+## 捕获演出的现场：演出开始前被捕获对象那一整份球（结果窗与 fxt478 提示要它的物种／性格／品级）。
+## `_capture_caught` = 本次判定结果；`_capture_result_pending` = 动作播完要开结果窗。
+var _capture_ball: Dictionary = {}
+var _capture_caught := false
+var _capture_result_pending := false
 ## 本战用掉的捕获球（原生 `Item_stdDel` 在判定前就扣）。
 var _used_items: Dictionary = {}
 ## 当前步骤要播的捕获特效（`b_effect` 37／38），`present` 用过后清空。
@@ -199,6 +206,8 @@ func _ready() -> void:
 			_refresh_display())
 	$Items.cancelled.connect(_next)
 	$Items.chosen.connect(_item_chosen)
+	$CaptureBox.confirmed.connect(_capture_box_confirmed)
+	$CaptureBox.transition_finished.connect(_capture_box_finished)
 	$SysMenu.closed.connect(_sys_menu_closed)
 	$SysMenu.title_requested.connect(_exit_to_title)
 	$SysMenu.setting_changed.connect(setting_changed.emit)
@@ -217,11 +226,15 @@ func start(model: RefCounted, resources: RefCounted = null, assets: Node = null,
 	$Items.hide()
 	$Result.hide()
 	$Result.stage = "closed"
+	$CaptureBox.hide()
 	$Actions.show()
 	$Field.reset_hud()
 	settlement = null
 	_captures.clear()
 	_used_items.clear()
+	_capture_ball.clear()
+	_capture_caught = false
+	_capture_result_pending = false
 	_pending_effect.clear()
 	_closed = false
 	_auto_announced = false
@@ -349,6 +362,9 @@ func _action_finished(_name: StringName) -> void:
 		# 攻击动画到此播完（原生 `Battle_Monster_procNext` 收尾 → POSITION 入场），阵亡的受击者现在才换墓碑。
 		_deferred_graves.clear()
 		_applied_steps = -1
+		if _capture_result_pending:
+			_open_capture_result()
+			return
 		_state_25()
 
 
@@ -720,6 +736,10 @@ func press(key: String) -> void:
 			_close_confirm(confirm_selected == 0)
 	elif phase == "boundary" and (confirm or key == "Escape"):
 		_boundary_exit()
+	elif phase == "capture_result":
+		# 原生 `Battle_Capture_Action_mKeyPressed`：只有结果窗稳态时 OK 才关窗（相位 4 → -1）。
+		if confirm and not $CaptureBox.is_transitioning():
+			$CaptureBox.close_window()
 	elif phase == "result":
 		if settlement != null:
 			$Result.handle_key(key)
@@ -909,11 +929,16 @@ func _run_capture() -> void:
 	_action_target = target
 	# 捕获成功时敌人在结果帧才消失，所以这 0.05 秒一步的演出从动作前的快照开始。
 	var shown: Array = _display_balls.duplicate(true)
+	# 目标可能在判定成功时就被 `battle.capture` 清掉，所以球要先把整份快照存下来：
+	# 入包提示（fxt478）与结果窗都要它的物种、性格与品级。
+	_capture_ball = shown[target].duplicate(true) if target >= 0 and target < shown.size() else {}
 	var response: Dictionary = battle.capture(selected_item, target)
 	if not response.get("ok", false):
 		_boundary(str(response.get("error", "原捕获不受支持")))
 		return
 	_steps = response.steps
+	_capture_caught = bool(response.get("caught", false))
+	_capture_result_pending = true
 	_display_balls = shown
 	current_step = 0
 	_recoil_start.clear()
@@ -928,6 +953,8 @@ func _run_capture() -> void:
 	if item_id >= 0:
 		_used_items[item_id] = int(_used_items.get(item_id, 0)) + 1
 	selected_item = {}
+	MonsterAnimation.warm("hero/h_b_01")
+	$Field.capture_begin(target)
 	_render_step(_steps[0])
 	_start_timeline()
 
@@ -1038,16 +1065,13 @@ func _render_step(step: Dictionary) -> void:
 		# 逐次伤害只是场上数字（原生 `Param_dmgNUMBER` 的 kind 14 对象）：既不进提示栈，
 		# 也不画在战斗面板上（面板只留给边界态）。
 	_refresh_recoil()
-	# 原生 `Battle_Capture_Action_mRun` 的结果帧：第 0 帧 `Param_atkEFFECT(…, 37／38, 0)`
-	# 迸发／失败闪光，`mPaint` 画 msg.fxt:12「抓捕成功」／11「抓捕失败」；成功时第 21 帧
-	# `Object_objRemove` 把对象移出战斗，所以这里直接清空显示、不留墓碑。
+	# 捕获演出的每个分镜（原生 `Battle_Capture_Hide_*`／`Battle_Capture_Action_*`）：
+	# 退场位移、淡入淡出、主角投球都交给 `$Field.capture_frame`；结果帧才在目标身上放
+	# `b_effect` 37／38，成功第 21 帧才清对象并推 fxt478 入包提示。
 	var capture: Dictionary = step.get("capture", {})
-	_pending_effect = capture.duplicate()
+	_pending_effect.clear()
 	if not capture.is_empty():
-		# 原生 `Battle_Capture_Action_mRun` 是 `Game_infoInit` 的调用点之一（msg.fxt 12／11）。
-		_set_note(_assets.text_message(Msg.SOURCE, Msg.Id.CAPTURE_SUCCEEDED if capture.caught else Msg.Id.CAPTURE_FAILED))
-		if capture.caught:
-			_display_balls[int(capture.target)] = {}
+		_show_capture_stage(capture)
 	if step.has("flash"):
 		_pending_flashes.assign(step["flash"])
 	_refresh_display()
@@ -1062,6 +1086,75 @@ func _say_passive_activated(owner: int) -> void:
 		else PASSIVE_NOTICE_ALLY_COLOR
 	MessageStack.say("%s[%s] %s" % [color, passive_name,
 		_assets.text_message(Msg.SOURCE, Msg.Id.PASSIVE_ACTIVATED)])
+
+
+## 捕获演出的一个分镜：位移／淡入淡出／主角投球都由 `$Field.capture_frame` 按原生帧序做，
+## 这里只接结果帧（`b_effect` 37／38）与成功第 21 帧的入包（原生 `Object_objRemove` + `Ball_stdAddEx`）。
+func _show_capture_stage(capture: Dictionary) -> void:
+	var stage := int(capture.get("stage", Battle.CaptureStage.RESULT))
+	var target := int(capture.get("target", -1))
+	$Field.capture_frame(stage, int(capture.get("frame", 0)))
+	if stage == Battle.CaptureStage.RESULT and capture.has("effect"):
+		_pending_effect = {"target": target, "effect": int(capture.effect)}
+	elif stage == Battle.CaptureStage.OBTAINED:
+		if target >= 0 and target < _display_balls.size():
+			_display_balls[target] = {}
+		_say_monster_obtained()
+
+
+## 原生 `Ball_stdAddEx@0x85310`：捕获成功入包后推一条提示——`Ball_stdGradeINDEX` 的品级色 +
+## 性格名（`Ball_stdNickText` 的 fxt472..477，性格 0 是空串）+ fxt478「%s获得」。图标帧是球记录的
+## `kind_specific_85_bits`，本工程的球记录没有这一项（原生类型 29 分支按表算出负数 ⇒ 不画图标）。
+func _say_monster_obtained() -> void:
+	if _capture_ball.is_empty() or _assets == null or _presentation == null:
+		return
+	# 原生 `Ball_stdAdd` 在怪物背包满时返回空指针，`Ball_stdAddEx` 也就不推这条提示；
+	# 本工程的入包推迟到战斗结束，所以用同一条容量规则先判一次（`_captures` 已含本次）。
+	var capacity := int(_progress.get("monsterCapacity", 0))
+	var monsters: Variant = _progress.get("monsters")
+	if capacity > 0 and monsters is Array and monsters.size() + _captures.size() > capacity:
+		return
+	var species := int(_capture_ball.get("species", 0))
+	var grade := clampi(int(_capture_ball.get("grade", 0)), 0,
+		Battle.CAPTURE_GRADE_COLOR.size() - 1)
+	var prefix: String = Battle.CAPTURE_GRADE_COLOR[grade]
+	var nickname := int(_capture_ball.get("nickname", 0))
+	if nickname > 0:
+		prefix += _presentation.message(471 + nickname) + " "
+	var names: Dictionary = _assets.text_messages("common/item_mon.dat")
+	var name_text := "#%d" % Battle.combat_species(species)
+	var definition: MonsterDefinition = _presentation.catalog.monster(
+		Battle.combat_species(species))
+	if definition != null and not definition.name_record.is_empty():
+		name_text = str(names.get(definition.name_record, name_text))
+	MessageStack.say(prefix + (_presentation.message(Msg.Id.MONSTER_OBTAINED) % name_text))
+
+
+## 原生 `Battle_Capture_Action_mPaint`：演出收尾后开 Box2 结果窗（`Menu_win_Box2_DrawOk`），
+## 正文是 msg.fxt 12「抓捕成功」／11「抓捕失败」；按下 OK 收窗后才切 POSITION。
+func _open_capture_result() -> void:
+	_capture_result_pending = false
+	phase = "capture_result"
+	$CaptureBox.present(_assets.text_message(Msg.SOURCE,
+		Msg.Id.CAPTURE_SUCCEEDED if _capture_caught else Msg.Id.CAPTURE_FAILED),
+		Box2Prompt.Form.OK)
+	$CaptureBox.show()
+	$CaptureBox.open_window()
+	_refresh_display()
+
+
+func _capture_box_confirmed() -> void:
+	if phase == "capture_result" and not $CaptureBox.is_transitioning():
+		$CaptureBox.close_window()
+
+
+## 结果窗收完（原生 `MainData` 的窗口相位回到 -4）：移除主角对象、退场偏移复位，再切 POSITION。
+func _capture_box_finished(opened: bool) -> void:
+	if opened or phase != "capture_result" or _closed:
+		return
+	$CaptureBox.hide()
+	$Field.capture_end()
+	_state_25()
 
 
 ## 原生 `Battle_Menu_mHide`／`Battle_Taget_mHide`：指令窗口（MENU）盯行动者、
@@ -1284,7 +1377,7 @@ func _abandon() -> void:
 	if _closed:
 		return
 	_closed = true
-	abandoned.emit(_used_items.duplicate())
+	abandoned.emit(_exit_payload())
 
 
 ## 系统菜单主菜单的「是」（`Battle_MainMenu_mRun` 返回码 1 → `Game_out()`）：
@@ -1293,7 +1386,13 @@ func _exit_to_title() -> void:
 	if _closed:
 		return
 	_closed = true
-	title_requested.emit(_used_items.duplicate())
+	title_requested.emit(_exit_payload())
+
+
+## 非结算出口（逃跑／放弃、系统菜单回标题）要交出的东西：原生在战斗内就已经写回了
+## `Item_stdDel` 与 `Ball_stdAddEx`，所以已用道具与已捕获个体都得跟着走。
+func _exit_payload() -> Dictionary:
+	return {"items": _used_items.duplicate(), "captures": _captures.duplicate(true)}
 
 
 func _boundary(message: String) -> void:
@@ -1421,7 +1520,7 @@ func _refresh_display() -> void:
 		$Flee/Content/Yes/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES), confirm_selected == 0)
 		$Flee/Content/No/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO), confirm_selected == 1)
 	# 行动期间 `battle.actor` 已经指向下一个行动者，站位要按本回合记下的行动者算。
-	var seat_actor := _acting_actor if phase in ["action", "result"] else \
+	var seat_actor := _acting_actor if phase in ["action", "result", "capture_result"] else \
 		(int(battle.actor) if battle != null else -1)
 	$Field.set_focus(_camera_focus(seat_actor))
 	_refresh_fade()
@@ -1441,7 +1540,8 @@ func _refresh_display() -> void:
 		# 命中。过去这里恒传 0，每帧刷新都把 `held_key` 冲掉，按住 AUTO 时的轻微抖动／拖动会再发
 		# 一次同一个键——AUTO 于是被连按两次（开一次、关一次），表现成「按一次只走一手」。
 		$TouchControls.present($SysMenu.touch_style() if phase == "sys" else
-			TouchStyle.COMMAND if phase in ["command", "action", "position"] else
+			TouchStyle.COMMAND if phase in ["command", "action", "position"] \
+			and not (phase == "action" and _capture_result_pending) else
 			TouchStyle.SELECT if phase in ["target", "flee", "revive", "encounter", "items"] else
 			TouchStyle.INFO if phase == "info" else 0, $TouchControls.held_key)
 		# 原生 `EFC_mainTouchDRAW:138-162`：自动战斗开着时 AUTO 键按 `GRP_MODE_BRIGHT` 画，亮度

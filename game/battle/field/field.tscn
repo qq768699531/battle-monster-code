@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://game/battle/combat/party_card/party_card.tscn" id="card"]
 [ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://game/battle/presentation/skill_banner/skill_banner.tscn" id="skill_banner"]
+[ext_resource type="PackedScene" path="res://engine/anim/monster_animation/monster_animation.tscn" id="monster"]
 
 [sub_resource type="AtlasTexture" id="Atlas_headings"]
 atlas = ExtResource("Sheet_common_ui_battle")
@@ -230,6 +231,9 @@ offset_top = 141.0
 [node name="Party2" parent="Actors" instance=ExtResource("actor")]
 offset_left = 281.0
 offset_top = 182.0
+
+[node name="CaptureHero" parent="." instance=ExtResource("monster")]
+visible = false
 
 [node name="Effects" type="Control" parent="."]
 mouse_filter = 2

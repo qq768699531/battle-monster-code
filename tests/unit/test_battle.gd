@@ -42,8 +42,15 @@ func test_legacy_suite() -> void:
 	capture.allow_flee = true
 	var attempt: Dictionary = capture.capture(plain, 0)
 	assert_true(attempt.ok and attempt.caught and capture.balls[0].is_empty() and
-		attempt.steps.size() == 34 and int(attempt.record.species) == 93,
+		attempt.steps.size() == 56 and int(attempt.record.species) == 93,
 		"a successful capture removes the enemy and yields a party record")
+	# 捕获演出分镜：退场 6 → 空跑 6 → 投球 16 → 结果 28，成功第 21 帧（总第 49 帧）入包。
+	assert_true(int(attempt.steps[0].capture.stage) == Battle.CaptureStage.HIDE and
+		int(attempt.steps[6].capture.stage) == Battle.CaptureStage.WAIT and
+		int(attempt.steps[12].capture.stage) == Battle.CaptureStage.THROW and
+		int(attempt.steps[28].capture.stage) == Battle.CaptureStage.RESULT and
+		int(attempt.steps[49].capture.stage) == Battle.CaptureStage.OBTAINED,
+		"the capture timeline follows hide → wait → throw → result → obtained")
 	# 败北后的复活（`Battle_Die_Revival` 的 0 档）：`Ball_stdInit(state, -1, 100, 100,
 	# 100, 100)` 把速度／HP／SP 回满，随后这场战斗继续（`Battle_Die_mRun` 的 4／8 段
 	# `BattleCanvas_SetNext(BATTLE_STATE_POSITION)`），所以 `result` 必须回到 null。

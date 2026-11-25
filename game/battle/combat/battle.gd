@@ -1125,10 +1125,23 @@ const CAPTURE_BASE := [90, 80, 50, 30, 7, 5]
 const CAPTURE_BONUS := [[5, 4, 3, 2, 1, 1], [6, 5, 4, 3, 1, 1], [7, 6, 5, 4, 2, 2],
 	[8, 7, 6, 5, 2, 2], [9, 8, 7, 6, 3, 3], [10, 9, 8, 7, 3, 3],
 	[11, 10, 9, 8, 4, 4], [12, 11, 10, 9, 4, 4]]
-## 捕获演出：`Battle_Capture_Action_mRun` 的子状态 0 在 `run_counter > 5` 时切走，
-## 结果子状态 2（失败）／3（成功）在 `run_counter == 28` 收尾，全程 34 个 0.05 秒帧。
-const CAPTURE_THROW_FRAMES := 6
+## 捕获演出的两段状态：`Battle_Capture_Hide_mRun` 先把非目标对象往两侧退开（6 帧，
+## `run_counter > 5` 切走），`Battle_Capture_Action_mRun` 子状态 0 再空跑 6 帧才投球；
+## 投球是主角对象（kind 11、`hero/h_b_01`）的 ANI 动作 18 → 导出动作 1，共 16 帧。
+## 结果子状态 2（失败）／3（成功）在 `run_counter == 28`／`31` 收尾，这里按 28 帧算。
+## `CAPTURE_HIDE_FRAMES` = `Battle_Capture_Hide_mRun` 的 6 帧退场（`run_counter > 5` 切状态）。
+const CAPTURE_HIDE_FRAMES := 6
+## `Battle_Capture_Action_mRun` 子状态 0 的空跑帧数（`run_counter > 5` 才 `Object_objANI(…, 18)`）。
+const CAPTURE_WAIT_FRAMES := 6
+## 投球动画帧数：`hero/h_b_01` 的 ANI 动作 1（场景 `metadata/frame_count` = 16）。
+const CAPTURE_THROW_FRAMES := 16
 const CAPTURE_RESULT_FRAMES := 28
+## 成功时 `Ball_stdAddEx` 在结果子状态第 21 帧执行（入包、图鉴登记与 fxt478 提示）。
+const CAPTURE_OBTAINED_FRAME := 21
+## `Ball_stdGradeINDEX` 的品级 → 行内换色码（原生 0x9C208..0x9C21C 的六个 4 字节串）：
+## 品级 0 → `#CB`、1 → `#CA`、2..5 → `#CC`..`#CF`；`Ball_stdAddEx` 把它拼在性格名之前。
+const CAPTURE_GRADE_COLOR := ["#CB", "#CA", "#CC", "#CD", "#CE", "#CF"]
+
 ## 结果演出里的 `Param_atkEFFECT` 动作号（`Battle_Capture_Action_mRun` 子状态 2／3 第 0 帧）：
 ## 成功 37、失败 38，都是 `obj/b_effect` 的动作。
 const CAPTURE_EFFECT := 37
@@ -1145,6 +1158,16 @@ const CAPTURE_STRONG_BALL_PERCENT := 280
 ## 目标属性与玩家流派相同（`ParamData.preferred_mastery_index`）时
 ## `Battle_Capture_Action_IsCapture` 的 `v6 += 2`。
 const CAPTURE_PREFERRED_MASTERY_BONUS := 2
+
+## 捕获演出的分镜号：`step.capture.stage` 取这里的值，`frame` 是该分镜内的帧号。
+## 分镜与原生状态一一对应，视图（`battle_view._show_capture_stage`）按它驱动场上对象。
+enum CaptureStage {
+	HIDE,     ## `Battle_Capture_Hide_mRun`：非目标对象往两侧退开并淡出
+	WAIT,     ## `Battle_Capture_Action_mRun` 子状态 0：目标与主角淡入
+	THROW,    ## `Battle_Hero_procNext` 之前的 ANI 18 投球
+	RESULT,   ## 子状态 2／3：`b_effect` 37／38 打中目标
+	OBTAINED, ## 子状态 3 第 21 帧：`Ball_stdAddEx` 入包并推进 fxt478 提示
+}
 
 
 ## 原生 `Battle_Capture_Action_IsCapture` 的 `v6`：最终判定是
@@ -1223,8 +1246,9 @@ static func awaken_record(member: Dictionary) -> void:
 
 ## 原生 `Battle_Capture_Item_init`：捕获道具只列 `Battle_Item_Capture_Get` 的 bag 4，
 ## 选中后 `Battle_Capture_Hide_*` → `Battle_Capture_Action_*`（投球 ANI 18 播完才算
-## `IsCapture`）。这里没有战斗里的主角立绘对象，投球用固定 6 帧代替，结果帧播 `b_effect`
-## 的 37（成功）／38（失败），`mPaint` 的 msg.fxt:12／11 由视图显示在说明行。
+## `IsCapture`）。演出按 `capture_timeline()` 的 56 步走：退场 6 帧、主角就位 6 帧、
+## `hero/h_b_01` 投球 16 帧、结果 28 帧；结果帧播 `b_effect` 的 37（成功）／38（失败），
+## msg.fxt:12／11 由视图的 Box2 结果窗显示，成功第 21 帧再推一条 fxt478 的入包提示。
 ## 与原生一致：**球先扣**（`Item_stdDel(item, 1, 1)` 在 `IsCapture` 里）、判定失败也照样消耗；
 ## 捕获成功的对象随即移出战斗（原生 `Object_objRemove`），留下 `record` 给调用方入包。
 func capture(item: Dictionary, target_index: int) -> Dictionary:
@@ -1248,13 +1272,7 @@ func capture(item: Dictionary, target_index: int) -> Dictionary:
 		hero_ability, preferred_mastery, standard_level)
 	var caught := _roll(1000) < 10 * rating
 	var record := capture_record(target) if caught else {}
-	var steps: Array[Dictionary] = []
-	for frame in CAPTURE_THROW_FRAMES + CAPTURE_RESULT_FRAMES:
-		var step := {"actor": actor, "action": AniAction.Clip.IDLE, "frame": 0, "hits": []}
-		if frame == CAPTURE_THROW_FRAMES:
-			step["capture"] = {"target": target_index, "caught": caught,
-				"effect": CAPTURE_EFFECT if caught else CAPTURE_EFFECT_FAIL}
-		steps.append(step)
+	var steps: Array[Dictionary] = capture_timeline(target_index, caught)
 	if caught:
 		balls[target_index] = {}
 	log.append("%d 捕获%s" % [int(balls[actor]["species"]), "成功" if caught else "失败"])
@@ -1262,6 +1280,38 @@ func capture(item: Dictionary, target_index: int) -> Dictionary:
 	select_actor()
 	return {"ok": true, "caught": caught, "steps": steps,
 		"record": record, "rating": rating}
+
+
+## 捕获演出的分镜表：一帧一步，`capture.stage` 是 `CaptureStage`、`capture.frame` 是该分镜内的
+## 帧号。时间线 = 退场 6 + 空跑 6 + 投球 16 + 结果 28 = 56 帧（2.8 秒）；`RESULT` 第 0 帧带
+## 爆开效果号，成功时结果第 21 帧改成 `OBTAINED`（原生到这一帧才 `Ball_stdAddEx`）。
+func capture_timeline(target_index: int, caught: bool) -> Array[Dictionary]:
+	var steps: Array[Dictionary] = []
+	var hide_end := CAPTURE_HIDE_FRAMES
+	var wait_end := hide_end + CAPTURE_WAIT_FRAMES
+	var throw_end := wait_end + CAPTURE_THROW_FRAMES
+	var total := throw_end + CAPTURE_RESULT_FRAMES
+	for frame in total:
+		var stage := CaptureStage.RESULT
+		var stage_frame := frame - throw_end
+		if frame < hide_end:
+			stage = CaptureStage.HIDE
+			stage_frame = frame
+		elif frame < wait_end:
+			stage = CaptureStage.WAIT
+			stage_frame = frame - hide_end
+		elif frame < throw_end:
+			stage = CaptureStage.THROW
+			stage_frame = frame - wait_end
+		elif caught and stage_frame == CAPTURE_OBTAINED_FRAME:
+			stage = CaptureStage.OBTAINED
+		var capture := {"stage": stage, "frame": stage_frame, "target": target_index,
+			"caught": caught}
+		if stage == CaptureStage.RESULT and stage_frame == 0:
+			capture["effect"] = CAPTURE_EFFECT if caught else CAPTURE_EFFECT_FAIL
+		steps.append({"actor": actor, "action": AniAction.Clip.IDLE, "frame": 0,
+			"hits": [], "capture": capture})
+	return steps
 
 
 func _frame_count(frame_counts: Dictionary, species: int, action_index: int) -> int:

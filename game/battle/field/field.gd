@@ -24,6 +24,22 @@ const ACTOR_SLOT_WORLD := [
 ]
 const ACTOR_SLOT_ENEMY := [3, 5, 7]
 const ACTOR_SLOT_PARTY := [8, 10, 12]
+## 捕获演出的槽位（`Battle_Capture_Action_init`）：目标被摆到 2 号槽，主角对象（`hero/h_b_01`）
+## 建在 7 号槽，两者都按 `Battle_objGetPosition` 的 `distance 10` 往自己那一侧推。
+const CAPTURE_TARGET_SLOT := 2
+const CAPTURE_HERO_SLOT := 7
+const CAPTURE_SLOT_DISTANCE := 10
+## `Battle_Capture_Hide_mRun`：非目标对象每帧按 `-5 × run_counter` 的 `distance` 往外侧退。
+const CAPTURE_HIDE_STEP := 5
+## `Object_drawSPRITE` 的 `extended_state[535]`（淡出）档：1..3 → 192／128／64，4 起不画。
+const CAPTURE_FADE_OUT := [192, 128, 64, 0]
+## `extended_state[534]`（淡入）档：1..4 → 64／128／192／256，之后保持不透明。
+const CAPTURE_FADE_IN := [64, 128, 192, 256]
+## 主角投球：`Battle_Hero_resLOAD` 载入 `hero/h_b_01`，`Battle_Hero_procAction` 把
+## animation_id 18 映射成 ANI 动作 1；导出场景按 0.06 秒一帧，原生每游戏帧（0.05）推一帧。
+const CAPTURE_HERO_IDENTITY := "hero/h_b_01"
+const CAPTURE_THROW_ACTION := 1
+const CAPTURE_ANIMATION_SPEED := 1.2
 const DamageNumber := preload("res://game/battle/presentation/damage_number/damage_number.gd")
 ## 战斗加载的镜头焦点：`BattleCanvas_load:39-40` 把它写进 `BattleData + 41318／41319`
 ## 后调 `Battle_mapCAMERA(202, 244, 1)`。全库只有这一处写那份焦点（`probe_ida.writers`），
@@ -129,6 +145,14 @@ var _popup_cursor := 0
 var _hit_cursor := 0
 ## 底图是否正被技能态压暗（`DimPlayer` 的 `dim` 已在播），用来避免每帧重复 `play()`。
 var _dimmed := false
+## 捕获演出状态（原生 `Battle_Capture_Hide_*`／`Battle_Capture_Action_*` 的 extended_state 标志）：
+## `_capture_target` = 被捕获对象的槽位（< 0 表示不在捕获演出里）、`_capture_hide_frame` =
+## 退场帧号（< 0 表示已进入动作阶段）、`_capture_action_frame` = 动作阶段帧号（只用于前 4 帧淡入）。
+var _capture_target := -1
+var _capture_hide_frame := -1
+var _capture_action_frame := 0
+var _capture_hero := false
+var _capture_throw_started := false
 
 
 func _ready() -> void:
@@ -145,6 +169,7 @@ func _ready() -> void:
 		var slot := index
 		actor.get_node("TargetHit").pressed.connect(func(): target_pressed.emit(slot))
 	$Cursor/AnimationPlayer.animation_finished.connect(_cursor_finished)
+	$CaptureHero.animation_finished.connect(_capture_throw_finished)
 	for node: Control in _hud_exit_nodes():
 		_hud_rest.append(Vector2(node.offset_top, node.offset_bottom - node.offset_top))
 	_set_camera(BATTLE_CAMERA)
@@ -352,6 +377,7 @@ func present(balls: Array, poses: Array[Dictionary],
 				shown["direction"] = 0
 				pose_state = {"action": AniAction.Clip.IDLE, "frame": 0}
 			display.present(shown, pose_state)
+			display.modulate.a = _capture_alpha(index)
 			var pose: Control = display.get_node("Pose")
 			# 原生 `Object_drawSPRITE` 用 `alpha = 256 − 12 * extended_state[541]`。
 			pose.modulate.a = float(256 - 12 * int(fade.get(index, 0))) / 256.0
@@ -713,6 +739,109 @@ func _show_capture_effect(effect: Dictionary, balls: Array) -> void:
 	flash.present(int(effect.get("effect", HitEffect.CAPTURE_ACTION)), direction)
 
 
+## 捕获退场（`Battle_Capture_Hide_init`）：记录目标并清掉上一场的残留。
+func capture_begin(target: int) -> void:
+	_capture_target = target
+	_capture_hide_frame = 0
+	_capture_action_frame = 0
+	_capture_hero = false
+	_capture_throw_started = false
+	$CaptureHero.visible = false
+	$CaptureHero.modulate.a = 1.0
+	$CaptureHero.clear()
+	_place_actors(_balls)
+
+
+## 捕获演出的一帧：`stage` 取 `BattleModel.CaptureStage`，`frame` 是该分镜内的帧号。
+## `HIDE` 每帧重算退场位移与淡出；进入 `WAIT`（`Battle_Capture_Action_init`）时退场结束，
+## 目标摆到 2 号槽、主角对象就位；`THROW` 的首帧播放主角的投球 ANI 动作。
+func capture_frame(stage: int, frame: int) -> void:
+	if _capture_target < 0:
+		return
+	if stage == BattleModel.CaptureStage.HIDE:
+		_capture_hide_frame = frame
+		_place_actors(_balls)
+		return
+	if _capture_hide_frame >= 0:
+		_capture_hide_frame = -1
+		_capture_action_frame = 0
+	else:
+		# 淡入只看「进了动作阶段之后画了几帧」，所以要单调递增，不能按分镜帧号重置。
+		_capture_action_frame += 1
+	# `Battle_Capture_Action_init` 建出主角对象（kind 11）时就让它以待机姿势在场：
+	# 退场结束的第一帧开始淡入，空跑 6 帧后才切投球动作。
+	if not _capture_hero:
+		_capture_hero = true
+		$CaptureHero.visible = true
+		$CaptureHero.set_speed(CAPTURE_ANIMATION_SPEED)
+		$CaptureHero.present(CAPTURE_HERO_IDENTITY, AniAction.Clip.IDLE,
+			BattleSide.Code.PLAYER, true)
+	if stage == BattleModel.CaptureStage.THROW and not _capture_throw_started:
+		_capture_throw_started = true
+		$CaptureHero.present(CAPTURE_HERO_IDENTITY, CAPTURE_THROW_ACTION,
+			BattleSide.Code.PLAYER, false)
+	_place_actors(_balls)
+
+
+## `Battle_Hero_procNext`：投球动作（animation_id 18）播完就 `Object_objANI(…, 0)` 回待机，
+## 之后到 POSITION 之前主角都站在场上待机。
+func _capture_throw_finished() -> void:
+	if _capture_hero:
+		$CaptureHero.present(CAPTURE_HERO_IDENTITY, AniAction.Clip.IDLE,
+			BattleSide.Code.PLAYER, true)
+
+
+## 离开捕获演出（结果窗关掉、切回 POSITION）：主角对象移除、退场偏移与淡入淡出复位。
+func capture_end() -> void:
+	_capture_target = -1
+	_capture_hide_frame = -1
+	_capture_action_frame = 0
+	_capture_hero = false
+	_capture_throw_started = false
+	$CaptureHero.visible = false
+	$CaptureHero.clear()
+	for actor: Control in _actors:
+		actor.modulate.a = 1.0
+	_place_actors(_balls)
+
+
+## 捕获演出的对象显隐：退场阶段非目标对象按 `ext[535]` 淡出 4 帧，动作阶段目标按 `ext[534]`
+## 淡入 4 帧；目标以外的对象在动作阶段已经不画（`ext[535]` ≥ 4）。
+func _capture_alpha(index: int) -> float:
+	if _capture_target < 0:
+		return 1.0
+	if index == _capture_target:
+		return 1.0 if _capture_hide_frame >= 0 else _capture_fade_in_alpha()
+	if _capture_hide_frame >= 0:
+		var fade := mini(_capture_hide_frame, CAPTURE_FADE_OUT.size() - 1)
+		return float(CAPTURE_FADE_OUT[fade]) / 256.0
+	return 0.0
+
+
+## `ext[534]` 的淡入档（1..4 → 64／128／192／256，之后不透明）。目标与主角共用这一档。
+func _capture_fade_in_alpha() -> float:
+	var step := mini(maxi(_capture_action_frame, 0), CAPTURE_FADE_IN.size() - 1)
+	return float(CAPTURE_FADE_IN[step]) / 256.0
+
+
+## 捕获演出期间的对象位置：目标在动作阶段摆到 2 号槽（`Battle_Capture_Action_init` 的
+## `Battle_objGetPosition(2, …, 10)`），其余对象在退场阶段每帧往外侧退 5 像素。
+func _capture_position(index: int) -> Vector2:
+	if _capture_target < 0:
+		return slot_position(index)
+	if index == _capture_target:
+		return capture_slot_position(CAPTURE_TARGET_SLOT) if _capture_hide_frame < 0 \
+			else slot_position(index)
+	var side := -1.0 if index < 3 else 1.0
+	return slot_position(index) + Vector2(side * CAPTURE_HIDE_STEP * maxi(_capture_hide_frame, 0), 0.0)
+
+
+## `Battle_objGetPosition(槽, …, distance)`：敌方（≤ 4）取 x + distance、我方取 x − distance。
+func capture_slot_position(slot: int) -> Vector2:
+	var distance := -CAPTURE_SLOT_DISTANCE if slot > 4 else CAPTURE_SLOT_DISTANCE
+	return ACTOR_SLOT_WORLD[clampi(slot, 0, ACTOR_SLOT_WORLD.size() - 1)] + Vector2(distance, 0.0)
+
+
 ## 技能横幅：原生 `Battle_Skill_mPaint`。技能态期间（`action_step` = 原生 `run_counter`）在画面上方
 ## 画一条半透明黑带 + 技能名 + 两侧装饰，并把施术者精灵画在黑带里；普攻的
 ## `Battle_Attack_mPaint` 没有这一段，横幅随即收起。
@@ -791,7 +920,10 @@ func _place_actors(balls: Array) -> void:
 		var display: Control = _actors[index]
 		if index >= balls.size() or balls[index].is_empty():
 			continue
-		display.position = slot_position(index) - camera
+		display.position = _capture_position(index) - camera
+	if _capture_hero:
+		$CaptureHero.position = capture_slot_position(CAPTURE_HERO_SLOT) - camera
+		$CaptureHero.modulate.a = _capture_fade_in_alpha()
 
 
 ## 原生 `Object_procLIST` 的插入序就是绘制序：`draw_order_key`（`Object_objHigh` 才写，

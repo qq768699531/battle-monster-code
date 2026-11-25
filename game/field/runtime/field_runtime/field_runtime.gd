@@ -1700,21 +1700,6 @@ func _quest_accepted(quest_id: int, _slot: int) -> void:
 	_close_quest()
 
 
-## `qst/qstlist.fxt:<任务号>` 的 payload 是「标题 \t 说明 \t 目标 \t 事件号 \t 图标 \t 地图」。
-## NPC／物种名走工程既有约定：`npc:<id>` 在翻译资源里，物种名在 `gameplay.tres` 的 `MonsterDefinition`。
-func _monster_name(record: Dictionary) -> String:
-	var species := int(record.get("species", -1))
-	if species < 0 or _resources == null or not _resources.has_method("load_gameplay"):
-		return "#%d" % species
-	var catalog: Variant = _resources.call("load_gameplay")
-	if catalog is GameplayData:
-		var definition: Variant = catalog.monster(species)
-		if definition != null:
-			var text: String = _assets.text_message("monster/%d.name" % species, 0) if _assets != null else ""
-			return text if not text.is_empty() else "#%d" % species
-	return "#%d" % species
-
-
 ## 任务／事件提示记录的第一页（标题）：原生 `JC_fxtPAGE(resource, 0)`，页分隔是制表符
 ## （`JC_fntCHANGE(resource, 9, 10)` 把它换成换行，见 `Qst_stdSET@0x93B34:34`）。
 func _quest_title(quest_id: int, source := TextTables.QUEST_SOURCE) -> String:
@@ -3300,7 +3285,7 @@ func _back_to_title() -> void:
 
 
 ## 战斗内用掉的背包物品（捕获球、复活道具）在离开战斗时一次性落实（原生是在战斗里
-## `Item_stdDel(item, 1, 1)` 使用时直接写回，本工程由战斗视图记进 outcome／`title_requested` 的 `items`）。
+## `Item_stdDel(item, 1, 1)` 使用时直接写回，本工程由战斗视图记进 outcome 的 `items`）。
 func _apply_used_items(outcome: Dictionary) -> void:
 	var used: Variant = outcome.get("items")
 	if not used is Dictionary:
@@ -3311,6 +3296,8 @@ func _apply_used_items(outcome: Dictionary) -> void:
 
 
 ## 捕获与捕获球的消耗：捕获只在野外战开放，入包记录同样来自 outcome。
+## 入包提示（fxt478）已在捕获演出第 21 帧由 `battle_view._say_monster_obtained` 推过，
+## 跟原生 `Ball_stdAddEx` 同一刻，这里不再重复推一条。
 func _apply_captures(outcome: Dictionary) -> void:
 	_apply_used_items(outcome)
 	var captures: Variant = outcome.get("captures")
@@ -3321,12 +3308,6 @@ func _apply_captures(outcome: Dictionary) -> void:
 		if not failure.is_empty():
 			note = failure
 			continue
-		# 原生 `Ball_stdAddEx@0x85310:34` 传的是球记录的 `kind_specific_85_bits`，但球走
-		# `Item_datBasic@0x843D8:80-86` 的类型 29 分支：`表[属性组-1] - 104`，表在 `0x9C160`
-		# 是 `{1,0,2,5,4,3}`，六项减完全是负数 ⇒ 原生捕获提示同样不画图标
-		# （`Game_infoDraw@0x416D0:83-85` 只在帧号 ≥ 0 时画）。所以这里保持无图标。
-		if _assets != null:
-			_push_message(-1, _assets.text_message(Msg.SOURCE, Msg.Id.MONSTER_OBTAINED) % 				_monster_name(record))
 
 
 ## 原生胜利结算（`Battle_Win_SetResult`）在战斗内就写回了能力值、金币与背包；
@@ -3356,10 +3337,11 @@ func _battle_settlement_drops(settlement: RefCounted) -> void:
 		note = "背包已满：%d 件道具未入包" % full.size()
 
 
-## 逃跑／放弃／逃生战边界：回野外地图。`items` 是战斗视图交出的本战已用道具——原生在战斗内
-## 使用时就已经 `Item_stdDel`／`Item_stdDels` 写回，所以每条离开战斗的结局都要先兑现再收尾。
-func _battle_abandoned(items: Dictionary) -> void:
-	_apply_used_items({"items": items})
+## 逃跑／放弃／逃生战边界：回野外地图。`outcome` 里是战斗视图交出的本战已用道具与已捕获
+## 个体——原生在战斗内使用时就已经 `Item_stdDel`／`Item_stdDels` 写回、捕获成功第 21 帧就
+## `Ball_stdAddEx` 入包，所以每条离开战斗的结局都要先兑现再收尾。
+func _battle_abandoned(outcome: Dictionary) -> void:
+	_apply_captures(outcome)
 	if _battle_id == -2:
 		note = "本战资料未完整还原，已返回地图；未结算、未改变队员数值。"
 		_return_from_wild_battle()
@@ -3372,9 +3354,10 @@ func _battle_abandoned(items: Dictionary) -> void:
 ## 系统菜单主菜单的「是」：原生 `Battle_MainMenu_mRun` 返回码 1 → `Game_out()` →
 ## `EFC_mainSetNEXT(CANVAS_PRIME, PRIME_STATE_TITLE)`。与「逃跑／放弃」（`_battle_abandoned` 回地图）
 ## 不同，这条不回地图、不结算、不写存档，直接交给启动层回标题（`wiki\battle\battle-exit.md`）。
-## `items` 是战斗视图交出的本战已用道具（原生在战斗内使用时就已经 `Item_stdDel` 写回），先扣再走。
-func _battle_title_requested(items: Dictionary) -> void:
-	_apply_used_items({"items": items})
+## `items`／`captures` 与 `abandoned` 同形（原生在战斗内使用时就已经 `Item_stdDel` 写回、
+## 捕获成功第 21 帧就已入包），先兑现再走。
+func _battle_title_requested(outcome: Dictionary) -> void:
+	_apply_captures(outcome)
 	_back_to_title()
 
 
