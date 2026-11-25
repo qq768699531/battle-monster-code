@@ -900,7 +900,21 @@ func _item_count(item_id: int) -> int:
 ## `Evt_stdIsPROC` 的 case 6：英雄脚点 24×24 与区域矩形相交，
 ## 期间出现过动画 3／4（调查动作）就锁存，等动画回到 0 时再放行。
 func _area_action_trigger(p: Array) -> bool:
-	if progress["mapId"] != p[0]:
+	if not _hero_in_area(p):
+		return false
+	var hero := _actor(0)
+	var action := int(hero.get("action", 0))
+	if action != 0:
+		if action in [3, 4]:
+			_trigger_latch = true
+		return false
+	return _trigger_latch
+
+
+## 触发 6 的区域判定：同图、主角脚点 24×24 与记录给的矩形相交（`Evt_stdIsPROC:61-70`）。
+## `p[1]` = 瓦片x×100 + 瓦片y，`p[2]` = 宽×100 + 高。
+func _hero_in_area(p: Array) -> bool:
+	if p.size() < 3 or progress["mapId"] != p[0]:
 		return false
 	var hero := _actor(0)
 	if hero.is_empty():
@@ -911,15 +925,23 @@ func _area_action_trigger(p: Array) -> bool:
 	var area_h := int(p[2]) % 100 * 16
 	var hero_x := float(hero["x"]) * 16.0 + 8.0
 	var hero_y := float(hero["y"]) * 16.0 + 8.0
-	if hero_x + 12.0 < area_x or hero_x - 12.0 > area_x + area_w or \
-			hero_y + 12.0 < area_y or hero_y - 12.0 > area_y + area_h:
+	return not (hero_x + 12.0 < area_x or hero_x - 12.0 > area_x + area_w or
+		hero_y + 12.0 < area_y or hero_y - 12.0 > area_y + area_h)
+
+
+## 当前事件正停在触发 6（区域调查）且区域包含主角时返回 true：
+## 这类交互的奖励由原版事件脚本给出（如 `evt0016.qst`／`evt0019.qst`），
+## 通用采集兜底要让位，避免同一次动作发两份奖励。
+func pending_area_action() -> bool:
+	if _disposed or _step_index_idle or int(progress["cursor"]) != 0 or not boundary.is_empty():
 		return false
-	var action := int(hero.get("action", 0))
-	if action != 0:
-		if action in [3, 4]:
-			_trigger_latch = true
+	var records := _records(int(progress["eventId"]))
+	if records.is_empty():
 		return false
-	return _trigger_latch
+	var trigger: Dictionary = records[0]
+	if int(trigger.get("opcode", -1)) != Trigger.AREA_ACTION or not trigger.get("params") is Array:
+		return false
+	return _hero_in_area(trigger["params"])
 
 
 func _records(id: int) -> Array:
@@ -1931,6 +1953,7 @@ func apply_battle_drops(settlement: RefCounted) -> Dictionary:
 ## 随后按 `Battle_Win_mRun@0x322F0:192-197` 对每只在场的敌人推进「击倒 N 只」类任务。
 ## 掉落已在窗口的 `items` 阶段入包（`apply_battle_drops`）时，这里只写回经验与金币，报告沿用那次结果。
 func apply_battle_settlement(settlement: RefCounted) -> Dictionary:
+	var was_applied := bool(settlement.get("applied"))
 	var granted: Variant = _battle_drops.get(settlement.get_instance_id())
 	var report: Dictionary = settlement.apply(progress,
 		_keep_granted_drop if granted is Dictionary else _add_battle_drop)
@@ -1941,7 +1964,22 @@ func apply_battle_settlement(settlement: RefCounted) -> Dictionary:
 	else:
 		# 没有经历结算窗口的路径（直接驱动模型）在这里补一次击倒类任务的清点。
 		_check_defeated_monster_quests()
+	if not was_applied and bool(settlement.get("applied")):
+		var rows: Variant = settlement.get("rows")
+		var hero_gain := int(rows[0].get("experience_gain", 0)) \
+			if rows is Array and not rows.is_empty() else 0
+		_present_gain_messages(hero_gain, int(settlement.get("money")))
 	return report
+
+
+## 原生 `Battle_Win_SetResult:586-590` 与 `Field_Quest_Complete_SetResult:72-75`：
+## 经验与金币各用组 23／24 伪道具推一条 fxt415「获得经验值／金币 N」。
+## 组 23／24 在 `Item_stdAdd` 里只清记录、不改进度，所以数值只取已经写回的那一份。
+func _present_gain_messages(experience_gain: int, money_gain: int) -> void:
+	if experience_gain > 0:
+		_add_inventory_item(ItemKind.id_of(ItemKind.Pseudo.GROUP_23, 0), experience_gain, false)
+	if money_gain > 0:
+		_add_inventory_item(ItemKind.id_of(ItemKind.Pseudo.GROUP_24, 0), money_gain, false)
 
 
 ## 原生 `Battle_Win_mRun@0x322F0:192-197`：对每只在场敌人推进「击倒 N 只」类任务。
@@ -2100,6 +2138,7 @@ func inn_rest() -> String:
 func grant_quest_reward(model: RefCounted) -> Dictionary:
 	if progress.is_empty():
 		return {"items": [], "full": []}
+	var was_applied := bool(model.get("applied"))
 	var report: Dictionary = model.apply(progress, _gameplay())
 	for item: Dictionary in model.items:
 		var id := int(item.get("id", 0))
@@ -2108,6 +2147,8 @@ func grant_quest_reward(model: RefCounted) -> Dictionary:
 			report.items.append(id)
 		else:
 			report.full.append(id)
+	if not was_applied and bool(model.get("applied")):
+		_present_gain_messages(int(model.get("experience")), int(model.get("money")))
 	return report
 
 
@@ -2165,6 +2206,18 @@ func open_box(map_id: int, interior: bool) -> Dictionary:
 	progress["openedBoxes"] = boxes
 	return {"ok": true, "item": drop,
 		"added": _add_inventory_item(int(drop.id), int(drop.count), false)}
+
+
+## 通用采集入口（本工程新增）：把材料入包并推入手提示。
+## `blocking=false`：包满只告警，不把事件执行器推进边界（与开宝箱同一条口径）。
+func gather_item(item_id: int, quantity: int) -> Dictionary:
+	if _disposed or progress.is_empty():
+		return {"ok": false, "error": "存档尚未载入"}
+	if item_id <= 0 or quantity <= 0:
+		return {"ok": false, "error": "采集参数非法"}
+	if not _add_inventory_item(item_id, quantity, false):
+		return {"ok": false, "error": "道具入包失败（背包可能已满）"}
+	return {"ok": true, "id": item_id, "count": quantity}
 
 
 ## 原生 `Ball_stdAdd`：捕获到的个体进怪物背包，`Param_bookSetMonster(定义号 % 1000, 1)`
@@ -2341,7 +2394,10 @@ func complete_battle(id: int, settlement: RefCounted = null) -> bool:
 	return true
 
 
-func after_move(destination_map: Dictionary, position: Dictionary, through_warp: bool = false) -> void:
+## `sync_hero=false` 只更新存档坐标与事件触发（野外像素走位用）：主角位置由调用方
+## 按像素推进，不能在这里被格坐标覆盖回去。
+func after_move(destination_map: Dictionary, position: Dictionary, through_warp: bool = false,
+		sync_hero: bool = true) -> void:
 	if _disposed or not boundary.is_empty() or not _point_valid(position) or not destination_map.has("id"):
 		return
 	var changed: bool = progress["mapId"] != destination_map["id"]
@@ -2349,7 +2405,7 @@ func after_move(destination_map: Dictionary, position: Dictionary, through_warp:
 	progress["mapId"] = map["id"]
 	progress["player"] = position.duplicate()
 	var hero := _actor(0)
-	if not hero.is_empty():
+	if not hero.is_empty() and (sync_hero or changed):
 		hero["x"] = position["x"]
 		hero["y"] = position["y"]
 	if changed and not _populate():

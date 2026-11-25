@@ -30,6 +30,8 @@ var _direction := 0
 var _action := -1
 var _looped := true
 var _running := true
+## 播放倍率（只影响时间推进，不影响按位移驱动的步态）。
+var _speed := 1.0
 var _player: AnimationPlayer
 var _source_materials: Dictionary = {}
 var _clip_loops: Dictionary = {}
@@ -255,6 +257,20 @@ func clear() -> void:
 	_grayscale = false
 
 
+## 从第一帧重播当前动作。同一 action/looped 的 `present()` 会命中上面的去重分支，
+## 所以需要「再播一遍」的地方（采集两遍动作）走这里。
+func replay() -> bool:
+	if _player == null or _action < 0:
+		return false
+	var name := _clip(_action)
+	if name == &"":
+		return false
+	_player.stop()
+	_player.play(name)
+	_player.advance(0.0)
+	return true
+
+
 # 循环播放直接用场景自带库（共享只读）；不循环时才取按 identity 缓存的 LOOP_NONE 变体。
 # 注意：共享库不可被任何实例改写，否则会污染同 identity 的其他实例。
 func _attach_library(identity: String, looped: bool) -> void:
@@ -309,7 +325,13 @@ func set_manual(value: bool) -> void:
 
 func advance(delta: float) -> void:
 	if _player != null and _running and is_visible_in_tree():
-		_player.advance(delta)
+		_player.advance(delta * _speed)
+
+
+## 播放倍率：原生 ANI 每游戏帧（50ms）推一帧，转换场景按 0.06 秒一帧；
+## 需要对齐原版速度的片段（采集 / 矿石与树的受击反应）按 0.06/0.05 = 1.2 倍推进。
+func set_speed(value: float) -> void:
+	_speed = value if is_finite(value) and value > 0.0 else 1.0
 
 
 ## 按实际位移推进步态。只有走跑片段声明了 cycle_distance；待机与剧情动作没有步态，

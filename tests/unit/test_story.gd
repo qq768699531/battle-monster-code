@@ -40,6 +40,17 @@ class FixtureProvider extends RefCounted:
 		return gameplay
 
 
+class FakeSettlement extends RefCounted:
+	var applied := false
+	var rows: Array = [{"experience_gain": 120}]
+	var money := 300
+	var items: Array = []
+
+	func apply(_progress: Dictionary, _add_item: Callable) -> Dictionary:
+		applied = true
+		return {"items": [], "full": []}
+
+
 func _record(opcode: int, params: Array = [0, 0, 0, 0, 0]) -> Dictionary:
 	return {"opcode": opcode, "params": params}
 
@@ -154,6 +165,49 @@ func test_event_step_state() -> void:
 	ended.events[0] = {"records": [_record(Story.Trigger.ALWAYS)]}
 	var done = _story(ended)
 	assert_eq(done.event_step()["index"], Story.STEP_INDEX_ENDED, "事件链结束按原生 step_index = -1")
+
+
+## 触发 6（区域调查）：主角在矩形里做出动作 3／4 后锁存，动作回到 0 才让事件开跑。
+## 采矿（帧 152）与摇树（第 0 组帧 0／5／10）的原版奖励就走这条。
+func test_area_action_trigger() -> void:
+	var provider := FixtureProvider.new()
+	provider.events[0] = {"records": [_record(Story.Trigger.AREA_ACTION, [0, 808, 101, 0, 0]),
+		_record(21, [9, 0, 0, 0, 0])]}
+	var story = _story(provider)
+	assert_true(story.pending_area_action(), "主角在区域里且事件停在触发 6 时优先走原版事件")
+	var hero: Dictionary = story.progress["actors"][0]
+	hero["action"] = 3
+	story.pump()
+	assert_eq(story.progress["quest"], 0, "调查动作播放期间只锁存，不提前开事件")
+	hero["action"] = 0
+	story.pump()
+	assert_eq(story.progress["quest"], 9, "动作结束后的下一帧才跑 opcode 21")
+	var outside = _story(provider)
+	outside.progress["player"]["x"] = 20
+	outside.progress["actors"][0]["x"] = 20
+	assert_true(not outside.pending_area_action(), "区域外不算等待中的调查事件")
+
+
+## 战斗结算 / 任务奖励：经验与金币用组 23／24 伪道具各推一条 fxt415（无图标）。
+func test_settlement_gain_messages() -> void:
+	var story = _story(_provider([]))
+	story.take_effects()
+	story.apply_battle_settlement(FakeSettlement.new())
+	var obtained: Array = story.take_effects().filter(func(effect: Dictionary) -> bool:
+		return effect.kind == "item-obtained")
+	assert_eq(obtained.map(func(effect: Dictionary) -> Array:
+		return [int(effect.itemId), int(effect.count), int(effect.iconFrame)]),
+		[[23000, 120, -1], [24000, 300, -1]],
+		"经验与金币按原版各推一条「获得经验值／金币」提示")
+
+
+## 通用采集入口：兜底材料走与开宝箱同一条非阻塞入包口径。
+func test_gather_item() -> void:
+	var story = _story(_provider([]))
+	var result: Dictionary = story.gather_item(1000, 2)
+	assert_true(result.get("ok", false), "采集材料入包成功")
+	assert_eq(int(story.progress["inventory"].get("1000", 0)), 2, "材料数量写进背包")
+	assert_true(not story.gather_item(0, 1).get("ok", false), "非法道具号被拒绝")
 
 
 ## P1-3 的商店与旅店数值：`Field_Item_Buy_Price`（购买价 × 数量）、

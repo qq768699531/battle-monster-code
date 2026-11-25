@@ -63,6 +63,8 @@ const EVENT_QUEST_TEXT_SOURCE := "evt/evtlist.fxt"
 const QuestSetLoader = preload("res://game/field/quests/quest_set/quest_set.gd")
 const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 const MapNameView = preload("res://game/field/map/map_name_view/map_name_view.gd")
+## 像素走位的纯几何核心（逐 1px 判碰撞 + 原生侧滑扫向）。
+const PixelWalk = preload("res://game/field/runtime/pixel_walk/pixel_walk.gd")
 const TILE := 16.0
 # Native 6/8px steps at the 50ms base interval; Engine.time_scale applies the speed setting.
 const WALK_SPEED := 7.5
@@ -107,14 +109,6 @@ const AIRSHIP_MAP_ID := 148
 const AIRSHIP_TILE := Vector2i(7, 12)
 ## 一次性动作的动画结束模式：停末帧（原生 `ObjectAnimationEndModeType.HOLD_LAST_FRAME`）。
 const ONE_SHOT_ANIMATION_END_MODE := Story.AnimationEndMode.HOLD_LAST_FRAME
-## 原生 Field_Hero_procMOVE：请求方向被挡时先侧移绕开，绕开后再自动回到请求方向。
-## 候选顺序照抄原生分支：横向请求先上后下，纵向请求先左后右。
-const WALK_ASSIST := {
-	Vector2i.RIGHT: [Vector2i.UP, Vector2i.DOWN],
-	Vector2i.LEFT: [Vector2i.UP, Vector2i.DOWN],
-	Vector2i.UP: [Vector2i.LEFT, Vector2i.RIGHT],
-	Vector2i.DOWN: [Vector2i.LEFT, Vector2i.RIGHT],
-}
 ## 主角朝向位（原生 `direction_code` 的低 4 位）→ 面前那一格。
 const FACING_TILES := {
 	FieldAction.Facing.LEFT: Vector2i.LEFT, FieldAction.Facing.RIGHT: Vector2i.RIGHT,
@@ -255,6 +249,9 @@ var _save_view: Control
 var _panel: ColorRect
 var _label: Label
 var _motions: Dictionary = {}
+## 进行中的采集：`{kind, tile, facing, action, from_action, play, hit}`。两遍英雄动作，
+## 每遍第 6 帧让物件反应一次，第二遍命中帧才发道具（见 `_tick_map_harvest`）。
+var _harvest: Dictionary = {}
 var _focus := Vector2.ZERO
 var _camera_center := Vector2.ZERO
 var _camera_initialized := false
@@ -265,23 +262,17 @@ var _battle_id := -1
 var _touch_key := 0
 ## 没有触控落点时的哨兵值（屏幕坐标恒为正）。
 const NO_TOUCH := Vector2i(-1000, -1000)
-## 原生 `Field_Basic_mKeyPressed` 的 `case 166`：只把该格物件换成 167 这一帧。
-const MAP_OBJECT_SWITCH_FROM := 166
-const MAP_OBJECT_SWITCH_TO := 167
-## 原生 `Field_Basic_mKeyPressed` 的 `case 152: Object_objANI(hero, 3)`：帧 152 是 152–155
-## 那一组宽物件（16×8，`Map_objCREATE`）的静止帧，`Field_Object_procNext` 把 153..155 收回 152。
-## 交互只让英雄播一次动作，物件本身不变、不入包也不存档。
-const MAP_OBJECT_INTERACT_FRAME := 152
-## 原生 `Field_Basic_mKeyPressed:26-49` 的同一支还有一处：`n10`（物件的 `animation_id`）为
-## 0／5／10 时，只要 `MapData.map_file_number == 0` 就让英雄播一次动作 4。
-## 这三帧的物件在 `Map_objCREATE:88-100` 里也只有第 0 组会被置 `active_state = 3`
-## （`Object_objHIT:24-26` 要求 `active_state > 0` 才命中），所以整支只对第 0 组地图生效。
-const MAP_OBJECT_GROUP_0_FRAMES := [0, 5, 10]
-## 上面那支的组号门控（`MapData.map_file_number` 由 `Map_mifLOAD:47` 从 MIF 头读出，
+## 帧号分派见 `MapItemInteraction`（166 → 167、152 反应帧 153..155、0／5／10 只对第 0 组）。
+## 组号门控（`MapData.map_file_number` 由 `Map_mifLOAD:47` 从 MIF 头读出，
 ## 对应地图 Scene 根节点的 `map_group`）。
 const MAP_OBJECT_GROUP_0 := 0
 var _last_touch := NO_TOUCH
 var _walk_direction := Vector2i.ZERO
+## 方向键堆栈：后按下的在栈顶，移动方向永远取栈顶；松开栈顶就回到底下那个按着的方向。
+var _walk_stack: Array[Vector2i] = []
+## 像素走位的亚像素累加与当前所在格（只用于同步剧情坐标与传送判定）。
+var _walk_remainder_px := 0.0
+var _walk_tile := Vector2i(-1, -1)
 var _running := false
 var _last_walk_direction := Vector2i.ZERO
 var _last_walk_time := -1
@@ -393,34 +384,13 @@ const SERVICE_PAGES := {
 }
 
 
-## 宿主（`main.gd`）在加入场景后挂上提示栈：原生 `Game_infoDraw` 画在 `GameCanvas` 顶层。
+## 宿主（`main.gd`）在加入场景后挂上提示栈：全局顶层 HUD，位置与地图／菜单无关。
 func set_messages(node: Control) -> void:
 	messages = node
-	_sync_message_state()
-
-
-## 当前画面在原生 `Game_infoDraw` 的哪一档 `v13`。y 的取值只有 `message_stack.gd` 的
-## `State` 一张表，这里只判状态：文字窗打开（第 35 行）在战斗分支之后判断、会覆盖战斗档；
-## 战斗子窗口/结算（掩码 `0x788B` 命中的 `BATTLE_STATE_INFO`／`ITEM1`／`CAPTURE_ITEM`／`WIN`／
-## `CLEAR`／`SETUP`／`METHOD`／`MAINMENU`）沿用基高，本移植只有结算窗口 `result` 落在这一支。
-func _message_state() -> int:
-	if not dialogue.is_empty() or not narration.is_empty():
-		return MessageStack.State.DIALOG
-	if battle_view != null:
-		return MessageStack.State.BATTLE_WINDOW if str(battle_view.phase) == "result" \
-			else MessageStack.State.BATTLE
-	return MessageStack.State.FIELD
-
-
-func _sync_message_state() -> void:
-	if messages == null:
-		return
-	messages.call("set_state_base_y", _message_state())
 
 
 ## `Game_infoInit(icon_frame, text)`：图标帧号 < 0 表示无图标。
 func _push_message(icon_frame: int, text: String) -> void:
-	_sync_message_state()
 	MessageStack.notify(icon_frame, text)
 
 
@@ -433,7 +403,6 @@ func _present_item_obtained(item_id: int, count: int, icon_frame: int) -> void:
 		return
 	var type := ItemKind.kind_of(item_id)
 	if PSEUDO_OBTAINED_LABELS.has(type):
-		_sync_message_state()
 		MessageStack.say_record(Msg.Id.PSEUDO_ITEM_OBTAINED,
 			[_assets.text_message(Msg.SOURCE, PSEUDO_OBTAINED_LABELS[type]), count])
 		return
@@ -451,7 +420,6 @@ func _present_item_obtained(item_id: int, count: int, icon_frame: int) -> void:
 	var grade: int = record.grade_index
 	var color: String = ITEM_GRADE_COLOR_CODES[grade] \
 		if grade >= 0 and grade < ITEM_GRADE_COLOR_CODES.size() else ""
-	_sync_message_state()
 	MessageStack.say_record_icon(icon_frame, Msg.Id.ITEM_OBTAINED, [color, item_name, count])
 
 
@@ -464,7 +432,6 @@ func _present_quest_set(quest_id: int, source := TextTables.QUEST_SOURCE,
 	if quest_id < 0 or _assets == null:
 		return
 	var quest_title := _quest_title(quest_id, source)
-	_sync_message_state()
 	if quest_title.is_empty():
 		MessageStack.say_record_icon(QUEST_ICON_FRAME, suffix_record)
 		return
@@ -493,7 +460,6 @@ func _present_quest_progress(quest_id: int, count: int, from_event: bool) -> voi
 	if quest_id < 0 or _assets == null:
 		return
 	var source := EVENT_QUEST_TEXT_SOURCE if from_event else TextTables.QUEST_SOURCE
-	_sync_message_state()
 	MessageStack.notify(QUEST_ICON_FRAME, MESSAGE_HIGHLIGHT_CODE + _quest_title(quest_id, source))
 	MessageStack.notify(-1, "%s[%s]" % [MESSAGE_HIGHLIGHT_CODE,
 		_quest_goal_text(quest_id, source, count)])
@@ -647,7 +613,6 @@ func advance(delta: float) -> void:
 	# 这是本文件唯一的暂停判据：动画开关与位移推进都从它取。
 	var objects_paused: bool = story != null and story.objects_paused()
 	# 原生每次绘制都重算 `v13`，所以已显示的消息在切档时立刻跟着走，不等下一条。
-	_sync_message_state()
 	# `GameCanvas_mPaint:29-40` 在每次绘制里推进经验加成窗口，与本帧其余推进无关。
 	_advance_exp_bonus(delta)
 	_actors.set_monster_running(story != null and focused and boundary.is_empty() and
@@ -691,24 +656,17 @@ func advance(delta: float) -> void:
 		push_warning("Legacy save has no recorded play time; its historical duration remains unknown.")
 		_legacy_time_reported = true
 	if battle_view == null:
-		var manual_movement := _motions.has(-1)
-		# 暂停期间对象池整段不推进：已在飞的位移冻在原地（剩余时间不消费、也不补帧），
-		# `_step_walk` 也不开新的一格。
+		var manual_movement := false
+		# 暂停期间对象池整段不推进：已在飞的脚本位移冻在原地（剩余时间不消费、也不补帧）。
 		var remaining := 0.0 if objects_paused else _advance_motions(delta)
 		_drain_effects()
-		# 脚本动作把剩余时间留给手动走位，直到时间用完或撞墙为止。
-		while not objects_paused and _motions.is_empty() and _walk_direction != Vector2i.ZERO:
-			if _step_walk(_walk_direction) == Vector2i.ZERO:
-				break
-			manual_movement = true
-			if remaining <= 0:
-				break
-			remaining = _advance_motions(remaining)
-			_drain_effects()
-		# 松开按键后回到站立：走完当前格，或整格被堵住而一步也没迈出时同样适用。
-		# 仍按住时不回站立——原版整格被堵住也会继续播走路／奔跑动画。
-		if _walk_direction == Vector2i.ZERO and not _motions.has(-1) and \
-				int(_actor(0).action) in [FieldAction.Hero.WALK, FieldAction.Hero.RUN]:
+		# 脚本位移跑完后的剩余时间交给像素走位（原生也是对象池推进完再吃输入）。
+		if not objects_paused and _motions.is_empty() and _walk_direction != Vector2i.ZERO:
+			manual_movement = _advance_manual_walk(remaining)
+		_drain_effects()
+		# 松开按键立刻停在当前像素位置（原版走位不是整格步进）。
+		if _walk_direction == Vector2i.ZERO and int(_actor(0).action) in \
+				[FieldAction.Hero.WALK, FieldAction.Hero.RUN]:
 			_actor(0).action = FieldAction.Hero.IDLE
 			_sync_actors()
 		if not dialogue.get("ordinary", false):
@@ -720,8 +678,9 @@ func advance(delta: float) -> void:
 			_event_covered = false
 		_refresh_followers()
 		_position_camera(delta)
-		_actors.advance(delta, not objects_paused,
-			not manual_movement and not _motions.has(-1))
+		_actors.advance(delta, not objects_paused, not manual_movement)
+		_tick_map_harvest()
+		_drain_effects()
 		_chat_view.advance(delta)
 		_advance_wild(delta)
 	_refresh()
@@ -837,8 +796,7 @@ func _drain_effects() -> void:
 				# `GameCanvas_load:10`（开局）与 `Map_Initialize:7`（引擎初始化）。
 				var switched: bool = _shown_map_id != int(effect.mapId)
 				for id: int in _motions:
-					if not _motions[id].manual:
-						story.cancel_move(id)
+					story.cancel_move(id)
 				_motions.clear()
 				# 载荷要整个传进去：`BattleMap.setup()` 同时要 `info` 与 `terrain`，
 				# 只给 `info` 会被当成“Map rules rejected the payload”。
@@ -853,6 +811,8 @@ func _drain_effects() -> void:
 					# 地图加载就是原生 `FieldCanvas_load:146-147` 的 `Map_summonLOAD/CREATE`，
 					# 之前被 `Op.CLEAR_ACTORS` 销毁的跟随对象在这里重建。
 					_summons_removed = false
+					_harvest = {}
+					_walk_tile = Vector2i(-1, -1)
 					if _actors.set_map_objects(effect.map.info, story.event_map_objects(),
 							_map_object_state(int(effect.map.get("id", -1)))):
 						_sync_actors()
@@ -889,7 +849,7 @@ func _drain_effects() -> void:
 					story.fail_effect(effect.id, "移动角色不存在")
 				else:
 					_motions[int(effect.id)] = {"actor": actor,
-						"destination": effect.destination, "follow": effect.follow, "manual": false}
+						"destination": effect.destination, "follow": effect.follow}
 			"item-obtained":
 				_present_item_obtained(int(effect.itemId), int(effect.count),
 					int(effect.iconFrame))
@@ -1150,22 +1110,16 @@ func _advance_motions(delta: float) -> float:
 		var actor: Dictionary = motion.actor
 		var current := Vector2(actor.x, actor.y)
 		var destination := Vector2(motion.destination.x, motion.destination.y)
-		var speed := SCRIPT_MOVE_SPEED
-		if motion.manual:
-			speed = RUN_SPEED if int(actor.action) == FieldAction.Hero.RUN else WALK_SPEED
-		var next := current.move_toward(destination, speed * delta)
+		var next := current.move_toward(destination, SCRIPT_MOVE_SPEED * delta)
 		actor.x = next.x
 		actor.y = next.y
 		if int(actor.id) == 0:
 			# `Field_procCurr:143`：事件执行记录期间（原生 `EvtData.step_index > 0`）跟随对象
 			# 直接返回、位置与轨迹都不推进；`Evt_stdPROC` case 9 的脚本走位也在事件内，所以
 			# 判据只有 `event_step_running` 一处，不按这次移动是谁发起的分叉。
-			Followers.advance(_followers, current, next,
-				int(actor.action) == FieldAction.Hero.RUN,
+			Followers.advance(_followers, current, next, int(actor.action) == FieldAction.Hero.RUN,
 				not Followers.event_step_running(story.progress))
 			_sync_actors()
-			if motion.manual:
-				_actors.advance_hero_motion(current.distance_to(next))
 		else:
 			_actors.update_position(actor)
 		if motion.follow:
@@ -1174,11 +1128,7 @@ func _advance_motions(delta: float) -> float:
 		if next != destination:
 			continue
 		_motions.erase(id)
-		if motion.manual:
-			remaining = maxf(0.0, delta - current.distance_to(destination) / speed)
-			story.after_move(story.map, motion.destination)
-		else:
-			story.complete_effect(id)
+		story.complete_effect(id)
 		_sync_actors()
 	return remaining
 
@@ -1216,7 +1166,7 @@ func handle_touch(position: Vector2, phase: String) -> bool:
 		var handled := _last_touch != NO_TOUCH
 		_last_touch = NO_TOUCH
 		if TouchView.DIRECTIONS.has(_touch_key):
-			_walk_direction = Vector2i.ZERO
+			_release_walk_direction(TouchView.DIRECTIONS[_touch_key])
 			_running = false
 		_touch_key = 0
 		_chat_view.set_touch_key(0)
@@ -1272,8 +1222,10 @@ func handle_touch(position: Vector2, phase: String) -> bool:
 	for key: int in keys:
 		if key == _touch_key:
 			continue
+		var previous_key := _touch_key
 		_touch_key = key
-		_walk_direction = Vector2i.ZERO
+		if TouchView.DIRECTIONS.has(previous_key):
+			_release_walk_direction(TouchView.DIRECTIONS[previous_key])
 		if not TouchView.DIRECTIONS.has(key):
 			_running = false
 		if not dialogue.is_empty():
@@ -1293,11 +1245,8 @@ func _field_touch_style() -> int:
 			world_map_view != null or not _pending_warp.is_empty() or \
 			not _encounter.is_empty() or not boundary.is_empty() or \
 			not dialogue.is_empty() or not narration.is_empty() or not mastery.is_empty() or \
-			story.stable_state().is_empty():
+			story.stable_state().is_empty() or not _motions.is_empty():
 		return 0
-	for motion: Dictionary in _motions.values():
-		if not motion.manual:
-			return 0
 	return TouchView.field_style(int(story.map.info.map_group))
 
 
@@ -1362,24 +1311,56 @@ func _press_field_key(key: int) -> void:
 
 
 func _begin_walk(direction: Vector2i) -> void:
-	if _field_touch_style() == 0 or not _pending_warp.is_empty():
+	_start_manual_walk(direction)
+
+
+## 开始／继续按住一个方向：压栈后以栈顶为准（多键同时按不会互相抢方向）。
+func _start_manual_walk(direction: Vector2i) -> void:
+	if _field_touch_style() == 0 or not _pending_warp.is_empty() or \
+			absi(direction.x) + absi(direction.y) != 1:
 		return
 	var now := Time.get_ticks_msec()
 	_running = _running or (_last_walk_direction == direction and
 		_last_walk_time >= 0 and now - _last_walk_time <= DASH_WINDOW_MS)
 	_last_walk_direction = direction
 	_last_walk_time = now
-	_walk_direction = direction
-	if _motions.has(-1):
-		_actor(0).action = FieldAction.Hero.RUN if _running else FieldAction.Hero.WALK
-		_sync_actors()
-	elif _step_walk(direction) == Vector2i.ZERO:
-		# 原生 Field_Hero_mKeyPressed 先 objDIRECT 再 objANI(1/2)：整格被完全堵住
-		# 时角色不移动，但仍面向请求方向原地播走路／奔跑动画。
-		_face(direction)
-		_actor(0).action = FieldAction.Hero.RUN if _running else FieldAction.Hero.WALK
-		_actor(0).erase("animationEndMode")
-		_sync_actors()
+	_push_walk_direction(direction)
+
+
+func _push_walk_direction(direction: Vector2i) -> void:
+	# 同一个方向再按一次（触控重复报同一键）只把它提到栈顶，不重复入栈。
+	_walk_stack.erase(direction)
+	_walk_stack.push_back(direction)
+	_walk_remainder_px = 0.0
+	_apply_walk_top()
+
+
+## 松开一个方向：从栈里移除；栈空就停，栈非空则回到底下那个按着的方向。
+func _release_walk_direction(direction: Vector2i) -> void:
+	if not _walk_stack.has(direction):
+		return
+	_walk_stack.erase(direction)
+	_walk_remainder_px = 0.0
+	_apply_walk_top()
+
+
+## 把栈顶同步成当前的移动方向、朝向与走跑动作；栈空时回待机。
+func _apply_walk_top() -> void:
+	var hero := _actor(0)
+	if hero.is_empty():
+		return
+	if _walk_stack.is_empty():
+		_walk_direction = Vector2i.ZERO
+		_running = false
+		if int(hero.action) in [FieldAction.Hero.WALK, FieldAction.Hero.RUN]:
+			hero.action = FieldAction.Hero.IDLE
+			_sync_actors()
+		return
+	_walk_direction = _walk_stack.back()
+	_face(_walk_direction)
+	hero.action = FieldAction.Hero.RUN if _running else FieldAction.Hero.WALK
+	hero.erase("animationEndMode")
+	_sync_actors()
 
 
 ## 原生 Object_objDIRECT：新方向写入 direction_code，复合 direction_flags 保留
@@ -1394,7 +1375,9 @@ func _face(direction: Vector2i) -> void:
 
 
 func _clear_walk_input() -> void:
+	_walk_stack.clear()
 	_walk_direction = Vector2i.ZERO
+	_walk_remainder_px = 0.0
 	_running = false
 	_last_walk_direction = Vector2i.ZERO
 	_last_walk_time = -1
@@ -1404,9 +1387,8 @@ func handle_key(event: InputEventKey) -> bool:
 	var key := int(event.keycode)
 	if DIRECTION_KEYS.has(key):
 		if not event.pressed:
-			if _walk_direction == DIRECTION_KEYS[key]:
-				_walk_direction = Vector2i.ZERO
-				_running = false
+			_release_walk_direction(DIRECTION_KEYS[key])
+			_running = false
 		elif not event.echo:
 			if _field_touch_style() != 0 and focused:
 				_begin_walk(DIRECTION_KEYS[key])
@@ -1918,14 +1900,20 @@ func _on_actor_animation_finished(actor_id: int) -> void:
 	var action := int(hero.get("action", 0))
 	if action == FieldAction.Hero.WARP and not _pending_warp.is_empty():
 		_apply_pending_warp()
-	elif action in [FieldAction.Hero.ARRIVE, FieldAction.Hero.OBJECT_152_INTERACT,
-			FieldAction.Hero.GROUP_0_OBJECT_INTERACT]:
-		# 原生 `Field_Hero_procNext` 的 `case 3: case 4:` 与 `case 11` 末帧都收回 `Object_objANI(hero, 0)`
-		# （`same_animation_request_count > 0` 才重播）：落地动作、「对着帧 152 物件播的那一下」与
-		# 「第 0 组地图物件播的那一下」都是播完回待机。
-		hero.action = FieldAction.Hero.IDLE
-		hero.erase("animationEndMode")
-		_sync_actors()
+	elif action in [FieldAction.Hero.MINE_ORE, FieldAction.Hero.SHAKE_TREE]:
+		# 采集是「一遍一播 + 显式重播」：每遍末帧算一次，第二遍结束才收回待机并结算。
+		if not _harvest.is_empty() and int(_harvest.get("action", -1)) == action:
+			_next_map_harvest_play()
+		else:
+			_clear_hero_gesture(hero)
+	elif action == FieldAction.Hero.ARRIVE:
+		_clear_hero_gesture(hero)
+
+
+func _clear_hero_gesture(hero: Dictionary) -> void:
+	hero.action = FieldAction.Hero.IDLE
+	hero.erase("animationEndMode")
+	_sync_actors()
 
 
 ## 原生交互码 4 → `FIELD_STATE_WARP2`(5)。`Field_Warp2_init` 只载 `common/ui_world.fbm`
@@ -2336,10 +2324,10 @@ func _map_object_state(map_id: int) -> Dictionary:
 
 
 ## 原生 `Field_Basic_mKeyPressed` 在对话分支之后调
-## `Object_objHIT(hero.x, hero.y, direction_code, 1200)`：面前 32 像素内 kind 8 的物件里，
-## `animation_id == 176` 就是宝箱 —— 先 `EFC_mdaPlayEFFECT` + `Object_objANI(obj, 177)`，
-## 再 `Field_Box_Set()`（相位 4 `Map_boxSetExist(map_id, 0)` 记已开、相位 6 `Battle_Drop_BOX`
-## 抽一件道具入包、末尾 `Game_saveSAVE()`）。相位在这里一次跑完，只保留这三步的结果。
+## `Object_objHIT(hero.x, hero.y, direction_code, 1200)`：面前 32 像素内 kind 8 的物件里
+## 只有帧 0／5／10（第 0 组）、152、166、176 会被命中，按帧分派见 `MapItemInteraction`。
+## 宝箱保留原生三步：`Object_objANI(obj, 177)` → `Field_Box_Set()`（`Map_boxSetExist` +
+## `Battle_Drop_BOX`）→ `Game_saveSAVE()`。
 func interact_map_object() -> bool:
 	if story == null or menu_open or book_open or save_open or service_open() or world_map_view != null or \
 			not focused or \
@@ -2354,34 +2342,133 @@ func interact_map_object() -> bool:
 	var facing: Vector2i = FACING_TILES.get(int(hero.get("lastDirection", FieldAction.Facing.DOWN)), Vector2i.ZERO)
 	if facing == Vector2i.ZERO:
 		return false
-	var tile := Vector2i(int(story.progress.player.x), int(story.progress.player.y)) + facing
-	# 原生 `Field_Basic_mKeyPressed` 的 `Object_objHIT` 分支按物件的 `animation_id` 分派：
-	# 166 → 只 `Object_objANI(obj, 167)`（换帧，没有存档与掉落）；152 → 只让英雄播 ANI 3；
-	# 0／5／10 → 只有第 0 组地图让英雄播一次动作 4（见 `MAP_OBJECT_GROUP_0_FRAMES`）。
-	if _actors.object_action_at(tile) == MAP_OBJECT_INTERACT_FRAME:
-		hero.action = FieldAction.Hero.OBJECT_152_INTERACT
-		hero["animationEndMode"] = ONE_SHOT_ANIMATION_END_MODE
-		_sync_actors()
-		note = ""
+	# 主角位移是像素级的（actor 的 x/y 是格单位浮点），命中判定也走像素：
+	# 原生 `Object_objHIT(hero.x, hero.y, direction_code, 1200)`。
+	var hero_pixel := Vector2(float(hero.x) * TILE + 8.0, float(hero.y) * TILE + 8.0)
+	var target: Dictionary = _actors.object_at(hero_pixel, int(hero.lastDirection))
+	if target.is_empty():
+		return false
+	var action := int(target.action)
+	var record: Dictionary = target.record
+	var tile := Vector2i(int(record.tile_x), int(record.tile_y))
+	match MapItemInteraction.kind_of(action, int(story.map.info.map_group) == MAP_OBJECT_GROUP_0):
+		MapItemInteraction.Kind.ORE:
+			return _mine_map_object(hero, tile, facing, action)
+		MapItemInteraction.Kind.TREE:
+			return _shake_map_object(hero, tile, facing, action)
+		MapItemInteraction.Kind.GLOW:
+			return _extinguish_map_object(tile)
+		MapItemInteraction.Kind.CHEST:
+			return _open_map_chest(tile)
+	return false
+
+
+## 帧 152（水晶矿）：原生 `Object_objANI(hero, 3)`；本工程按原版节奏播两遍英雄动作，
+## 每遍第 6 帧让矿石反应一次，第二遍命中帧发道具（见 `_tick_map_harvest`）。
+func _mine_map_object(hero: Dictionary, tile: Vector2i, facing: Vector2i, action: int) -> bool:
+	return _start_map_harvest(hero, tile, facing, MapItemInteraction.Kind.ORE, action)
+
+
+## 帧 0／5／10（第 0 组地图的树）：原生 `Object_objANI(hero, 4)`。树木没有原生摇晃帧，
+## 抖动是 `map_object.tscn` 补的 Scene 动画，关键帧取宽物件受击动作 53／54／55 的偏移节奏。
+func _shake_map_object(hero: Dictionary, tile: Vector2i, facing: Vector2i, action: int) -> bool:
+	return _start_map_harvest(hero, tile, facing, MapItemInteraction.Kind.TREE, action)
+
+
+## 帧 166 → 167：原生只换帧（`Object_objANI(obj, 167)`），没有存档与掉落。
+func _extinguish_map_object(tile: Vector2i) -> bool:
+	if not _actors.switch_object_at(tile, MapItemInteraction.GLOW_FRAME_FROM,
+			MapItemInteraction.GLOW_FRAME_TO):
+		_stop("物件 %d → %d 的换帧失败；未猜测替代绘制。" % [MapItemInteraction.GLOW_FRAME_FROM,
+			MapItemInteraction.GLOW_FRAME_TO])
 		_refresh()
 		return true
-	if _actors.object_action_at(tile) == MAP_OBJECT_SWITCH_FROM:
-		if not _actors.switch_object_at(tile, MAP_OBJECT_SWITCH_FROM, MAP_OBJECT_SWITCH_TO):
-			_stop("物件 %d → %d 的换帧失败；未猜测替代绘制。" % [MAP_OBJECT_SWITCH_FROM,
-				MAP_OBJECT_SWITCH_TO])
-			_refresh()
-			return true
-		note = ""
-		_refresh()
+	note = ""
+	_refresh()
+	return true
+
+
+## 开始一次采集（对齐原生 `Field_Hero_procCurr`）：英雄动作 3／4 播两遍，
+## 每次命中帧（第 6 帧）让物件反应一次；第二遍命中帧才发道具并递减 active_state。
+## 第一遍的 `same_animation_request_count == 0` 只播反应不发奖，结束回调重播后计数变 1。
+func _start_map_harvest(hero: Dictionary, tile: Vector2i, facing: Vector2i, kind: int, from_action: int) -> bool:
+	if not _harvest.is_empty():
 		return true
-	if int(story.map.info.map_group) == MAP_OBJECT_GROUP_0 and \
-			_actors.object_action_at(tile) in MAP_OBJECT_GROUP_0_FRAMES:
-		hero.action = FieldAction.Hero.GROUP_0_OBJECT_INTERACT
-		hero["animationEndMode"] = ONE_SHOT_ANIMATION_END_MODE
-		_sync_actors()
-		note = ""
+	var action := FieldAction.Hero.MINE_ORE \
+		if kind == MapItemInteraction.Kind.ORE else FieldAction.Hero.SHAKE_TREE
+	_harvest = {"kind": kind, "tile": tile, "facing": facing, "action": action,
+		"from_action": from_action, "play": 0, "hit": false}
+	hero.action = action
+	hero["animationEndMode"] = ONE_SHOT_ANIMATION_END_MODE
+	_sync_actors()
+	note = ""
+	_refresh()
+	return true
+
+
+## 每帧看主角当前帧：到达命中帧就只触发一次反应（原生 `Field_Hero_procCurr` 的 case 3／4）。
+func _tick_map_harvest() -> void:
+	if _harvest.is_empty():
+		return
+	var action := int(_harvest.get("action", -1))
+	if int(_actor(0).get("action", 0)) != action or bool(_harvest.get("hit", false)):
+		return
+	var hit_frame := MapItemInteraction.MINE_HIT_FRAME \
+		if int(_harvest.kind) == MapItemInteraction.Kind.ORE else MapItemInteraction.SHAKE_HIT_FRAME
+	if _actors.hero_frame() < hit_frame:
+		return
+	_harvest["hit"] = true
+	_map_harvest_hit(int(_harvest.get("play", 0)) > 0)
+
+
+## 一次命中：物件反应；第二遍命中才结算道具与 active_state。
+func _map_harvest_hit(second: bool) -> void:
+	var tile: Vector2i = _harvest.get("tile", Vector2i.ZERO)
+	var facing: Vector2i = _harvest.get("facing", Vector2i.DOWN)
+	var kind := int(_harvest.get("kind", MapItemInteraction.Kind.NONE))
+	if kind == MapItemInteraction.Kind.ORE:
+		_actors.react_at(tile, MapItemInteraction.ORE_FRAME,
+			MapItemInteraction.reaction_action(facing))
+	else:
+		var from_action := int(_harvest.get("from_action", 0))
+		var reaction := MapItemInteraction.tree_reaction_action(from_action, facing)
+		if reaction > 0:
+			_actors.react_at(tile, from_action, reaction)
+	if not second:
 		_refresh()
-		return true
+		return
+	if _actors.can_harvest_at(tile, kind):
+		if _gather_map_item(kind):
+			_actors.consume_harvest_at(tile, kind)
+	else:
+		# 原生 `Field_Hero_procCurr` 的 fxt 412：树次数用尽但还能摇。
+		note = _assets.text_message(Msg.SOURCE, 412)
+	_refresh()
+
+
+## 一遍采集动作播完：第一遍结束重播，第二遍结束回待机（奖励已在命中帧结算）。
+func _next_map_harvest_play() -> void:
+	var hero := _actor(0)
+	if hero.is_empty():
+		_harvest = {}
+		return
+	# 低帧率把命中帧整帧跳掉时补一次，避免漏发反应与道具。
+	if not bool(_harvest.get("hit", false)):
+		_harvest["hit"] = true
+		_map_harvest_hit(int(_harvest.get("play", 0)) > 0)
+	var play := int(_harvest.get("play", 0)) + 1
+	if play < MapItemInteraction.HARVEST_SWINGS:
+		_harvest["play"] = play
+		_harvest["hit"] = false
+		_actors.restart_hero_action()
+		return
+	_harvest = {}
+	_clear_hero_gesture(hero)
+	_refresh()
+
+
+## 宝箱：帧 176 命中后 `Field_Box_Set` 的相位 4（记已开）与相位 6（抽一件入包）一次跑完。
+func _open_map_chest(tile: Vector2i) -> bool:
 	if not _actors.has_unopened_box(tile):
 		return false
 	var map_id := int(story.map.get("id", -1))
@@ -2406,110 +2493,169 @@ func interact_map_object() -> bool:
 	return true
 
 
-## 单格通行判定：返回空字符串表示可走，否则是阻挡原因。## cell_flags 低 3 位是原生通行掩码，非 0 表示不可走（`Map_tileIsMoveRect`）。
-func _step_blocker(direction: Vector2i) -> String:
+## 兜底采集：原版把采矿／摇树的奖励放在「区域调查」事件里（触发 6）。当前事件正等着
+## 这个区域的动作时不掉道具（事件会发），返回 true 表示这次采集算成功。
+func _gather_map_item(kind: int) -> bool:
+	if story.pending_area_action():
+		return true
+	var table: Array = MapItemInteraction.gather_table(kind)
+	if table.is_empty():
+		return false
+	var drop := MapItemInteraction.gather_drop(kind, randi_range(0, table.size() - 1))
+	var result: Dictionary = story.gather_item(int(drop.get("id", -1)), int(drop.get("count", 0)))
+	if not result.get("ok", false):
+		note = str(result.get("error", "采集入包失败"))
+		return false
+	_save_from_event()
+	return true
+
+
+## 原生 `Map_tileIsMoveRect` 的像素版：候选脚点 → 16×16 碰撞盒覆盖的格全部可走。
+## 额外把实体占位与未开放传送格视为阻挡；传送门在踏进新格时另行处理。
+func _walk_rect_free(foot: Vector2) -> bool:
 	if story == null:
-		return "原流程尚未就绪。"
-	var next := Vector2i(story.progress.player.x, story.progress.player.y) + direction
+		return false
+	var min_px := foot - Vector2(TILE, TILE) * 0.5
+	var rect := Rect2(min_px, Vector2(TILE, TILE))
 	var terrain: Dictionary = story.map.terrain
-	if next.x < 0 or next.y < 0 or next.x >= terrain.width_tiles or next.y >= terrain.height_tiles or \
-			story.tile_blocked(next.x, next.y):
-		return "前方原通行格阻挡。"
+	var x0 := floori(min_px.x / TILE)
+	var y0 := floori(min_px.y / TILE)
+	var x1 := floori((min_px.x + TILE - 0.001) / TILE)
+	var y1 := floori((min_px.y + TILE - 0.001) / TILE)
+	if x0 < 0 or y0 < 0 or x1 >= int(terrain.width_tiles) or y1 >= int(terrain.height_tiles):
+		return false
+	for ty in range(y0, y1 + 1):
+		for tx in range(x0, x1 + 1):
+			if story.tile_blocked(tx, ty):
+				return false
 	for actor: Dictionary in story.progress.actors:
-		if int(actor.id) != 0 and Vector2i(roundi(actor.x), roundi(actor.y)) == next:
-			return "前方实体阻挡。"
-	return ""
-
-
-## 迈一步：请求方向能走就走；被挡时按原生优先级侧移一格绕行，之后再自动回到请求方向。
-## 返回实际迈出的方向，ZERO 表示请求方向和绕行方向都走不了。
-func _step_walk(direction: Vector2i) -> Vector2i:
-	if move_player(direction):
-		return direction
-	if not boundary.is_empty():
-		return Vector2i.ZERO
-	for candidate: Vector2i in WALK_ASSIST.get(direction, []):
-		# 原生同时要求侧移落脚格和斜前方格可通行，否则绕过去也接不回请求方向。
-		if not _step_blocker(candidate).is_empty() or \
-				not _step_blocker(direction + candidate).is_empty():
+		if int(actor.id) == 0:
 			continue
-		if move_player(candidate):
-			return candidate
-	return Vector2i.ZERO
+		var body := Rect2(Vector2(float(actor.x), float(actor.y)) * TILE, Vector2(TILE, TILE))
+		if rect.intersects(body):
+			return false
+	# 未开放的传送格按「暂时不能通行」处理。
+	for warp: Dictionary in story.map.info.get("warps", []):
+		if story.progress.warpEnabled.get(str(int(warp.get("destination_map_id", 0)))) != false:
+			continue
+		if rect.intersects(Rect2(Vector2(int(warp.tile_x), int(warp.tile_y)) * TILE,
+				Vector2(TILE, TILE)), true):
+			return false
+	return true
 
 
-## 手动走位一格：先按通行标志与实体占位判定，再检查 MIF 传送点。
-## 传送目标缺失或落点越界时明确报错，不猜目的地、不改地图。
-func move_player(direction: Vector2i) -> bool:
-	if story == null or menu_open or book_open or save_open or service_open() or world_map_view != null or \
-			not _pending_warp.is_empty() or \
-			not focused or \
-			battle_view != null or \
-			not _encounter.is_empty() or not narration.is_empty() or not mastery.is_empty() or \
-			not boundary.is_empty() or not dialogue.is_empty() or not _motions.is_empty() or \
-			story.stable_state().is_empty() or absi(direction.x) + absi(direction.y) != 1:
+## 原生 `Field_Hero_procMOVE`：每帧按速度走像素，被挡就侧滑；位移驱动步态。
+func _advance_manual_walk(delta: float) -> bool:
+	if story == null or delta <= 0.0 or _walk_direction == Vector2i.ZERO:
 		return false
 	var hero := _actor(0)
 	if hero.is_empty():
 		return false
-	var blocker := _step_blocker(direction)
-	if not blocker.is_empty():
-		# 原生撞墙只是走不动（`Map_tileIsMoveRect` 不通过就不走），不推提示栈、也不显示文案。
-		return false
-	var next := Vector2i(story.progress.player.x, story.progress.player.y) + direction
-	for warp: Dictionary in story.map.info.get("warps", []):
-		if Vector2i(warp.tile_x, warp.tile_y) != next:
-			continue
-		if not Story._uint(warp.get("destination_map_id")) or \
-				not Story._uint(warp.get("destination_tile_x"), 255) or \
-				not Story._uint(warp.get("destination_tile_y"), 255):
-			_stop("MIF 传送点目标契约不兼容；未猜测目的地。")
-			_refresh()
-			return false
-		var target := int(warp.destination_map_id)
-		# 原生 `Map_warpProc:17` 通过、`:59-60` 走 `Game_msgInit(0, fxt404)`：404 落在 index 0 消息条，
-		# 不换图，也不进 `Game_infoInit` 的 8 槽提示栈。
-		if story.progress.warpEnabled.get(str(target)) == false:
-			_warp_blocked_bar.present(_assets.text_message(Msg.SOURCE, Msg.Id.MAP_BLOCKED),
-				MapNameView.Source.WARP)
-			return false
-		var loaded: Variant = _resources.call("load_map", target) \
-			if _resources.has_method("load_map") else null
-		if loaded is Resource:
-			loaded = loaded.get_meta("payload", null)
-		if loaded is Dictionary:
-			loaded = Story._native_numbers(loaded)
-		if not loaded is Dictionary or loaded.get("id") != target or \
-				not loaded.get("terrain") is Dictionary or \
-				not loaded.get("info") is Dictionary or \
-				not loaded.get("sheets") is Array or \
-				not Story._uint(loaded.terrain.get("width_tiles")) or \
-				not Story._uint(loaded.terrain.get("height_tiles")) or \
-				warp.destination_tile_x >= loaded.terrain.width_tiles or \
-				warp.destination_tile_y >= loaded.terrain.height_tiles:
-			_stop("MIF 传送目标缺失或落点越界：m%d；未替换地图或猜测落点。" % target)
-			_refresh()
-			return false
-		# 原生在脚点矩形刚与传送格相交时就换图，不等走完这一格：
-		# 记通行标志、把角色放到目标格中心并回到站立动作，跟随者随位置同步。
-		story.progress.warpPassed[str(target)] = true
-		hero.action = FieldAction.Hero.IDLE
-		hero.erase("animationEndMode")
-		# 换图成功：原生 `Map_warpProc:54` 无条件 `Game_msgInit(1, …)`，目标图就是当前图也弹。
-		_map_name_source = MapNameView.Source.WARP
-		story.after_move(loaded, {"x": int(warp.destination_tile_x),
-			"y": int(warp.destination_tile_y)}, true)
-		note = ""
-		_drain_effects()
-		_refresh()
-		return true
-	_face(direction)
+	_face(_walk_direction)
 	hero.action = FieldAction.Hero.RUN if _running else FieldAction.Hero.WALK
 	hero.erase("animationEndMode")
-	_motions[-1] = {"actor": hero, "destination": {"x": next.x, "y": next.y},
-		"follow": true, "manual": true}
-	note = ""
+	var speed_px := (RUN_SPEED if _running else WALK_SPEED) * TILE
+	_walk_remainder_px += speed_px * delta
+	var pixels := int(floorf(_walk_remainder_px))
+	if pixels <= 0:
+		return false
+	_walk_remainder_px -= float(pixels)
+	var before := Vector2(float(hero.x), float(hero.y))
+	var start := before * TILE + Vector2(TILE, TILE) * 0.5
+	var result: Dictionary = PixelWalk.move_step(start, _walk_direction, pixels, _walk_rect_free)
+	var moved := int(result.moved)
+	if moved < pixels:
+		var slide: Dictionary = PixelWalk.slide_direction(result.position, _walk_direction,
+			pixels - moved, _walk_rect_free)
+		if not slide.is_empty():
+			var slide_result: Dictionary = PixelWalk.move_step(result.position, slide.direction,
+				int(slide.pixels), _walk_rect_free)
+			result.position = slide_result.position
+			moved += int(slide_result.moved)
+			if int(slide_result.moved) > 0:
+				_face(slide.direction)
+	if moved <= 0:
+		return false
+	var foot: Vector2 = result.position
+	hero.x = (foot.x - TILE * 0.5) / TILE
+	hero.y = (foot.y - TILE * 0.5) / TILE
+	var after := Vector2(float(hero.x), float(hero.y))
+	Followers.advance(_followers, before, after, _running,
+		not Followers.event_step_running(story.progress))
+	_actors.update_position(hero)
+	_actors.advance_hero_motion(float(moved) / TILE)
+	_focus = _point(hero)
+	var stopped := _follow_walk_tile(hero)
 	_sync_actors()
+	_position_camera()
+	return not stopped
+
+
+## 跨格时同步剧情坐标 + 触发 + 传送；返回 true 表示已换图/必须停下。
+func _follow_walk_tile(hero: Dictionary) -> bool:
+	var tile := Vector2i(floori(float(hero.x)), floori(float(hero.y)))
+	if tile == _walk_tile:
+		return false
+	_walk_tile = tile
+	story.after_move(story.map, {"x": tile.x, "y": tile.y}, false, false)
+	if not boundary.is_empty():
+		return true
+	for warp: Dictionary in story.map.info.get("warps", []):
+		if Vector2i(int(warp.tile_x), int(warp.tile_y)) != tile:
+			continue
+		return _enter_warp(warp)
+	return false
+
+
+## MIF 传送点：目标缺失或落点越界时明确报错，不猜目的地、不改地图。
+func _enter_warp(warp: Dictionary) -> bool:
+	var hero := _actor(0)
+	if hero.is_empty():
+		return false
+	if not Story._uint(warp.get("destination_map_id")) or \
+			not Story._uint(warp.get("destination_tile_x"), 255) or \
+			not Story._uint(warp.get("destination_tile_y"), 255):
+		_stop("MIF 传送点目标契约不兼容；未猜测目的地。")
+		_refresh()
+		return true
+	var target := int(warp.destination_map_id)
+	# 原生 `Map_warpProc:17` 通过、`:59-60` 走 `Game_msgInit(0, fxt404)`：404 落在 index 0 消息条，
+	# 不换图，也不进 `Game_infoInit` 的 8 槽提示栈。
+	if story.progress.warpEnabled.get(str(target)) == false:
+		_warp_blocked_bar.present(_assets.text_message(Msg.SOURCE, Msg.Id.MAP_BLOCKED),
+			MapNameView.Source.WARP)
+		return true
+	var loaded: Variant = _resources.call("load_map", target) \
+		if _resources.has_method("load_map") else null
+	if loaded is Resource:
+		loaded = loaded.get_meta("payload", null)
+	if loaded is Dictionary:
+		loaded = Story._native_numbers(loaded)
+	if not loaded is Dictionary or loaded.get("id") != target or \
+			not loaded.get("terrain") is Dictionary or \
+			not loaded.get("info") is Dictionary or \
+			not loaded.get("sheets") is Array or \
+			not Story._uint(loaded.terrain.get("width_tiles")) or \
+			not Story._uint(loaded.terrain.get("height_tiles")) or \
+			warp.destination_tile_x >= loaded.terrain.width_tiles or \
+			warp.destination_tile_y >= loaded.terrain.height_tiles:
+		_stop("MIF 传送目标缺失或落点越界：m%d；未替换地图或猜测落点。" % target)
+		_refresh()
+		return true
+	# 原生在脚点矩形刚与传送格相交时就换图，不等走完这一格：
+	# 记通行标志、把角色放到目标格中心并回到站立动作，跟随者随位置同步。
+	story.progress.warpPassed[str(target)] = true
+	hero.action = FieldAction.Hero.IDLE
+	hero.erase("animationEndMode")
+	_walk_tile = Vector2i(int(warp.destination_tile_x), int(warp.destination_tile_y))
+	_clear_walk_input()
+	# 换图成功：原生 `Map_warpProc:54` 无条件 `Game_msgInit(1, …)`，目标图就是当前图也弹。
+	_map_name_source = MapNameView.Source.WARP
+	story.after_move(loaded, {"x": int(warp.destination_tile_x),
+		"y": int(warp.destination_tile_y)}, true)
+	note = ""
+	_drain_effects()
+	_refresh()
 	return true
 
 
@@ -3101,7 +3247,6 @@ func _open_battle(id: int) -> void:
 	battle_view.title_requested.connect(_battle_title_requested)
 	battle_view.settlement_drops.connect(_battle_settlement_drops)
 	# 原生战斗态一套 `height − 51`（`0x788B` 掩码外的状态）；在 `start()` 之前切，战斗内第一条提示就落在基线。
-	_sync_message_state()
 	battle_view.start(story.combat, _resources, _assets, story.progress)
 
 
@@ -3251,7 +3396,6 @@ func _close_battle() -> void:
 		remove_child(battle_view)
 		battle_view.queue_free()
 		battle_view = null
-	_sync_message_state()
 
 
 func set_focused(value: bool) -> void:
@@ -3368,7 +3512,7 @@ func press(key: int) -> void:
 			confirm_dialogue()
 	else:
 		if DIRECTION_KEYS.has(key):
-			move_player(DIRECTION_KEYS[key])
+			_start_manual_walk(DIRECTION_KEYS[key])
 	_refresh()
 
 

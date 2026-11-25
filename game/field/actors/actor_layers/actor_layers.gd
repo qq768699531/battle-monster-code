@@ -42,6 +42,17 @@ func set_monster_running(value: bool) -> void:
 		_monster.set_running(value)
 
 
+## 播放倍率（采集与受击反应用 1.2 对齐原生 50ms 帧距）。
+func set_speed(value: float) -> void:
+	if _monster != null:
+		_monster.set_speed(value)
+
+
+## 从第一帧重播当前动作（同一条 `present` 请求会被去重，采集两遍动作用这个）。
+func replay() -> bool:
+	return _monster.replay() if _monster != null else false
+
+
 func advance(delta: float) -> void:
 	if _monster != null:
 		_monster.advance(delta)

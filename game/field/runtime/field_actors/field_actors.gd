@@ -8,7 +8,8 @@ extends Node2D
 const HERO := "hero/h_f_01"
 const ACTOR_SCENE = preload("res://game/field/actors/actor/actor.tscn")
 # 地图物件只需要绘制体，不需要 actor 场景里的 Emotion（它内部还会再实例化一套 ANI）。
-const LAYERS_SCENE = preload("res://game/field/actors/actor_layers/actor_layers.tscn")
+## 地图物件外壳：`Shake` 层承载 Scene 抖动动画，`Shake/Body` 仍是 `actor_layers` 绘制体。
+const MAP_OBJECT_SCENE = preload("res://game/field/runtime/map_object/map_object.tscn")
 ## MIF 物件 `frame_id` 里不走 `% 100` 取图的那几个码：传送门由 `Map_portalCREATE` 单独处理。
 const PORTAL_FRAME_IDS := [164, 165]
 ## 物件绘制锚点按尺寸分档（原生 `Map_objCREATE`）：16×8 与 12×5 两组，其余 8×8。
@@ -25,9 +26,21 @@ const GROUP_OBJECT_SELECTORS := [1, 2, 3, 4, 7, COMMON_OBJECT_SELECTOR]
 ## 公共帧 156–163（`obj_f_99`）的原生绘制序为 -1，其余物件为 0。
 const COMMON_BACK_FRAME_FIRST := 156
 const COMMON_BACK_FRAME_LAST := 163
+## 原生 `Object_procDRAW:165-215` 的遮挡淡出：0 序物件中 `resource_id == 1`（第 0 组，
+## 即 `obj/obj_f_01`）且当前动画码 ≤ 14 的树木，在被主角绘制之后又与主角的绘制矩形相交时
+## 每帧 +1 档（上限 7），离开后每帧 −1 档；alpha = (256 − 12×档位) / 256。
+## 档位存在物件自己的字节里，不写档。
+const OCCLUSION_FADE_MAX_STEPS := 7
+const OCCLUSION_FADE_ALPHA_STEP := 12
+const OCCLUSION_FADE_ACTION_MAX := 14
+const TREE_OBJECT_PATH := "obj/obj_f_01"
 ## 英雄 `action` → 待机／走跑基帧（原生 `Field_Hero_procAction`）：基帧后两帧是「朝上」「朝侧」
 ## 变体，朝下直接用基帧本身。action 1／6 都是走路，10／11 是剧情用动作。
 const HERO_ACTION_BASES := {0: 0, 1: 3, 6: 3, 2: 6, 3: 9, 4: 12, 10: 25, 11: 24}
+## 原生 ANI 每游戏帧（50ms）推一帧，转换时按 0.06 秒写场景；采集动作（hero ANI 9–14）
+## 与物件受击反应用 0.06/0.05 = 1.2 倍播放，对齐原版速度。
+const NATIVE_ANI_SPEED := 1.2
+const GATHER_ANI_ACTIONS := [9, 10, 11, 12, 13, 14]
 
 var _catalog: Object
 var _actors: Dictionary = {}
@@ -67,14 +80,13 @@ func _create_map_object(index: int, record: Dictionary, info: Dictionary,
 	var selector := int(info.map_group) + 1 if action <= COMMON_OBJECT_SELECTOR \
 		else COMMON_OBJECT_SELECTOR
 	var path := "obj/obj_f_%02d" % (selector if selector in GROUP_OBJECT_SELECTORS else 0)
-	var group := Node2D.new()
+	var group: Node2D = MAP_OBJECT_SCENE.instantiate()
 	group.name = "MapObject_%d" % index
 	# 与 actor.tscn 根节点保持一致的原生绘制层级。
 	group.z_index = 30
-	var body: Node2D = LAYERS_SCENE.instantiate()
-	body.name = "Body"
-	group.add_child(body)
+	var body: Node2D = group.get_node("Shake/Body")
 	add_child(group)
+	body.animation_finished.connect(_on_map_object_animation_finished.bind(index))
 	var anchor := Vector2(8, 8)
 	if int(record.frame_id) in WIDE_FRAME_IDS:
 		anchor = Vector2(16, 8)
@@ -97,16 +109,100 @@ func _create_map_object(index: int, record: Dictionary, info: Dictionary,
 		_clear_map_objects()
 		return {}
 	return {"group": group, "body_node": body, "body": drawing, "record": record,
-		"action": action, "path": path}
+		"action": action, "path": path, "resting_action": action, "reacting": false,
+		"harvests": 0, "hidden": false, "hide_when_idle": false,
+		"occlusion_steps": 0}
 
 
 ## 该格上的地图物件当前的动作号（`Object_objHIT` 命中后看 `animation_id`），没有就返回 −1。
 func object_action_at(tile: Vector2i) -> int:
 	for view: Dictionary in _map_objects:
 		var record: Dictionary = view.record
-		if int(record.tile_x) == tile.x and int(record.tile_y) == tile.y:
+		if int(record.tile_x) == tile.x and int(record.tile_y) == tile.y and \
+				not bool(view.get("hidden", false)):
 			return int(view.action)
 	return -1
+
+
+## 原生 `Object_objHIT(hero.x, hero.y, direction_code, 1200)`：主角脚下是**像素**坐标，
+## 不是格子。命中集合与朝向窗口都在像素上判，最后取距离² < `range_sq` 的最近一个。
+## 返回物件 view（`record` 里仍有格坐标，给打开／反应帧用）。
+func object_at(pixel: Vector2, direction_code: int, range_sq: int = 1200) -> Dictionary:
+	var best: Dictionary = {}
+	var best_distance := range_sq
+	for view: Dictionary in _map_objects:
+		if bool(view.get("hidden", false)) or not _interactive_action(int(view.action)):
+			continue
+		var target: Vector2 = view.group.position
+		if not _facing_window(pixel, target, direction_code):
+			continue
+		var distance := int(pixel.distance_squared_to(target))
+		if distance >= best_distance:
+			continue
+		best = view
+		best_distance = distance
+	return best
+
+
+## `Object_objHIT` 的命中集合：只有这四类帧会被按确认键命中。
+static func _interactive_action(action: int) -> bool:
+	return action in MapItemInteraction.TREE_FRAMES or action in [MapItemInteraction.ORE_FRAME,
+		MapItemInteraction.GLOW_FRAME_FROM, MapItemInteraction.CHEST_FRAME_CLOSED]
+
+
+## `Object_objHIT` 的朝向窗口：左右看 |dy| ≤ 8px、向上／下的 0..32px；上下看 |dx| ≤ 8px。
+static func _facing_window(hero: Vector2, target: Vector2, direction_code: int) -> bool:
+	var delta := target - hero
+	match direction_code:
+		FieldAction.Facing.LEFT:
+			return absf(delta.y) <= 8.0 and delta.x <= 0.0 and -delta.x <= 32.0
+		FieldAction.Facing.RIGHT:
+			return absf(delta.y) <= 8.0 and delta.x >= 0.0 and delta.x <= 32.0
+		FieldAction.Facing.UP:
+			return absf(delta.x) <= 8.0 and delta.y <= 0.0 and -delta.y <= 32.0
+		FieldAction.Facing.DOWN:
+			return absf(delta.x) <= 8.0 and delta.y >= 0.0 and delta.y <= 32.0
+	return false
+
+
+## 该格采集点是否还能给道具：矿石／树都有本次访问的收获上限，矿石耗尽后隐藏。
+## 计数不写档；换图重建物件即归零，对应原版“暂时消失／下次再来”的阅读。
+func can_harvest_at(tile: Vector2i, kind: int) -> bool:
+	var view := _map_object_at(tile)
+	if view.is_empty():
+		return false
+	var limit := MapItemInteraction.harvest_limit(kind)
+	return limit > 0 and int(view.get("harvests", 0)) < limit
+
+
+## 记一次成功采集；矿石到上限后隐藏，等重生计时走完再显现。
+func consume_harvest_at(tile: Vector2i, kind: int) -> void:
+	var view := _map_object_at(tile)
+	if view.is_empty():
+		return
+	var limit := MapItemInteraction.harvest_limit(kind)
+	if limit <= 0:
+		return
+	var count := mini(int(view.get("harvests", 0)) + 1, limit)
+	view["harvests"] = count
+	if kind == MapItemInteraction.Kind.ORE and count >= limit:
+		view["hide_when_idle"] = true
+		if not bool(view.get("reacting", false)):
+			_hide_map_object(view)
+
+
+func _map_object_at(tile: Vector2i) -> Dictionary:
+	for view: Dictionary in _map_objects:
+		var record: Dictionary = view.record
+		if int(record.tile_x) == tile.x and int(record.tile_y) == tile.y:
+			return view
+	return {}
+
+
+func _hide_map_object(view: Dictionary) -> void:
+	view["hidden"] = true
+	view["hide_when_idle"] = false
+	view.group.visible = false
 
 
 ## 原生 `Field_Basic_mKeyPressed` 的 `case 166: Object_objANI(obj, 167)`：只把这一格的物件
@@ -169,6 +265,68 @@ func has_unopened_box(tile: Vector2i) -> bool:
 				int(view.action) == CHEST_FRAME_CLOSED:
 			return true
 	return false
+
+
+## 原生 `Field_Object_procNext`：153..155 播完回 152。矿石受击时按朝向播其中一段，
+## 播完由 `_on_map_object_animation_finished` 收回静止帧。
+func react_at(tile: Vector2i, from_action: int, reaction_action: int) -> bool:
+	for view: Dictionary in _map_objects:
+		var record: Dictionary = view.record
+		if int(record.tile_x) != tile.x or int(record.tile_y) != tile.y or bool(view.get("reacting", false)):
+			continue
+		if int(view.action) != from_action:
+			continue
+		# 上一段反应播完、还没到下一帧收回静止帧时再按一次：先把 152 换回来再起新反应。
+		_apply_map_object_revert(view)
+		var drawing: Dictionary = view.body_node.present(
+			{"path": str(view.get("path", "obj/obj_f_99")), "action": int(reaction_action) % 100,
+				"direction": 0}, false, _limit)
+		if drawing.is_empty():
+			return false
+		view["reacting"] = true
+		view["action"] = reaction_action
+		view["body"] = drawing
+		view.body_node.set_speed(NATIVE_ANI_SPEED)
+		return true
+	return false
+
+
+## 主角当前显示帧（原生 `Object_procCURR` 的 `frame_index`）：采集命中帧判定用。
+func hero_frame() -> int:
+	var view: Dictionary = _actors.get(0, {})
+	var body: Dictionary = view.get("body", {})
+	return int(body.get("frame", -1))
+
+
+func _on_map_object_animation_finished(index: int) -> void:
+	if index < 0 or index >= _map_objects.size():
+		return
+	var view: Dictionary = _map_objects[index]
+	if not bool(view.get("reacting", false)):
+		return
+	view["reacting"] = false
+	# 不在动画回调栈里重建层：只登记要收回的静止帧，下一帧 advance 开头再换。
+	view["revert_action"] = int(view.get("resting_action", int(view.action)))
+
+
+## 矿石反应帧播完的收回点（`Field_Object_procNext` 的 153..155 → 152）。
+func _apply_map_object_revert(view: Dictionary) -> void:
+	var revert := int(view.get("revert_action", -1))
+	if revert < 0:
+		return
+	view.erase("revert_action")
+	# 耗尽矿石不再画一帧静止图：反应一结束就直接隐藏。
+	if bool(view.get("hide_when_idle", false)):
+		_hide_map_object(view)
+		return
+	var drawing: Dictionary = view.body_node.present(
+		{"path": str(view.get("path", "obj/obj_f_99")), "action": revert % 100,
+			"direction": 0}, true, _limit)
+	if drawing.is_empty():
+		return
+	view["action"] = revert
+	view["body"] = drawing
+	view.body_node.set_speed(1.0)
 
 
 ## 原生 `Object_objANI(obj, 177)`：宝箱换成打开的那一帧（`obj_f_99` 动作 77）。
@@ -322,6 +480,8 @@ func sync(actors: Array, bindings: Array = []) -> void:
 			view["body"] = view.body_node.present(art,
 				int(actor.get("animationEndMode", 0)) != StoryRuntime.AnimationEndMode.HOLD_LAST_FRAME,
 				_limit, preserve_phase)
+			view.body_node.set_speed(NATIVE_ANI_SPEED \
+				if int(art.get("action", 0)) in GATHER_ANI_ACTIONS else 1.0)
 			if art.is_empty():
 				_limit("NPC %d has no confirmed artwork binding." % id)
 		_sync_emotion(view)
@@ -397,10 +557,20 @@ func advance_hero_motion(distance: float) -> void:
 	view.body.frame = view.body_node.frame_index()
 
 
+## 让主角当前动作从第一帧重播一次（采集两遍用）。同一条 `present()` 请求会被去重，
+## 所以第二遍只能走 `actor_layers.replay()`。
+func restart_hero_action() -> bool:
+	var view: Dictionary = _actors.get(0, {})
+	if view.is_empty() or view.get("body", {}).is_empty():
+		return false
+	return bool(view.body_node.replay())
+
+
 func advance(delta: float, animate_bodies: bool = true, animate_hero: bool = true) -> void:
 	if not is_finite(delta) or delta < 0:
 		return
 	for view: Dictionary in _map_objects:
+		_apply_map_object_revert(view)
 		if animate_bodies:
 			view.body_node.advance(delta)
 			view.body.frame = view.body_node.frame_index()
@@ -419,6 +589,34 @@ func advance(delta: float, animate_bodies: bool = true, animate_hero: bool = tru
 				continue
 		view.emotion_node.advance(delta)
 		_sync_emotion(view)
+	_apply_occlusion_fade()
+
+
+## 原生 `Object_procDRAW` 的遮挡淡出：只处理第 0 组（`obj/obj_f_01`）且动画码 ≤14 的
+## 0 序树木，且必须绘制在主角之后（脚点更靠下）。档位每帧 ±1，alpha = (256−12×档位)/256。
+func _apply_occlusion_fade() -> void:
+	var hero_view: Dictionary = _actors.get(0, {})
+	if hero_view.is_empty() or hero_view.get("body", {}).is_empty():
+		return
+	var hero_rect: Rect2 = hero_view.group.get_global_transform() * hero_view.body["bounds"]
+	var hero_index: int = int(hero_view.group.get_index())
+	for view: Dictionary in _map_objects:
+		var body: Dictionary = view.get("body", {})
+		if bool(view.get("hidden", false)) or \
+				int(view.group.get_meta("draw_order_key", 0)) != 0 or \
+				str(view.get("path", "")) != TREE_OBJECT_PATH or \
+				int(view.get("resting_action", 0)) % 100 > OCCLUSION_FADE_ACTION_MAX or \
+				body.is_empty():
+			continue
+		var steps := int(view.get("occlusion_steps", 0))
+		var overlapping: bool = view.group.get_index() > hero_index and \
+			(view.group.get_global_transform() * body["bounds"]).intersects(hero_rect, true)
+		if overlapping:
+			steps = mini(steps + 1, OCCLUSION_FADE_MAX_STEPS)
+		else:
+			steps = maxi(steps - 1, 0)
+		view["occlusion_steps"] = steps
+		view.group.modulate.a = float(256 - OCCLUSION_FADE_ALPHA_STEP * steps) / 256.0
 
 
 func clear_emotions() -> void:
@@ -459,4 +657,3 @@ func snapshot() -> Array[Dictionary]:
 			"emotion_position": view["group"].position + view["emotion_node"].position,
 			"order": view["group"].get_index()})
 	return result
-

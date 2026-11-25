@@ -379,12 +379,15 @@ menu/status_portrait/status_portrait_effect.tscn + .webp
 field/map_actor/obj_f_01  obj_f_02  obj_f_03  obj_f_04  obj_f_07  obj_f_89  obj_f_99
 ```
 
-这些是**地图上的可交互物品**（宝箱、告示牌等），不是纯装饰：
+这些是**地图上的可交互物品**（宝箱、矿脉、树等），不是纯装饰：
 
-- 当前已用部分：`field/field_actors/field_actors.gd` 按
-  `GROUP_OBJECT_SELECTORS = [1, 2, 3, 4, 7, 99]` 取 `obj/obj_f_%02d` 作静态绘制。
-- 每个目录里的 `.tscn` 是**待实现的交互对象场景**，暂无人实例化，属于未完成功能，
-  不要当成死资源删除。
+- 绘制仍由 `game/field/runtime/field_actors/field_actors.gd` 按
+  `GROUP_OBJECT_SELECTORS = [1, 2, 3, 4, 7, 99]` 取 `obj/obj_f_%02d` 作静态绘制或 ANI 播放。
+- 交互分派与奖励见 [field-map-items.md](field-map-items.md)：物件外壳场景是
+  `field/runtime/map_object/map_object.tscn`（带树木抖动动画），逻辑在
+  `field/runtime/map_item_interaction/map_item_interaction.gd`。
+- 每个 `map_actor/obj_f_*/` 里的 `.tscn` 是 ANI 转换出的**整体参考场景**，暂无人实例化；
+  运行时用的是 `obj_f` 资源路径 + `actor_layers`，不要把这些 `.tscn` 当交互入口或删除。
 - `obj/obj_f_89` 是 `obj_f_02` / `obj_f_04` 共用的帧包。
 
 ## 字体导入参数（本地，不入库）
