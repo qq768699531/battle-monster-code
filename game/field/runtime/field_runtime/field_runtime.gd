@@ -246,8 +246,6 @@ var _mastery_stage := Story.MasteryStage.MASTERY
 ## 第 7 组 16「专家的印章」打开的流派页：不走剧情事件门，只写 `preferredMastery`。
 var _mastery_item_active := false
 var _save_view: Control
-var _panel: ColorRect
-var _label: Label
 var _motions: Dictionary = {}
 ## 进行中的采集：`{kind, tile, facing, action, from_action, play, hit}`。两遍英雄动作，
 ## 每遍第 6 帧让物件反应一次，第二遍命中帧才发道具（见 `_tick_map_harvest`）。
@@ -491,8 +489,6 @@ func _ready() -> void:
 	_save_view = get_node("Save")
 	_save_view.save_requested.connect(_save_page_requested)
 	_save_view.closed.connect(_close_save)
-	_panel = get_node("Boundary")
-	_label = get_node("Boundary/Message")
 
 
 func start_slot(store: RefCounted, slot: int, resources: Object, assets: Node) -> bool:
@@ -942,6 +938,7 @@ func _stop(detail: String) -> void:
 	boundary = detail
 	if story != null:
 		story.paused = true
+	MessageStack.say(detail)
 
 
 ## 分级地图特效播完 5 帧爬坡：放行原事件（原生这一步不占帧，见 `wiki\field\map-effects.md` 第 5 节）。
@@ -3503,12 +3500,11 @@ func press(key: int) -> void:
 
 ## 把模型状态同步到视图；只在真正需要时重建，不改动编辑器里的固定布局。
 func _refresh() -> void:
-	if _label == null or _chat_view == null:
+	if _chat_view == null:
 		return
 	# 头顶与小地图的任务图标都读 actor 上的 `quest_status`（原生 `Qst_icoSET` 在任务页确认、
 	# 事件推进、计数达标时刷新），所以每次刷新界面状态都重算一次。
 	_sync_quest_icons()
-	_panel.visible = not menu_open and not book_open and not save_open and not service_open() and not boundary.is_empty()
 	var style := _field_touch_style()
 	_touch_view.present(style, _touch_key)
 	_hero_summary.visible = style != 0
@@ -3525,17 +3521,14 @@ func _refresh() -> void:
 		not dialogue.is_empty()
 	if not boundary.is_empty():
 		_actors.set_dialogue_speaker(-1)
-		_label.text = boundary
 	elif not dialogue.is_empty():
 		var record: Dictionary = dialogue.records[dialogue_index]
 		_actors.set_dialogue_speaker(int(record.get("portrait_id", 999)))
 		_chat_view.present_record(record, _speaker_name(int(record.get("portrait_id", 999))),
 			dialogue_index)
-		_label.text = ""
 	else:
 		_actors.set_dialogue_speaker(-1)
 		_chat_view.clear_dialogue()
-		_label.text = ""
 
 
 ## 字幕结束（`Evt_scrFINAL`）后事件才继续下一条记录：自然放完与确定键两条路都先把视图置 `finished()`，

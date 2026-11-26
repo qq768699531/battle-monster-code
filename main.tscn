@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" path="res://game/prime/startup/background/background.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://dkkm4um34f8dk" path="res://game/prime/title/title_visual/title_visual.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://game/prime/startup/prime_view/prime_view.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://game/prime/startup/boundary/boundary.tscn" id="7"]
 [ext_resource type="Resource" path="res://game/field/runtime/event_scripts/event_scripts.tres" id="8"]
 
 [node name="Main" type="Node2D" unique_id=234776110]
@@ -19,6 +18,3 @@ event_scripts = ExtResource("8")
 visible = false
 z_index = 900
 
-z_index = 950
-
-[node name="Boundary" parent="." unique_id=628216388 instance=ExtResource("7")]

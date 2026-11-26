@@ -314,7 +314,7 @@ main/main/
   main.tscn   main.gd   main.webp
 ```
 
-原 `main/` 下的展示内容全部并入 `prime/`：`background`、`boundary`、`elogo`、
+原 `main/` 下的展示内容全部并入 `prime/`：`background`、`elogo`、
 `ensony`、`loading`、`platform-images`、`title`、`title_item`、`title_visual`、
 `ui_select`、`ui_touch`。标题闪光仍在 `prime/title_visual/`，材质用
 `menu/menu/native_menu_brightness.gdshader`。

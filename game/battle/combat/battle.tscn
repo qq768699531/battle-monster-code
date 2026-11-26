@@ -1,9 +1,8 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene load_steps=21 format=3]
 [ext_resource type="Texture2D" path="res://engine/ui/touch_button/touch_button.webp" id="Sheet_touch_ui_button"]
 
 [ext_resource type="Script" path="res://game/battle/presentation/battle_view/battle_view.gd" id="1"]
 [ext_resource type="PackedScene" path="res://game/battle/field/field.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://game/battle/presentation/message/message.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://game/battle/combat/actions/actions.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://game/field/runtime/touch_controls/touch_controls.tscn" id="touch"]
 [ext_resource type="PackedScene" path="res://engine/ui/touch_button/touch_button.tscn" id="button"]
@@ -47,7 +46,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Message:position")
+tracks/1/path = NodePath("Actions:position")
 tracks/1/interp = 0
 tracks/1/loop_wrap = false
 tracks/1/keys = {
@@ -59,22 +58,10 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Actions:position")
+tracks/2/path = NodePath("TouchControls:position")
 tracks/2/interp = 0
 tracks/2/loop_wrap = false
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Vector2(-3, 3), Vector2(3, 3), Vector2(-3, -3), Vector2(3, -3), Vector2(-3, 3), Vector2(3, 3), Vector2(0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TouchControls:position")
-tracks/3/interp = 0
-tracks/3/loop_wrap = false
-tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
@@ -94,9 +81,6 @@ offset_bottom = 240.0
 script = ExtResource("1")
 
 [node name="Field" parent="." instance=ExtResource("2")]
-
-[node name="Message" parent="." instance=ExtResource("3")]
-z_index = 2
 
 [node name="Actions" parent="." instance=ExtResource("4")]
 z_index = 3

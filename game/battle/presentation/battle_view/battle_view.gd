@@ -58,13 +58,10 @@ enum TouchStyle {
 	INFO = 0x3,
 }
 
-## 战斗提示的落点。原生只有两条文本通道：
-## - `STACK`：`Game_infoInit` 推进全局提示栈，`Game_infoDraw` 每条先铺半透明黑底再画字。战斗侧的
-##   调用点见 `Battle_Menu_mKeyPressed`、`Battle_Target_mKeyPressed`、`Battle_Capture_Action_mRun`、
-##   `Battle_Win_mRun`（饱食度）、`Battle_Character_init`（被动／开场）。
-## - `BOUNDARY`：本工程的边界面板（`battle_ui/message.tscn`），原生无对应浮层，只给 `_boundary()`
-##   那条「这一战不受支持」的出口用。
-enum NoteChannel { STACK, BOUNDARY }
+## 战斗提示只有一条文本通道：`Game_infoInit` 推进全局提示栈，`Game_infoDraw` 每条先铺半透明
+## 黑底再画字（见 `wiki\ui\message-stack.md`）。战斗侧的调用点见 `Battle_Menu_mKeyPressed`、
+## `Battle_Target_mKeyPressed`、`Battle_Capture_Action_mRun`、`Battle_Win_mRun`（饱食度）、
+## `Battle_Character_init`（被动／开场）；边界态也走这里，不再单独开浮层。
 ## 原生状态 28 DIE 的 Box2 页（`Battle_Die_mPaint`）：3「使用%s[%s]复活吗?」、
 ## 5「使用100元的情报使用费可以复活」、2／6「返回主菜单吗?」、4／8「全部复活了」。
 enum DefeatPage { ITEM, FEE, REVIVED, RETURN }
@@ -1563,8 +1560,7 @@ func _boundary(message: String) -> void:
 	_auxiliary.clear()
 	_clear_buttons()
 	var destination := "地图" if not _boundary_exits_to_title() else "标题"
-	_set_note("原战斗边界：%s\n返回%s不会结算或推进战斗。" % [message, destination],
-		NoteChannel.BOUNDARY)
+	_set_note("原战斗边界：%s\n返回%s不会结算或推进战斗。" % [message, destination])
 	_button(200, "返回" + destination, _boundary_exit)
 	_refresh_display()
 
@@ -1582,22 +1578,13 @@ func _boundary_exit() -> void:
 		_abandon()
 
 
-## 战斗里的文字提示按 `NoteChannel` 分派：
-## - `STACK`（默认）：原生 `Game_infoInit` 那一类战斗反馈——`Game_infoDraw` 给每条消息先铺
-##   半透明黑底（`box_alpha` 44／88／132／176／220）再画图标与文字，所以它属于全局提示栈，
-##   不属于战斗窗自己。战斗侧调用点：`Battle_Menu_mKeyPressed`（指令／逃跑）、
-##   `Battle_Target_mKeyPressed`（道具）、`Battle_Capture_Action_mRun`（捕获）、
-##   `Battle_Win_mRun`（饱食度）、`Battle_Character_init`（被动／开场）。
-## - `BOUNDARY`：边界态（`phase == "boundary"`，`_boundary()` 那条出口）留在 `$Message` 面板，
-##   原生没有对应浮层，必须看得见。
-## 逐次伤害（`Param_dmgNUMBER` 的场上数字）与加载占位两条通道都不走，见各自的调用点注释。
-func _set_note(text: String, channel := NoteChannel.STACK) -> void:
-	match channel:
-		NoteChannel.BOUNDARY:
-			$Message.present(text)
-		_:
-			# 空串由 `MessageStack.notify` 自己忽略（原生不会推空消息）。
-			MessageStack.say(text)
+## 战斗里的文字提示统一走原生全局提示栈（`Game_infoInit` / `Game_infoDraw`，
+## 见 `wiki\ui\message-stack.md`）：原生给每条消息先铺半透明黑底再画字，战斗窗不再自己
+## 持有一块边界浮层。逐次伤害（`Param_dmgNUMBER` 的场上数字）与加载占位两条通道都不走，
+## 见各自的调用点注释。
+func _set_note(text: String) -> void:
+	# 空串由 `MessageStack.notify` 自己忽略（原生不会推空消息）。
+	MessageStack.say(text)
 
 
 func _clear_buttons() -> void:

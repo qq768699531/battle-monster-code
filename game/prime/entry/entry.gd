@@ -3,6 +3,7 @@ extends Node2D
 ## 显示倍率只在这里设置；业务状态交给各 runtime 与模型脚本。
 
 const PrimeTitleRuntime = preload("res://game/prime/title/prime_title_runtime/prime_title_runtime.gd")
+const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 const PrimeSettingsStore = preload("res://game/prime/settings/prime_settings_store/prime_settings_store.gd")
 const LocalServiceClient = preload("res://game/field/network/local_service_client/local_service_client.gd")
 const LocalServiceProcess = preload("res://game/field/network/local_service_process/local_service_process.gd")
@@ -35,7 +36,6 @@ const DEBUG_STARTUP_PAGE_KEY := KEY_F9
 
 @onready var _title = $Title
 @onready var _background = $Background
-@onready var _overlay: ColorRect = $Boundary
 @onready var _prime_view: Node2D = $PrimeView
 ## 消息栈是 autoload（`Messages`）：全局唯一浮层，这里只取引用传给野外运行时。
 @onready var _messages: Control = get_node_or_null("/root/Messages") as Control
@@ -343,7 +343,6 @@ func _render(paint: Dictionary) -> void:
 			(paint.scene == PrimeTitleRuntime.TITLE and (bool(paint.menu_open) or int(paint.frame) > 14)):
 		_audio.play_music(self, 101, true)
 	_title.present(paint)
-	_overlay.visible = false
 	if paint.scene == PrimeTitleRuntime.SAVE_SELECT or (paint.scene == PrimeTitleRuntime.NETWORK and paint.get("network_slot_page", false) and not paint.get("network_menu_open", false) and not paint.get("network_detail", false)):
 		_slot_window_state = int(paint.get("window_state", 4))
 	_background.present(paint.scene, _captured_background, _slot_window_state)
@@ -863,4 +862,6 @@ func _render_menu(items: Array) -> void:
 func _show_boundary(message: String, fatal: bool) -> void:
 	if fatal:
 		_startup_error = message
-	_overlay.show_message(message)
+		push_error(message)
+	# 原生 `Game_infoInit`／`Game_infoDraw`：提示统一进全局消息栈，标题层不再单独开边界页。
+	MessageStack.say(message)
