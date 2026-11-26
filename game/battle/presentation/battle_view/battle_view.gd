@@ -162,6 +162,11 @@ var auto_mode := false
 ## 原生 `BattleData + 25`（`BattleCanvas_mKeyPressed:30-36`）：AUTO 开启提示
 ## （`Msg.Id.AUTO_BATTLE`）本场只推一次。
 var _auto_announced := false
+## AUTO／敌方 AI 的轮盘时序：原生 `Battle_Menu_mPaint` 的子状态 0 先把轮盘入场动画完整播完，
+## 末尾才调 `Battle_Menu_Auto`；`_auto_pending` 标记「等入场动画结束再选招」，
+## `_auto_choice` 暂存选出来的动作与目标。
+var _auto_pending := false
+var _auto_choice: Dictionary = {}
 var confirm_selected := 1
 var _flee_accept := false
 var _pending_command := ""
@@ -198,6 +203,7 @@ func _ready() -> void:
 	$Flee/Content/No.pressed.connect(_confirm_choice.bind(1))
 	$Flee.transition_finished.connect(_flee_transition_finished)
 	$Actions.command_finished.connect(_command_finished)
+	$Actions.intro_finished.connect(_wheel_intro_finished)
 	$Field.target_pressed.connect(_target_pressed)
 	$Field.target_accepted.connect(_target_accepted)
 	$Info.closed.connect(func():
@@ -238,6 +244,8 @@ func start(model: RefCounted, resources: RefCounted = null, assets: Node = null,
 	_pending_effect.clear()
 	_closed = false
 	_auto_announced = false
+	_auto_pending = false
+	_auto_choice = {}
 	# 原生 `Battle_Win_SetResult:373` 把 `BattleData + 24` 起 0x60 字节清零，
 	# 所以新一场从手操开始。
 	auto_mode = false
@@ -505,6 +513,8 @@ func _process(delta: float) -> void:
 
 func _next() -> void:
 	phase = "command"
+	_auto_pending = false
+	_auto_choice = {}
 	for index in range(battle.balls.size()):
 		if battle.balls[index].is_empty():
 			continue
@@ -540,8 +550,11 @@ func _next() -> void:
 			_set_note("战斗结束 · 确认结果")
 			_button(200, "确认结果", _finish)
 	elif not battle.get_manual() or auto_mode:
-		var choice: Dictionary = battle.auto_action()
-		_run(choice.action, int(choice.target))
+		# 原生 `Battle_Menu_mPaint` 子状态 0：轮盘先完整播入场（7 帧），末尾才 `Battle_Menu_Auto`。
+		# 所以 AUTO／敌方 AI 也先摆出轮盘，等入场动画结束后再选招，之后同样走
+		# 接受（1–5）／退出（6–10）动画与淡出。
+		_auto_pending = true
+		_command_buttons()
 	else:
 		phase = "command"
 		_command_buttons()
@@ -592,6 +605,10 @@ func _command_buttons() -> void:
 func _request_command(action: String) -> void:
 	if phase != "command":
 		return
+	# 原生 `Battle_Menu_mKeyPressed` 只在子状态 1（入场动画已播完）接受按键；AUTO／敌方 AI
+	# 的入场动画期间由 `_wheel_intro_finished` 选招，这里不再让手动输入插队。
+	if _auto_pending:
+		return
 	if action == "skill" and not Battle.skill_available(battle.balls[battle.actor]):
 		_choose(action)
 		return
@@ -599,6 +616,8 @@ func _request_command(action: String) -> void:
 		_unsupported("此事件战逃跑")
 		return
 	_pending_command = action
+	_auto_pending = false
+	_auto_choice = {}
 	phase = "command_exit"
 	$Actions.select_command(action)
 	_refresh_display()
@@ -610,12 +629,35 @@ func _command_finished() -> void:
 	var action := _pending_command
 	_pending_command = ""
 	phase = "command"
+	# AUTO／敌方 AI 的选招在入场结束时就已经定了目标（原生随后照常进 TARGET 并由 AUTO 确认），
+	# 这里直接把那份目标交给行动解析；轮盘的接受／退出／淡出已经播完。
+	if not _auto_choice.is_empty():
+		var choice := _auto_choice
+		_auto_choice = {}
+		_run(String(choice.action), int(choice.target))
+		return
 	if action == "item":
 		_open_items("item")
 	elif action == "flee":
 		_choose_flee()
 	else:
 		_choose(action)
+
+
+## 轮盘入场动画（`obj/b_icon2` 动作 0）播完：原生 `Battle_Menu_mPaint` 的子状态 0 在这一刻
+## 调 `Battle_Menu_Auto`，所以 AUTO／敌方 AI 与玩家看到的是同一套轮盘与退场动画。
+func _wheel_intro_finished() -> void:
+	if not _auto_pending or phase != "command" or _closed:
+		return
+	if battle == null or battle.result != null:
+		return
+	_auto_pending = false
+	_auto_choice = battle.auto_action()
+	var action := String(_auto_choice.action)
+	_pending_command = action
+	phase = "command_exit"
+	$Actions.select_command(action)
+	_refresh_display()
 
 
 func _choose(action: String) -> void:
@@ -692,6 +734,7 @@ func _touch_command(key: int) -> void:
 			else:
 				_refresh_display()
 		else:
+			_auto_pending = false
 			_refresh_display()
 	elif phase == "command":
 		if key == TouchKey.MON_INFO:
