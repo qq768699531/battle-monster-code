@@ -5,6 +5,9 @@ const Runtime = preload("res://game/prime/title/prime_title_runtime/prime_title_
 ## 子 ANI 的 AnimationPlayer 自带 autoplay，先停住，等 Scene 动画在指定时刻把它们叫起来。
 const ANI_PLAYERS := ["Logo/ElLogo/AnimationPlayer", "Logo/EnsOny/AnimationPlayer",
 	"TitleGroup/Loop/AnimationPlayer", "TitleGroup/Detail/AnimationPlayer"]
+## 原生 `Prime_Title_Draw` 的循环/细节从 `run_counter+5` 帧起画；菜单打开时直接落到稳定帧，
+## 避免动作 1 前 5 帧的暗帧（否则主菜单背景会先黑一瞬）。
+const TITLE_LOOP_SETTLE := 1.1
 var _title_sprites: Array[Sprite2D] = []
 var _menu_labels: Array[Label] = []
 var _menu_text: Array[String] = []
@@ -17,7 +20,10 @@ var _scene := -1
 var _menu_open := false
 var _playing := ""
 var _shown_frame := 0
+## 菜单打开过的压黑一旦触发就不再取消（标题页回退/重复进入仍保持 50% 半透明）。
+var _menu_dimmed := false
 @onready var _fade_overlay: ColorRect = $Fade
+@onready var _menu_dim: ColorRect = $MenuDim
 @onready var _player: AnimationPlayer = $Player
 @onready var _logo: Node2D = $Logo
 @onready var _title_group: Node2D = $TitleGroup
@@ -63,6 +69,8 @@ func present(paint: Dictionary) -> void:
 		reset()
 	_scene = scene
 	_menu_open = menu_open
+	if menu_open:
+		_menu_dimmed = true
 	if scene == Runtime.LOGO:
 		_logo.show()
 		if _playing != "logo":
@@ -78,8 +86,23 @@ func present(paint: Dictionary) -> void:
 		_player.play(animation)
 		_playing = animation
 		_shown_frame = int(paint.frame)
+		if menu_open:
+			_start_menu_title_loop()
 	_render_menu(paint.items)
 	_shown_frame = int(paint.frame)
+	# 半透明压黑：菜单一点开就是 50%，之后一直保持（不随菜单关闭/重进被取消）。
+	if _menu_dimmed:
+		_menu_dim.visible = true
+		_menu_dim.color = Color(0, 0, 0, 0.5)
+
+
+## 菜单打开：循环直接落到稳定帧（原生 `run_counter+5`），叠上动作 3 的眼部动画。
+func _start_menu_title_loop() -> void:
+	var loop_player: AnimationPlayer = _title_group.get_node("Loop/AnimationPlayer")
+	loop_player.play("action_001")
+	loop_player.seek(TITLE_LOOP_SETTLE, true)
+	var detail_player: AnimationPlayer = _title_group.get_node("Detail/AnimationPlayer")
+	detail_player.play("action_003")
 
 
 func release_capture() -> void:
