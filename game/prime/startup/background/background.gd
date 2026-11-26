@@ -6,16 +6,15 @@ const UI = preload("res://game/prime/ui/layout/layout.gd")
 var scene := -1
 var captured: Texture2D
 @onready var box: Control = $Box
-@onready var edge_shade: ColorRect = $EdgeShade
 
 func present(next_scene: int, texture: Texture2D, state: int) -> void:
 	scene = next_scene
 	captured = texture
 	$Fill.color = Color.WHITE if scene == Runtime.LOGO else Color.BLACK
 	$Capture.texture = captured
+	# 原生 `Prime_Title_Capture` 只把标题画面叠一层 50% 黑，不再做边缘渐隐；
+	# 抓取图本身就是整屏的标题画面，没有需要遮的矩形边。
 	$Capture.visible = scene >= Runtime.SAVE_SELECT and captured != null
-	# 压黑边只跟着抓取背景出现：LOGO 的白底和其它页不压。
-	edge_shade.visible = $Capture.visible
 	box.visible = scene == Runtime.SAVE_SELECT and state not in [0, -4]
 	if box.visible:
 		if box.phase != state:

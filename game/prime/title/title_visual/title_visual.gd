@@ -2,15 +2,9 @@ extends Node2D
 ## 标题画面：开机 LOGO、标题动画与白闪都在 Scene 的 AnimationPlayer 里，脚本只切状态与绑定数据。
 
 const Runtime = preload("res://game/prime/title/prime_title_runtime/prime_title_runtime.gd")
-## 标题入场动画的长度：菜单在此之前打开就直接进循环动作。
-const TITLE_SETTLED := 1.3
-## `obj/title.ani` 的动作号：0 是入场，1 是标题循环，2 是细节循环（动作 1／2 的语义未在
-## 反编译代码里单独出现，这里按播放器角色命名）。
-const TITLE_LOOP_ACTION := 1
-const TITLE_DETAIL_ACTION := 2
+## 子 ANI 的 AnimationPlayer 自带 autoplay，先停住，等 Scene 动画在指定时刻把它们叫起来。
 const ANI_PLAYERS := ["Logo/ElLogo/AnimationPlayer", "Logo/EnsOny/AnimationPlayer",
-	"TitleGroup/Idle/AnimationPlayer", "TitleGroup/Loop/AnimationPlayer",
-	"TitleGroup/Detail/AnimationPlayer"]
+	"TitleGroup/Loop/AnimationPlayer", "TitleGroup/Detail/AnimationPlayer"]
 var _title_sprites: Array[Sprite2D] = []
 var _menu_labels: Array[Label] = []
 var _menu_text: Array[String] = []
@@ -53,6 +47,7 @@ func reset() -> void:
 	for image in _title_sprites: image.hide()
 	for label in _menu_labels: label.hide()
 	for item in $Menu.get_children(): item.hide()
+	$MenuDim.hide()
 	_fade_overlay.visible = false
 
 
@@ -77,35 +72,14 @@ func present(paint: Dictionary) -> void:
 	_last_title_frame = int(paint.frame)
 	_last_title_animation = int(paint.title_animation_frame)
 	_title_group.show()
-	if _playing != "title" or int(paint.frame) < _shown_frame:
-		_player.play("title")
-		_playing = "title"
+	# 入场（菜单未开）和菜单打开后的循环／压黑都走 Scene 里的动画：`title` / `menu_open`。
+	var animation := "menu_open" if menu_open else "title"
+	if _playing != animation or (animation == "title" and int(paint.frame) < _shown_frame):
+		_player.play(animation)
+		_playing = animation
 		_shown_frame = int(paint.frame)
-	if menu_open:
-		_settle_title()
-		# 源码 `Prime_Title_mPaint@0x69E5C`：菜单打开期间每帧压一层黑罩，
-		# `JC_grpSetMODE(GRP_MODE_ALPHA, 16 * frame)`，上限 128（=50%）。
-		var overlay_alpha := mini(16 * int(paint.opening_frame), 128) / 256.0
-		_fade_overlay.color = Color(0, 0, 0, overlay_alpha)
-		_fade_overlay.visible = true
 	_render_menu(paint.items)
 	_shown_frame = int(paint.frame)
-
-
-## 菜单提前打开时标题 logo 不再播入场，直接进入循环动作并收掉白闪。
-func _settle_title() -> void:
-	if _playing == "menu":
-		return
-	_player.seek(TITLE_SETTLED, true)
-	_start_title_loop()
-	_playing = "menu"
-
-
-func _start_title_loop() -> void:
-	var loop_player := _title_group.get_node("Loop/AnimationPlayer") as AnimationPlayer
-	var detail_player := _title_group.get_node("Detail/AnimationPlayer") as AnimationPlayer
-	loop_player.play(AniAction.clip_name(loop_player, TITLE_LOOP_ACTION))
-	detail_player.play(AniAction.clip_name(detail_player, TITLE_DETAIL_ACTION))
 
 
 func release_capture() -> void:

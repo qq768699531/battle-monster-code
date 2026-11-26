@@ -1,18 +1,26 @@
-[gd_scene load_steps=13 format=3 uid="uid://dkkm4um34f8dk"]
-[ext_resource type="Texture2D" path="res://game/prime/title/title_visual/title_visual.webp" id="Sheet_common_ui_grade"]
+[gd_scene format=3 uid="uid://dkkm4um34f8dk"]
 
 [ext_resource type="Script" uid="uid://qgw48kxhkey5" path="res://game/prime/title/title_visual/title_visual.gd" id="1"]
 [ext_resource type="PackedScene" path="res://game/prime/title/title_item/title_item.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://game/prime/title/elogo/elogo.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://game/prime/title/ensony/ensony.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://game/prime/title/title.tscn" id="7"]
+[ext_resource type="Shader" uid="uid://dkw0hrluk4oe3" path="res://game/prime/title/title_visual/title_edge_fade.gdshader" id="EdgeShader"]
+[ext_resource type="Texture2D" uid="uid://bd28rk25fpase" path="res://game/prime/title/title_visual/title_visual.webp" id="Sheet_common_ui_grade"]
 
 [sub_resource type="AtlasTexture" id="Atlas_8"]
 atlas = ExtResource("Sheet_common_ui_grade")
 region = Rect2(0, 0, 79, 87)
+
 [sub_resource type="AtlasTexture" id="Atlas_9"]
 atlas = ExtResource("Sheet_common_ui_grade")
 region = Rect2(79, 0, 76, 87)
+
+[sub_resource type="ShaderMaterial" id="EdgeFadeMaterial"]
+shader = ExtResource("EdgeShader")
+shader_parameter/edge_width_x = 0.13
+shader_parameter/edge_width_y = 0.04
+
 [sub_resource type="Animation" id="Animation_logo"]
 resource_name = "logo"
 length = 7.45
@@ -94,6 +102,99 @@ tracks/5/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_menu"]
+resource_name = "menu_open"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fade:visible")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MenuDim:visible")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MenuDim:color")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TitleGroup/Loop:visible")
+tracks/3/interp = 0
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TitleGroup/Detail:visible")
+tracks/4/interp = 0
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TitleGroup/Loop/AnimationPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["action_001"],
+"method": &"play"
+}]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TitleGroup/Detail/AnimationPlayer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["action_002"],
+"method": &"play"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_title"]
 resource_name = "title"
 length = 1.3
@@ -101,19 +202,19 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TitleGroup/Idle:visible")
+tracks/0/path = NodePath("TitleGroup/Loop:visible")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, false]
+"values": [true]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TitleGroup/Loop:visible")
+tracks/1/path = NodePath("TitleGroup/Detail:visible")
 tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -125,46 +226,34 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("TitleGroup/Detail:visible")
+tracks/2/path = NodePath("Fade:visible")
 tracks/2/interp = 0
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Fade:visible")
-tracks/3/interp = 0
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.8, 1.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Fade:color")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Fade:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0.8, 1.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.0976563)]
 }
-tracks/5/type = "method"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("TitleGroup/Idle/AnimationPlayer")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TitleGroup/Loop/AnimationPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -172,13 +261,13 @@ tracks/5/keys = {
 "method": &"play"
 }]
 }
-tracks/6/type = "method"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("TitleGroup/Loop/AnimationPlayer")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TitleGroup/Loop/AnimationPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0.8),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -186,13 +275,13 @@ tracks/6/keys = {
 "method": &"play"
 }]
 }
-tracks/7/type = "method"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("TitleGroup/Detail/AnimationPlayer")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TitleGroup/Detail/AnimationPlayer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(0.8),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -204,11 +293,9 @@ tracks/7/keys = {
 [sub_resource type="AnimationLibrary" id="Library"]
 _data = {
 &"logo": SubResource("Animation_logo"),
+&"menu_open": SubResource("Animation_menu"),
 &"title": SubResource("Animation_title")
 }
-
-[sub_resource type="CanvasItemMaterial" id="AddBlend"]
-blend_mode = 1
 
 [node name="Title" type="Node2D" unique_id=776554764]
 script = ExtResource("1")
@@ -244,8 +331,9 @@ centered = false
 [node name="TitleGroup" type="Node2D" parent="." unique_id=831615175]
 visible = false
 
-[node name="Idle" parent="TitleGroup" unique_id=1698667678 instance=ExtResource("7")]
-z_index = 20
+[node name="Detail" parent="TitleGroup" unique_id=358203160 instance=ExtResource("7")]
+visible = false
+z_index = 21
 position = Vector2(124, 128)
 
 [node name="Loop" parent="TitleGroup" unique_id=1078743487 instance=ExtResource("7")]
@@ -253,13 +341,24 @@ visible = false
 z_index = 20
 position = Vector2(124, 128)
 
-[node name="Detail" parent="TitleGroup" unique_id=358203160 instance=ExtResource("7")]
-visible = false
-z_index = 21
-position = Vector2(124, 128)
+[node name="EdgeFade" type="ColorRect" parent="TitleGroup/Loop" unique_id=2037948659]
+material = SubResource("EdgeFadeMaterial")
+offset_left = -76.0
+offset_top = -216.0
+offset_right = 228.0
+offset_bottom = 109.0
+mouse_filter = 2
 
 [node name="Player" type="AnimationPlayer" parent="." unique_id=251512124]
 libraries/ = SubResource("Library")
+
+[node name="MenuDim" type="ColorRect" parent="." unique_id=828424131]
+visible = false
+z_index = 250
+offset_right = 400.0
+offset_bottom = 240.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
 
 [node name="Menu" type="Node2D" parent="." unique_id=184544102]
 
