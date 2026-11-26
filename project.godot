@@ -31,6 +31,10 @@ window/size/viewport_height=240
 window/size/resizable=false
 window/stretch/mode="canvas_items"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
 [gui]
 
 theme/custom="res://engine/ui/native_label/ui_theme.tres"
