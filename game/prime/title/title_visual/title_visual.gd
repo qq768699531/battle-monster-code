@@ -1,13 +1,15 @@
 extends Node2D
 ## 标题画面：开机 LOGO、标题动画与白闪都在 Scene 的 AnimationPlayer 里，脚本只切状态与绑定数据。
+## 标题侧按 title.ani 的动作拆成三个 Scene，每个 Scene 只放一个动作：`TitleGroup/Enter`（动作 0
+## 入场：版权 + 两块闪光）、`TitleGroup/Loop`（动作 1 立绘循环）、`TitleGroup/Detail`（动作 2 静态叠层）。
+## 子场景的动画由 Scene 的 Animation 资源接入：`logo` 用 animation 轨道驱动 ElLogo／EnsOny；
+## 标题的「入场→循环」用 `current_animation` 轨道接力——animation 轨道在父动画结束时会把子
+## 播放器一起停掉，循环接不上；而父动画一停，Godot 又把 `current_animation` 还原成该轨道的
+## 第一个键，所以 `menu_open` 也写一条 action_001，菜单收起、重新入场时循环不会掉回入场。
 
 const Runtime = preload("res://game/prime/title/prime_title_runtime/prime_title_runtime.gd")
-## 子 ANI 的 AnimationPlayer 自带 autoplay，先停住，等 Scene 动画在指定时刻把它们叫起来。
-const ANI_PLAYERS := ["Logo/ElLogo/AnimationPlayer", "Logo/EnsOny/AnimationPlayer",
-	"TitleGroup/Loop/AnimationPlayer", "TitleGroup/Detail/AnimationPlayer"]
 ## 原生 `Prime_Title_Draw` 的动作 1/2 从 `run_counter+5` 帧起画；标题入场（run_counter 0）
 ## 的动作 1 第一帧就是第 5 帧。动作 0 的末尾 0–4 帧是入场的过渡帧，循环从第 5 帧接上。
-const TITLE_LOOP_SETTLE := 0.25
 var _title_sprites: Array[Sprite2D] = []
 var _menu_labels: Array[Label] = []
 var _menu_text: Array[String] = []
@@ -32,13 +34,6 @@ func _ready() -> void:
 	for item in $Menu.get_children():
 		_title_sprites.append(item.get_node("Image"))
 		_menu_labels.append(item.get_node("Label"))
-	_stop_ani_players()
-
-
-## 子 ANI 的 AnimationPlayer 自带 autoplay，先停住，等 Scene 动画在指定时刻把它们叫起来。
-func _stop_ani_players() -> void:
-	for path: String in ANI_PLAYERS:
-		(get_node(path) as AnimationPlayer).stop()
 
 
 func reset() -> void:
@@ -47,7 +42,6 @@ func reset() -> void:
 	_playing = ""
 	_shown_frame = 0
 	_player.stop()
-	_stop_ani_players()
 	_logo.hide()
 	_title_group.hide()
 	for image in _title_sprites: image.hide()
@@ -92,16 +86,6 @@ func present(paint: Dictionary) -> void:
 	if _menu_dimmed:
 		_menu_dim.visible = true
 		_menu_dim.color = Color(0, 0, 0, 0.5)
-
-
-## 入场动作 0 播完、闪光结束后（或菜单打开时）进入动作 1/2：动作 1 从稳定帧开始，
-## 动作 2（logo）从第 0 帧开始；两者都是原生 `Prime_Title_Draw` 的那两条动作。
-func _enter_title_loop() -> void:
-	var loop_player: AnimationPlayer = _title_group.get_node("Loop/AnimationPlayer")
-	loop_player.play("action_001")
-	loop_player.seek(TITLE_LOOP_SETTLE, true)
-	var detail_player: AnimationPlayer = _title_group.get_node("Detail/AnimationPlayer")
-	detail_player.play("action_002")
 
 
 func release_capture() -> void:

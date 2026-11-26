@@ -4,7 +4,9 @@
 [ext_resource type="PackedScene" path="res://game/prime/title/title_item/title_item.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://game/prime/title/elogo/elogo.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://game/prime/title/ensony/ensony.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://game/prime/title/title.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://game/prime/title/title_detail/title_detail.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://game/prime/title/title_enter/title_enter.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://game/prime/title/title_loop/title_loop.tscn" id="10"]
 [ext_resource type="Shader" path="res://game/prime/title/title_visual/title_edge_fade.gdshader" id="EdgeShader"]
 [ext_resource type="Texture2D" path="res://game/prime/title/title_visual/title_visual.webp" id="Sheet_common_ui_grade"]
 
@@ -19,6 +21,57 @@ region = Rect2(79, 0, 76, 87)
 [sub_resource type="ShaderMaterial" id="EdgeFadeMaterial"]
 shader = ExtResource("EdgeShader")
 shader_parameter/contrast = 1.1
+
+[sub_resource type="Animation" id="Animation_ublox"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Logo/ElLogo:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Logo/EnsOny:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Logo/Grade:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Logo/GradeDetail:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_logo"]
 resource_name = "logo"
@@ -55,10 +108,10 @@ tracks/2/path = NodePath("Logo/Grade:visible")
 tracks/2/interp = 0
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 4.4),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 4.4, 7.45),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [false, true]
+"values": [false, true, false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -67,38 +120,30 @@ tracks/3/path = NodePath("Logo/GradeDetail:visible")
 tracks/3/interp = 0
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 4.4),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 4.4, 7.45),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [false, true]
+"values": [false, true, false]
 }
-tracks/4/type = "method"
+tracks/4/type = "animation"
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/path = NodePath("Logo/ElLogo/AnimationPlayer")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": ["action_000"],
-"method": &"play"
-}]
+"clips": PackedStringArray("action_000", "RESET"),
+"times": PackedFloat32Array(0, 1.35)
 }
-tracks/5/type = "method"
+tracks/5/type = "animation"
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/path = NodePath("Logo/EnsOny/AnimationPlayer")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(1.35),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": ["action_000"],
-"method": &"play"
-}]
+"clips": PackedStringArray("action_000", "RESET"),
+"times": PackedFloat32Array(1.35, 4.4)
 }
 
 [sub_resource type="Animation" id="Animation_menu"]
@@ -144,19 +189,19 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("TitleGroup/Loop:visible")
+tracks/3/path = NodePath("TitleGroup/Enter:visible")
 tracks/3/interp = 0
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("TitleGroup/Detail:visible")
+tracks/4/path = NodePath("TitleGroup/Loop:visible")
 tracks/4/interp = 0
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -165,19 +210,29 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
-tracks/5/type = "method"
+tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath(".")
-tracks/5/interp = 1
+tracks/5/path = NodePath("TitleGroup/Detail:visible")
+tracks/5/interp = 0
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"_enter_title_loop"
-}]
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TitleGroup/Loop/AnimationPlayer:current_animation")
+tracks/6/interp = 0
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"action_001"]
 }
 
 [sub_resource type="Animation" id="Animation_title"]
@@ -187,23 +242,23 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TitleGroup/Loop:visible")
+tracks/0/path = NodePath("TitleGroup/Enter:visible")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true]
+"values": [true, false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TitleGroup/Detail:visible")
+tracks/1/path = NodePath("TitleGroup/Loop:visible")
 tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.3),
+"times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -232,37 +287,46 @@ tracks/3/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.0976563)]
 }
-tracks/4/type = "method"
+tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("TitleGroup/Loop/AnimationPlayer")
-tracks/4/interp = 1
+tracks/4/path = NodePath("TitleGroup/Detail:visible")
+tracks/4/interp = 0
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": ["action_000"],
-"method": &"play"
-}]
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
-tracks/5/type = "method"
+tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath(".")
-tracks/5/interp = 1
+tracks/5/path = NodePath("TitleGroup/Enter/AnimationPlayer:current_animation")
+tracks/5/interp = 0
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(1.3),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"_enter_title_loop"
-}]
+"update": 1,
+"values": [&"action_000"]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TitleGroup/Loop/AnimationPlayer:current_animation")
+tracks/6/interp = 0
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"action_001"]
 }
 
 [sub_resource type="AnimationLibrary" id="Library"]
 _data = {
+&"RESET": SubResource("Animation_ublox"),
 &"logo": SubResource("Animation_logo"),
 &"menu_open": SubResource("Animation_menu"),
 &"title": SubResource("Animation_title")
@@ -278,10 +342,25 @@ visible = false
 z_index = 20
 position = Vector2(200, 120)
 
+[node name="Layer000" parent="Logo/ElLogo" index="1"]
+position = Vector2(124, -11)
+rotation = 3.1415927
+
+[node name="Layer001" parent="Logo/ElLogo" index="3"]
+position = Vector2(-28, 116)
+rotation = 3.1415927
+
+[node name="Layer002" parent="Logo/ElLogo" index="5"]
+position = Vector2(-49, 136)
+rotation = 3.1415927
+
 [node name="EnsOny" parent="Logo" unique_id=1234227600 instance=ExtResource("6")]
 visible = false
 z_index = 20
 position = Vector2(200, 120)
+
+[node name="Layer000" parent="Logo/EnsOny" index="1"]
+position = Vector2(-12, -112)
 
 [node name="Grade" type="Sprite2D" parent="Logo" unique_id=1580000233]
 visible = false
@@ -300,14 +379,19 @@ texture = SubResource("Atlas_9")
 centered = false
 
 [node name="TitleGroup" type="Node2D" parent="." unique_id=831615175]
+visible = false
 
-[node name="Detail" parent="TitleGroup" unique_id=358203160 instance=ExtResource("7")]
-z_index = 21
-position = Vector2(0, 0)
-
-[node name="Loop" parent="TitleGroup" unique_id=1078743487 instance=ExtResource("7")]
+[node name="Enter" parent="TitleGroup" unique_id=610750201 instance=ExtResource("9")]
+visible = false
 z_index = 20
-position = Vector2(0, 0)
+
+[node name="Loop" parent="TitleGroup" unique_id=1078743487 instance=ExtResource("10")]
+visible = false
+z_index = 20
+
+[node name="Detail" parent="TitleGroup" unique_id=358203160 instance=ExtResource("8")]
+visible = false
+z_index = 21
 
 [node name="EdgeFade" type="ColorRect" parent="TitleGroup/Loop" unique_id=2037948659]
 material = SubResource("EdgeFadeMaterial")
@@ -319,14 +403,14 @@ mouse_filter = 2
 
 [node name="Player" type="AnimationPlayer" parent="." unique_id=251512124]
 libraries/ = SubResource("Library")
+autoplay = &"logo"
 
 [node name="MenuDim" type="ColorRect" parent="." unique_id=828424131]
-visible = false
 z_index = 250
 offset_right = 400.0
 offset_bottom = 240.0
 mouse_filter = 2
-color = Color(0, 0, 0, 0)
+color = Color(0, 0, 0, 0.5)
 
 [node name="Menu" type="Node2D" parent="." unique_id=184544102]
 
@@ -370,3 +454,8 @@ z_index = 250
 offset_right = 400.0
 offset_bottom = 240.0
 mouse_filter = 2
+color = Color(1, 1, 1, 0.09765631)
+
+[editable path="Logo/ElLogo"]
+[editable path="Logo/EnsOny"]
+[editable path="TitleGroup/Loop"]

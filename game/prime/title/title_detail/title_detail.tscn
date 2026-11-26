@@ -1,0 +1,51 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://game/prime/title/title_detail/title_detail.webp" id="Sheet_loading"]
+
+[sub_resource type="AtlasTexture" id="Tex_Frame003"]
+atlas = ExtResource("Sheet_loading")
+region = Rect2(0, 0, 100, 34)
+
+[sub_resource type="AtlasTexture" id="Tex_Frame004"]
+atlas = ExtResource("Sheet_loading")
+region = Rect2(154, 0, 154, 36)
+
+[sub_resource type="AtlasTexture" id="Tex_Frame005"]
+atlas = ExtResource("Sheet_loading")
+region = Rect2(308, 0, 30, 11)
+
+[sub_resource type="AtlasTexture" id="Tex_Frame006"]
+atlas = ExtResource("Sheet_loading")
+region = Rect2(0, 36, 35, 13)
+
+[sub_resource type="AtlasTexture" id="Tex_Frame007"]
+atlas = ExtResource("Sheet_loading")
+region = Rect2(154, 36, 37, 13)
+
+[node name="title_detail" type="Node2D"]
+texture_filter = 1
+
+[node name="Frame003" type="Sprite2D" parent="."]
+position = Vector2(149, 126)
+texture = SubResource("Tex_Frame003")
+centered = false
+
+[node name="Frame004" type="Sprite2D" parent="."]
+position = Vector2(124, 160)
+texture = SubResource("Tex_Frame004")
+centered = false
+
+[node name="Frame005" type="Sprite2D" parent="."]
+position = Vector2(120, 196)
+texture = SubResource("Tex_Frame005")
+centered = false
+
+[node name="Frame006" type="Sprite2D" parent="."]
+position = Vector2(247, 196)
+texture = SubResource("Tex_Frame006")
+centered = false
+
+[node name="Frame007" type="Sprite2D" parent="."]
+position = Vector2(181, 193)
+texture = SubResource("Tex_Frame007")
+centered = false

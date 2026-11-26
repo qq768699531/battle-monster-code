@@ -1,46 +1,38 @@
 [gd_scene format=3]
-[ext_resource type="Texture2D" path="res://game/prime/startup/loading/loading.webp" id="Sheet_obj_loading"]
 
-[ext_resource type="Shader" path="res://engine/ui/touch_button/native_touch_blend.gdshader" id="BlendShader"]
+[ext_resource type="Texture2D" path="res://game/prime/startup/loading/loading.webp" id="Sheet_loading"]
 
-[sub_resource type="AtlasTexture" id="Atlas_Texture0"]
-atlas = ExtResource("Sheet_obj_loading")
+[sub_resource type="AtlasTexture" id="Tex_Frame000"]
+atlas = ExtResource("Sheet_loading")
 region = Rect2(0, 0, 37, 7)
-[sub_resource type="AtlasTexture" id="Atlas_Texture1"]
-atlas = ExtResource("Sheet_obj_loading")
+
+[sub_resource type="AtlasTexture" id="Tex_Frame001"]
+atlas = ExtResource("Sheet_loading")
 region = Rect2(154, 0, 2, 2)
-[sub_resource type="AtlasTexture" id="Atlas_Texture2"]
-atlas = ExtResource("Sheet_obj_loading")
+
+[sub_resource type="AtlasTexture" id="Tex_Frame002"]
+atlas = ExtResource("Sheet_loading")
 region = Rect2(308, 0, 1, 1)
-[sub_resource type="AtlasTexture" id="Atlas_Texture3"]
-atlas = ExtResource("Sheet_obj_loading")
+
+[sub_resource type="AtlasTexture" id="Tex_Frame003"]
+atlas = ExtResource("Sheet_loading")
 region = Rect2(0, 36, 100, 34)
-[sub_resource type="AtlasTexture" id="Atlas_Texture4"]
-atlas = ExtResource("Sheet_obj_loading")
+
+[sub_resource type="AtlasTexture" id="Tex_Frame004"]
+atlas = ExtResource("Sheet_loading")
 region = Rect2(154, 36, 154, 36)
-[sub_resource type="AtlasTexture" id="Atlas_Texture5"]
-atlas = ExtResource("Sheet_obj_loading")
+
+[sub_resource type="AtlasTexture" id="Tex_Frame005"]
+atlas = ExtResource("Sheet_loading")
 region = Rect2(308, 36, 30, 11)
-[sub_resource type="AtlasTexture" id="Atlas_Texture6"]
-atlas = ExtResource("Sheet_obj_loading")
+
+[sub_resource type="AtlasTexture" id="Tex_Frame006"]
+atlas = ExtResource("Sheet_loading")
 region = Rect2(0, 72, 35, 13)
-[sub_resource type="AtlasTexture" id="Atlas_Texture7"]
-atlas = ExtResource("Sheet_obj_loading")
+
+[sub_resource type="AtlasTexture" id="Tex_Frame007"]
+atlas = ExtResource("Sheet_loading")
 region = Rect2(154, 72, 37, 13)
-[sub_resource type="ShaderMaterial" id="Blend200"]
-shader = ExtResource("BlendShader")
-shader_parameter/native_mode = 14
-shader_parameter/native_alpha = 3
-
-[sub_resource type="ShaderMaterial" id="Blend120"]
-shader = ExtResource("BlendShader")
-shader_parameter/native_mode = 14
-shader_parameter/native_alpha = 8
-
-[sub_resource type="ShaderMaterial" id="Blend56"]
-shader = ExtResource("BlendShader")
-shader_parameter/native_mode = 14
-shader_parameter/native_alpha = 12
 
 [sub_resource type="Animation" id="RESET"]
 resource_local_to_scene = true
@@ -48,128 +40,168 @@ resource_name = "RESET"
 length = 0.05
 step = 0.05
 loop_mode = 0
-metadata/frame_count = 1
-metadata/bounds = Rect2(0, 0, 0, 0)
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:metadata/frame_motion")
-tracks/0/interp = 0
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Frame000:transform")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0, 0)]
+"values": [Transform2D(1, 0, 0, 1, -22, -3)]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Layer000:texture")
-tracks/1/interp = 0
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Frame000:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [false]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Layer000:transform")
-tracks/2/interp = 0
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Frame000:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Layer000:visible")
-tracks/3/interp = 0
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Frame001:transform")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [Transform2D(1, 0, 0, 1, 18, 2)]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Layer000:material")
-tracks/4/interp = 0
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Frame001:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [false]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Buffer000:copy_mode")
-tracks/5/interp = 0
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Frame001:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Layer001:texture")
-tracks/6/interp = 0
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Frame002A:transform")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 23, 3)]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Layer001:transform")
-tracks/7/interp = 0
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Frame002A:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("Layer001:visible")
-tracks/8/interp = 0
-tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Frame002A:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(1, 1, 1, 1)]
+}
 tracks/9/type = "value"
-tracks/9/path = NodePath("Layer001:material")
-tracks/9/interp = 0
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Frame002B:transform")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 27, 3)]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Buffer001:copy_mode")
-tracks/10/interp = 0
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Frame002B:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [false]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("Layer002:texture")
-tracks/11/interp = 0
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Frame002B:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("Layer002:transform")
-tracks/12/interp = 0
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Frame003:transform")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [Transform2D(1, 0, 0, 1, -52, -45)]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("Layer002:visible")
-tracks/13/interp = 0
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Frame003:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
@@ -177,1084 +209,491 @@ tracks/13/keys = {
 "values": [false]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("Layer002:material")
-tracks/14/interp = 0
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Frame003:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("Buffer002:copy_mode")
-tracks/15/interp = 0
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Frame004:transform")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [Transform2D(1, 0, 0, 1, -77, -11)]
 }
 tracks/16/type = "value"
-tracks/16/path = NodePath("Layer003:texture")
-tracks/16/interp = 0
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Frame004:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
 tracks/16/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [false]
 }
 tracks/17/type = "value"
-tracks/17/path = NodePath("Layer003:transform")
-tracks/17/interp = 0
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Frame004:modulate")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
 tracks/17/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/18/type = "value"
-tracks/18/path = NodePath("Layer003:visible")
-tracks/18/interp = 0
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Frame005:transform")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
 tracks/18/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [Transform2D(1, 0, 0, 1, -81, 25)]
 }
 tracks/19/type = "value"
-tracks/19/path = NodePath("Layer003:material")
-tracks/19/interp = 0
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Frame005:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
 tracks/19/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [false]
 }
 tracks/20/type = "value"
-tracks/20/path = NodePath("Buffer003:copy_mode")
-tracks/20/interp = 0
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Frame005:modulate")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
 tracks/20/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/21/type = "value"
-tracks/21/path = NodePath("Layer004:texture")
-tracks/21/interp = 0
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Frame006:transform")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
 tracks/21/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 46, 25)]
 }
 tracks/22/type = "value"
-tracks/22/path = NodePath("Layer004:transform")
-tracks/22/interp = 0
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Frame006:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
 tracks/22/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [false]
 }
 tracks/23/type = "value"
-tracks/23/path = NodePath("Layer004:visible")
-tracks/23/interp = 0
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Frame006:modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
 tracks/23/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/24/type = "value"
-tracks/24/path = NodePath("Layer004:material")
-tracks/24/interp = 0
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Frame007:transform")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
 tracks/24/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, -18, 19)]
 }
 tracks/25/type = "value"
-tracks/25/path = NodePath("Buffer004:copy_mode")
-tracks/25/interp = 0
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Frame007:visible")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
 tracks/25/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="action_000"]
-resource_local_to_scene = true
-resource_name = "action_000"
-length = 0.05
-step = 0.05
-loop_mode = 0
-metadata/frame_count = 0
-metadata/bounds = Rect2(0, 0, 0, 0)
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:metadata/frame_motion")
-tracks/0/interp = 0
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Layer000:texture")
-tracks/1/interp = 0
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Layer000:transform")
-tracks/2/interp = 0
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Layer000:visible")
-tracks/3/interp = 0
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
 "values": [false]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Layer000:material")
-tracks/4/interp = 0
-tracks/4/keys = {
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Frame007:modulate")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Buffer000:copy_mode")
-tracks/5/interp = 0
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Layer001:texture")
-tracks/6/interp = 0
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Layer001:transform")
-tracks/7/interp = 0
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("Layer001:visible")
-tracks/8/interp = 0
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/9/type = "value"
-tracks/9/path = NodePath("Layer001:material")
-tracks/9/interp = 0
-tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/10/type = "value"
-tracks/10/path = NodePath("Buffer001:copy_mode")
-tracks/10/interp = 0
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/11/type = "value"
-tracks/11/path = NodePath("Layer002:texture")
-tracks/11/interp = 0
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/12/type = "value"
-tracks/12/path = NodePath("Layer002:transform")
-tracks/12/interp = 0
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/13/type = "value"
-tracks/13/path = NodePath("Layer002:visible")
-tracks/13/interp = 0
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/14/type = "value"
-tracks/14/path = NodePath("Layer002:material")
-tracks/14/interp = 0
-tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/15/type = "value"
-tracks/15/path = NodePath("Buffer002:copy_mode")
-tracks/15/interp = 0
-tracks/15/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/16/type = "value"
-tracks/16/path = NodePath("Layer003:texture")
-tracks/16/interp = 0
-tracks/16/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/17/type = "value"
-tracks/17/path = NodePath("Layer003:transform")
-tracks/17/interp = 0
-tracks/17/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/18/type = "value"
-tracks/18/path = NodePath("Layer003:visible")
-tracks/18/interp = 0
-tracks/18/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/19/type = "value"
-tracks/19/path = NodePath("Layer003:material")
-tracks/19/interp = 0
-tracks/19/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/20/type = "value"
-tracks/20/path = NodePath("Buffer003:copy_mode")
-tracks/20/interp = 0
-tracks/20/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/21/type = "value"
-tracks/21/path = NodePath("Layer004:texture")
-tracks/21/interp = 0
-tracks/21/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/22/type = "value"
-tracks/22/path = NodePath("Layer004:transform")
-tracks/22/interp = 0
-tracks/22/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/23/type = "value"
-tracks/23/path = NodePath("Layer004:visible")
-tracks/23/interp = 0
-tracks/23/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/24/type = "value"
-tracks/24/path = NodePath("Layer004:material")
-tracks/24/interp = 0
-tracks/24/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/25/type = "value"
-tracks/25/path = NodePath("Buffer004:copy_mode")
-tracks/25/interp = 0
-tracks/25/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="action_001"]
-resource_local_to_scene = true
-resource_name = "action_001"
-length = 0.05
-step = 0.05
-loop_mode = 0
-metadata/frame_count = 0
-metadata/bounds = Rect2(0, 0, 0, 0)
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:metadata/frame_motion")
-tracks/0/interp = 0
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Layer000:texture")
-tracks/1/interp = 0
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Layer000:transform")
-tracks/2/interp = 0
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Layer000:visible")
-tracks/3/interp = 0
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Layer000:material")
-tracks/4/interp = 0
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Buffer000:copy_mode")
-tracks/5/interp = 0
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Layer001:texture")
-tracks/6/interp = 0
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Layer001:transform")
-tracks/7/interp = 0
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("Layer001:visible")
-tracks/8/interp = 0
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/9/type = "value"
-tracks/9/path = NodePath("Layer001:material")
-tracks/9/interp = 0
-tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/10/type = "value"
-tracks/10/path = NodePath("Buffer001:copy_mode")
-tracks/10/interp = 0
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/11/type = "value"
-tracks/11/path = NodePath("Layer002:texture")
-tracks/11/interp = 0
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/12/type = "value"
-tracks/12/path = NodePath("Layer002:transform")
-tracks/12/interp = 0
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/13/type = "value"
-tracks/13/path = NodePath("Layer002:visible")
-tracks/13/interp = 0
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/14/type = "value"
-tracks/14/path = NodePath("Layer002:material")
-tracks/14/interp = 0
-tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/15/type = "value"
-tracks/15/path = NodePath("Buffer002:copy_mode")
-tracks/15/interp = 0
-tracks/15/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/16/type = "value"
-tracks/16/path = NodePath("Layer003:texture")
-tracks/16/interp = 0
-tracks/16/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/17/type = "value"
-tracks/17/path = NodePath("Layer003:transform")
-tracks/17/interp = 0
-tracks/17/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/18/type = "value"
-tracks/18/path = NodePath("Layer003:visible")
-tracks/18/interp = 0
-tracks/18/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/19/type = "value"
-tracks/19/path = NodePath("Layer003:material")
-tracks/19/interp = 0
-tracks/19/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/20/type = "value"
-tracks/20/path = NodePath("Buffer003:copy_mode")
-tracks/20/interp = 0
-tracks/20/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/21/type = "value"
-tracks/21/path = NodePath("Layer004:texture")
-tracks/21/interp = 0
-tracks/21/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/22/type = "value"
-tracks/22/path = NodePath("Layer004:transform")
-tracks/22/interp = 0
-tracks/22/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/23/type = "value"
-tracks/23/path = NodePath("Layer004:visible")
-tracks/23/interp = 0
-tracks/23/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/24/type = "value"
-tracks/24/path = NodePath("Layer004:material")
-tracks/24/interp = 0
-tracks/24/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/25/type = "value"
-tracks/25/path = NodePath("Buffer004:copy_mode")
-tracks/25/interp = 0
-tracks/25/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="action_002"]
-resource_local_to_scene = true
-resource_name = "action_002"
-length = 0.05
-step = 0.05
-loop_mode = 0
-metadata/frame_count = 0
-metadata/bounds = Rect2(0, 0, 0, 0)
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:metadata/frame_motion")
-tracks/0/interp = 0
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Layer000:texture")
-tracks/1/interp = 0
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Layer000:transform")
-tracks/2/interp = 0
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Layer000:visible")
-tracks/3/interp = 0
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("Layer000:material")
-tracks/4/interp = 0
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Buffer000:copy_mode")
-tracks/5/interp = 0
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Layer001:texture")
-tracks/6/interp = 0
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Layer001:transform")
-tracks/7/interp = 0
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("Layer001:visible")
-tracks/8/interp = 0
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/9/type = "value"
-tracks/9/path = NodePath("Layer001:material")
-tracks/9/interp = 0
-tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/10/type = "value"
-tracks/10/path = NodePath("Buffer001:copy_mode")
-tracks/10/interp = 0
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/11/type = "value"
-tracks/11/path = NodePath("Layer002:texture")
-tracks/11/interp = 0
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/12/type = "value"
-tracks/12/path = NodePath("Layer002:transform")
-tracks/12/interp = 0
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/13/type = "value"
-tracks/13/path = NodePath("Layer002:visible")
-tracks/13/interp = 0
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/14/type = "value"
-tracks/14/path = NodePath("Layer002:material")
-tracks/14/interp = 0
-tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/15/type = "value"
-tracks/15/path = NodePath("Buffer002:copy_mode")
-tracks/15/interp = 0
-tracks/15/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/16/type = "value"
-tracks/16/path = NodePath("Layer003:texture")
-tracks/16/interp = 0
-tracks/16/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/17/type = "value"
-tracks/17/path = NodePath("Layer003:transform")
-tracks/17/interp = 0
-tracks/17/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/18/type = "value"
-tracks/18/path = NodePath("Layer003:visible")
-tracks/18/interp = 0
-tracks/18/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/19/type = "value"
-tracks/19/path = NodePath("Layer003:material")
-tracks/19/interp = 0
-tracks/19/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/20/type = "value"
-tracks/20/path = NodePath("Buffer003:copy_mode")
-tracks/20/interp = 0
-tracks/20/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/21/type = "value"
-tracks/21/path = NodePath("Layer004:texture")
-tracks/21/interp = 0
-tracks/21/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/22/type = "value"
-tracks/22/path = NodePath("Layer004:transform")
-tracks/22/interp = 0
-tracks/22/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
-}
-tracks/23/type = "value"
-tracks/23/path = NodePath("Layer004:visible")
-tracks/23/interp = 0
-tracks/23/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/24/type = "value"
-tracks/24/path = NodePath("Layer004:material")
-tracks/24/interp = 0
-tracks/24/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-tracks/25/type = "value"
-tracks/25/path = NodePath("Buffer004:copy_mode")
-tracks/25/interp = 0
-tracks/25/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="action_003"]
 resource_local_to_scene = true
 resource_name = "action_003"
-length = 0.05
+length = 0.45
 step = 0.05
 loop_mode = 0
-metadata/frame_count = 0
-metadata/bounds = Rect2(0, 0, 0, 0)
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:metadata/frame_motion")
-tracks/0/interp = 0
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Frame000:transform")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(0, 0)]
+"values": [Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3)]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Layer000:texture")
-tracks/1/interp = 0
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Frame000:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [false, false, false, false, false, false, false, false, false]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Layer000:transform")
-tracks/2/interp = 0
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Frame000:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Layer000:visible")
-tracks/3/interp = 0
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Frame001:transform")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false]
+"values": [Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2)]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Layer000:material")
-tracks/4/interp = 0
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Frame001:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [false, false, false, false, false, false, false, false, false]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Buffer000:copy_mode")
-tracks/5/interp = 0
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Frame001:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Layer001:texture")
-tracks/6/interp = 0
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Frame002A:transform")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3)]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Layer001:transform")
-tracks/7/interp = 0
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Frame002A:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [false, false, false, false, false, false, false, false, false]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Layer001:visible")
-tracks/8/interp = 0
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Frame002A:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Layer001:material")
-tracks/9/interp = 0
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Frame002B:transform")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3)]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Buffer001:copy_mode")
-tracks/10/interp = 0
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Frame002B:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [false, false, false, false, false, false, false, false, false]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("Layer002:texture")
-tracks/11/interp = 0
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Frame002B:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("Layer002:transform")
-tracks/12/interp = 0
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Frame003:transform")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [Transform2D(1, 0, 0, 1, 25, 1), Transform2D(1, 0, 0, 1, 25, 1), Transform2D(1, 0, 0, 1, 25, -2), Transform2D(1, 0, 0, 1, 25, -23), Transform2D(1, 0, 0, 1, 25, -132), Transform2D(1, 0, 0, 1, 25, -186), Transform2D(1, 0, 0, 1, 25, -166), Transform2D(1, 0, 0, 1, 25, -175), Transform2D(1, 0, 0, 1, 25, -173)]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("Layer002:visible")
-tracks/13/interp = 0
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Frame003:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false]
+"values": [true, true, true, true, true, true, true, true, true]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("Layer002:material")
-tracks/14/interp = 0
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Frame003:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("Buffer002:copy_mode")
-tracks/15/interp = 0
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Frame004:transform")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [Transform2D(1, 0, 0, 1, 0, 33), Transform2D(1, 0, 0, 1, 0, 33), Transform2D(1, 0, 0, 1, 0, 32), Transform2D(1, 0, 0, 1, 0, 32), Transform2D(1, 0, 0, 1, 0, 32), Transform2D(1, 0, 0, 1, 0, 32), Transform2D(1, 0, 0, 1, 0, 32), Transform2D(1, 0, 0, 1, 0, 32), Transform2D(1, 0, 0, 1, 0, 32)]
 }
 tracks/16/type = "value"
-tracks/16/path = NodePath("Layer003:texture")
-tracks/16/interp = 0
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Frame004:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [true, true, true, true, true, true, true, true, true]
 }
 tracks/17/type = "value"
-tracks/17/path = NodePath("Layer003:transform")
-tracks/17/interp = 0
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Frame004:modulate")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/18/type = "value"
-tracks/18/path = NodePath("Layer003:visible")
-tracks/18/interp = 0
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Frame005:transform")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false]
+"values": [Transform2D(1, 0, 0, 1, -4, 69), Transform2D(1, 0, 0, 1, -4, 69), Transform2D(1, 0, 0, 1, -4, 68), Transform2D(1, 0, 0, 1, -4, 68), Transform2D(1, 0, 0, 1, -4, 68), Transform2D(1, 0, 0, 1, -4, 68), Transform2D(1, 0, 0, 1, -4, 68), Transform2D(1, 0, 0, 1, -4, 68), Transform2D(1, 0, 0, 1, -4, 68)]
 }
 tracks/19/type = "value"
-tracks/19/path = NodePath("Layer003:material")
-tracks/19/interp = 0
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Frame005:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [true, true, true, true, true, true, true, true, true]
 }
 tracks/20/type = "value"
-tracks/20/path = NodePath("Buffer003:copy_mode")
-tracks/20/interp = 0
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Frame005:modulate")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/21/type = "value"
-tracks/21/path = NodePath("Layer004:texture")
-tracks/21/interp = 0
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Frame006:transform")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 123, 69), Transform2D(1, 0, 0, 1, 123, 69), Transform2D(1, 0, 0, 1, 123, 68), Transform2D(1, 0, 0, 1, 123, 68), Transform2D(1, 0, 0, 1, 123, 68), Transform2D(1, 0, 0, 1, 123, 68), Transform2D(1, 0, 0, 1, 123, 68), Transform2D(1, 0, 0, 1, 123, 68), Transform2D(1, 0, 0, 1, 123, 68)]
 }
 tracks/22/type = "value"
-tracks/22/path = NodePath("Layer004:transform")
-tracks/22/interp = 0
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Frame006:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [true, true, true, true, true, true, true, true, true]
 }
 tracks/23/type = "value"
-tracks/23/path = NodePath("Layer004:visible")
-tracks/23/interp = 0
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Frame006:modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
 tracks/23/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/24/type = "value"
-tracks/24/path = NodePath("Layer004:material")
-tracks/24/interp = 0
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Frame007:transform")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 57, 66), Transform2D(1, 0, 0, 1, 57, 66), Transform2D(1, 0, 0, 1, 57, 65), Transform2D(1, 0, 0, 1, 57, 65), Transform2D(1, 0, 0, 1, 57, 65), Transform2D(1, 0, 0, 1, 57, 65), Transform2D(1, 0, 0, 1, 57, 65), Transform2D(1, 0, 0, 1, 57, 65), Transform2D(1, 0, 0, 1, 57, 65)]
 }
 tracks/25/type = "value"
-tracks/25/path = NodePath("Buffer004:copy_mode")
-tracks/25/interp = 0
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Frame007:visible")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [true, true, true, true, true, true, true, true, true]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Frame007:modulate")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="action_004"]
@@ -1263,241 +702,329 @@ resource_name = "action_004"
 length = 0.3
 step = 0.05
 loop_mode = 1
-metadata/frame_count = 6
-metadata/bounds = Rect2(-22, -3, 50, 7)
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:metadata/frame_motion")
-tracks/0/interp = 0
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Frame000:transform")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(0, 0)]
+"values": [Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3)]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Layer000:texture")
-tracks/1/interp = 0
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Frame000:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [SubResource("Atlas_Texture0")]
+"values": [true, true, true, true, true, true]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Layer000:transform")
-tracks/2/interp = 0
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Frame000:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, -22, -3)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Layer000:visible")
-tracks/3/interp = 0
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Frame001:transform")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 22, 2), Transform2D(1, 0, 0, 1, 22, 2), Transform2D(1, 0, 0, 1, 26, 2), Transform2D(1, 0, 0, 1, 26, 2)]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Layer000:material")
-tracks/4/interp = 0
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Frame001:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [true, true, true, true, true, true]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Buffer000:copy_mode")
-tracks/5/interp = 0
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Frame001:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Layer001:texture")
-tracks/6/interp = 0
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Frame002A:transform")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [SubResource("Atlas_Texture1")]
+"values": [Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 19, 3), Transform2D(1, 0, 0, 1, 19, 3), Transform2D(1, 0, 0, 1, 19, 3), Transform2D(1, 0, 0, 1, 19, 3)]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Layer001:transform")
-tracks/7/interp = 0
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Frame002A:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 22, 2), Transform2D(1, 0, 0, 1, 26, 2)]
+"values": [true, true, true, true, true, true]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Layer001:visible")
-tracks/8/interp = 0
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Frame002A:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Layer001:material")
-tracks/9/interp = 0
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Frame002B:transform")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3)]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Buffer001:copy_mode")
-tracks/10/interp = 0
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Frame002B:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [true, true, true, true, true, true]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("Layer002:texture")
-tracks/11/interp = 0
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Frame002B:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [SubResource("Atlas_Texture2")]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("Layer002:transform")
-tracks/12/interp = 0
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Frame003:transform")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 19, 3)]
+"values": [Transform2D(1, 0, 0, 1, -52, -45), Transform2D(1, 0, 0, 1, -52, -45), Transform2D(1, 0, 0, 1, -52, -45), Transform2D(1, 0, 0, 1, -52, -45), Transform2D(1, 0, 0, 1, -52, -45), Transform2D(1, 0, 0, 1, -52, -45)]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("Layer002:visible")
-tracks/13/interp = 0
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Frame003:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [false, false, false, false, false, false]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("Layer002:material")
-tracks/14/interp = 0
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Frame003:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("Buffer002:copy_mode")
-tracks/15/interp = 0
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Frame004:transform")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [Transform2D(1, 0, 0, 1, -77, -11), Transform2D(1, 0, 0, 1, -77, -11), Transform2D(1, 0, 0, 1, -77, -11), Transform2D(1, 0, 0, 1, -77, -11), Transform2D(1, 0, 0, 1, -77, -11), Transform2D(1, 0, 0, 1, -77, -11)]
 }
 tracks/16/type = "value"
-tracks/16/path = NodePath("Layer003:texture")
-tracks/16/interp = 0
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Frame004:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [SubResource("Atlas_Texture2")]
+"values": [false, false, false, false, false, false]
 }
 tracks/17/type = "value"
-tracks/17/path = NodePath("Layer003:transform")
-tracks/17/interp = 0
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Frame004:modulate")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 23, 3)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/18/type = "value"
-tracks/18/path = NodePath("Layer003:visible")
-tracks/18/interp = 0
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Frame005:transform")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [Transform2D(1, 0, 0, 1, -81, 25), Transform2D(1, 0, 0, 1, -81, 25), Transform2D(1, 0, 0, 1, -81, 25), Transform2D(1, 0, 0, 1, -81, 25), Transform2D(1, 0, 0, 1, -81, 25), Transform2D(1, 0, 0, 1, -81, 25)]
 }
 tracks/19/type = "value"
-tracks/19/path = NodePath("Layer003:material")
-tracks/19/interp = 0
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Frame005:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [false, false, false, false, false, false]
 }
 tracks/20/type = "value"
-tracks/20/path = NodePath("Buffer003:copy_mode")
-tracks/20/interp = 0
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Frame005:modulate")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/21/type = "value"
-tracks/21/path = NodePath("Layer004:texture")
-tracks/21/interp = 0
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Frame006:transform")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 46, 25), Transform2D(1, 0, 0, 1, 46, 25), Transform2D(1, 0, 0, 1, 46, 25), Transform2D(1, 0, 0, 1, 46, 25), Transform2D(1, 0, 0, 1, 46, 25), Transform2D(1, 0, 0, 1, 46, 25)]
 }
 tracks/22/type = "value"
-tracks/22/path = NodePath("Layer004:transform")
-tracks/22/interp = 0
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Frame006:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [false, false, false, false, false, false]
 }
 tracks/23/type = "value"
-tracks/23/path = NodePath("Layer004:visible")
-tracks/23/interp = 0
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Frame006:modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
 tracks/23/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/24/type = "value"
-tracks/24/path = NodePath("Layer004:material")
-tracks/24/interp = 0
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Frame007:transform")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19)]
 }
 tracks/25/type = "value"
-tracks/25/path = NodePath("Buffer004:copy_mode")
-tracks/25/interp = 0
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Frame007:visible")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [false, false, false, false, false, false]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Frame007:modulate")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="action_005"]
@@ -1506,241 +1033,329 @@ resource_name = "action_005"
 length = 0.45
 step = 0.05
 loop_mode = 0
-metadata/frame_count = 9
-metadata/bounds = Rect2(-199, -47, 457, 88)
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:metadata/frame_motion")
-tracks/0/interp = 0
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Frame000:transform")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(0, 0)]
+"values": [Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3), Transform2D(1, 0, 0, 1, -22, -3)]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Layer000:texture")
-tracks/1/interp = 0
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Frame000:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [SubResource("Atlas_Texture3")]
+"values": [false, false, false, false, false, false, false, false, false]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Layer000:transform")
-tracks/2/interp = 0
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Frame000:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, -199, -47), Transform2D(1, 0, 0, 1, -173, -45), Transform2D(1, 0, 0, 1, -109, -45), Transform2D(1, 0, 0, 1, -78, -45), Transform2D(1, 0, 0, 1, -57, -45), Transform2D(1, 0, 0, 1, -53, -45), Transform2D(1, 0, 0, 1, -52, -45)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Layer000:visible")
-tracks/3/interp = 0
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Frame001:transform")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2), Transform2D(1, 0, 0, 1, 18, 2)]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Layer000:material")
-tracks/4/interp = 0
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Frame001:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [false, false, false, false, false, false, false, false, false]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Buffer000:copy_mode")
-tracks/5/interp = 0
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Frame001:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Layer001:texture")
-tracks/6/interp = 0
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Frame002A:transform")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [SubResource("Atlas_Texture4")]
+"values": [Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3), Transform2D(1, 0, 0, 1, 23, 3)]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Layer001:transform")
-tracks/7/interp = 0
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Frame002A:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 100, -8), Transform2D(1, 0, 0, 1, 59, -11), Transform2D(1, 0, 0, 1, -17, -11), Transform2D(1, 0, 0, 1, -51, -11), Transform2D(1, 0, 0, 1, -72, -11), Transform2D(1, 0, 0, 1, -76, -11), Transform2D(1, 0, 0, 1, -77, -11)]
+"values": [false, false, false, false, false, false, false, false, false]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Layer001:visible")
-tracks/8/interp = 0
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Frame002A:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Layer001:material")
-tracks/9/interp = 0
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Frame002B:transform")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3), Transform2D(1, 0, 0, 1, 27, 3)]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Buffer001:copy_mode")
-tracks/10/interp = 0
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Frame002B:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [false, false, false, false, false, false, false, false, false]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("Layer002:texture")
-tracks/11/interp = 0
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Frame002B:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [SubResource("Atlas_Texture5")]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("Layer002:transform")
-tracks/12/interp = 0
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Frame003:transform")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 96, 28), Transform2D(1, 0, 0, 1, 55, 25), Transform2D(1, 0, 0, 1, -21, 25), Transform2D(1, 0, 0, 1, -55, 25), Transform2D(1, 0, 0, 1, -76, 25), Transform2D(1, 0, 0, 1, -80, 25), Transform2D(1, 0, 0, 1, -81, 25)]
+"values": [Transform2D(1, 0, 0, 1, -199, -47), Transform2D(1, 0, 0, 1, -173, -45), Transform2D(1, 0, 0, 1, -109, -45), Transform2D(1, 0, 0, 1, -78, -45), Transform2D(1, 0, 0, 1, -57, -45), Transform2D(1, 0, 0, 1, -53, -45), Transform2D(1, 0, 0, 1, -52, -45), Transform2D(1, 0, 0, 1, -52, -45), Transform2D(1, 0, 0, 1, -52, -45)]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("Layer002:visible")
-tracks/13/interp = 0
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Frame003:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [true, true, true, true, true, true, true, true, true]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("Layer002:material")
-tracks/14/interp = 0
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Frame003:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("Buffer002:copy_mode")
-tracks/15/interp = 0
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Frame004:transform")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [Transform2D(1, 0, 0, 1, 100, -8), Transform2D(1, 0, 0, 1, 59, -11), Transform2D(1, 0, 0, 1, -17, -11), Transform2D(1, 0, 0, 1, -51, -11), Transform2D(1, 0, 0, 1, -72, -11), Transform2D(1, 0, 0, 1, -76, -11), Transform2D(1, 0, 0, 1, -77, -11), Transform2D(1, 0, 0, 1, -77, -11), Transform2D(1, 0, 0, 1, -77, -11)]
 }
 tracks/16/type = "value"
-tracks/16/path = NodePath("Layer003:texture")
-tracks/16/interp = 0
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Frame004:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [SubResource("Atlas_Texture6")]
+"values": [true, true, true, true, true, true, true, true, true]
 }
 tracks/17/type = "value"
-tracks/17/path = NodePath("Layer003:transform")
-tracks/17/interp = 0
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Frame004:modulate")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 223, 28), Transform2D(1, 0, 0, 1, 182, 25), Transform2D(1, 0, 0, 1, 106, 25), Transform2D(1, 0, 0, 1, 72, 25), Transform2D(1, 0, 0, 1, 51, 25), Transform2D(1, 0, 0, 1, 47, 25), Transform2D(1, 0, 0, 1, 46, 25)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/18/type = "value"
-tracks/18/path = NodePath("Layer003:visible")
-tracks/18/interp = 0
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Frame005:transform")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [Transform2D(1, 0, 0, 1, 96, 28), Transform2D(1, 0, 0, 1, 55, 25), Transform2D(1, 0, 0, 1, -21, 25), Transform2D(1, 0, 0, 1, -55, 25), Transform2D(1, 0, 0, 1, -76, 25), Transform2D(1, 0, 0, 1, -80, 25), Transform2D(1, 0, 0, 1, -81, 25), Transform2D(1, 0, 0, 1, -81, 25), Transform2D(1, 0, 0, 1, -81, 25)]
 }
 tracks/19/type = "value"
-tracks/19/path = NodePath("Layer003:material")
-tracks/19/interp = 0
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Frame005:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null]
+"values": [true, true, true, true, true, true, true, true, true]
 }
 tracks/20/type = "value"
-tracks/20/path = NodePath("Buffer003:copy_mode")
-tracks/20/interp = 0
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Frame005:modulate")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/21/type = "value"
-tracks/21/path = NodePath("Layer004:texture")
-tracks/21/interp = 0
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Frame006:transform")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null, SubResource("Atlas_Texture7")]
+"values": [Transform2D(1, 0, 0, 1, 223, 28), Transform2D(1, 0, 0, 1, 182, 25), Transform2D(1, 0, 0, 1, 106, 25), Transform2D(1, 0, 0, 1, 72, 25), Transform2D(1, 0, 0, 1, 51, 25), Transform2D(1, 0, 0, 1, 47, 25), Transform2D(1, 0, 0, 1, 46, 25), Transform2D(1, 0, 0, 1, 46, 25), Transform2D(1, 0, 0, 1, 46, 25)]
 }
 tracks/22/type = "value"
-tracks/22/path = NodePath("Layer004:transform")
-tracks/22/interp = 0
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Frame006:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0), Transform2D(1, 0, 0, 1, -18, 19)]
+"values": [true, true, true, true, true, true, true, true, true]
 }
 tracks/23/type = "value"
-tracks/23/path = NodePath("Layer004:visible")
-tracks/23/interp = 0
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Frame006:modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
 tracks/23/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false, true]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 tracks/24/type = "value"
-tracks/24/path = NodePath("Layer004:material")
-tracks/24/interp = 0
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Frame007:transform")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.3, 0.35, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [null, SubResource("Blend200"), SubResource("Blend120"), SubResource("Blend56"), null]
+"values": [Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19), Transform2D(1, 0, 0, 1, -18, 19)]
 }
 tracks/25/type = "value"
-tracks/25/path = NodePath("Buffer004:copy_mode")
-tracks/25/interp = 0
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Frame007:visible")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 2, 0]
+"values": [false, false, false, false, false, true, true, true, true]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Frame007:modulate")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.1875), Color(1, 1, 1, 0.5), Color(1, 1, 1, 0.75), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="action_006"]
@@ -1749,249 +1364,334 @@ resource_name = "action_006"
 length = 0.05
 step = 0.05
 loop_mode = 0
-metadata/frame_count = 0
-metadata/bounds = Rect2(0, 0, 0, 0)
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:metadata/frame_motion")
-tracks/0/interp = 0
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Frame000:transform")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0, 0)]
+"values": [Transform2D(1, 0, 0, 1, -22, -3)]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Layer000:texture")
-tracks/1/interp = 0
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Frame000:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [false]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Layer000:transform")
-tracks/2/interp = 0
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Frame000:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Layer000:visible")
-tracks/3/interp = 0
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Frame001:transform")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [Transform2D(1, 0, 0, 1, 18, 2)]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Layer000:material")
-tracks/4/interp = 0
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Frame001:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [false]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Buffer000:copy_mode")
-tracks/5/interp = 0
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Frame001:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Layer001:texture")
-tracks/6/interp = 0
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Frame002A:transform")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 23, 3)]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Layer001:transform")
-tracks/7/interp = 0
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Frame002A:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [false]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Layer001:visible")
-tracks/8/interp = 0
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Frame002A:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Layer001:material")
-tracks/9/interp = 0
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Frame002B:transform")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 27, 3)]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Buffer001:copy_mode")
-tracks/10/interp = 0
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Frame002B:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [false]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("Layer002:texture")
-tracks/11/interp = 0
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Frame002B:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("Layer002:transform")
-tracks/12/interp = 0
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Frame003:transform")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [Transform2D(1, 0, 0, 1, -52, -45)]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("Layer002:visible")
-tracks/13/interp = 0
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Frame003:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("Layer002:material")
-tracks/14/interp = 0
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Frame003:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("Buffer002:copy_mode")
-tracks/15/interp = 0
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Frame004:transform")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [Transform2D(1, 0, 0, 1, -77, -11)]
 }
 tracks/16/type = "value"
-tracks/16/path = NodePath("Layer003:texture")
-tracks/16/interp = 0
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Frame004:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
 tracks/16/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [true]
 }
 tracks/17/type = "value"
-tracks/17/path = NodePath("Layer003:transform")
-tracks/17/interp = 0
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Frame004:modulate")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
 tracks/17/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/18/type = "value"
-tracks/18/path = NodePath("Layer003:visible")
-tracks/18/interp = 0
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Frame005:transform")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
 tracks/18/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [Transform2D(1, 0, 0, 1, -81, 25)]
 }
 tracks/19/type = "value"
-tracks/19/path = NodePath("Layer003:material")
-tracks/19/interp = 0
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Frame005:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
 tracks/19/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [true]
 }
 tracks/20/type = "value"
-tracks/20/path = NodePath("Buffer003:copy_mode")
-tracks/20/interp = 0
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Frame005:modulate")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
 tracks/20/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/21/type = "value"
-tracks/21/path = NodePath("Layer004:texture")
-tracks/21/interp = 0
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Frame006:transform")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
 tracks/21/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, 46, 25)]
 }
 tracks/22/type = "value"
-tracks/22/path = NodePath("Layer004:transform")
-tracks/22/interp = 0
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Frame006:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
 tracks/22/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Transform2D(1, 0, 0, 1, 0, 0)]
+"values": [true]
 }
 tracks/23/type = "value"
-tracks/23/path = NodePath("Layer004:visible")
-tracks/23/interp = 0
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Frame006:modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
 tracks/23/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/24/type = "value"
-tracks/24/path = NodePath("Layer004:material")
-tracks/24/interp = 0
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Frame007:transform")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
 tracks/24/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [Transform2D(1, 0, 0, 1, -18, 19)]
 }
 tracks/25/type = "value"
-tracks/25/path = NodePath("Buffer004:copy_mode")
-tracks/25/interp = 0
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Frame007:visible")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
 tracks/25/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [true]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Frame007:modulate")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="Library"]
 _data = {
 &"RESET": SubResource("RESET"),
-&"action_000": SubResource("action_000"),
-&"action_001": SubResource("action_001"),
-&"action_002": SubResource("action_002"),
 &"action_003": SubResource("action_003"),
 &"action_004": SubResource("action_004"),
 &"action_005": SubResource("action_005"),
@@ -2002,52 +1702,59 @@ _data = {
 texture_filter = 1
 metadata/frame_motion = Vector2(0, 0)
 
-[node name="Buffer000" type="BackBufferCopy" parent="."]
-copy_mode = 0
-
-[node name="Layer000" type="Sprite2D" parent="."]
-centered = false
-texture = null
-transform = Transform2D(1, 0, 0, 1, 0, 0)
+[node name="Frame000" type="Sprite2D" parent="."]
 visible = false
-
-[node name="Buffer001" type="BackBufferCopy" parent="."]
-copy_mode = 0
-
-[node name="Layer001" type="Sprite2D" parent="."]
+position = Vector2(-22, -3)
+texture = SubResource("Tex_Frame000")
 centered = false
-texture = null
-transform = Transform2D(1, 0, 0, 1, 0, 0)
+
+[node name="Frame001" type="Sprite2D" parent="."]
 visible = false
-
-[node name="Buffer002" type="BackBufferCopy" parent="."]
-copy_mode = 0
-
-[node name="Layer002" type="Sprite2D" parent="."]
+position = Vector2(18, 2)
+texture = SubResource("Tex_Frame001")
 centered = false
-texture = null
-transform = Transform2D(1, 0, 0, 1, 0, 0)
+
+[node name="Frame002A" type="Sprite2D" parent="."]
 visible = false
-
-[node name="Buffer003" type="BackBufferCopy" parent="."]
-copy_mode = 0
-
-[node name="Layer003" type="Sprite2D" parent="."]
+position = Vector2(23, 3)
+texture = SubResource("Tex_Frame002")
 centered = false
-texture = null
-transform = Transform2D(1, 0, 0, 1, 0, 0)
+
+[node name="Frame002B" type="Sprite2D" parent="."]
 visible = false
-
-[node name="Buffer004" type="BackBufferCopy" parent="."]
-copy_mode = 0
-
-[node name="Layer004" type="Sprite2D" parent="."]
+position = Vector2(27, 3)
+texture = SubResource("Tex_Frame002")
 centered = false
-texture = null
-transform = Transform2D(1, 0, 0, 1, 0, 0)
+
+[node name="Frame003" type="Sprite2D" parent="."]
 visible = false
+position = Vector2(-52, -45)
+texture = SubResource("Tex_Frame003")
+centered = false
+
+[node name="Frame004" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-77, -11)
+texture = SubResource("Tex_Frame004")
+centered = false
+
+[node name="Frame005" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-81, 25)
+texture = SubResource("Tex_Frame005")
+centered = false
+
+[node name="Frame006" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(46, 25)
+texture = SubResource("Tex_Frame006")
+centered = false
+
+[node name="Frame007" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-18, 19)
+texture = SubResource("Tex_Frame007")
+centered = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "action_000"
 libraries = { &"": SubResource("Library") }
-
