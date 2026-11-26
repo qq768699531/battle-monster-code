@@ -1648,6 +1648,27 @@ func _heal_party(hp_percent: int, sp_percent: int) -> bool:
 	return true
 
 
+## 原生 `FieldCanvas_load:39-40`（以及后面逐个袋位重复的 `:59-60`）：进入野外画布时，
+## 精灵袋里 HP 归 0 的个体一律恢复成 **1 HP**。战斗里阵亡的队员因此在离开战斗后以 1 点血复活；
+## 只改 HP，不动 SP／心情／饱食度。记录里没有 `hp` 键的个体是「未记录当前值」（捕获入包的新记录），
+## 按 `native_member_details` 的规则算满血，不碰。返回被恢复的个体数（测试用）。
+func restore_downed_monsters() -> int:
+	if _disposed or progress.is_empty():
+		return 0
+	var monsters: Variant = progress.get("monsters")
+	if not monsters is Array:
+		return 0
+	var restored := 0
+	for member: Variant in monsters:
+		if not member is Dictionary:
+			continue
+		var hp: Variant = member.get("hp")
+		if hp is int and int(hp) <= 0:
+			member["hp"] = 1
+			restored += 1
+	return restored
+
+
 ## 出战队伍（原生 `ItemData.party_monsters[0..2]`）。
 func _party_indices() -> Array:
 	var recorded: Variant = progress.get("partyOrder")
@@ -2372,6 +2393,8 @@ func complete_battle(id: int, settlement: RefCounted = null) -> bool:
 		# 事件的触发器是 7／8）才把「已打回来」标志置 1，其余触发器直接
 		# `EFC_mainSetNEXT(GAME_STATE_FIELD, 1)` 回地图、不置标志。
 		_battle_returned = trigger in [Trigger.BATTLE_RETURNED, Trigger.BATTLE_RETURNED_ALT]
+		# 回到野外画布就是原生 `FieldCanvas_load`：阵亡的队员以 1 HP 复活。
+		restore_downed_monsters()
 		trace.append("Battle_Win:结算经验/金币/掉落→Evt_stdNEXT")
 		_finish_pending()
 		return true
@@ -2381,6 +2404,7 @@ func complete_battle(id: int, settlement: RefCounted = null) -> bool:
 		for index in range(3):
 			progress["monsters"][_battle_order[index]]["hp"] = party[index]["max_hp"]
 			progress["monsters"][_battle_order[index]]["sp"] = party[index]["max_sp"]
+		restore_downed_monsters()
 		trace.append("Battle_Position:全队HP=0→Param_ballFULL(0)→evt trigger8 flag")
 		_battle_returned = true
 		_finish_pending()

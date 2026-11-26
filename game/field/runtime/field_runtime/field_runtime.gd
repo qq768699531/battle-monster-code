@@ -511,6 +511,8 @@ func start_slot(store: RefCounted, slot: int, resources: Object, assets: Node) -
 	_map_effect.clear()
 	story = Story.new(resources, loaded.progress)
 	story.initialize(loaded.status == "ready")
+	# 原生 `FieldCanvas_load`：载入存档／进野外画布时，HP 归 0 的精灵恢复成 1 HP。
+	story.restore_downed_monsters()
 	_prepare_exp_bonus_hud()
 	_queue_party_battle_animations()
 	_drain_effects()
@@ -3363,6 +3365,8 @@ func _battle_title_requested(outcome: Dictionary) -> void:
 
 func _return_from_wild_battle() -> void:
 	_close_battle()
+	# 战斗阵亡写回的是 0 HP；回野外画布（原生 `FieldCanvas_load`）时恢复成 1 HP。
+	story.restore_downed_monsters()
 	story.combat = null
 	_encounter.clear()
 	_battle_id = -1

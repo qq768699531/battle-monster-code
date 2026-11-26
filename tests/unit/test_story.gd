@@ -252,6 +252,23 @@ func test_capture_party_add() -> void:
 		"a captured individual joins the box, is recorded in the book and consumes its ball")
 
 
+## 原生 `FieldCanvas_load`：进入野外画布时 HP 归 0 的个体恢复 1 HP（只改 HP，不动 SP；
+## 记录里没有 `hp` 键的个体按「未记录当前值＝满血」处理，不碰）。
+func test_downed_monsters_restore_to_one_hp() -> void:
+	var story = _story(_provider([]))
+	story.progress["monsters"] = [
+		{"species": 49, "hp": 0, "sp": 7, "nativeArguments": [49, 10, 0, -1, 0]},
+		{"species": 62, "hp": 3, "sp": 2, "nativeArguments": [62, 10, 0, -1, 0]},
+		{"species": 86, "nativeArguments": [86, 10, 0, -1, 0]},
+	]
+	var restored: int = story.restore_downed_monsters()
+	assert_eq([restored, int(story.progress["monsters"][0]["hp"]),
+		int(story.progress["monsters"][0]["sp"]),
+		int(story.progress["monsters"][1]["hp"]),
+		story.progress["monsters"][2].has("hp")], [1, 1, 7, 3, false],
+		"field load restores downed monsters to 1 HP, leaves SP and unknown HP alone")
+
+
 ## 宝箱（原生 `Field_Box_mRun` 的相位 4→6：记已开、抽 `Battle_Drop_BOX`、入包）。
 func test_map_box_open() -> void:
 	var provider := _provider([])
