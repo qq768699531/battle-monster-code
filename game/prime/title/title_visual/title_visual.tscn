@@ -18,6 +18,11 @@ region = Rect2(79, 0, 76, 87)
 
 [sub_resource type="ShaderMaterial" id="EdgeFadeMaterial"]
 shader = ExtResource("EdgeShader")
+shader_parameter/center_x = 0.5
+shader_parameter/center_y = 0.1
+shader_parameter/radius_x = 0.56
+shader_parameter/radius_y = 0.9
+shader_parameter/feather = 0.2
 
 [sub_resource type="Animation" id="Animation_logo"]
 resource_name = "logo"
@@ -338,6 +343,9 @@ position = Vector2(124, 128)
 visible = false
 z_index = 20
 position = Vector2(124, 128)
+
+[node name="EdgeBuffer" type="BackBufferCopy" parent="TitleGroup/Loop"]
+copy_mode = 1
 
 [node name="EdgeFade" type="ColorRect" parent="TitleGroup/Loop" unique_id=2037948659]
 material = SubResource("EdgeFadeMaterial")
