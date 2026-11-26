@@ -5,9 +5,9 @@ const Runtime = preload("res://game/prime/title/prime_title_runtime/prime_title_
 ## 子 ANI 的 AnimationPlayer 自带 autoplay，先停住，等 Scene 动画在指定时刻把它们叫起来。
 const ANI_PLAYERS := ["Logo/ElLogo/AnimationPlayer", "Logo/EnsOny/AnimationPlayer",
 	"TitleGroup/Loop/AnimationPlayer", "TitleGroup/Detail/AnimationPlayer"]
-## 原生 `Prime_Title_Draw` 的动作 1/2 从 `run_counter+5` 帧起画；这里用动作 1 的稳定帧
-## （1.1 s，脸部完整、眼部红光已亮）作为循环起点，避免动作 1 开头几帧的暗帧/半张脸。
-const TITLE_LOOP_SETTLE := 1.1
+## 原生 `Prime_Title_Draw` 的动作 1/2 从 `run_counter+5` 帧起画；标题入场（run_counter 0）
+## 的动作 1 第一帧就是第 5 帧。动作 0 的末尾 0–4 帧是入场的过渡帧，循环从第 5 帧接上。
+const TITLE_LOOP_SETTLE := 0.25
 var _title_sprites: Array[Sprite2D] = []
 var _menu_labels: Array[Label] = []
 var _menu_text: Array[String] = []
