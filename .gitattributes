@@ -1,1 +1,6 @@
-* text=auto eol=lf
+# 去掉编辑器和 Godot 4.4+ 写进场景/资源的 uid="uid://…" 属性：
+# 工作区里编辑器仍会写，git 的 clean filter 在 add/diff 时去掉，提交与 diff 里不出现。
+# addons/（第三方 GUT）不处理，避免改坏插件文件。
+*.tscn filter=stripuid
+*.tres filter=stripuid
+addons/** -filter

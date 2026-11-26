@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="GameplayData" format=3]
 [ext_resource type="Script" path="res://engine/data/gameplay_data/gameplay_data.gd" id="data_script"]
-[ext_resource type="Script" uid="uid://cyjcchk7h63g3" path="res://game/battle/combat/script_battle_definition/script_battle_definition.gd" id="8_2v3ru"]
+[ext_resource type="Script" path="res://game/battle/combat/script_battle_definition/script_battle_definition.gd" id="8_2v3ru"]
 [sub_resource type="Resource" id="Resource_ex0rq"]
 script = ExtResource("8_2v3ru")
 id = 2

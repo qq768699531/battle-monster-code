@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://radfhaympysi"]
+[gd_scene format=3]
 [ext_resource type="Texture2D" path="res://content/actors/hero/c_f_shadow/c_f_shadow.webp" id="Sheet_hero_c_f_shadow"]
 [ext_resource type="Texture2D" path="res://content/actors/hero/h_f_01/h_f_01.webp" id="Sheet_hero_h_f_01"]
 [ext_resource type="Texture2D" path="res://content/actors/hero/c_f_effect/c_f_effect.webp" id="Sheet_hero_c_f_effect"]

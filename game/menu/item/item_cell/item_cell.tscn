@@ -1,11 +1,11 @@
-[gd_scene format=3 uid="uid://dloye1ifpaohu"]
+[gd_scene format=3]
 [ext_resource type="Texture2D" path="res://engine/ui/number/number.webp" id="Sheet_common_ui_number"]
 
 [ext_resource type="Shader" path="res://game/menu/item/item_cell/item_cell_frame.gdshader" id="bright"]
 [ext_resource type="PackedScene" path="res://engine/ui/item_icon/item_icon.tscn" id="icon"]
 [ext_resource type="Shader" path="res://engine/ui/number/native_number_palette.gdshader" id="key"]
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_top.tscn" id="num_top"]
-[ext_resource type="Script" uid="uid://cxwur0rad6fqp" path="res://game/menu/item/item_cell/item_cell.gd" id="script"]
+[ext_resource type="Script" path="res://game/menu/item/item_cell/item_cell.gd" id="script"]
 
 [sub_resource type="AtlasTexture" id="Atlas_digits"]
 atlas = ExtResource("Sheet_common_ui_number")

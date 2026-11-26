@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" format=3 uid="uid://bq7rdj53j0vyl"]
+[gd_resource type="TileSet" format=3]
 
 [ext_resource type="Texture2D" path="res://game/field/map/map_set/m0/m0_0.webp" id="1_ywnik"]
 [ext_resource type="Texture2D" path="res://game/field/map/map_set/m0/m0_1.webp" id="2_pxxmm"]
