@@ -1,12 +1,12 @@
-[gd_scene format=3 uid="uid://dkkm4um34f8dk"]
+[gd_scene format=3]
 
-[ext_resource type="Script" uid="uid://qgw48kxhkey5" path="res://game/prime/title/title_visual/title_visual.gd" id="1"]
+[ext_resource type="Script" path="res://game/prime/title/title_visual/title_visual.gd" id="1"]
 [ext_resource type="PackedScene" path="res://game/prime/title/title_item/title_item.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://game/prime/title/elogo/elogo.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://game/prime/title/ensony/ensony.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://game/prime/title/title.tscn" id="7"]
-[ext_resource type="Shader" uid="uid://dkw0hrluk4oe3" path="res://game/prime/title/title_visual/title_edge_fade.gdshader" id="EdgeShader"]
-[ext_resource type="Texture2D" uid="uid://bd28rk25fpase" path="res://game/prime/title/title_visual/title_visual.webp" id="Sheet_common_ui_grade"]
+[ext_resource type="Shader" path="res://game/prime/title/title_visual/title_edge_fade.gdshader" id="EdgeShader"]
+[ext_resource type="Texture2D" path="res://game/prime/title/title_visual/title_visual.webp" id="Sheet_common_ui_grade"]
 
 [sub_resource type="AtlasTexture" id="Atlas_8"]
 atlas = ExtResource("Sheet_common_ui_grade")
@@ -300,27 +300,21 @@ texture = SubResource("Atlas_9")
 centered = false
 
 [node name="TitleGroup" type="Node2D" parent="." unique_id=831615175]
-visible = false
 
 [node name="Detail" parent="TitleGroup" unique_id=358203160 instance=ExtResource("7")]
-visible = false
 z_index = 21
-position = Vector2(124, 128)
+position = Vector2(0, 0)
 
 [node name="Loop" parent="TitleGroup" unique_id=1078743487 instance=ExtResource("7")]
-visible = false
 z_index = 20
-position = Vector2(124, 128)
-
-[node name="EdgeBuffer" type="BackBufferCopy" parent="TitleGroup/Loop" unique_id=1862679610]
-copy_mode = 1
+position = Vector2(0, 0)
 
 [node name="EdgeFade" type="ColorRect" parent="TitleGroup/Loop" unique_id=2037948659]
 material = SubResource("EdgeFadeMaterial")
-offset_left = -76.0
-offset_top = -216.0
-offset_right = 228.0
-offset_bottom = 109.0
+offset_left = 48.0
+offset_top = -88.0
+offset_right = 352.0
+offset_bottom = 237.0
 mouse_filter = 2
 
 [node name="Player" type="AnimationPlayer" parent="." unique_id=251512124]
