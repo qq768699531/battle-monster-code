@@ -18,11 +18,6 @@ region = Rect2(79, 0, 76, 87)
 
 [sub_resource type="ShaderMaterial" id="EdgeFadeMaterial"]
 shader = ExtResource("EdgeShader")
-shader_parameter/center_x = 0.5
-shader_parameter/center_y = 0.64
-shader_parameter/radius_x = 0.56
-shader_parameter/radius_y = 0.52
-shader_parameter/feather = 0.14
 
 [sub_resource type="Animation" id="Animation_logo"]
 resource_name = "logo"
