@@ -5,6 +5,9 @@ const Runtime = preload("res://game/prime/title/prime_title_runtime/prime_title_
 ## 子 ANI 的 AnimationPlayer 自带 autoplay，先停住，等 Scene 动画在指定时刻把它们叫起来。
 const ANI_PLAYERS := ["Logo/ElLogo/AnimationPlayer", "Logo/EnsOny/AnimationPlayer",
 	"TitleGroup/Loop/AnimationPlayer", "TitleGroup/Detail/AnimationPlayer"]
+## 原生 `Prime_Title_Draw` 的动作 1/2 从 `run_counter+5` 帧起画；这里用动作 1 的稳定帧
+## （1.1 s，脸部完整、眼部红光已亮）作为循环起点，避免动作 1 开头几帧的暗帧/半张脸。
+const TITLE_LOOP_SETTLE := 1.1
 var _title_sprites: Array[Sprite2D] = []
 var _menu_labels: Array[Label] = []
 var _menu_text: Array[String] = []
@@ -89,6 +92,16 @@ func present(paint: Dictionary) -> void:
 	if _menu_dimmed:
 		_menu_dim.visible = true
 		_menu_dim.color = Color(0, 0, 0, 0.5)
+
+
+## 入场动作 0 播完、闪光结束后（或菜单打开时）进入动作 1/2：动作 1 从稳定帧开始，
+## 动作 2（logo）从第 0 帧开始；两者都是原生 `Prime_Title_Draw` 的那两条动作。
+func _enter_title_loop() -> void:
+	var loop_player: AnimationPlayer = _title_group.get_node("Loop/AnimationPlayer")
+	loop_player.play("action_001")
+	loop_player.seek(TITLE_LOOP_SETTLE, true)
+	var detail_player: AnimationPlayer = _title_group.get_node("Detail/AnimationPlayer")
+	detail_player.play("action_002")
 
 
 func release_capture() -> void:
