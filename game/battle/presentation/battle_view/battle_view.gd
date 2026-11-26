@@ -65,6 +65,9 @@ enum TouchStyle {
 ## - `BOUNDARY`：本工程的边界面板（`battle_ui/message.tscn`），原生无对应浮层，只给 `_boundary()`
 ##   那条「这一战不受支持」的出口用。
 enum NoteChannel { STACK, BOUNDARY }
+## 原生状态 28 DIE 的 Box2 页（`Battle_Die_mPaint`）：3「使用%s[%s]复活吗?」、
+## 5「使用100元的情报使用费可以复活」、2／6「返回主菜单吗?」、4／8「全部复活了」。
+enum DefeatPage { ITEM, FEE, REVIVED, RETURN }
 ## 原生 `Battle_Monster_procPosition` 的逐帧定位指令（见 `battle_poses.gd`）：
 ## 攻击／技能帧会把本体摆到「受击者槽 ± 距离」，这就是怪物看起来「走到目标身前」的来源。
 func _pose_command(index: int, action: int, frame: int) -> Vector2i:
@@ -186,6 +189,11 @@ var _captures: Array[Dictionary] = []
 var _capture_ball: Dictionary = {}
 var _capture_caught := false
 var _capture_result_pending := false
+## 原生状态 28 DIE 的 Box2 页（见 `DefeatPage`）；`_defeat_previous` 是「返回主菜单吗?」
+## 选「否」时退回的那一页，`_defeat_after_close` 是关窗后要做的事（继续战斗／回标题）。
+var _defeat_page := DefeatPage.ITEM
+var _defeat_previous := DefeatPage.ITEM
+var _defeat_after_close := ""
 ## 本战用掉的捕获球（原生 `Item_stdDel` 在判定前就扣）。
 var _used_items: Dictionary = {}
 ## 当前步骤要播的捕获特效（`b_effect` 37／38），`present` 用过后清空。
@@ -214,6 +222,9 @@ func _ready() -> void:
 	$Items.chosen.connect(_item_chosen)
 	$CaptureBox.confirmed.connect(_capture_box_confirmed)
 	$CaptureBox.transition_finished.connect(_capture_box_finished)
+	$Defeat.chosen.connect(_defeat_chosen)
+	$Defeat.confirmed.connect(_defeat_confirmed)
+	$Defeat.transition_finished.connect(_defeat_transition_finished)
 	$SysMenu.closed.connect(_sys_menu_closed)
 	$SysMenu.title_requested.connect(_exit_to_title)
 	$SysMenu.setting_changed.connect(setting_changed.emit)
@@ -233,6 +244,10 @@ func start(model: RefCounted, resources: RefCounted = null, assets: Node = null,
 	$Result.hide()
 	$Result.stage = "closed"
 	$CaptureBox.hide()
+	$Defeat.hide()
+	_defeat_page = DefeatPage.ITEM
+	_defeat_previous = DefeatPage.ITEM
+	_defeat_after_close = ""
 	$Actions.show()
 	$Field.reset_hud()
 	settlement = null
@@ -530,19 +545,11 @@ func _next() -> void:
 			_begin_victory()
 			return
 		if battle.result == "lost":
-			# 原生状态 28 DIE（`Battle_Die_init`）：有复活道具就走子状态 1／3 的
-			# 「使用%s[%s]复活吗?」选择窗；没有就落到子状态 5 的 msg 25「使用100元的情报使用费
-			# 可以复活」，确认后子状态 7 开 `Game_Cash_init(0, 99, 0)` 的真实支付窗（P3-4 未实现），
-			# 再到子状态 2／6 的 msg 36 确认后 `Game_out()` 回标题：不返回地图、不发奖励。
-			if _revive_available():
-				_open_revive()
-				return
-			# 原生把这段收场文字画在 DIE 窗口里，本工程该窗只剩一颗确认按钮，所以改走全局提示栈
-			# 保证可见（面板只留给边界态）。
-			_set_note("付费复活（情报使用费）尚未接通。\n%s" %
-				(_assets.text_message(Msg.SOURCE, Msg.Id.RETURN_TO_MENU) if battle.allow_flee else
-					"战斗失败 · 确认结果"))
-			_button(200, "确认结果", _finish)
+			# 原生状态 28 DIE：`Battle_Die_init` 按复活道具决定第一页（子状态 1／5），
+			# 之后 3／2 或 5／7／6、4／8 在同一个 Box2 窗口里换页；确认「返回主菜单吗?」
+			# 走 `Game_out()` 回标题，复活则 `SetNext(POSITION)` 继续打。
+			_open_defeat()
+			return
 		elif battle.result == "escaped":
 			_set_note(_assets.text_message(Msg.SOURCE, Msg.Id.FLEE_SUCCEEDED) + " · 确认返回地图")
 			_button(200, "确认结果", _finish)
@@ -766,10 +773,15 @@ func press(key: String) -> void:
 		$Info.handle_key(key)
 	elif phase == "encounter" and (confirm or key == "Escape"):
 		_abandon()
-	elif phase in ["flee", "revive"]:
+	elif phase == "defeat":
+		# 原生状态 28 DIE：方向盘左右换是／否，OK 落键（确定页只有一颗键）。
+		if key in ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]:
+			$Defeat.move_selection(-1 if key in ["ArrowLeft", "ArrowUp"] else 1)
+		elif confirm:
+			$Defeat.accept()
+	elif phase == "flee":
 		if $Flee.is_transitioning():
 			return
-		# 复活选择窗的「否」＝回标题（原生子状态 6 的 `Game_out()`），逃跑的「否」＝回指令窗口。
 		if key == "Escape":
 			_close_confirm(false)
 		elif key in ["ArrowLeft", "ArrowRight"]:
@@ -1289,14 +1301,107 @@ func _choose_flee() -> void:
 	$Flee.open_window()
 
 
-## 原生状态 28 DIE 的子状态 1／3：`Battle_Die_init` 判过背包里有复活道具，这里问
-## 「使用%s[%s]复活吗?」（`msg.fxt` 23）。窗口沿用逃跑那套 Box2 选择窗（同一种窗口）。
-func _open_revive() -> void:
-	phase = "revive"
-	confirm_selected = 1
+## 原生状态 28 DIE（`Battle_Die_init`）：有复活道具先出子状态 3 的「使用%s[%s]复活吗?」，
+## 没有就出子状态 5 的「使用100元的情报使用费可以复活」；两页的「否／确定」都落到
+## 子状态 2／6 的「返回主菜单吗?」。整屏先 `Battle_info_Capture()` 拍成模糊半透明底
+## （`$Defeat` 的 `screen_shade`），再在这个 Box2 窗口里逐页换文。
+func _open_defeat() -> void:
+	if phase == "defeat" or _closed:
+		return
+	phase = "defeat"
 	_clear_buttons()
+	$Field.freeze_scene(true)
+	$Defeat.show()
+	_show_defeat_page(DefeatPage.ITEM if _revive_available() else DefeatPage.FEE)
+	$Defeat.open_window()
 	_refresh_display()
-	$Flee.open_window()
+
+
+## 换一页：窗口保持开着，只换正文形态（原生状态 28 的子状态切换就是在同一个窗口里换绘制入口）。
+func _show_defeat_page(page: int) -> void:
+	_defeat_page = page
+	match page:
+		DefeatPage.ITEM:
+			$Defeat.present_select(_assets.text_message(Msg.SOURCE,
+				Msg.Id.REVIVE_PROMPT) % ["", _revive_item_name()], 1)
+		DefeatPage.FEE:
+			$Defeat.present_message(_assets.text_message(Msg.SOURCE, Msg.Id.REVIVE_INFO_FEE))
+		DefeatPage.REVIVED:
+			$Defeat.present_message(_assets.text_message(Msg.SOURCE, Msg.Id.REVIVE_DONE))
+		DefeatPage.RETURN:
+			$Defeat.present_select(_assets.text_message(Msg.SOURCE, Msg.Id.RETURN_TO_MENU), 1)
+	_refresh_display()
+
+
+## 选择页落键：是／否。
+func _defeat_chosen(accepted: bool) -> void:
+	if phase != "defeat" or _closed:
+		return
+	match _defeat_page:
+		DefeatPage.ITEM:
+			if accepted:
+				_defeat_revive()
+			else:
+				_defeat_previous = DefeatPage.ITEM
+				_show_defeat_page(DefeatPage.RETURN)
+		DefeatPage.RETURN:
+			if accepted:
+				_defeat_exit("title")
+			else:
+				_show_defeat_page(_defeat_previous)
+
+
+## 确定页落键。
+func _defeat_confirmed() -> void:
+	if phase != "defeat" or _closed:
+		return
+	match _defeat_page:
+		DefeatPage.FEE:
+			# 原生子状态 7 是 `Game_Cash` 的现金购买（`JB_sysPurchase`，真实货币）。离线工程没有
+			# 这条支付通道，与其余现金功能同口径：只提示，然后落到「返回主菜单吗?」。
+			_set_note("情报使用费需要现金商店，离线工程无法支付；请用复活道具或返回主菜单。")
+			_defeat_previous = DefeatPage.FEE
+			_show_defeat_page(DefeatPage.RETURN)
+		DefeatPage.REVIVED:
+			_defeat_exit("resume")
+
+
+## 原生子状态 3 的「是」：扣 1 个复活道具（`Item_stdDels(7, 23, 1, 1)`）→ 全队
+## `Battle_Die_Revival` 回满 → 子状态 4「全部复活了」；确定后 `SetNext(POSITION)` 继续战斗。
+func _defeat_revive() -> void:
+	if not battle.revive():
+		_boundary("战斗已不在败北状态，无法复活")
+		return
+	var item_id := Battle.revive_item_id()
+	_used_items[item_id] = int(_used_items.get(item_id, 0)) + 1
+	_deferred_graves.clear()
+	_poses.clear()
+	_display_balls = battle.balls.duplicate(true)
+	for index in range(_display_balls.size()):
+		_poses.append({"action": AniAction.Clip.IDLE, "frame": 0}
+			if not _display_balls[index].is_empty() else {})
+	_show_defeat_page(DefeatPage.REVIVED)
+
+
+## 关窗后再做收尾：`resume` 回战斗（复活成功），`title` 走 `completed` 的败北出口（`Game_out`）。
+func _defeat_exit(after: String) -> void:
+	_defeat_after_close = after
+	$Defeat.close_window()
+
+
+func _defeat_transition_finished(opened: bool) -> void:
+	if opened or phase != "defeat" or _closed:
+		return
+	$Defeat.hide()
+	var after := _defeat_after_close
+	_defeat_after_close = ""
+	if after == "resume":
+		$Field.freeze_scene(false)
+		_next()
+	elif after == "title":
+		# `_finish()` 只接受结果相位（它会再读一次 `battle.result`）。
+		phase = "result"
+		_finish()
 
 
 ## 背包里还剩几个复活道具：`_progress.inventory` 的键可能是数字或数字字符串
@@ -1320,30 +1425,6 @@ func _inventory_count(item_id: int) -> int:
 	return total
 
 
-## 确认用复活道具：原生子状态 3 → 扣 1 个（`Item_stdDel`）→ 对 3／4／5 号里「活着记录仍在」的
-## 对象逐个 `Battle_Die_Revival` 回满并补一次动作 29 的特效 → 子状态 4 显示 `msg.fxt` 24
-## 「全部复活了」→ 子状态 8 `BattleCanvas_SetNext(POSITION)`，也就是这场战斗接着打，不是回标题。
-func _revive() -> void:
-	var down: Array = []
-	for index in range(3, battle.balls.size()):
-		if not battle.balls[index].is_empty() and int(battle.balls[index].hp) <= 0:
-			down.append(index)
-	if not battle.revive():
-		_boundary("战斗已不在败北状态，无法复活")
-		return
-	var item_id := Battle.revive_item_id()
-	_used_items[item_id] = int(_used_items.get(item_id, 0)) + 1
-	# 原生对每只复活对象补一次 `Param_atkEFFECT(obj.x, obj.y, 1, 29, 0)`。
-	_pending_flashes = down.map(func(slot: int) -> Dictionary:
-		return {"slot": slot, "action": HitEffect.REVIVE_ACTION})
-	_next()
-	if phase == "command":
-		# 原生子状态 4 把 msg 24「全部复活了」画在 DIE 窗口里；本工程该窗只剩确认按钮，
-		# 所以改走全局提示栈保持可见（面板只留给边界态）。
-		_set_note(_assets.text_message(Msg.SOURCE, Msg.Id.REVIVE_DONE))
-		_refresh_display()
-
-
 ## 复活道具的显示名：优先取背包行的名字（与道具窗口同一套记录），拿不到再按道具记录取。
 func _revive_item_name() -> String:
 	var item_id := Battle.revive_item_id()
@@ -1358,7 +1439,7 @@ func _revive_item_name() -> String:
 
 
 func _confirm_choice(index: int) -> void:
-	if phase not in ["flee", "revive"]:
+	if phase != "flee":
 		return
 	if $Flee.is_transitioning():
 		return
@@ -1376,17 +1457,6 @@ func _close_confirm(accepted: bool) -> void:
 
 func _flee_transition_finished(opened: bool) -> void:
 	if opened or _closed:
-		return
-	if phase == "revive":
-		# 原生子状态 4／8 继续战斗；否走子状态 2／6 的 `Game_out()`。
-		var accepted := _flee_accept
-		_flee_accept = false
-		if accepted:
-			_revive()
-		else:
-			# `_finish()` 只接受结果相位（它会再读一次 `battle.result`），这里退回结果相位再收尾。
-			phase = "result"
-			_finish()
 		return
 	if phase != "flee":
 		return
@@ -1556,16 +1626,9 @@ func _banner_step() -> int:
 
 
 func _refresh_display() -> void:
-	$Flee.visible = phase in ["flee", "revive"]
+	$Flee.visible = phase == "flee"
 	if phase == "flee":
 		$Flee/Content/Prompt.text = _assets.text_message(Msg.SOURCE, Msg.Id.FLEE_PROMPT)
-		$Flee/Content/Yes/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES), confirm_selected == 0)
-		$Flee/Content/No/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO), confirm_selected == 1)
-	elif phase == "revive":
-		# 原生 `EX_knlSprintk(s, msg23, Item_stdGradeINDEX(3), 道具名)`：第一个 %s 是道具品级的
-		# 颜色前缀（本工程不还原调色板前缀，留空即为「使用[道具名]复活吗?」）。
-		$Flee/Content/Prompt.text = _assets.text_message(Msg.SOURCE, Msg.Id.REVIVE_PROMPT) % \
-			["", _revive_item_name()]
 		$Flee/Content/Yes/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES), confirm_selected == 0)
 		$Flee/Content/No/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO), confirm_selected == 1)
 	# 行动期间 `battle.actor` 已经指向下一个行动者，站位要按本回合记下的行动者算。
@@ -1591,7 +1654,7 @@ func _refresh_display() -> void:
 		$TouchControls.present($SysMenu.touch_style() if phase == "sys" else
 			TouchStyle.COMMAND if phase in ["command", "action", "position"] \
 			and not (phase == "action" and _capture_result_pending) else
-			TouchStyle.SELECT if phase in ["target", "flee", "revive", "encounter", "items"] else
+			TouchStyle.SELECT if phase in ["target", "flee", "encounter", "items"] else
 			TouchStyle.INFO if phase == "info" else 0, $TouchControls.held_key)
 		# 原生 `EFC_mainTouchDRAW:138-162`：自动战斗开着时 AUTO 键按 `GRP_MODE_BRIGHT` 画，亮度
 		# 取样成 64／0／64／128，即在 0 与 128 之间来回。那四档是按帧号取样的量化痕迹，本工程在

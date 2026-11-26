@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=22 format=3]
 [ext_resource type="Texture2D" path="res://engine/ui/touch_button/touch_button.webp" id="Sheet_touch_ui_button"]
 
 [ext_resource type="Script" path="res://game/battle/presentation/battle_view/battle_view.gd" id="1"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" path="res://game/battle/presentation/result/result.tscn" id="result"]
 [ext_resource type="PackedScene" path="res://game/battle/presentation/sys_menu/sys_menu.tscn" id="sysmenu"]
 [ext_resource type="PackedScene" path="res://game/field/runtime/box2_prompt/box2_prompt.tscn" id="box2"]
+[ext_resource type="PackedScene" path="res://game/battle/presentation/defeat/defeat.tscn" id="defeat"]
 
 [sub_resource type="AtlasTexture" id="Atlas_ring"]
 atlas = ExtResource("Sheet_touch_ui_button")
@@ -169,6 +170,10 @@ z_index = 5
 z_index = 5
 
 [node name="CaptureBox" parent="." instance=ExtResource("box2")]
+visible = false
+z_index = 5
+
+[node name="Defeat" parent="." instance=ExtResource("defeat")]
 visible = false
 z_index = 5
 
