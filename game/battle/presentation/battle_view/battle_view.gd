@@ -1102,9 +1102,11 @@ func _show_capture_stage(capture: Dictionary) -> void:
 		_say_monster_obtained()
 
 
-## 原生 `Ball_stdAddEx@0x85310`：捕获成功入包后推一条提示——`Ball_stdGradeINDEX` 的品级色 +
-## 性格名（`Ball_stdNickText` 的 fxt472..477，性格 0 是空串）+ fxt478「%s获得」。图标帧是球记录的
-## `kind_specific_85_bits`，本工程的球记录没有这一项（原生类型 29 分支按表算出负数 ⇒ 不画图标）。
+## 原生 `Ball_stdAddEx@0x85310`：捕获成功入包后推一条提示——图标帧是球记录的
+## `kind_specific_85_bits`（`Item_datBasic` 类型 29 的 `表[属性] − 104` 存成无符号字节，
+## 即 `common/ui_item` 的 152–157，与 `MenuModel.BALL_ICONS` 同一套属性球图标），正文是
+## `Ball_stdGradeINDEX` 的品级色 + 性格名（`Ball_stdNickText` 的 fxt472..477，性格 0 是空串）
+## + fxt478「%s获得」。
 func _say_monster_obtained() -> void:
 	if _capture_ball.is_empty() or _assets == null or _presentation == null:
 		return
@@ -1127,7 +1129,11 @@ func _say_monster_obtained() -> void:
 		Battle.combat_species(species))
 	if definition != null and not definition.name_record.is_empty():
 		name_text = str(names.get(definition.name_record, name_text))
-	MessageStack.say(prefix + (_presentation.message(Msg.Id.MONSTER_OBTAINED) % name_text))
+	# `Ball_stdAddEx` 的图标帧：属性球图标（`Menu_Party_DrawBall:32` 把同一个字段喂给
+	# `JC_fbmDrawSPRITE`）。球记录的 `attribute` 是 0..5，`menu_ball_icon` 收的是 1..6。
+	var icon: Variant = Menu.menu_ball_icon(int(_capture_ball.get("attribute", 0)) + 1)
+	MessageStack.notify(int(icon) if icon is int else -1,
+		prefix + (_presentation.message(Msg.Id.MONSTER_OBTAINED) % name_text))
 
 
 ## 原生 `Battle_Capture_Action_mPaint`：演出收尾后开 Box2 结果窗（`Menu_win_Box2_DrawOk`），
