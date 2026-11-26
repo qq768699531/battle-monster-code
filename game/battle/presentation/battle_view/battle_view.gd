@@ -170,8 +170,11 @@ var _auto_announced := false
 ## `_auto_choice` 暂存选出来的动作与目标。
 var _auto_pending := false
 var _auto_choice: Dictionary = {}
-var confirm_selected := 1
-var _flee_accept := false
+## 逃跑窗（原生状态 18 RUN）的两段：`_flee_escaped` = 本次判定结果，`_flee_after_close`
+## 是关窗后要做的事（`command` 取消回指令窗、`result` 重开窗显示结果、`finish` 成功回地图、
+## `position` 失败进回位）。
+var _flee_escaped := false
+var _flee_after_close := ""
 var _pending_command := ""
 var selected_item: Dictionary = {}
 var _progress: Dictionary = {}
@@ -207,8 +210,8 @@ var _sys_ready := false
 func _ready() -> void:
 	$ActionTimeline.animation_finished.connect(_action_finished)
 	$TouchControls.key_pressed.connect(_touch_command)
-	$Flee/Content/Yes.pressed.connect(_confirm_choice.bind(0))
-	$Flee/Content/No.pressed.connect(_confirm_choice.bind(1))
+	$Flee.chosen.connect(_flee_chosen)
+	$Flee.confirmed.connect(_flee_confirmed)
 	$Flee.transition_finished.connect(_flee_transition_finished)
 	$Actions.command_finished.connect(_command_finished)
 	$Actions.intro_finished.connect(_wheel_intro_finished)
@@ -355,7 +358,16 @@ func _start_timeline() -> void:
 	for index in _steps.size():
 		clip.track_insert_key(track, index * STEP_SECONDS, {"method": "_apply_step", "args": [index]})
 	library.add_animation("action", clip)
-	# 状态 25 POSITION 的滑回槽位也放进同一条时间轴，方便像动作步一样逐帧推进。
+	_add_return_clip(library)
+	timeline.stop()
+	if timeline.has_animation_library(&""):
+		timeline.remove_animation_library(&"")
+	timeline.add_animation_library(&"", library)
+	timeline.play("action")
+
+
+## 状态 25 的滑回片段：`x = (槽 + x) / 2` 每 0.05 s 推一帧，共 `RETURN_FRAMES` 帧。
+func _add_return_clip(library: AnimationLibrary) -> void:
 	var glide := Animation.new()
 	glide.length = RETURN_FRAMES * STEP_SECONDS
 	var glide_track := glide.add_track(Animation.TYPE_METHOD)
@@ -364,11 +376,18 @@ func _start_timeline() -> void:
 		glide.track_insert_key(glide_track, index * STEP_SECONDS,
 			{"method": "_apply_return_step", "args": [index]})
 	library.add_animation("return", glide)
-	timeline.stop()
-	if timeline.has_animation_library(&""):
-		timeline.remove_animation_library(&"")
-	timeline.add_animation_library(&"", library)
-	timeline.play("action")
+
+
+## 没有动作步的回合（逃跑失败）直接进 25：时间轴里还没有 return 片段，先补一条再播。
+func _play_return_timeline() -> void:
+	var timeline: AnimationPlayer = $ActionTimeline
+	if not timeline.has_animation("return"):
+		var library := AnimationLibrary.new()
+		_add_return_clip(library)
+		if timeline.has_animation_library(&""):
+			timeline.remove_animation_library(&"")
+		timeline.add_animation_library(&"", library)
+	timeline.play("return")
 
 
 func _apply_step(index: int) -> void:
@@ -416,7 +435,7 @@ func _state_25() -> void:
 		_return_offsets[index] = $Field.actor_shift(index)
 		_poses[index] = {"action": AniAction.Clip.IDLE, "frame": 0}
 	phase = "position"
-	$ActionTimeline.play("return")
+	_play_return_timeline()
 	_refresh_display()
 
 
@@ -783,12 +802,11 @@ func press(key: String) -> void:
 		if $Flee.is_transitioning():
 			return
 		if key == "Escape":
-			_close_confirm(false)
-		elif key in ["ArrowLeft", "ArrowRight"]:
-			confirm_selected = 1 - confirm_selected
-			_refresh_display()
+			$Flee.cancel()
+		elif key in ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]:
+			$Flee.move_selection(-1 if key in ["ArrowLeft", "ArrowUp"] else 1)
 		elif confirm:
-			_close_confirm(confirm_selected == 0)
+			$Flee.accept()
 	elif phase == "boundary" and (confirm or key == "Escape"):
 		_boundary_exit()
 	elif phase == "capture_result":
@@ -1295,10 +1313,13 @@ func _choose_flee() -> void:
 		_unsupported("此事件战逃跑")
 		return
 	phase = "flee"
-	confirm_selected = 1
+	_flee_escaped = false
+	_flee_after_close = ""
 	_clear_buttons()
-	_refresh_display()
+	$Flee.present_select(_assets.text_message(Msg.SOURCE, Msg.Id.FLEE_PROMPT))
+	$Flee.show()
 	$Flee.open_window()
+	_refresh_display()
 
 
 ## 原生状态 28 DIE（`Battle_Die_init`）：有复活道具先出子状态 3 的「使用%s[%s]复活吗?」，
@@ -1438,41 +1459,54 @@ func _revive_item_name() -> String:
 	return _assets.text_message("common/item_basic.dat", entry.name_record)
 
 
-func _confirm_choice(index: int) -> void:
-	if phase != "flee":
+func _flee_chosen(accepted: bool) -> void:
+	if phase != "flee" or _closed:
 		return
-	if $Flee.is_transitioning():
+	if not accepted:
+		_flee_after_close = "command"
+		$Flee.close_window()
 		return
-	if confirm_selected == index:
-		_close_confirm(confirm_selected == 0)
-	else:
-		confirm_selected = index
-		_refresh_display()
+	# 原生 `Battle_Run_mKeyPressed` 在关窗之前就掷 `Param_atkIsRUNAWAY()`，把结果写进
+	# 答案字段；关窗（相位 −4）后 `Battle_Run_mRun` 才重开窗显示 msg 8／9。
+	var response: Dictionary = battle.flee()
+	if not response.ok:
+		_boundary(str(response.error))
+		return
+	_flee_escaped = bool(response.escaped)
+	_flee_after_close = "result"
+	$Flee.close_window()
 
 
-func _close_confirm(accepted: bool) -> void:
-	_flee_accept = accepted
+## 结果页的确定键：成功回野外地图（原生 `GameCanvas_SetNext(GAME_STATE_FIELD)`），
+## 失败进状态 25 POSITION 收尾这一回合（原生 `Battle_Target_Next` 的 case 4）。
+func _flee_confirmed() -> void:
+	if phase != "flee" or _closed:
+		return
+	_flee_after_close = "finish" if _flee_escaped else "position"
 	$Flee.close_window()
 
 
 func _flee_transition_finished(opened: bool) -> void:
-	if opened or _closed:
+	if opened or _closed or phase != "flee":
 		return
-	if phase != "flee":
-		return
-	if not _flee_accept:
-		_next()
-		return
-	_flee_accept = false
-	var response: Dictionary = battle.flee()
-	if not response.ok:
-		_boundary(response.error)
-		return
-	_next()
-	if not response.escaped and phase == "command":
-		# 原生逃跑判定失败经 `Game_infoInit` 推一条（`Battle_Menu_mKeyPressed` 是调用点之一）。
-		_set_note(_assets.text_message(Msg.SOURCE, Msg.Id.FLEE_FAILED))
-		_refresh_display()
+	var after := _flee_after_close
+	_flee_after_close = ""
+	match after:
+		"result":
+			$Flee.present_message(_assets.text_message(Msg.SOURCE,
+				Msg.Id.FLEE_SUCCEEDED if _flee_escaped else Msg.Id.FLEE_FAILED))
+			$Flee.open_window()
+		"command":
+			$Flee.hide()
+			_next()
+		"finish":
+			$Flee.hide()
+			# `_finish()` 只接受结果相位（它会再读一次 `battle.result == "escaped"`）。
+			phase = "result"
+			_finish()
+		"position":
+			$Flee.hide()
+			_state_25()
 
 
 func _finish() -> void:
@@ -1627,10 +1661,6 @@ func _banner_step() -> int:
 
 func _refresh_display() -> void:
 	$Flee.visible = phase == "flee"
-	if phase == "flee":
-		$Flee/Content/Prompt.text = _assets.text_message(Msg.SOURCE, Msg.Id.FLEE_PROMPT)
-		$Flee/Content/Yes/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES), confirm_selected == 0)
-		$Flee/Content/No/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO), confirm_selected == 1)
 	# 行动期间 `battle.actor` 已经指向下一个行动者，站位要按本回合记下的行动者算。
 	var seat_actor := _acting_actor if phase in ["action", "result", "capture_result"] else \
 		(int(battle.actor) if battle != null else -1)

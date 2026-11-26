@@ -1,5 +1,7 @@
-[gd_scene format=3]
+[gd_scene load_steps=7 format=3]
+
 [ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
+[ext_resource type="Script" path="res://game/battle/combat/flee/flee.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://engine/ui/dotted_line/dotted_line.tscn" id="line"]
 [ext_resource type="PackedScene" path="res://engine/ui/message_choice/message_choice.tscn" id="choice"]
@@ -9,6 +11,7 @@
 visible = false
 kind = 1
 window_size = Vector2i(160, 57)
+script = ExtResource("script")
 [node name="Prompt" parent="Content" instance=ExtResource("label")]
 offset_left = 128.0
 offset_top = 102.0
@@ -41,3 +44,15 @@ theme_override_styles/hover = SubResource("Empty")
 theme_override_styles/pressed = SubResource("Empty")
 theme_override_styles/focus = SubResource("Empty")
 [node name="Choice" parent="Content/No" instance=ExtResource("choice")]
+[node name="Confirm" type="Button" parent="Content"]
+visible = false
+offset_left = 178.0
+offset_top = 125.0
+offset_right = 222.0
+offset_bottom = 141.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+[node name="Choice" parent="Content/Confirm" instance=ExtResource("choice")]
