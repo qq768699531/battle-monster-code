@@ -125,6 +125,8 @@ func _ready() -> void:
 		for target in [PrimeTitleRuntime.NETWORK, PrimeTitleRuntime.PRESENT, PrimeTitleRuntime.ZONE]:
 			_runtime.set_notice(target, _prime_view.notice_resource(target))
 		_runtime.start()
+	# 主菜单三个图层交给大场景管理器：进野外/战斗时整层隐藏，标题 ANI 也停推进。
+	BigScenes.bind_menu([_background, _title, _prime_view], [_title])
 	set_process(true)
 	if not _startup_error.is_empty():
 		_show_boundary(_startup_error, true)
@@ -731,12 +733,9 @@ func _enter_field(effect: Dictionary) -> bool:
 		return false
 	_runtime.dismiss_boundary()
 	_audio.stop_all(self)
-	for child in get_children():
-		# 只收起 Prime 自己的图层；消息栈是 autoload 浮层（`Game_infoDraw`），不在这里。
-		if child is CanvasItem:
-			child.visible = false
 	_field = FIELD_SCENE.instantiate()
 	add_child(_field)
+	BigScenes.enter_field(_field)
 	# 消息提示栈（原生 `Game_infoDraw`）是 `GameCanvas` 顶层浮层，交给野外运行时推消息与让位。
 	_field.set_messages(_messages)
 	_apply_current_settings()
@@ -770,8 +769,6 @@ func _open_field_page(page: int) -> void:
 
 func _finish_field_page() -> void:
 	_prime_view.hide()
-	_background.hide()
-	_title.hide()
 	_field.menu_view.finish_shared_page(_runtime.settings)
 	_field.set_focused(not _runtime.paused)
 
@@ -785,8 +782,7 @@ func _return_to_title() -> void:
 	remove_child(_field)
 	_field.queue_free()
 	_field = null
-	_background.visible = true
-	_title.visible = true
+	BigScenes.enter_menu()
 	Engine.time_scale = _launch_time_scale
 	_runtime.key_up()
 	_runtime.resume()

@@ -3224,6 +3224,7 @@ func _open_battle(id: int) -> void:
 	# 原生 `Evt_stdSET(3, 物种)`：事件等待触发器 3 时，击杀对应物种会掉它的条件物品。
 	battle_view.event_drop = story.event_drop_for
 	add_child(battle_view)
+	BigScenes.enter_battle(battle_view)
 	battle_view.completed.connect(_battle_completed)
 	battle_view.abandoned.connect(_battle_abandoned)
 	battle_view.title_requested.connect(_battle_title_requested)
@@ -3378,6 +3379,8 @@ func _close_battle() -> void:
 		remove_child(battle_view)
 		battle_view.queue_free()
 		battle_view = null
+	BigScenes.enter_field(self)
+
 
 
 func set_focused(value: bool) -> void:

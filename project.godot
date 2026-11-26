@@ -22,6 +22,7 @@ AssetCatalog="*res://engine/data/resource_catalog/resource_catalog.gd"
 AudioManager="*res://content/audio/audio_manager/audio_manager.tscn"
 NativeTouchFeedback="*res://game/field/runtime/native_touch_feedback/native_touch_feedback.tscn"
 Messages="*res://engine/ui/message_stack/message_stack.tscn"
+BigScenes="*res://engine/ui/big_scene_manager/big_scene_manager.gd"
 
 [display]
 
