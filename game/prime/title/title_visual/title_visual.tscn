@@ -165,6 +165,34 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TitleGroup/Loop/AnimationPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["action_001"],
+"method": &"play"
+}]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TitleGroup/Detail/AnimationPlayer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["action_002"],
+"method": &"play"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_title"]
 resource_name = "title"
@@ -256,7 +284,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0.8),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["action_003"],
+"args": ["action_002"],
 "method": &"play"
 }]
 }
