@@ -11,8 +11,11 @@ func present(ball: Dictionary, pose: Dictionary) -> void:
 	$Pose.visible = not pose.is_empty()
 	if not pose.is_empty():
 		var revision := int(pose.get("revision", 0))
+		# 原生 `Object_procCURR` 只把 `frame_index` 往前推，`Battle_Monster_procNext` 按
+		# `same_animation_request_count * frame_count + frame_index` 跨循环判断命中帧——
+		# 所以攻击／技能／分身动作在行动结束前一直循环，不是播一遍停在末帧。
 		$Pose.present(ball, int(pose.action), 1.0,
-			int(pose.action) == AniAction.Clip.IDLE and (ball.hp == null or ball.hp > 0),
+			ball.hp == null or ball.hp > 0,
 			revision != _hit_revision)
 		_hit_revision = revision
 	$Statuses.scale.x = -1.0 if int(ball.direction) == 1 else 1.0

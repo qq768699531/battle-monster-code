@@ -132,20 +132,27 @@ func _place_decoration(node: TextureRect, center: Vector2) -> void:
 ## 这里回退到技能动作，保证横幅里始终有一张立绘。
 func _present_portrait(ball: Dictionary, at: Vector2) -> void:
 	var portrait: Node2D = $Clip/Portrait
-	portrait.position = at - $Clip.position
 	var identity := MonsterAnimation.battle_identity(int(ball.get("species", 0)))
 	var direction := int(ball.get("direction", BattleSide.Code.ENEMY))
 	var action := AniAction.action_of(PORTRAIT_ANIMATION_ID)
 	var key := "%s/%d/%d" % [identity, action, direction]
-	if key == _portrait_key:
-		return
-	_portrait_key = key
-	if not portrait.present(identity, action, direction, false, false, AniAction.Clip.SKILL):
-		portrait.visible = false
-		return
-	portrait.visible = true
-	portrait.set_running(false)
-	portrait.seek_frame(0)
+	if key != _portrait_key:
+		_portrait_key = key
+		if not portrait.present(identity, action, direction, false, false, AniAction.Clip.SKILL):
+			portrait.visible = false
+			return
+		portrait.visible = true
+		portrait.set_running(false)
+		portrait.seek_frame(0)
+	# 原生把这帧画进黑带的剪裁区（只露脸的一条）；Node2D 立绘在 Field 的兄弟节点里
+	# 无法可靠被 Control 的 clip_contents 剪掉（会整只盖到战场上），所以改成按当前
+	# 带高整体缩放并居中——带展开／收拢时立绘跟着长大／缩小，不再溢出横带。
+	var art: Rect2 = portrait.bounds()
+	var available := maxf($Band.size.y - 2.0, 1.0)
+	var factor := minf(1.0, available / maxf(art.size.y, 1.0))
+	portrait.scale = Vector2.ONE * factor
+	var target: Vector2 = at - $Clip.position
+	portrait.position = target - (art.position + art.size / 2.0) * factor
 
 
 ## 原生 `JC_fntGetWIDTH(&text_slot_)`：`JC_fntGetSPACE` 遇到第一个换行就把宽度截住，

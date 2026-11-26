@@ -1292,6 +1292,10 @@ func _refresh_recoil() -> void:
 		var age := current_step - int(_recoil_start[raw_index])
 		if age >= HIT_RECOIL.size():
 			_recoil_start.erase(raw_index)
+			# 原生 `Battle_Monster_procCurr` 的 `n4 > 4` 分支 `Object_objANI(obj, 0)`：受击动作播完
+			# 必须回待机。停在受击帧会让怪物一直保持挨打姿势，而受击图帧本身带画内偏移，看起来就像站歪了。
+			if not _deferred_graves.has(raw_index):
+				_poses[raw_index] = {"action": AniAction.Clip.IDLE, "frame": 0}
 			continue
 		_recoil[raw_index] = int(HIT_RECOIL[maxi(age, 0)]) * (1 if raw_index >= 3 else -1)
 
