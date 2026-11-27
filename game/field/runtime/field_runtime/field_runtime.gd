@@ -2955,7 +2955,7 @@ func _menu_progress_changed(progress: Dictionary) -> void:
 	if not operation.is_empty():
 		# NET 购买：入包走 Story 的入手入口，效果流里的 item-obtained 才会推标准入手栈消息。
 		if str(operation.get("kind", "")) == "network-buy":
-			var bought := story.network_buy_item(int(operation.get("item_id", -1)),
+			var bought: String = story.network_buy_item(int(operation.get("item_id", -1)),
 				int(operation.get("count", 1)))
 			if not bought.is_empty() or story.progress != progress or not focused or \
 					not boundary.is_empty() or not dialogue.is_empty() or \
