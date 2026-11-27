@@ -30,6 +30,10 @@ const EXP_BONUS_DIVISOR := 5
 ## 存档校验上限：`validate_progress` 用 `_uint(parameter["moneyBalance"], MONEY_MAX)` 判钱；
 ## 加钱一律夹到这个上限（原生 `Param_moneySET` 的饱和值）。
 const MONEY_MAX := 999999999
+## 原生 `Evt_stdPROC` 的 case 0x12（REMOVE_ITEM）把 `0x10000` 当删除数量传给 `Item_stdDels`；
+## `Item_stdDel@0x83D94:15-28` 在请求量大于持有量时会把这一格清零，所以这条指令的语义是
+## **清空该道具**（记录里的数量字段只被 case 0x11 的 ADD_ITEM 用）。
+const REMOVE_STACK_ALL := 0x10000
 
 ## 原生事件记录第一个字段的 opcode（`Evt_stdPROC` 的动作号）。触发条件（`_trigger`）与
 ## 指令（`_instruction`）共用同一个数值空间：0–9 既是首记录的触发条件，也是可执行指令。
@@ -1292,7 +1296,7 @@ func _instruction(opcode: int, p: Array) -> bool:
 		Op.NONE: pass
 		Op.JUMP: return _jump_event(p[0])
 		Op.ADD_ITEM: return _add_inventory_item(p[0], p[1])
-		Op.REMOVE_ITEM: return _delete_inventory_item(p[0], p[1])
+		Op.REMOVE_ITEM: return _delete_inventory_item(p[0], REMOVE_STACK_ALL)
 		Op.MUSIC:
 			# case 0x18（`Evt_stdPROC:473-476`）：`EvtData+0x4C`（`event_music_track`）与 `p[0]`
 			# 不同才写入并 `EFC_mdaFreeALL()`，所以同一首重复发指令不会重播。
