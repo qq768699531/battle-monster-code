@@ -819,13 +819,13 @@ func test_remove_item_clamps_instead_of_blocking() -> void:
 	assert_true(story._delete_inventory_item(3000, 1), "袋里根本没有这一项也是空操作")
 	assert_true(story.boundary.is_empty(), "同样不进边界")
 
-## 原生 `Evt_stdPROC` 的 case 0x12：删除数量传 `0x10000`，`Item_stdDel` 的 clamp 把它变成
-## 「清空该道具」——记录里的数量字段不影响删除量（那是 case 0x11 ADD_ITEM 的）。
-func test_remove_item_opcode_clears_the_whole_stack() -> void:
+## 扣除量以事件记录里的数量为准（case 0x12 的第二个参数就是数量）：多扣不会超扣，
+## 手里还有剩余时只扣记录要求的那些。
+func test_remove_item_opcode_deducts_the_recorded_quantity() -> void:
 	var provider := _provider([])
 	provider.gameplay = Fixtures.data({"items": [{"id": 3000, "type": 3, "index": 0}]})
 	var story = _story(provider)
 	story.progress["inventory"] = {"3000": 4}
-	assert_true(story._instruction(Story.Op.REMOVE_ITEM, [3000, 1]), "指令照常成功")
-	assert_true(not story.progress["inventory"].has("3000"), "整格清空，不按记录里的数量删")
+	assert_true(story._instruction(Story.Op.REMOVE_ITEM, [3000, 2]), "指令照常成功")
+	assert_eq(int(story.progress["inventory"]["3000"]), 2, "只扣记录里的 2 个")
 	assert_true(story.boundary.is_empty(), "不把事件推进边界")
