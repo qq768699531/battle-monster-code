@@ -795,3 +795,13 @@ func test_pause_objects() -> void:
 		_record(Story.Op.WAIT, [16, 0, 0, 0, 0])]))
 	assert_true(not other.objects_paused(),
 		"只有恰好 1 冻结（Object_procRUN:13 的比较是 `!= 1`），0 与其它取值都是恢复")
+
+## 进图（开局／选好存档载入）要报一次当前区域名：`initialize` 在 `map` 之后紧接 `map-name`，
+## `field_runtime` 把首次渲染当成换图（`_shown_map_id == -1`），名称条就会弹一次。
+func test_initialize_announces_the_current_map_name() -> void:
+	var effects: Array = _story(_provider([])).take_effects()
+	var kinds: Array = effects.map(func(effect: Dictionary) -> String: return effect.kind)
+	var index := kinds.find("map-name")
+	assert_true(index > 0 and kinds[index - 1] == "map",
+		"地图名称条紧跟在 map 效果之后，进图就会弹")
+	assert_eq(String(effects[index].text), "起点地图", "名称取自当前地图的 name_text")

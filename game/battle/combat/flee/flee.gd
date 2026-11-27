@@ -94,6 +94,13 @@ func selection() -> int:
 func _choose(accepted: bool) -> void:
 	if not _select or is_transitioning():
 		return
+	# 原生 `Menu_win_Box2_DrawSelect` 按光标分配两颗 44×16 键的触控键：光标所在的那颗发确认键
+	# −5，另一颗发方向键 −3／−4。所以点光标不在的那颗只是把光标移过去，再点一次才确认。
+	var index := 0 if accepted else 1
+	if index != _selected:
+		_selected = index
+		_refresh_choices()
+		return
 	chosen.emit(accepted)
 
 

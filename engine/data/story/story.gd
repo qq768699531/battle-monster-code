@@ -728,6 +728,12 @@ func initialize(continuing: bool = false) -> void:
 	if not boundary.is_empty() or not _populate():
 		return
 	_emit("map", {"mapId": progress["mapId"], "map": map})
+	# 进图（开局／载入存档）也要报一次区域名：原生这条卷轴条只由 `Map_warpProc:54` 的
+	# `Game_msgInit(1, …)` 弹出，载入存档走的 `FieldCanvas_load` 不经过它，所以此前选好存档进图
+	# 不弹名称条。重制侧把「进入地图」统一成 map + map-name 两条效果，`field_runtime` 把首次渲染
+	# （`_shown_map_id == -1`）当换图处理，名称条因此会弹一次；之后剧情 opcode 14 的同图载入仍按
+	# bm-P2-104 不重播。
+	_emit("map-name", {"text": map.info.name_text if map.get("info") is Dictionary else null})
 	_emit("focus", {"position": progress["camera"] if progress["camera"] != null else progress["player"]})
 	var music_track := int(progress[MUSIC_TRACK_KEY])
 	if music_track > 0:
