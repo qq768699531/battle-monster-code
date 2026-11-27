@@ -802,6 +802,18 @@ func use_selected_item() -> bool:
 		notice = _menu_text(Msg.Id.ITEM_UNUSABLE)
 		_render_content()
 		return false
+	if not Menu.item_needs_target(item):
+		# 原生第二层状态 5：`Ball_stdUseEx(0, 0, record)` —— 不选精灵，效果直接结算。
+		var direct: Dictionary = Menu.use_item(story_progress, gameplay_catalog, int(item.id), -1)
+		if not bool(direct.get("ok", false)):
+			notice = str(direct.get("error", _menu_text(Msg.Id.ITEM_UNUSABLE)))
+			_render_content()
+			return false
+		notice = ""
+		last_progress_operation = {"kind": "use", "item_id": int(item.id), "member": -1}
+		progress_changed.emit(story_progress.duplicate(true))
+		_render_content()
+		return true
 	var monsters: Variant = story_progress.get("monsters")
 	if not monsters is Array or monsters.is_empty():
 		notice = "当前没有可选择的精灵。"

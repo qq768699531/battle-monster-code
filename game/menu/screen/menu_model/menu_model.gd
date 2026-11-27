@@ -544,6 +544,12 @@ static func _ball_resource_error(catalog: GameplayData, args: Array, nickname: V
 ## 且 `Ball_stdUse` 的这一支已经接通（`ItemEffect.supports`）。两者问的不是同一件事：
 ## 前者是**原生长不长得出这个条目**，后者是本工程**实现没实现**（例如第 1 组 25–30 原生有
 ## 「使用」，但其余被动强化还没还原，这里就仍然拒绝）。
+## 原生第二层状态号：`Menu_Item_SetMenuList` 给第 7 组 9–18 填 5（直用，不选精灵），
+## 第 1 组与第 7 组 {3, 20, 21} 填 9（`Menu_Party_Set` 选目标）。
+static func item_needs_target(item: Dictionary) -> bool:
+	return ItemEffect.needs_target(item)
+
+
 static func item_use_supported(item: Dictionary) -> bool:
 	return item_actions(item).has(ITEM_ACTION_USE) and ItemEffect.supports(item)
 
@@ -557,8 +563,10 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 	# 原生二级选择是 `Menu_Party_Draw` 的 `Ball_bagList`：全部持有精灵都能当目标，
 	# 不限于 `partyOrder` 的三只出战队伍。
 	var monsters: Variant = progress.get("monsters")
-	if not monsters is Array or member_index < 0 or member_index >= monsters.size() or \
-			not monsters[member_index] is Dictionary:
+	# `member_index < 0` = 原生第二层状态 5 的 `Ball_stdUseEx(0, 0, record)`：不选精灵。
+	var direct := member_index < 0
+	if not monsters is Array or (not direct and (member_index >= monsters.size() or \
+			not monsters[member_index] is Dictionary)):
 		return {"ok": false, "error": "此精灵不在当前队伍中"}
 	var rows := native_inventory_rows(progress, catalog, 0)
 	var selected: Dictionary = {}
@@ -580,20 +588,24 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 		inventory_key = key
 	if inventory_key.is_empty():
 		return {"ok": false, "error": "背包中没有该道具"}
-	var details := native_member_details(progress, catalog, member_index)
-	var ball: Variant = details.get("ball")
-	if not details.get("ok", false) or not ball is Dictionary:
-		return {"ok": false, "error": str(details.get("unavailable", "原成员属性不可用"))}
-	var member: Dictionary = monsters[member_index]
-	# 记录上的运行时值灌进 `Ball_stdBasic` 算出的球：HP／SP 没记就是满，心情与饱食度恒有值。
-	ball["hp"] = int(details["hp"])
-	ball["sp"] = int(details["sp"])
-	ball["feel"] = int(member.get("feel", 0))
-	ball["food"] = int(member.get("food", ItemEffect.FOOD_MAX))
-	# 第 7 组 3 写 `Ball_stdSet` 的 `brain_current`（+0x2B），菜单记录存在 `brainCurrent`。
-	ball["brain_current"] = int(member.get("brainCurrent", Battle.BRAIN_CURRENT_INITIAL))
-	# 菜单记录不带状态表：原生这一段状态也在记录里，本工程只有战斗球持有（见 beads `bm-P1-4`）。
-	ball["statuses"] = {}
+	var ball: Dictionary = {}
+	var member: Dictionary = {}
+	if not direct:
+		var details := native_member_details(progress, catalog, member_index)
+		var resolved: Variant = details.get("ball")
+		if not details.get("ok", false) or not resolved is Dictionary:
+			return {"ok": false, "error": str(details.get("unavailable", "原成员属性不可用"))}
+		ball = resolved
+		member = monsters[member_index]
+		# 记录上的运行时值灌进 `Ball_stdBasic` 算出的球：HP／SP 没记就是满，心情与饱食度恒有值。
+		ball["hp"] = int(details["hp"])
+		ball["sp"] = int(details["sp"])
+		ball["feel"] = int(member.get("feel", 0))
+		ball["food"] = int(member.get("food", ItemEffect.FOOD_MAX))
+		# 第 7 组 3 写 `Ball_stdSet` 的 `brain_current`（+0x2B），菜单记录存在 `brainCurrent`。
+		ball["brain_current"] = int(member.get("brainCurrent", Battle.BRAIN_CURRENT_INITIAL))
+		# 菜单记录不带状态表：原生这一段状态也在记录里，本工程只有战斗球持有（见 beads `bm-P1-4`）。
+		ball["statuses"] = {}
 	var parameter: Variant = progress.get("parameter", {})
 	var standard := standard_level(progress)
 	var context := {"catalog": catalog, "standard_level": standard if standard > 0 else 1,
@@ -624,8 +636,8 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 		if inventory[inventory_key] == 0:
 			inventory.erase(inventory_key)
 		progress["inventory"] = inventory
-	if int(result.get("code", ItemEffect.Code.FAILED)) in [ItemEffect.Code.PASSIVE_UPGRADE_DONE,
-			ItemEffect.Code.PASSIVES_CLEARED]:
+	if not direct and int(result.get("code", ItemEffect.Code.FAILED)) in [
+			ItemEffect.Code.PASSIVE_UPGRADE_DONE, ItemEffect.Code.PASSIVES_CLEARED]:
 		member["passiveSlots"] = ball["passive_slots"]
 	if bool(result.get("evolved", false)) and member.get("nativeArguments") is Array:
 		# 与战后写回同一条规则：觉醒档存在 `nativeArguments[2]`（`Ball_stdFeel` 的 `definition_id + 1000`）。

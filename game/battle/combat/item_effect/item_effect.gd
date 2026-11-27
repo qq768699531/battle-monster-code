@@ -162,6 +162,17 @@ static func slots_of(item: Dictionary) -> Array:
 ## 第 1 组 25–30 是强化剂（走 `MonsterGrowth` 的强化页，不在道具使用里）；第 7 组 16 扣一件后由
 ## 菜单宿主开原生 `CHARACTER_SELECT_17` 页（返回码 27）；17 原生落 `LABEL_11` 返回 0 且不扣
 ## （`Ball_stdUseEx` 默认 510「无法使用」）。19 没有「使用」动作，`item_actions` 不会放行。
+## `Menu_Item_SetMenuList@0x4A49C` 给第二层填的状态号：第 7 组 9–18（随机球／随机书／能力恢复／
+## 流派变更／不可用／经验加成）是 5——`Menu_Item_mKeyPressed` 里直接 `Ball_stdUseEx(0, 0, record)`，
+## 不选精灵；第 1 组与第 7 组 {3, 20, 21} 是 9，先 `Menu_Party_Set` 选目标。
+static func needs_target(item: Dictionary) -> bool:
+	var item_id := int(item.get("id", -1))
+	if ItemKind.kind_of(item_id) != ItemKind.Kind.GROUP_7:
+		return true
+	var index := ItemKind.index_of(item_id)
+	return not (index >= ITEM_FIRST_RANDOM_BALL and index <= EXP_BONUS_INDEX)
+
+
 static func supports(item: Dictionary) -> bool:
 	var item_id: Variant = item.get("id")
 	if not item_id is int:
