@@ -29,7 +29,7 @@ func test_legacy_suite() -> void:
 	var price: Control = buy.get_node("Window/Content/Price")
 	assert_true(price.visible and price.size == Vector2(48, 9),
 		"买／卖分支画 48×9 价格牌（`Field_Item_Buy_DrawPrice`）")
-	assert_eq(buy.get_node("Window/Content/Prompt").position.y, 50.0,
+	assert_eq(buy.get_node("Window/Content/Lines").offset_top, 50.0,
 		"价格行把正文压到窗顶 + 50（`Field_Item_DrawSelect:121-138`）")
 	assert_true(buy.get_node("Window/Content/Price/Number").get_child_count() > 0,
 		"价格牌按单价 × 数量写金额")

@@ -1,5 +1,6 @@
-[gd_scene load_steps=32 format=3]
+[gd_scene load_steps=33 format=3]
 [ext_resource type="Texture2D" path="res://engine/ui/gold_icon/gold_icon.webp" id="part_gold_icon"]
+[ext_resource type="PackedScene" path="res://engine/ui/confirm_box/confirm_box.tscn" id="confirm_box"]
 [ext_resource type="Texture2D" path="res://game/battle/presentation/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
 [ext_resource type="Texture2D" path="res://engine/ui/number/number.webp" id="Sheet_common_ui_number"]
 
@@ -687,47 +688,7 @@ theme_override_styles/hover = SubResource("Empty")
 theme_override_styles/pressed = SubResource("Empty")
 theme_override_styles/focus = SubResource("Empty")
 
-[node name="Confirm" parent="." instance=ExtResource("window")]
+[node name="Confirm" parent="." instance=ExtResource("confirm_box")]
 visible = false
-kind = 1
-
-[node name="Prompt" parent="Confirm/Content" instance=ExtResource("label")]
-offset_left = 128.0
-offset_top = 102.0
-offset_right = 272.0
-offset_bottom = 112.0
-
-[node name="Rule" parent="Confirm/Content" instance=ExtResource("rule")]
-offset_left = 124.0
-offset_top = 120.0
-offset_right = 276.0
-offset_bottom = 121.0
-
-[node name="Yes" type="Button" parent="Confirm/Content"]
-offset_left = 138.0
-offset_top = 125.0
-offset_right = 182.0
-offset_bottom = 141.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-
-[node name="Choice" parent="Confirm/Content/Yes" instance=ExtResource("choice")]
-
-[node name="No" type="Button" parent="Confirm/Content"]
-offset_left = 218.0
-offset_top = 125.0
-offset_right = 262.0
-offset_bottom = 141.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-
-[node name="Choice" parent="Confirm/Content/No" instance=ExtResource("choice")]
-
 [editable path="Confirm"]
 

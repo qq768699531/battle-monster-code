@@ -37,8 +37,7 @@ var _unit_price := 0
 func _ready() -> void:
 	visible = false
 	$Window.transition_finished.connect(_transition_finished)
-	$Window/Content/Yes.pressed.connect(_choose.bind(0))
-	$Window/Content/No.pressed.connect(_choose.bind(1))
+	$Window.chosen.connect(_on_confirm_choice)
 
 
 ## `prompt`／`yes`／`no` 是宿主取好的 `msg.fxt` 正文；`limit` 是可选数量上限（至少 1）。
@@ -50,7 +49,7 @@ func present(prompt: String, yes: String, no: String, icon: Texture2D, limit: in
 	selected = 0
 	_decided = false
 	$Window/Content/Item.get_node("Icon").texture = icon
-	$Window/Content/Prompt.text = prompt
+	$Window.present_neutral(prompt)
 	_kind = kind
 	_unit_price = unit_price
 	_apply_window_size(kind)
@@ -99,14 +98,9 @@ func handle_key(key: String) -> bool:
 ## 所以正文、点线、确认键整体下移 `ITEM_SELECT_PRICE_ROW`。
 func _apply_window_size(kind: int) -> void:
 	$Window.window_size = ConfirmLayout.item_select_size(BOX_WIDTH, kind)
-	var price_row := ConfirmLayout.ITEM_SELECT_PRICE_ROW \
+	$Window.header_offset = ConfirmLayout.ITEM_SELECT_PRICE_ROW \
 		if kind != ConfirmLayout.ItemSelect.DISCARD else 0
-	var content: Control = $Window/Content
-	(content.get_node("Prompt") as Control).position.y = ConfirmLayout.ITEM_SELECT_TEXT_TOP + price_row
-	(content.get_node("Rule") as Control).position.y = ConfirmLayout.ITEM_SELECT_RULE_TOP + price_row
-	for node_name in ["Yes", "No"]:
-		(content.get_node(node_name) as Control).position.y = ConfirmLayout.ITEM_SELECT_CHOICE_TOP + price_row
-	var plate: Control = content.get_node("Price")
+	var plate: Control = $Window/Content/Price
 	plate.position = Vector2(ConfirmLayout.ITEM_SELECT_PRICE_PLATE.position)
 	plate.size = Vector2(ConfirmLayout.ITEM_SELECT_PRICE_PLATE.size)
 	plate.visible = kind != ConfirmLayout.ItemSelect.DISCARD
@@ -134,14 +128,12 @@ func _confirm() -> void:
 	decided.emit(count)
 
 
-func _choose(index: int) -> void:
+## 触控：光标先移过去，光标已在的那颗才算确认（`chosen` 只在确认时发）。
+func _on_confirm_choice(accepted: bool) -> void:
 	if $Window.is_transitioning():
 		return
-	if selected == index:
-		_confirm()
-		return
-	selected = index
-	_render()
+	selected = 0 if accepted else 1
+	_confirm()
 
 
 func _close() -> void:
@@ -164,7 +156,9 @@ func _render() -> void:
 	$Window/Content/QuantityBackground.color = Color("#ff9600") if choosing else Color.BLACK
 	$Window/Content/Quantity.modulate = Color.BLACK if choosing else Color.WHITE
 	$Window/Content/Quantity.present(str(quantity))
-	$Window/Content/Yes/Choice.present(_yes, not choosing and selected == 0)
-	$Window/Content/No/Choice.present(_no, not choosing and selected == 1)
+	if choosing:
+		$Window.present_neutral($Window.body_text())
+	else:
+		$Window.present_select($Window.body_text(), selected)
 	if _kind != ConfirmLayout.ItemSelect.DISCARD:
 		$Window/Content/Price/Number.present(str(_unit_price * quantity))

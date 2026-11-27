@@ -113,8 +113,7 @@ func _ready() -> void:
 	$List/Content/Option1.pressed.connect(_select.bind(1))
 	$List/Content/Option2.pressed.connect(_select.bind(2))
 	$List/Content/Option3.pressed.connect(_select.bind(3))
-	$Prompt/Content/Yes.pressed.connect(_answer.bind(PromptChoice.YES))
-	$Prompt/Content/No.pressed.connect(_answer.bind(PromptChoice.NO))
+	$Prompt.chosen.connect(_on_prompt_choice)
 
 
 ## 建档：正文表、设置项、帮助页与两个复用页的图元。返回 false 时本覆盖层不开放。
@@ -271,21 +270,19 @@ func _method_key(key: String) -> void:
 func _prompt_key(key: String) -> void:
 	match key:
 		"ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown":
-			_prompt_selected = PromptChoice.YES if _prompt_selected == PromptChoice.NO \
-				else PromptChoice.NO
-			_render_prompt()
+			$Prompt.move_selection(-1)
+			_prompt_selected = $Prompt.selection()
 		"Enter", "Space":
-			_answer(_prompt_selected)
+			$Prompt.accept()
 		"Escape", "Backspace":
-			_answer(PromptChoice.NO)
+			$Prompt.cancel()
 
 
-func _answer(choice: int) -> void:
+func _on_prompt_choice(accepted: bool) -> void:
 	if _busy():
 		return
-	_prompt_selected = choice
-	_render_prompt()
-	if choice == PromptChoice.YES:
+	_prompt_selected = PromptChoice.YES if accepted else PromptChoice.NO
+	if accepted:
 		_close_to(NO_PAGE, 0, true)
 		return
 	_close_to(Page.CLEAR, ReturnCode.MAINMENU)
@@ -417,11 +414,7 @@ func _render_list() -> void:
 
 
 func _render_prompt() -> void:
-	$Prompt/Content/Prompt.text = _text(Msg.Id.RETURN_TO_MENU)
-	$Prompt/Content/Yes/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES),
-		_prompt_selected == PromptChoice.YES)
-	$Prompt/Content/No/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO),
-		_prompt_selected == PromptChoice.NO)
+	$Prompt.present_select(_text(Msg.Id.RETURN_TO_MENU), _prompt_selected)
 
 
 func _text(id: int) -> String:

@@ -22,6 +22,11 @@ enum Form { OK, SELECT }
 
 ## 窗宽：原生 `Menu_win_Box2_DrawSelect(&width__0, …)` 的 160；正文按 `宽 − 16` 折行。
 @export var width := 160
+## 提示上方还有一格内容（道具／数量／价格行，原生 `Field_Item_DrawSelect` 那三页）：
+## 置 true 时正文顶固定 38、点线 53、按键 58（`ConfirmLayout.ITEM_SELECT_*`），窗高由页面自己给。
+@export var header := false
+## 带价格行时整套下移 12 px（`ConfirmLayout.ITEM_SELECT_PRICE_ROW`，买卖正文顶 50）。
+@export var header_offset := 0
 
 @onready var _assets: Node = get_node("/root/AssetCatalog")
 @onready var _lines: Control = $Content/Lines
@@ -33,6 +38,7 @@ enum Form { OK, SELECT }
 var _form := Form.OK
 var _body := ""
 var _selected := 1
+var _neutral := false
 
 
 func _ready() -> void:
@@ -50,6 +56,13 @@ func present_message(text: String) -> void:
 ## 原生 `Menu_win_Box2_DrawSelect`：一段正文 + 点线 + 是／否。`selected` 默认落在「否」。
 func present_select(text: String, selected: int = 1) -> void:
 	_present(text, Form.SELECT, selected)
+
+
+## 原生 `Field_Item_DrawSelect` 的数量相位：是／否两颗画出来但都不选中（光标还不在框里）。
+func present_neutral(text: String) -> void:
+	_present(text, Form.SELECT, 1)
+	_neutral = true
+	_refresh_choices()
 
 
 ## 方向盘左右换是／否（原生选择页只有两颗键：0 是、1 否）。
@@ -105,10 +118,12 @@ func set_selection(index: int) -> void:
 ## 原生状态 28 的子状态 3 → 4、5 → 7 → 8 就是这样在同一个窗口里换入口，不重开。
 func _present(text: String, form: Form, selected: int) -> void:
 	_form = form
+	_neutral = false
 	_body = text
 	_selected = 1 if selected != 0 else 0
 	var lines: Array[String] = Layout.wrap_text(text, width - ConfirmLayout.WRAP_INSET, Layout.UI_FONT)
-	window_size = ConfirmLayout.select_size(width, lines.size())
+	if not header:
+		window_size = ConfirmLayout.select_size(width, lines.size())
 	_layout_body(lines.size())
 	_lines.present(lines)
 	# `text_line_list` 的行原型最小宽度是 196（给正文页用），不归零会把 160 窗撑开、正文溢出。
@@ -127,6 +142,17 @@ func _present(text: String, form: Form, selected: int) -> void:
 
 ## 正文、点线与按键的纵向摆位：三者都相对窗口顶边，行距 13 px 由 `ConfirmLayout` 给。
 func _layout_body(lines: int) -> void:
+	if header:
+		# `Field_Item_DrawSelect:117-169`：正文顶 38、点线 53、按键 58，三处都是固定值，不随行数走。
+		var top := ConfirmLayout.ITEM_SELECT_TEXT_TOP + header_offset
+		_lines.offset_top = float(top)
+		_lines.offset_bottom = float(top + ConfirmLayout.LINE_STEP * lines)
+		_divider.offset_top = float(ConfirmLayout.ITEM_SELECT_RULE_TOP + header_offset)
+		_divider.offset_bottom = float(ConfirmLayout.ITEM_SELECT_RULE_TOP + header_offset + ConfirmLayout.RULE_HEIGHT)
+		for button: Button in [_confirm, _yes, _no]:
+			button.offset_top = float(ConfirmLayout.ITEM_SELECT_CHOICE_TOP + header_offset)
+			button.offset_bottom = float(ConfirmLayout.ITEM_SELECT_CHOICE_TOP + header_offset + ConfirmLayout.CHOICE_SIZE.y)
+		return
 	var text_bottom := ConfirmLayout.TEXT_INSET.y + ConfirmLayout.LINE_STEP * lines
 	_lines.offset_top = float(ConfirmLayout.TEXT_INSET.y)
 	_lines.offset_bottom = float(text_bottom)
@@ -140,8 +166,10 @@ func _layout_body(lines: int) -> void:
 
 
 func _refresh_choices() -> void:
-	_yes.get_node("Choice").present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES), _selected == 0)
-	_no.get_node("Choice").present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO), _selected == 1)
+	_yes.get_node("Choice").present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES),
+		not _neutral and _selected == 0)
+	_no.get_node("Choice").present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO),
+		not _neutral and _selected == 1)
 
 
 ## 触控/鼠标按下某一颗键：光标不在它上面时只把光标移过去（原生按光标分配触控键），

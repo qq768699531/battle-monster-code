@@ -10,8 +10,7 @@ func _ready() -> void:
 	host = get_parent()
 	visible = false
 	$Window.transition_finished.connect(_transition_finished)
-	$Window/Content/Yes.pressed.connect(_choose.bind(0))
-	$Window/Content/No.pressed.connect(_choose.bind(1))
+	$Window.chosen.connect(_on_confirm_choice)
 
 
 func render() -> void:
@@ -37,9 +36,7 @@ func render() -> void:
 	$Window/Content/QuantityBackground.color = Color("#ff9600") if choosing else Color.BLACK
 	$Window/Content/Quantity.modulate = Color.BLACK if choosing else Color.WHITE
 	$Window/Content/Quantity.present(str(host.item_discard_count))
-	$Window/Content/Prompt.text = host._menu_text(82)
-	$Window/Content/Yes/Choice.present(host._menu_text(85), host.selected_item_discard == 0)
-	$Window/Content/No/Choice.present(host._menu_text(86), host.selected_item_discard == 1)
+	$Window.present_select(host._menu_text(82), host.selected_item_discard)
 
 
 func handle_key(key: String) -> bool:
@@ -89,14 +86,12 @@ func _adjust(direction: int) -> void:
 	render()
 
 
-func _choose(index: int) -> void:
+## 触控：光标先移过去，光标已在的那颗才算确认（`chosen` 只在确认时发）。
+func _on_confirm_choice(accepted: bool) -> void:
 	if not host.item_discard_open or $Window.is_transitioning():
 		return
-	if host.selected_item_discard == index:
-		confirm()
-	else:
-		host.selected_item_discard = index
-		render()
+	host.selected_item_discard = 0 if accepted else 1
+	confirm()
 
 
 func _transition_finished(opened: bool) -> void:

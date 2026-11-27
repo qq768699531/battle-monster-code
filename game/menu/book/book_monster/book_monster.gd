@@ -22,7 +22,6 @@ signal starter_confirmed
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const Battle = preload("res://game/battle/combat/battle.gd")
 const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
-const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const SlotFrame = preload("res://game/menu/party/slot_frame/slot_frame.gd")
 const SlotFrames = preload("res://game/menu/party/slot_frames/slot_frames.gd")
@@ -62,9 +61,7 @@ enum ConfirmState { BROWSE, OPEN }
 enum Answer { YES = 0, NO = 1 }
 
 ## 确认框宽：`Menu_win_Box2_DrawSelect` 的 `width` 参数（状态 16 传 160）。
-const CONFIRM_WIDTH := 160
 ## 正文折行宽度 `width − 16`（`Menu_win_Box2_DrawSelect:41` 的 `JC_fntGetPage(…, width − 16, …)`）。
-const CONFIRM_TEXT_WIDTH := 144
 
 var category := 0
 var cursor := 0
@@ -112,8 +109,7 @@ func _ready() -> void:
 	$Content/AcceptHit.pressed.connect(_accept)
 	$Content/BackHit.pressed.connect(_back)
 	$Confirm.transition_finished.connect(_confirm_finished)
-	$Confirm/Content/Yes.pressed.connect(_choose.bind(Answer.YES))
-	$Confirm/Content/No.pressed.connect(_choose.bind(Answer.NO))
+	$Confirm.chosen.connect(_on_confirm_choice)
 	# `Menu_detailDrawMonster` 先画 `obj/ui_eff` 动作 1 的底光，再画精灵；底光静止在首帧。
 	var effect: AnimationPlayer = $Content/Detail/Portrait/Clip/Effect/AnimationPlayer
 	effect.speed_scale = 0.0
@@ -323,15 +319,7 @@ func _reset_confirm() -> void:
 
 
 func _render_confirm() -> void:
-	var confirm := $Confirm as Control
-	var prompt := _confirm_prompt()
-	(confirm.get_node("Content/Prompt") as Control).text = prompt
-	var lines := Layout.wrap_text(prompt, CONFIRM_TEXT_WIDTH, Layout.UI_FONT)
-	confirm.window_size = ConfirmLayout.select_size(CONFIRM_WIDTH, lines.size())
-	(confirm.get_node("Content/Yes/Choice") as Control).present(
-		AssetCatalog.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES), _answer == Answer.YES)
-	(confirm.get_node("Content/No/Choice") as Control).present(
-		AssetCatalog.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO), _answer == Answer.NO)
+	($Confirm as Control).present_select(_confirm_prompt(), _answer)
 
 
 ## 框内按键：−4／−3 翻「是／否」（`Game_Book_Monster_mKeyPressed:107-114`）、
@@ -339,16 +327,15 @@ func _render_confirm() -> void:
 func _confirm_key(key: String) -> bool:
 	match key:
 		"ArrowLeft", "ArrowRight":
-			_answer = Answer.NO if _answer == Answer.YES else Answer.YES
-			_render_confirm()
+			$Confirm.move_selection(-1)
+			_answer = $Confirm.selection()
 		"Escape", "Backspace":
 			_close_confirm()
 		"Enter", "Space":
 			if _answer == Answer.NO or _closing_confirm:
 				_close_confirm()
 			else:
-				_choose(Answer.YES)
-		_:
+				$Confirm.accept()
 			return false
 	return true
 
@@ -361,18 +348,15 @@ func _confirm_finished(opened: bool) -> void:
 
 
 ## 触控：框内两块是真实 Button（原生 `EFC_mainTouchSET(-5/-3)`），点「是」直接请宿主提交。
-func _choose(answer: int) -> void:
+## 触控：光标先移过去，光标已在的那颗才算确认（`chosen` 只在确认时发）。
+func _on_confirm_choice(accepted: bool) -> void:
 	if _confirm != ConfirmState.OPEN or _closing_confirm:
 		return
-	if answer != _answer:
-		_answer = answer
-		_render_confirm()
-		return
-	if answer == Answer.NO:
+	_answer = Answer.YES if accepted else Answer.NO
+	if not accepted:
 		_close_confirm()
 		return
 	starter_confirmed.emit()
-
 
 ## 正文 fxt 101「[%s]确定吗?」，`%s` 是 `Item_datBasic` 读出的物种名
 ## （`Game_Book_Monster_mPaint:33-38`）；本工程取 `common/item_mon.dat` 的组名，与详情同一份。

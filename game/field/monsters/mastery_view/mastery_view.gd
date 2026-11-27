@@ -18,7 +18,6 @@ extends "res://engine/ui/window_transition/window_transition.gd"
 
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_animation.gd")
-const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 
 ## Box2 确认框的页面状态：原生 `current_state_index_bits+1`（`Game_Character_Select_mKeyPressed`），
@@ -34,9 +33,7 @@ enum Answer { YES = 0, NO = 1 }
 const MASTERY_WINDOW := Vector2i(228, 214)
 ## 确认框宽：`Menu_win_Box2_DrawSelect` 的 `width` 参数（`Game_Character_Select_mKeyPressed:27`
 ## 传 160）。窗高不写死，按正文折行数走 `ConfirmLayout.select_size`。
-const CONFIRM_WIDTH := 160
 ## 正文折行宽度 `width − 16`（`Menu_win_Box2_DrawSelect:41` 的 `JC_fntGetPage(…, width_1 - 16, …)`）。
-const CONFIRM_TEXT_WIDTH := 144
 ## 候选数：`Game_Character_Select_init` 写 `transition+1 = 6`。
 const MASTERY_ROWS := 6
 ## 六个物种号＝每组（`Book.MONSTER_SLOTS` 个）的最后一只（`22 * m + 21`）。
@@ -95,8 +92,7 @@ func _ready() -> void:
 	for index in MASTERY_ROWS:
 		(_mastery_row(index).get_node("Selected") as TextureRect).texture = _selection_texture(index)
 	$Confirm.transition_finished.connect(_confirm_finished)
-	$Confirm/Content/Yes.pressed.connect(_choose.bind(Answer.YES))
-	$Confirm/Content/No.pressed.connect(_choose.bind(Answer.NO))
+	$Confirm.chosen.connect(_on_confirm_choice)
 	# 候选格没有 Button，选中走 `field_runtime.handle_touch` → `row_at` → `press_row`。
 
 
@@ -121,8 +117,8 @@ func move(step: int) -> void:
 		return
 	if _confirm == ConfirmState.OPEN:
 		# 原生子相位 1 的 −4／−3 只翻单选的「是／否」（`Game_Character_Select_mKeyPressed:40-48`）。
-		_answer = Answer.NO if _answer == Answer.YES else Answer.YES
-		_render_confirm()
+		$Confirm.move_selection(-1 if step < 0 else 1)
+		_answer = $Confirm.selection()
 		return
 	var count := _mastery_names.size()
 	if count == 0:
@@ -303,15 +299,7 @@ func _reset_confirm() -> void:
 
 
 func _render_confirm() -> void:
-	var confirm := $Confirm as Control
-	var prompt := _confirm_prompt()
-	(confirm.get_node("Content/Prompt") as Control).text = prompt
-	var lines := Layout.wrap_text(prompt, CONFIRM_TEXT_WIDTH, Layout.UI_FONT)
-	confirm.window_size = ConfirmLayout.select_size(CONFIRM_WIDTH, lines.size())
-	(confirm.get_node("Content/Yes/Choice") as Control).present(
-		AssetCatalog.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES), _answer == Answer.YES)
-	(confirm.get_node("Content/No/Choice") as Control).present(
-		AssetCatalog.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO), _answer == Answer.NO)
+	($Confirm as Control).present_select(_confirm_prompt(), _answer)
 
 
 ## 正文 fxt 164「决定吗?」（`Menu_CharacterSelect_Draw:177-178`）。
@@ -321,14 +309,12 @@ func _confirm_prompt() -> String:
 
 ## 原生触控：选中那一块注册 −5（确认），另一块 −3／−4（切光标）。键盘的「是」靠宿主读光标后提交，
 ## 触控没有按键事件，只好请宿主的公开入口 `submit_mastery()`——与键盘确定走的是同一个入口。
-func _choose(answer: int) -> void:
+## 触控：光标先移过去，光标已在的那颗才算确认（`chosen` 只在确认时发）。
+func _on_confirm_choice(accepted: bool) -> void:
 	if _confirm != ConfirmState.OPEN or _closing_confirm:
 		return
-	if answer != _answer:
-		_answer = answer
-		_render_confirm()
-		return
-	if answer == Answer.NO:
+	_answer = Answer.YES if accepted else Answer.NO
+	if not accepted:
 		_close_confirm()
 		return
 	var field: Object = get_parent()

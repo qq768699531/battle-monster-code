@@ -8,8 +8,7 @@ func _ready() -> void:
 	host = get_parent()
 	visible = false
 	$Window.transition_finished.connect(_transition_finished)
-	$Window/Content/Yes.pressed.connect(_choose.bind(0))
-	$Window/Content/No.pressed.connect(_choose.bind(1))
+	$Window.chosen.connect(_on_confirm_choice)
 
 
 func render() -> void:
@@ -25,10 +24,8 @@ func render() -> void:
 	if int(arguments[3]) >= 0:
 		$Window.tooltip_text += "\n已穿戴的装备也会一并丢弃，不会返还背包。"
 	cell.tooltip_text = $Window.tooltip_text
-	$Window/Content/Prompt.text = host._menu_text(82)
+	$Window.present_select(host._menu_text(82), host.selected_party_discard)
 	$Window/Content/Quantity.present("1")
-	$Window/Content/Yes/Choice.present(host._menu_text(85), host.selected_party_discard == 0)
-	$Window/Content/No/Choice.present(host._menu_text(86), host.selected_party_discard == 1)
 
 
 func handle_key(key: String) -> bool:
@@ -67,14 +64,12 @@ func confirm() -> void:
 	host._render_content()
 
 
-func _choose(index: int) -> void:
+## 触控：光标先移过去，光标已在的那颗才算确认（`chosen` 只在确认时发）。
+func _on_confirm_choice(accepted: bool) -> void:
 	if not host.party_discard_open or $Window.is_transitioning():
 		return
-	if host.selected_party_discard == index:
-		confirm()
-	else:
-		host.selected_party_discard = index
-		render()
+	host.selected_party_discard = 0 if accepted else 1
+	confirm()
 
 
 func _transition_finished(opened: bool) -> void:

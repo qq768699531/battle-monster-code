@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://game/field/quests/quest_detail/quest_detail.gd" id="script"]
+[ext_resource type="PackedScene" path="res://engine/ui/confirm_box/confirm_box.tscn" id="confirm_box"]
 [ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://game/menu/screen/menu_list_button/menu_list_button.tscn" id="button"]
@@ -172,60 +173,9 @@ theme_override_styles/hover = SubResource("Empty")
 theme_override_styles/pressed = SubResource("Empty")
 theme_override_styles/focus = SubResource("Empty")
 
-[node name="Confirm" parent="." instance=ExtResource("window")]
+[node name="Confirm" parent="." instance=ExtResource("confirm_box")]
 visible = false
-kind = 1
-
-[node name="Content" parent="Confirm" index="2"]
 visible = true
-
-[node name="ModalLayer" type="Control" parent="Confirm" index="1"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Prompt" parent="Confirm/Content" instance=ExtResource("label")]
-offset_left = 128.0
-offset_top = 102.0
-offset_right = 272.0
-offset_bottom = 112.0
-horizontal_alignment = 1
-
-[node name="Divider" parent="Confirm/Content" instance=ExtResource("line")]
-offset_left = 124.0
-offset_top = 120.0
-offset_right = 276.0
-offset_bottom = 121.0
-
-[node name="Yes" type="Button" parent="Confirm/Content"]
-offset_left = 138.0
-offset_top = 125.0
-offset_right = 182.0
-offset_bottom = 141.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-
-[node name="Choice" parent="Confirm/Content/Yes" instance=ExtResource("choice")]
-
-[node name="No" type="Button" parent="Confirm/Content"]
-offset_left = 218.0
-offset_top = 125.0
-offset_right = 262.0
-offset_bottom = 141.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-
-[node name="Choice" parent="Confirm/Content/No" instance=ExtResource("choice")]
-
 [node name="WorldMap" parent="." instance=ExtResource("world_map")]
 visible = false
 

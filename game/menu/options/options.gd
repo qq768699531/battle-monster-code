@@ -9,8 +9,7 @@ func _ready() -> void:
 	for index in range(host.OPTION_MESSAGE_IDS.size()):
 		var button: Button = get_node("Card%d" % index)
 		button.pressed.connect(_select_option.bind(index))
-	$ReturnWindow/Content/Yes.pressed.connect(_choose_return.bind(0))
-	$ReturnWindow/Content/No.pressed.connect(_choose_return.bind(1))
+	$ReturnWindow.chosen.connect(_on_return_choice)
 	$ReturnWindow.transition_finished.connect(_return_finished)
 
 func handle_key(key: String) -> bool:
@@ -22,10 +21,11 @@ func handle_key(key: String) -> bool:
 		if key in ["Escape", "Backspace"]:
 			$ReturnWindow.close_window()
 		elif key in ["ArrowLeft", "ArrowRight"]:
-			host.selected_option_return = 1 - host.selected_option_return
+			$ReturnWindow.move_selection(-1)
+			host.selected_option_return = $ReturnWindow.selection()
 			host._render_content()
 		elif key in ["Enter", "Space"]:
-			_confirm_return()
+			$ReturnWindow.accept()
 		return true
 	if not host.option_navigation_open:
 		if key in ["ArrowUp", "ArrowDown", "Enter", "Space"]:
@@ -62,9 +62,7 @@ func _render_options() -> void:
 		button.disabled = host.option_return_open
 	$ReturnWindow.visible = host.option_return_open
 	if host.option_return_open:
-		$ReturnWindow/Content/Prompt.text = host._menu_text(36)
-		$ReturnWindow/Content/Yes/Choice.present(host._menu_text(85), host.selected_option_return == 0)
-		$ReturnWindow/Content/No/Choice.present(host._menu_text(86), host.selected_option_return == 1)
+		$ReturnWindow.present_select(host._menu_text(36), host.selected_option_return)
 
 
 func _select_option(index: int) -> void:
@@ -80,14 +78,12 @@ func _select_option(index: int) -> void:
 		host._render_content()
 
 
-func _choose_return(index: int) -> void:
+## 触控/鼠标：控件内部已做「先移光标，光标在那颗才算确认」，这里只收结果。
+func _on_return_choice(accepted: bool) -> void:
 	if $ReturnWindow.is_transitioning():
 		return
-	if index == host.selected_option_return:
-		_confirm_return()
-	else:
-		host.selected_option_return = index
-		host._render_content()
+	host.selected_option_return = 0 if accepted else 1
+	_confirm_return()
 
 
 func _confirm_return() -> void:

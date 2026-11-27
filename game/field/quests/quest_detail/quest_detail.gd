@@ -32,7 +32,6 @@ signal closed
 signal accepted(quest_id: int, slot: int)
 
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
-const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 const UI_THEME = preload("res://engine/ui/native_label/ui_theme.tres")
 
 ## 任务正文走 `TextTables.QUEST_SOURCE`（`qst/qstlist.fxt:<任务号>`），payload 是
@@ -62,9 +61,7 @@ const CHOICE_YES := 0
 const CHOICE_NO := 1
 ## 确认框宽：`Qst_chtKeyPress:112-117` 进层 2 时 `Menu_win_Box2_DrawSelect` 的 `width` 参数。
 ## 窗高不写死，`_open_confirm` 按正文折行数走 `ConfirmLayout.select_size`。
-const CONFIRM_WIDTH := 160
 ## 正文折行宽度 `width − 16`（`Menu_win_Box2_DrawSelect:41` 的 `JC_fntGetPage(…, width_1 - 16, …)`）。
-const CONFIRM_TEXT_WIDTH := 144
 ## 窗口开合相位用父脚本的 `BoxPhase`（原生 `Menu_win_Box4_DrawWindow@0x4F82C` 的 `*a5`）：
 ## 进页面（`Field_Quest_Detail_init` 写 1）、开图与层 1 返回（`Qst_chtKeyPress` 都写 1）都从 1 起，
 ## 每帧按符号 ±1；4 是稳态，-1 起收拢、-4 由 `Qst_chtRUN` 收尾。接受确认框与外层同一个枚举
@@ -124,8 +121,7 @@ func _ready() -> void:
 	$Content/ActionButton.pressed.connect(_on_page_pressed.bind(PAGE_ACTION))
 	$Content/BackHit.pressed.connect(close)
 	$Confirm.transition_finished.connect(_confirm_transition_finished)
-	$Confirm/Content/Yes.pressed.connect(_resolve_confirm.bind(CHOICE_YES))
-	$Confirm/Content/No.pressed.connect(_resolve_confirm.bind(CHOICE_NO))
+	$Confirm.chosen.connect(_on_confirm_choice)
 	_world_map = $WorldMap
 	_world_map.close_requested.connect(_close_world_map)
 
@@ -200,12 +196,12 @@ func handle_key(key: String) -> bool:
 			"ArrowLeft", "ArrowRight":
 				if _closing_confirm:
 					return true
-				_choice = CHOICE_NO if _choice == CHOICE_YES else CHOICE_YES
-				_render_confirm()
+				$Confirm.move_selection(-1)
+				_choice = $Confirm.selection()
 			"Enter", "Space":
-				_resolve_confirm(_choice)
+				$Confirm.accept()
 			"Escape", "Backspace":
-				_close_confirm()
+				$Confirm.cancel()
 			_:
 				pass
 		return true
@@ -343,12 +339,8 @@ func _open_confirm() -> void:
 	_closing_confirm = false
 	_choice = CHOICE_YES
 	_notice = ""
-	$Confirm/Content/Prompt.text = _assets.text_message(Msg.SOURCE, Msg.Id.QUEST_FIELD_ACCEPT_PROMPT)
-	var lines := Layout.wrap_text(String($Confirm/Content/Prompt.text),
-		CONFIRM_TEXT_WIDTH, Layout.UI_FONT)
-	$Confirm.window_size = ConfirmLayout.select_size(CONFIRM_WIDTH, lines.size())
-	_render_confirm()
-	$Confirm.show()
+	$Confirm.present_select(
+		_assets.text_message(Msg.SOURCE, Msg.Id.QUEST_FIELD_ACCEPT_PROMPT), _choice)
 	$Confirm.open_window()
 
 
@@ -385,20 +377,20 @@ func closing_confirm() -> bool:
 	return _closing_confirm
 
 
-func _render_confirm() -> void:
-	$Confirm/Content/Yes/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES),
-		_choice == CHOICE_YES)
-	$Confirm/Content/No/Choice.present(_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO),
-		_choice == CHOICE_NO)
-
+## 触控：光标先移过去，光标已在的那颗才算确认（`chosen` 只在确认时发）。
+func _on_confirm_choice(accepted: bool) -> void:
+	if _layer != LAYER_CONFIRM:
+		return
+	_choice = CHOICE_YES if accepted else CHOICE_NO
+	_resolve_confirm(accepted)
 
 ## `Qst_chtKeyPress` 子状态 2 的 `-5`：选「否」退回详情，选「是」先 `Qst_stdEmpty`
 ## 抢槽（失败弹 fxt 512），成功再 `Qst_stdSET` 写入任务槽。
 ## 原生这一段没有「收拢中」判断，`-5` 一律按当前选中项处理，所以这里也不看 `_closing_confirm`。
-func _resolve_confirm(value: int) -> void:
+func _resolve_confirm(choose_yes: bool) -> void:
 	if _layer != LAYER_CONFIRM:
 		return
-	if value != CHOICE_YES:
+	if not choose_yes:
 		_close_confirm()
 		return
 	if not _log.accept(_table, quest_id, context):

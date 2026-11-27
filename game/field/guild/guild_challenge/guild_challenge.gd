@@ -12,7 +12,7 @@ const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 ## `guild_code − 1`）`y+75` 白、`msg 58`（胜利后排名上升一位）`y+95` `#FFFF55`，三行都居中于 `x+90`。
 ##
 ## 确认框是 `Menu_win_Box2_DrawSelect(160, 标题 null, msg 59, 光标)`：窗高与正文／点线／按键
-## 摆位都由 `_layout_confirm()` 按 msg 59 的实际折行数算（高度公式在 `ConfirmLayout`），
+## 摆位由通用确认框 `engine/ui/confirm_box` 按 msg 59 的实际折行数算（高度公式在 `ConfirmLayout`），
 ## 单行时就是 160×57 @ (120, 91)；正文 `(x+8, y+11)`、点线 `(x+4, 13·行数+5+y)`、
 ## 两个 44×16 键中心在 `x + w/4`／`x + 3w/4`，左「是」`msg 85`、右「否」`msg 86`，
 ## 选中那只 `#FF9200` 底 + 黑字、另一只灰字。
@@ -30,8 +30,6 @@ signal started(constructors: Array)
 signal closed
 
 const GuildBattle = preload("res://game/field/guild/guild_battle/guild_battle.gd")
-const Layout = preload("res://game/prime/ui/layout/layout.gd")
-const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
 ## `FieldData+0x08`：0 = 本页、1 = 确认框。
 enum Page { MAIN, CONFIRM }
@@ -39,9 +37,7 @@ enum Page { MAIN, CONFIRM }
 enum Answer { YES, NO }
 
 ## 确认框的 `Menu_win_Box2_DrawSelect` 宽度（原生 `Field_Guild_Challenge_Draw` 传的立即数 160）。
-const CONFIRM_WIDTH := 160
 ## 确认框正文折行宽度 `width − 16`（`Menu_win_Box2_DrawSelect:41` 的 `JC_fntGetPage`）。
-const CONFIRM_TEXT_WIDTH := 144
 
 ## `ParamData.guild_code_bits`（原生挑战页只显示原始名次数字）。
 var code := 0
@@ -62,8 +58,7 @@ func _ready() -> void:
 	$Confirm.transition_finished.connect(_confirm_finished)
 	$Window/Content/AcceptHit.pressed.connect(_open_confirm)
 	$Window/Content/BackHit.pressed.connect(close)
-	$Confirm/Content/Yes.pressed.connect(_choose.bind(Answer.YES))
-	$Confirm/Content/No.pressed.connect(_choose.bind(Answer.NO))
+	$Confirm.chosen.connect(_on_confirm_choice)
 
 
 ## `guild_code` = 原生的转移参数（`ParamData.guild_code_bits`）；`assets` 提供
@@ -112,13 +107,12 @@ func _handle_confirm_key(key: String) -> bool:
 		return true
 	match key:
 		"ArrowLeft", "ArrowRight":
-			choice = Answer.NO if choice == Answer.YES else Answer.YES
-			_render()
+			$Confirm.move_selection(-1)
+			choice = $Confirm.selection()
 		"Enter", "Space":
-			_decide()
+			$Confirm.accept()
 		"Escape", "Backspace":
-			_cancel_confirm()
-		_:
+			$Confirm.cancel()
 			return false
 	return true
 
@@ -155,14 +149,12 @@ func _cancel_confirm() -> void:
 	$Confirm.close_window()
 
 
-func _choose(answer: int) -> void:
+## 触控/鼠标：光标先移过去，光标已在的那颗才算确认（`chosen` 只在确认时发）。
+func _on_confirm_choice(accepted: bool) -> void:
 	if _closing or page != Page.CONFIRM or $Confirm.is_transitioning():
 		return
-	if answer == choice:
-		_decide()
-		return
-	choice = answer
-	_render()
+	choice = Answer.YES if accepted else Answer.NO
+	_decide()
 
 
 func _window_finished(opened: bool) -> void:
@@ -200,38 +192,8 @@ func _render() -> void:
 	if not _error.is_empty() and _error != _error_shown:
 		_error_shown = _error
 		MessageStack.say(_error)
-	_layout_confirm(_assets.text_message(Msg.SOURCE, Msg.Id.GUILD_CHALLENGE_PROMPT))
-	$Confirm/Content/Yes/Choice.present(
-		_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_YES), choice == Answer.YES)
-	$Confirm/Content/No/Choice.present(
-		_assets.text_message(Msg.SOURCE, Msg.Id.ANSWER_NO), choice == Answer.NO)
-
-
-## 确认框是 `Menu_win_Box2_DrawSelect(160, 标题 null, msg 59, 光标)`：窗高按实际折行数由
-## `ConfirmLayout` 算（场景里不再写死尺寸），正文／点线／两只按键都跟着窗口矩形摆位——正文位置、
-## 点线缩进与间隔、按键 44×16 都取 `ConfirmLayout` 里那几个常量（Box2 三个绘制入口共用一份）。
-func _layout_confirm(prompt: String) -> void:
-	$Confirm/Content/Prompt.text = prompt
-	var lines := Layout.wrap_text(prompt, CONFIRM_TEXT_WIDTH, Layout.UI_FONT)
-	var size := ConfirmLayout.select_size(CONFIRM_WIDTH, lines.size())
-	$Confirm.window_size = size
-	# `Menu_win_Box2_DrawWindow` 在 400×240 里居中（整数截断）。
-	var rect := Layout.box4_window_frame(size)
-	$Confirm/Content/Prompt.position = Vector2(rect.position + ConfirmLayout.TEXT_INSET)
-	var rule_y := rect.position.y + ConfirmLayout.TEXT_INSET.y + \
-		ConfirmLayout.LINE_STEP * lines.size() + ConfirmLayout.RULE_GAP
-	$Confirm/Content/Rule.position = Vector2(rect.position.x + ConfirmLayout.RULE_INSET, rule_y)
-	$Confirm/Content/Rule.size = Vector2(rect.size.x - 2 * ConfirmLayout.RULE_INSET,
-		ConfirmLayout.RULE_HEIGHT)
-	var choice_y := rule_y + ConfirmLayout.RULE_GAP
-	var yes: Control = $Confirm/Content/Yes
-	yes.position = Vector2(rect.position.x + rect.size.x / 4 - ConfirmLayout.CHOICE_SIZE.x / 2,
-		choice_y)
-	yes.size = Vector2(ConfirmLayout.CHOICE_SIZE)
-	var no: Control = $Confirm/Content/No
-	no.position = Vector2(rect.position.x + 3 * rect.size.x / 4 - \
-		ConfirmLayout.CHOICE_SIZE.x / 2, choice_y)
-	no.size = Vector2(ConfirmLayout.CHOICE_SIZE)
+	$Confirm.present_select(
+		_assets.text_message(Msg.SOURCE, Msg.Id.GUILD_CHALLENGE_PROMPT), choice)
 
 
 ## 原生 `EX_knlSprintk(s, JC_fxt2Return(56/57), 值)`：记录正文里带 `%d`。

@@ -23,7 +23,6 @@ const PAGE_COUNT := 2
 
 ## `Menu_win_Box2_DrawSelect`：`a4 == 0` 高亮左键「是」（msg 85），1 高亮「否」（msg 86）。
 const CHOICE_YES := 0
-const CHOICE_NO := 1
 
 ## 列表组号（原生 `QstData.active_marker`）：1 = 脚本任务，2 = 公会槽，3 = 普通槽；
 ## 类型条与「放弃」一项都按它分支。
@@ -34,7 +33,6 @@ var host: Control
 var _quest: Dictionary = {}
 var _page := PAGE_MAP
 var _confirming := false
-var _choice := CHOICE_YES
 ## 确认框在收拢中（`Menu_win_Box2_DrawWindow` 每帧把相位按符号推进，1→4 稳态、−1→−4 收拢）。
 var _closing := false
 ## 收拢完要回列表（选「是」）：期间列表先画出来，框继续叠在上面收。
@@ -50,8 +48,7 @@ func _ready() -> void:
 	$Confirm.transition_finished.connect(_on_confirm_transition_finished)
 	$Bounds/MapButton.pressed.connect(_on_page_pressed.bind(PAGE_MAP))
 	$Bounds/DiscardButton.pressed.connect(_on_page_pressed.bind(PAGE_ACTION))
-	$Confirm/Content/Yes.pressed.connect(_choose.bind(CHOICE_YES))
-	$Confirm/Content/No.pressed.connect(_choose.bind(CHOICE_NO))
+	$Confirm.chosen.connect(_on_confirm_choice)
 	$Confirm.hide()
 
 
@@ -68,13 +65,12 @@ func handle_key(key: String) -> bool:
 	if _confirming:
 		match key:
 			"ArrowLeft", "ArrowRight":
-				_choice = CHOICE_NO if _choice == CHOICE_YES else CHOICE_YES
-				_render_confirm()
+				$Confirm.move_selection(-1)
 			"Enter", "Space":
-				_resolve_confirm()
+				$Confirm.accept()
 			"Escape", "Backspace":
 				# CLR 与「否」同路：相位 −1，层号留在 3，收拢完回详情层。
-				_start_confirm_close(false)
+				$Confirm.cancel()
 		return true
 	if key in ["Escape", "Backspace"]:
 		_close_to_list()
@@ -186,31 +182,21 @@ func _open_confirm() -> void:
 	if _confirming or _closing or int(_quest.get("id", -1)) < 0:
 		return
 	_confirming = true
-	_choice = CHOICE_YES
-	$Confirm/Content/Prompt.text = host._menu_text(Msg.Id.QUEST_ABANDON_PROMPT)
-	_render_confirm()
+	$Confirm.present_select(host._menu_text(Msg.Id.QUEST_ABANDON_PROMPT), CHOICE_YES)
 	$Confirm.show()
 	$Confirm.open_window()
 
 
-func _render_confirm() -> void:
-	$Confirm/Content/Yes/Choice.present(host._menu_text(Msg.Id.ANSWER_YES), _choice == CHOICE_YES)
-	$Confirm/Content/No/Choice.present(host._menu_text(Msg.Id.ANSWER_NO), _choice == CHOICE_NO)
-
-
-func _choose(choice: int) -> void:
+## 原生 `0x4D096`：光标 0（是）清槽并回列表；其余只收框，`Menu_Quest_mRun` 之后把层号写回 1（详情）。
+func _on_confirm_choice(accepted: bool) -> void:
 	if not _confirming or _closing:
 		return
-	if _choice == choice:
-		_resolve_confirm()
-		return
-	_choice = choice
-	_render_confirm()
+	_resolve_confirm(accepted)
 
 
-## `0x4D096`：光标 0（是）清槽并回列表；其余只收框，`Menu_Quest_mRun` 之后把层号写回 1（详情）。
-func _resolve_confirm() -> void:
-	if _choice != CHOICE_YES:
+## `0x4D096`：清槽并回列表（选「是」），否则只收框。
+func _resolve_confirm(accepted: bool) -> void:
+	if not accepted:
 		_start_confirm_close(false)
 		return
 	var quest_id := int(_quest.get("id", -1))
