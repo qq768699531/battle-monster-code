@@ -857,7 +857,7 @@ func buy_network_offer(offer: Dictionary) -> bool:
 		notice = str(result.get("error", "NET 购买失败"))
 		_render_content()
 		return false
-	notice = "已购买 %s ×%d（付款暂未接通）" % [_native_item_name(offer), int(offer.quantity)]
+	notice = "已购买 %s ×%d" % [_native_item_name(offer), int(offer.quantity)]
 	last_progress_operation = {"kind": "network-buy", "item_id": int(offer.id),
 		"count": int(offer.quantity)}
 	progress_changed.emit(story_progress.duplicate(true))

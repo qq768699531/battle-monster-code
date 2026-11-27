@@ -249,4 +249,10 @@ enum Id {
 	## 第 7 组 9–14 的入包失败提示（`Ball_stdUseEx` 的 case 22／24 → `msg.fxt:498／499`）。
 	ITEM_MONSTER_STORAGE_FULL = 498, ## 「精灵储存空间不足.」：随机球的 `Ball_stdAddEx` 返回空
 	ITEM_SKILL_BOOK_STORAGE_FULL = 499, ## 「技能书储存空间不足.」：随机技能书的 `Item_stdAddEx` 返回 0
+	## NET 商店（`Menu_Network_mKeyPressed` 组 1 的 −5 → `Game_Cash_*` 付款窗）：
+	NET_PURCHASED = 95,          ## 「购买完毕」（`Game_Cash_mPaint` 状态 6 的 `Menu_win_Box2_DrawOk` 正文）
+	NET_CANNOT_BUY = 196,        ## 「现在无法购买」（同上组 1 的 −5 在 `current_event_resource_id <= 2` 时只推这条）
+	NET_CONFIRM_TITLE = 567,     ## 「确认支付」（`Menu_win_Box2_DrawSelectCash` 的标题）
+	NET_CONFIRM_BUY = 568,       ## 「要买这个道具吗?」（付款窗正文，现金档 ≤ 3）
+	NET_CONFIRM_PAY_AGAIN = 570, ## 「再次确认支付.」（付款窗正文，其余档位）
 }

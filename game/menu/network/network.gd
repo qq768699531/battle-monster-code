@@ -5,19 +5,33 @@ const SlotFrame = preload("res://game/menu/party/slot_frame/slot_frame.gd")
 var host: Control
 var _offers: Array[Dictionary]
 var _first_index := 0
+## 正在付款确认的那一格（原生 `Game_Cash_init` 把 `purchase_parameter_bits` 记下来）。
+var _paying: Dictionary = {}
 
 
 func _ready() -> void:
 	hide()
 	host = get_parent()
 	_offers = host.Menu.native_network_offers()
+	$Confirm.chosen.connect(_on_payment_choice)
+	$Confirm.confirmed.connect(_close_payment)
 	for slot in range($Grid.get_child_count()):
 		$Grid.get_child(slot).pressed.connect(_select_offer.bind(slot))
 	$Scroll/UpHit.pressed.connect(_move.bind(-6))
 	$Scroll/DownHit.pressed.connect(_move.bind(6))
 
 
+## 付款确认窗开着时按键全归它（原生 `Menu_Network_mKeyPressed` 的组 2 直接转 `Game_Cash_mKeyPressed`）。
 func handle_key(key: String) -> bool:
+	if $Confirm.visible:
+		match key:
+			"ArrowLeft", "ArrowRight":
+				$Confirm.move_selection(-1)
+			"Enter", "Space":
+				$Confirm.accept()
+			"Escape", "Backspace":
+				$Confirm.cancel()
+		return true
 	if not host.network_navigation_open:
 		if key in ["ArrowDown", "Enter", "Space"]:
 			host.network_navigation_open = true
@@ -55,13 +69,44 @@ func _select_offer(slot: int) -> void:
 		host._render_content()
 
 
-## 确认这一格：原生 `Menu_NET_*` 的购买流程。付款阶段尚未接通，宿主只入包、不扣金币
-## （`menu_view.buy_network_offer` 负责写背包、推提示与 `progress_changed`）。
+## 确认这一格：原生 `Menu_Network_mKeyPressed` 组 1 的 −5 —— 先核 `Item_stdIsAdd`（放不下就只推
+## 「现在无法购买」），再 `Game_Cash_init(cash_tag, focus)` 开付款确认窗（标题 567「确认支付」，
+## 正文现金档 568、其余 570，光标初值 1 = 「否」）。
 func _confirm() -> void:
-	if host.selected_network_index < _offers.size():
-		host.buy_network_offer(_offers[host.selected_network_index])
-	else:
+	if host.selected_network_index >= _offers.size():
 		host._render_content()
+		return
+	var offer: Dictionary = _offers[host.selected_network_index]
+	if not host.Menu.can_buy_network_offer(host.story_progress, offer):
+		host.notice = host._menu_text(Msg.Id.NET_CANNOT_BUY)
+		host._render_content()
+		return
+	_paying = offer
+	var body: String = host._menu_text(Msg.Id.NET_CONFIRM_BUY if int(offer.cash_tag) <= 3 \
+		else Msg.Id.NET_CONFIRM_PAY_AGAIN)
+	$Confirm.present_select(host._menu_text(Msg.Id.NET_CONFIRM_TITLE) + "\n" + body, 1)
+	$Confirm.show()
+	$Confirm.open_window()
+
+
+## 付款窗的结果：选「是」 → 入包并推「购买完毕」；选「否」 → 关窗回货架。
+func _on_payment_choice(accepted: bool) -> void:
+	if _paying.is_empty() or $Confirm.is_transitioning():
+		return
+	if not accepted:
+		_close_payment()
+		return
+	var offer: Dictionary = _paying
+	_paying = {}
+	if not host.buy_network_offer(offer):
+		$Confirm.present_message(host._menu_text(Msg.Id.NET_CANNOT_BUY))
+		return
+	$Confirm.present_message(host._menu_text(Msg.Id.NET_PURCHASED))
+
+
+func _close_payment() -> void:
+	_paying = {}
+	$Confirm.close_window()
 
 
 func _capacity() -> int:

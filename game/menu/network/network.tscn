@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://game/menu/item/item_description/item_description.tscn" id="description"]
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://engine/ui/currency_amount/currency_amount.tscn" id="currency"]
+[ext_resource type="PackedScene" path="res://engine/ui/confirm_box/confirm_box.tscn" id="confirm_box"]
 
 [sub_resource type="AtlasTexture" id="Atlas_digits"]
 atlas = ExtResource("Sheet_common_ui_number")
@@ -153,6 +154,9 @@ offset_left = 94.0
 offset_top = 163.0
 offset_right = 306.0
 offset_bottom = 222.0
+
+[node name="Confirm" parent="." instance=ExtResource("confirm_box")]
+visible = false
 
 [editable path="Scroll"]
 [editable path="Price"]

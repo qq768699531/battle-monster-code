@@ -2247,6 +2247,18 @@ func gather_item(item_id: int, quantity: int) -> Dictionary:
 	return {"ok": true, "id": item_id, "count": quantity}
 
 
+## NET 商店的一单购买（原生 `Menu_Network_mKeyPressed` 组 1 的 −5 → `Game_Cash_*`）：
+## 原生付款走 `JB_sysPurchase` 的应用内付费，本工程没有可接的渠道，确认后按成功处理。
+## 入包走与其它入手同一条 `_add_inventory_item`，所以效果流照常推 `item-obtained`（fxt 415），
+## 野外会照标准入手栈消息处理。返回空串表示成功，否则是给页面显示的拒绝原因。
+func network_buy_item(item_id: int, quantity: int) -> String:
+	if _disposed or progress.is_empty() or not boundary.is_empty():
+		return "存档尚未载入或流程被拦住"
+	if not _add_inventory_item(item_id, quantity):
+		return "背包放不下这些道具"
+	return ""
+
+
 ## 原生 `Ball_stdAdd`：捕获到的个体进怪物背包，`Param_bookSetMonster(定义号 % 1000, 1)`
 ## 登记图鉴。背包满时原生 `Ball_stdAdd` 返回空指针、什么也不加，这里同样只报错不入包。
 func capture_monster(record: Dictionary) -> String:

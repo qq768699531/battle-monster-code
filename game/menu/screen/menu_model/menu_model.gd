@@ -745,6 +745,11 @@ static func buy_network_offer(progress: Dictionary, offer: Dictionary) -> Dictio
 	return {"ok": true, "id": item_id, "count": count}
 
 
+## 同一条入包规则的试算：NET 页开付款确认前先核对背包放不放得下（原生 `Item_stdIsAdd`）。
+static func can_buy_network_offer(progress: Dictionary, offer: Dictionary) -> bool:
+	return bool(buy_network_offer(progress.duplicate(true), offer).get("ok", false))
+
+
 static func menu_footer_at(x: float, y: float) -> Variant:
 	if y < 220 or y >= 240:
 		return null

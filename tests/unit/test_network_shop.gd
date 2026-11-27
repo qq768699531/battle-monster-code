@@ -2,6 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const NetworkScene = preload("res://game/menu/network/network.tscn")
+const Box = preload("res://engine/ui/confirm_box/confirm_box.gd")
 
 
 ## NET 页的宿主（`menu_view`）在测试里只留确认时真正用到的接口。
@@ -12,11 +13,15 @@ class FakeHost extends Control:
 	var selected_network_index := 0
 	var network_scroll_start := 0
 	var notice := ""
+	var story_progress: Dictionary = {"inventory": {}, "parameter": {"moneyBalance": 0}}
 	var bought: Array = []
 	var renders := 0
 
 	func _render_content() -> void:
 		renders += 1
+
+	func _menu_text(id: int) -> String:
+		return "文本%d" % id
 
 	func buy_network_offer(offer: Dictionary) -> bool:
 		bought.append(offer)
@@ -40,21 +45,8 @@ func test_model_rejects_a_full_bag() -> void:
 	assert_true(not progress["inventory"].has("7000"), "拒绝时不入包")
 
 
-## NET 页确认时把光标那一格交给宿主购买（写背包与 `progress_changed` 都在宿主侧）。
-func test_screen_confirm_delegates_to_the_host() -> void:
-	var host := FakeHost.new()
-	add_child_autofree(host)
-	var screen: Control = NetworkScene.instantiate()
-	host.add_child(screen)
-	assert_eq(screen._offers.size(), Menu.native_network_offers().size(),
-		"货架来自原生包裹表")
-	host.selected_network_index = 2
-	screen._confirm()
-	assert_eq(host.bought.size(), 1, "确认一次只下一单")
-	assert_eq(int(host.bought[0]["id"]), int(screen._offers[2]["id"]), "买的是光标那一格")
-
 ## 野外会把菜单提交的快照按 `last_progress_operation` 重放一遍校核（`_menu_progress_changed`），
-## 所以 NET 购买必须能被 `replay_operation` 原样重放，否则整单会被拒。
+## NET 购买走 Story 的入手入口，快照级重放仍要能对得上。
 func test_replay_reproduces_the_network_purchase() -> void:
 	var live := {"inventory": {}, "parameter": {"moneyBalance": 0}}
 	var snapshot: Dictionary = live.duplicate(true)
@@ -64,3 +56,23 @@ func test_replay_reproduces_the_network_purchase() -> void:
 		"count": 6})
 	assert_true(bool(replay.get("ok", false)), "重放认得 network-buy")
 	assert_eq(replay["progress"], snapshot, "重放结果与提交快照逐字段相等")
+
+
+## 原生 `Menu_Network_mKeyPressed` 组 1 的 −5：先开付款确认窗（光标停在「否」），
+## 选「是」才交给宿主入包，随后换「购买完毕」的确定页。
+func test_screen_confirm_opens_payment_then_buys() -> void:
+	var host := FakeHost.new()
+	add_child_autofree(host)
+	var screen: Control = NetworkScene.instantiate()
+	host.add_child(screen)
+	host.selected_network_index = 2
+	screen._confirm()
+	var confirm: Control = screen.get_node("Confirm")
+	assert_true(confirm.visible and confirm.selection() == 1,
+		"先开付款确认窗，光标默认落在「否」")
+	confirm.set_selection(0)
+	confirm.get_node("AnimationPlayer").advance(1.0)
+	confirm.accept()
+	assert_eq(host.bought.size(), 1, "选「是」才下这一单")
+	assert_eq(int(host.bought[0]["id"]), int(screen._offers[2]["id"]), "买的是光标那一格")
+	assert_eq(confirm.form(), Box.Form.OK, "付款后换「购买完毕」的确定页")

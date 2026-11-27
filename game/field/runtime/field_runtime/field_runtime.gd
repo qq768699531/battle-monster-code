@@ -2953,6 +2953,19 @@ func _menu_progress_changed(progress: Dictionary) -> void:
 	# 必须放在通用 parameter 差异之前：合成扣钱、经验窗口、能力点退回都会改 parameter。
 	var operation: Dictionary = menu_view.take_progress_operation()
 	if not operation.is_empty():
+		# NET 购买：入包走 Story 的入手入口，效果流里的 item-obtained 才会推标准入手栈消息。
+		if str(operation.get("kind", "")) == "network-buy":
+			var bought := story.network_buy_item(int(operation.get("item_id", -1)),
+				int(operation.get("count", 1)))
+			if not bought.is_empty() or story.progress != progress or not focused or \
+					not boundary.is_empty() or not dialogue.is_empty() or \
+					not _motions.is_empty() or battle_view != null or \
+					story.stable_state().is_empty() or \
+					not Story.validate_progress(progress, int(story.progress.slot)):
+				_reject_menu_progress()
+				return
+			_drain_effects()
+			return
 		var replay: Dictionary = MenuModel.replay_operation(story.progress,
 			menu_view.gameplay_catalog, operation)
 		var replayed: Variant = replay.get("progress")
