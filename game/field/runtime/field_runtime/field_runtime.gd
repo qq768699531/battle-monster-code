@@ -115,7 +115,7 @@ const FACING_TILES := {
 	FieldAction.Facing.UP: Vector2i.UP, FieldAction.Facing.DOWN: Vector2i.DOWN,
 }
 
-var story: RefCounted
+var story: StoryRuntime
 var boundary := ""
 ## 野外提示。**静态文本提示已退役**：非空值一律转成一条提示栈消息（原生 `Game_infoInit`），
 ## 菜单打开时同时写进菜单页脚（原行为保留）。空串只用于清状态，不推消息。
