@@ -36,3 +36,14 @@ func test_ok_form_swaps_to_the_single_confirm_key() -> void:
 	assert_eq(confirm.get_node("Choice/Caption").text,
 		_box.get_node("/root/AssetCatalog").text_message(Msg.SOURCE, Msg.Id.CONFIRM_OK),
 		"确定键文案取原生 85／86 之外的 OK")
+
+## 收窗动画播完要真正隐藏：否则下一次 `open_window()` 会和上一单残留的 `transition_finished`
+## 抢同一个窗口，表现为付款窗一闪而过、购买完毕窗瞬间消失（NET 连续购买那次）。
+func test_close_hides_the_window() -> void:
+	_box.present_select("要购买吗?", 1)
+	_box.show()
+	_box.open_window()
+	_box.get_node("AnimationPlayer").advance(1.0)
+	_box.close_window()
+	_box.get_node("AnimationPlayer").advance(1.0)
+	assert_false(_box.visible, "关窗动画播完后隐藏")

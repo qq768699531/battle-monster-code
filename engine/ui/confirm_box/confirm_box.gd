@@ -43,6 +43,7 @@ var _neutral := false
 
 func _ready() -> void:
 	super()
+	transition_finished.connect(_transition_finished)
 	_confirm.pressed.connect(accept)
 	_yes.pressed.connect(_choose.bind(true))
 	_no.pressed.connect(_choose.bind(false))
@@ -183,3 +184,9 @@ func _choose(accepted: bool) -> void:
 		_refresh_choices()
 		return
 	chosen.emit(accepted)
+
+
+## 收窗动画播完（相位 −4）才真正隐藏：页面收窗后不用再自己管可见性（原生关窗后整条不再绘制）。
+func _transition_finished(opened: bool) -> void:
+	if not opened:
+		hide()

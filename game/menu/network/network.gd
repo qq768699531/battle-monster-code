@@ -81,6 +81,10 @@ func _confirm() -> void:
 		host.notice = host._menu_text(Msg.Id.NET_CANNOT_BUY)
 		host._render_content()
 		return
+	if $Confirm.is_transitioning():
+		# 上一单的收窗动画还没播完：先落回稳态，否则那次 transition_finished 会把刚开的新窗
+		# 顺手隐藏（表现为付款窗一闪而过、购买完毕窗瞬间消失）。
+		$Confirm.stop_transition()
 	_paying = offer
 	var body: String = host._menu_text(Msg.Id.NET_CONFIRM_BUY if int(offer.cash_tag) <= 3 \
 		else Msg.Id.NET_CONFIRM_PAY_AGAIN)
