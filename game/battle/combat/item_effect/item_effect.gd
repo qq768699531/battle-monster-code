@@ -321,6 +321,8 @@ static func apply(subject: Dictionary, item: Dictionary,
 	if ItemKind.kind_of(int(item["id"])) == ItemKind.Kind.SKILL_BOOK:
 		return _mix(subject, index)
 	var hp := int(subject.get("hp", 0))
+	# 原生 `Ball_stdUse:123-127` 的守卫只在 `n2 != 0` 时生效：没传目标（直用）就不查倒下。
+	var guarded := not subject.is_empty()
 	if ItemKind.kind_of(int(item["id"])) == ItemKind.Kind.GROUP_7:
 		# `Ball_stdUse:123-127`：守卫是 `if (n2 != 0 && *(_WORD *)(n2 + 26) == 0)` —— 只有传了目标才检查
 		# 倒没倒下；直接使用（`Ball_stdUseEx(0, 0, record)`）的目标是 0 号，这一支整段跳过。
@@ -329,12 +331,12 @@ static func apply(subject: Dictionary, item: Dictionary,
 		if index == CLEAR_PASSIVES_INDEX:
 			return _clear_passives(subject)
 		if index == BRAIN_BOOST_INDEX or index == ABILITY_RECOVERY_INDEX:
-			if hp <= 0:
+			if guarded and hp <= 0:
 				return {"ok": true, "code": Code.TARGET_DOWN, "consumed": false}
 			return _brain_boost(subject) if index == BRAIN_BOOST_INDEX else \
 				_ability_recovery(item)
 		if index == EXP_BONUS_INDEX:
-			return _exp_bonus(item, hp)
+			return _exp_bonus(item, hp, guarded)
 		if index >= ITEM_FIRST_RANDOM_BALL and index <= ITEM_LAST_RANDOM_BOOK:
 			return _random_grant(index, context)
 		# 第 7 组 16：原生先扣一件再 `SetNext(CHARACTER_SELECT_17)`；页面由菜单宿主打开。
@@ -344,7 +346,7 @@ static func apply(subject: Dictionary, item: Dictionary,
 		if index == UNUSABLE_INDEX:
 			return {"ok": true, "code": Code.FAILED, "consumed": false}
 		# `SHIWORD(n4) == 20`：超级大理石。原生在「对象已倒下」的检查之后，加心情前叠加被动 21。
-		if hp <= 0:
+		if guarded and hp <= 0:
 			return {"ok": true, "code": Code.TARGET_DOWN, "consumed": false}
 		var sated := int(subject.get("food", FOOD_MAX)) > FOOD_SATIATED
 		return _feed(subject, 70 if sated else 140, Code.FEEL_GOOD, on_awaken)
@@ -501,9 +503,9 @@ static func _roll(context: Dictionary) -> int:
 ## 第 7 组第 18 号：开「经验 +20%」窗口（`Ball_stdUse:1060-1070`）。窗口已在生效时返回 36
 ## 且**不重置**、不扣道具；否则把存档的 `standard_progress + 7` 写成 3600000 并返回 28。
 ## 参数表由 `MenuModel.native_inventory_rows` 按引用挂在道具行上（原生是直接写 `ParamData`）。
-static func _exp_bonus(item: Dictionary, hp: int) -> Dictionary:
-	# `Ball_stdUse:123-127`：目标已倒下时先返回 35，走不到开窗那一段。
-	if hp <= 0:
+static func _exp_bonus(item: Dictionary, hp: int, guarded: bool = true) -> Dictionary:
+	# `Ball_stdUse:123-127`：只有真传了目标、且它已倒下时才先返回 35；直用不受影响。
+	if guarded and hp <= 0:
 		return {"ok": true, "code": Code.TARGET_DOWN, "consumed": false}
 	var parameter: Variant = item.get("parameter")
 	if not parameter is Dictionary:

@@ -30,3 +30,9 @@ func test_direct_use_skips_the_target_down_guard() -> void:
 	assert_true(int(direct.get("code", ItemEffect.Code.TARGET_DOWN)) != ItemEffect.Code.TARGET_DOWN,
 		"不传目标就不查倒下")
 	assert_false(bool(direct.get("consumed", true)), "不可用类不消耗")
+	# 第 7 组 18（经验加成）也是直用：没有精灵也要能生效并扣掉一件。
+	var bonus := _item(ItemKind.Kind.GROUP_7, 18)
+	bonus["parameter"] = {"moneyBalance": 0}
+	var used: Dictionary = ItemEffect.apply({}, bonus)
+	assert_true(bool(used.get("ok", false)) and bool(used.get("consumed", false)),
+		"经验加成无目标也能用并消耗：%s" % str(used))

@@ -639,15 +639,17 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 	if not direct and int(result.get("code", ItemEffect.Code.FAILED)) in [
 			ItemEffect.Code.PASSIVE_UPGRADE_DONE, ItemEffect.Code.PASSIVES_CLEARED]:
 		member["passiveSlots"] = ball["passive_slots"]
-	if bool(result.get("evolved", false)) and member.get("nativeArguments") is Array:
-		# 与战后写回同一条规则：觉醒档存在 `nativeArguments[2]`（`Ball_stdFeel` 的 `definition_id + 1000`）。
-		member["nativeArguments"][2] = int(ball["native_arguments"][5])
-	member["hp"] = int(ball["hp"])
-	member["sp"] = int(ball["sp"])
-	member["feel"] = int(ball["feel"])
-	member["food"] = int(ball["food"])
-	member["brainCurrent"] = int(ball["brain_current"])
-	progress["monsters"] = monsters
+	if not direct:
+		if bool(result.get("evolved", false)) and member.get("nativeArguments") is Array:
+			# 与战后写回同一条规则：觉醒档存在 `nativeArguments[2]`
+			# （`Ball_stdFeel` 的 `definition_id + 1000`）。
+			member["nativeArguments"][2] = int(ball["native_arguments"][5])
+		member["hp"] = int(ball["hp"])
+		member["sp"] = int(ball["sp"])
+		member["feel"] = int(ball["feel"])
+		member["food"] = int(ball["food"])
+		member["brainCurrent"] = int(ball["brain_current"])
+		progress["monsters"] = monsters
 	var code := int(result.get("code", ItemEffect.Code.FAILED))
 	return {"ok": true, "item": selected, "member_index": member_index, "code": code,
 		"message_id": ItemEffect.message_id(code),
