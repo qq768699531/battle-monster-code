@@ -55,10 +55,13 @@ func _select_offer(slot: int) -> void:
 		host._render_content()
 
 
+## 确认这一格：原生 `Menu_NET_*` 的购买流程。付款阶段尚未接通，宿主只入包、不扣金币
+## （`menu_view.buy_network_offer` 负责写背包、推提示与 `progress_changed`）。
 func _confirm() -> void:
 	if host.selected_network_index < _offers.size():
-		host.notice = "NET购买尚未接通；未扣费或添加道具。"
-	host._render_content()
+		host.buy_network_offer(_offers[host.selected_network_index])
+	else:
+		host._render_content()
 
 
 func _capacity() -> int:

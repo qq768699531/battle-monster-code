@@ -850,6 +850,21 @@ func discard_selected_item() -> bool:
 	return true
 
 
+## NET 商店购买（原生 `Menu_NET_*`）：付款阶段尚未接通，先只入包、不扣金币。
+func buy_network_offer(offer: Dictionary) -> bool:
+	var result := Menu.buy_network_offer(story_progress, offer)
+	if not result.get("ok", false):
+		notice = str(result.get("error", "NET 购买失败"))
+		_render_content()
+		return false
+	notice = "已购买 %s ×%d（付款暂未接通）" % [_native_item_name(offer), int(offer.quantity)]
+	last_progress_operation = {"kind": "network-buy", "item_id": int(offer.id),
+		"count": int(offer.quantity)}
+	progress_changed.emit(story_progress.duplicate(true))
+	_render_content()
+	return true
+
+
 func _selected_inventory_item() -> Dictionary:
 	var rows := Menu.native_inventory_rows(story_progress, gameplay_catalog,
 		selected_bag_category)

@@ -660,6 +660,10 @@ static func replay_operation(progress: Dictionary, catalog: GameplayData,
 			int(operation.get("seed", -1)))
 		return {"ok": bool(used.get("ok", false)), "progress": candidate,
 			"result": used}
+	if kind == "network-buy":
+		var bought := buy_network_offer(candidate, {"id": item_id, "quantity":
+			int(operation.get("count", 1))})
+		return {"ok": bool(bought.get("ok", false)), "progress": candidate, "result": bought}
 	var category := int(operation.get("category", ItemKind.Bag.ITEMS))
 	var row := _inventory_row(candidate, catalog, item_id, category)
 	if row.is_empty():
@@ -727,6 +731,18 @@ static func native_network_offers() -> Array[Dictionary]:
 			"quantity": package[1], "cash_tag": package[2], "cash_price": NETWORK_PRICES[package[2]],
 			"name_record": "item_basic.group.7.entry.%d.name" % index})
 	return offers
+
+
+## NET 商店的一单购买（原生 `Menu_NET_*` 的购买流程）：付款阶段尚未接通，先只入包、不扣金币。
+## 返回 `{"ok": true, "id": …, "count": …}` 或 `{"ok": false, "error": …}`。
+static func buy_network_offer(progress: Dictionary, offer: Dictionary) -> Dictionary:
+	var item_id := int(offer.get("id", 0))
+	var count := int(offer.get("quantity", 0))
+	if item_id <= 0 or count <= 0:
+		return {"ok": false, "error": "NET 商品数据不完整"}
+	if not _add_generated_item(progress, item_id, count):
+		return {"ok": false, "error": "背包放不下这些道具"}
+	return {"ok": true, "id": item_id, "count": count}
 
 
 static func menu_footer_at(x: float, y: float) -> Variant:
@@ -894,9 +910,9 @@ static func _generated_failure(item: Dictionary, member_index: int, code: int) -
 
 ## `Item_stdAddEx` 的背包写入：按 `Item_stdMax` 折算格数并核 `itemCapacity[袋号]`。
 ## 技能书走袋 3，与剧情／宝箱的 `_add_inventory_item` 同一套堆叠与容量规则。
-static func _add_generated_item(progress: Dictionary, item_id: int) -> bool:
+static func _add_generated_item(progress: Dictionary, item_id: int, count := 1) -> bool:
 	var inventory: Variant = progress.get("inventory")
-	if not inventory is Dictionary:
+	if not inventory is Dictionary or count <= 0:
 		return false
 	var type := ItemKind.kind_of(item_id)
 	var index := ItemKind.index_of(item_id)
@@ -907,7 +923,7 @@ static func _add_generated_item(progress: Dictionary, item_id: int) -> bool:
 	var current := int(inventory.get(key, 0))
 	var capacity: Variant = progress.get("itemCapacity")
 	if capacity is Array and bag < capacity.size():
-		var occupied := _generated_stack_slots(current + 1, ItemKind.max_stack(type, index))
+		var occupied := _generated_stack_slots(current + count, ItemKind.max_stack(type, index))
 		for other: Variant in inventory:
 			var other_key := str(other)
 			if other_key == key or not other_key.is_valid_int():
@@ -920,7 +936,7 @@ static func _add_generated_item(progress: Dictionary, item_id: int) -> bool:
 					ItemKind.max_stack(other_type, other_index))
 		if occupied > int(capacity[bag]):
 			return false
-	inventory[key] = current + 1
+	inventory[key] = current + count
 	progress["inventory"] = inventory
 	return true
 
