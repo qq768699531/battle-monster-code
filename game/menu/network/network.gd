@@ -93,7 +93,9 @@ func _confirm() -> void:
 	$Confirm.open_window()
 
 
-## 付款窗的结果：选「是」 → 入包并推「购买完毕」；选「否」 → 关窗回货架。
+## 付款窗的结果：选「是」 → 收窗、入包，收窗动画播完后再开「购买完毕」；选「否」 → 关窗回货架。
+## 两扇窗是同一个 `confirm_box`，要看到中间的开合动画，就得等上一次收窗的
+## `transition_finished` 再 `open_window()`（否则只是同一帧里换正文）。
 func _on_payment_choice(accepted: bool) -> void:
 	if _paying.is_empty() or $Confirm.is_transitioning():
 		return
@@ -102,10 +104,15 @@ func _on_payment_choice(accepted: bool) -> void:
 		return
 	var offer: Dictionary = _paying
 	_paying = {}
-	if not host.buy_network_offer(offer):
-		$Confirm.present_message(host._menu_text(Msg.Id.NET_CANNOT_BUY))
+	var bought: bool = host.buy_network_offer(offer)
+	$Confirm.close_window()
+	await $Confirm.transition_finished
+	if not is_inside_tree() or $Confirm.visible:
 		return
-	$Confirm.present_message(host._menu_text(Msg.Id.NET_PURCHASED))
+	$Confirm.present_message(host._menu_text(Msg.Id.NET_PURCHASED if bought \
+		else Msg.Id.NET_CANNOT_BUY))
+	$Confirm.show()
+	$Confirm.open_window()
 
 
 func _close_payment() -> void:

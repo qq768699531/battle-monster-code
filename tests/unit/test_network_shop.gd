@@ -75,4 +75,7 @@ func test_screen_confirm_opens_payment_then_buys() -> void:
 	confirm.accept()
 	assert_eq(host.bought.size(), 1, "选「是」才下这一单")
 	assert_eq(int(host.bought[0]["id"]), int(screen._offers[2]["id"]), "买的是光标那一格")
+	# 付款窗先播完收窗动画，再开「购买完毕」——手动步进这一段。
+	confirm.get_node("AnimationPlayer").advance(1.0)
+	await get_tree().process_frame
 	assert_eq(confirm.form(), Box.Form.OK, "付款后换「购买完毕」的确定页")
