@@ -2079,11 +2079,8 @@ func _delete_inventory_item(item_id: int, quantity: int) -> bool:
 				return false
 			existing_key = str(key)
 	var held := 0 if existing_key.is_empty() else int(inventory[existing_key])
-	# 要扣的数量以事件记录写的为准；持有量不足时只扣得掉手里的这些，并把差额写进告警
-	# （原生 `Item_stdDel@0x83D94:15-28` 同样是把这一格清零、把差额当返回值，调用方不看返回值）。
-	# 这里不 `_block`：`_instruction` 返回 false 会让事件停在原地等不到下文，表现同样是卡死。
-	if held < quantity:
-		push_warning("事件请求扣除 %d × %d，背包只有 %d；按持有量扣除。" % [item_id, quantity, held])
+	# 扣除量以事件记录写的为准（原生 `Evt_stdPROC` 的 case 0x12 第二参数）。
+	# 原生没有告警／日志：`Item_stdDel@0x83D94:15-28` 请求量大于持有量时清零这一格、把差额当返回值。
 	var removed := mini(held, quantity)
 	if removed <= 0:
 		return true
