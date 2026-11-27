@@ -23,7 +23,7 @@ content/         美术与音频内容
 tests/           GUT 用例与测试脚本
 tools/           自有工具（资源轮廓、本地服务），带 .gdignore 不被引擎扫描
 docs/            文档：结构、资源约定、wiki、对账记录
-addons/          GUT 9.6.1（vendored，MIT）
+addons/          GUT 9.7.1（vendored，MIT）
 ```
 
 ## 全局单例（autoload）

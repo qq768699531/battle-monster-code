@@ -1,11 +1,11 @@
 # 测试
 
-GUT 9.6.1（`addons/gut`，MIT）＋ `tests/unit/` 下的用例，从旧仓库 `BattleMonster/game/tests` 迁回。
+GUT 9.7.1（`addons/gut`，MIT）＋ `tests/unit/` 下的用例，从旧仓库 `BattleMonster/game/tests` 迁回。
 
 ## 跑法
 
 ```powershell
-.\tests\run_tests.ps1                                    # 全部用例（约 3.6 秒，其中 GUT 0.75 秒）
+.\tests\run_tests.ps1                                    # 全部用例（约 5 秒，其中 GUT 实测 2.4 秒）
 .\tests\run_tests.ps1 -Tests test_story,test_battle      # 只跑指定文件
 .\tests\run_tests.ps1 -List                              # 只列用例文件名
 .\tests\run_tests.ps1 -Full                              # 打印 GUT 全量输出
@@ -21,7 +21,7 @@ GUT 9.6.1（`addons/gut`，MIT）＋ `tests/unit/` 下的用例，从旧仓库 `
 **任何单项测试超过 100ms 直接删掉**，不靠并行、缓存或"只跑一次"掩盖。这条规则是为了让测试始终能在
 一次呼吸内跑完，改一点就能全量验证。
 
-当前基线：**20 个脚本、54 项断言集、GUT 实测 0.75 秒**（2026-11-24）。
+当前基线：**24 个脚本、74 项测试、408 次断言，GUT 实测 2.39 秒**（2026-11-27，GUT 9.7.1）。
 
 保留的都是纯逻辑／数据用例：战斗结算、战斗核心、存档、事件（23 项）、任务数据、怪物合成表、
 提示/文本资源、触控映射、窗口过渡等。多数单项真实耗时在 1–60ms。

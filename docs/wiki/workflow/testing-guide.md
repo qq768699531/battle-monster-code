@@ -19,7 +19,7 @@
 现状基线：`tests\unit` 60 个 `test_*.gd`、110 个用例。保持这个量级：新改动用替换或
 收缩既有断言来表达，不要把它重新堆回去。
 
-**用 GUT（`addons\gut`，v9.6.1），不要再写自定义的 `extends SceneTree` 测试。** 新增测试放 `tests\unit\test_*.gd`，`extends GutTest`，用 `assert_eq`／`assert_true`／`assert_gt` 等标准断言。
+**用 GUT（`addons\gut`，v9.7.1），不要再写自定义的 `extends SceneTree` 测试。** 新增测试放 `tests\unit\test_*.gd`，`extends GutTest`，用 `assert_eq`／`assert_true`／`assert_gt` 等标准断言。
 
 **只允许手动跑本轮指定的测试文件（一条命令一个），没有「跑全部」的入口，也不要再写跑全量的脚本**：
 
