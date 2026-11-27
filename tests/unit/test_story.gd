@@ -805,3 +805,16 @@ func test_initialize_announces_the_current_map_name() -> void:
 	assert_true(index > 0 and kinds[index - 1] == "map",
 		"地图名称条紧跟在 map 效果之后，进图就会弹")
 	assert_eq(String(effects[index].text), "起点地图", "名称取自当前地图的 name_text")
+## 原生 `Item_stdDel@0x83D94`／`Item_stdDels@0x83DE0`：持有量不足时把这一格清零、把差额当返回值，
+## 指令照常往下走（`Evt_stdPROC` 的 case 0x12 不看返回值）。不能停事件——否则剧情动画后野外
+## 会一直等边界，表现就是卡死（例：可可的狼毛任务交付后离开洞窟）。
+func test_remove_item_clamps_instead_of_blocking() -> void:
+	var provider := _provider([])
+	provider.gameplay = Fixtures.data({"items": [{"id": 3000, "type": 3, "index": 0}]})
+	var story = _story(provider)
+	story.progress["inventory"] = {"3000": 2}
+	assert_true(story._delete_inventory_item(3000, 5), "多删只清掉持有量，不报错")
+	assert_true(not story.progress["inventory"].has("3000"), "整格清零")
+	assert_true(story.boundary.is_empty(), "不把事件推进边界")
+	assert_true(story._delete_inventory_item(3000, 1), "袋里根本没有这一项也是空操作")
+	assert_true(story.boundary.is_empty(), "同样不进边界")

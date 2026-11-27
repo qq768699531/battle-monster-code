@@ -2078,10 +2078,17 @@ func _delete_inventory_item(item_id: int, quantity: int) -> bool:
 				_block("原物品背包存在重复数值键")
 				return false
 			existing_key = str(key)
-	if existing_key.is_empty() or inventory[existing_key] < quantity:
-		_block("原物品数量不足；未执行部分删除")
-		return false
-	var remaining: int = inventory[existing_key] - quantity
+	if existing_key.is_empty():
+		# 原生 `Item_stdDels@0x83DE0:29-33`：袋里找不到这一项就什么也不做（返回 0），不报错。
+		return true
+	var held := int(inventory[existing_key])
+	if held < quantity:
+		# 原生 `Item_stdDel@0x83D94:15-28`：持有量不足时把这一格清零、把差额当返回值，
+		# 指令照常往下走（`Evt_stdPROC` 的 case 0x12 不看它）——不能停事件，否则剧情动画后
+		# 野外会一直等边界，看着就是卡死。
+		inventory.erase(existing_key)
+		return true
+	var remaining := held - quantity
 	if remaining == 0:
 		inventory.erase(existing_key)
 	else:
