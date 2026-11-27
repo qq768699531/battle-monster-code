@@ -311,8 +311,9 @@ static func apply(subject: Dictionary, item: Dictionary,
 		return _mix(subject, index)
 	var hp := int(subject.get("hp", 0))
 	if ItemKind.kind_of(int(item["id"])) == ItemKind.Kind.GROUP_7:
-		# `Ball_stdUse:123-127` 的「倒下对象」守卫在整张分派表之前，第 7 组全部适用。
-		if hp <= 0:
+		# `Ball_stdUse:123-127`：守卫是 `if (n2 != 0 && *(_WORD *)(n2 + 26) == 0)` —— 只有传了目标才检查
+		# 倒没倒下；直接使用（`Ball_stdUseEx(0, 0, record)`）的目标是 0 号，这一支整段跳过。
+		if not subject.is_empty() and hp <= 0:
 			return {"ok": true, "code": Code.TARGET_DOWN, "consumed": false}
 		if index == CLEAR_PASSIVES_INDEX:
 			return _clear_passives(subject)
