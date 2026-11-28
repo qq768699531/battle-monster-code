@@ -649,14 +649,6 @@ func advance(delta: float) -> void:
 		return
 	if _minimap.visible:
 		_minimap.advance(delta)
-	if dialogue.get("ordinary", false):
-		# 普通 NPC 对话只开聊天窗，不冻结地图：继续推进 NPC 待机／环境动画；
-		# 只有任务接取等服务页才按窗口通用逻辑冻结。
-		_actors.advance(delta, true)
-		_advance_npc_idle(delta)
-		_chat_view.advance(delta)
-		_refresh()
-		return
 	# 原生存的是环绕的毫秒累计，这里按整数毫秒进位后回写，保持与原版一致的回绕行为。
 	if story.progress.has("playedTimeMs"):
 		_played_time_remainder += delta * 1000.0
@@ -675,7 +667,7 @@ func advance(delta: float) -> void:
 		var remaining := 0.0 if objects_paused else _advance_motions(delta)
 		_drain_effects()
 		# 脚本位移跑完后的剩余时间交给像素走位（原生也是对象池推进完再吃输入）。
-		if not objects_paused and _motions.is_empty() and _walk_direction != Vector2i.ZERO:
+		if not objects_paused and _motions.is_empty() and dialogue.is_empty() and _walk_direction != Vector2i.ZERO:
 			manual_movement = _advance_manual_walk(remaining)
 		_drain_effects()
 		# 松开按键立刻停在当前像素位置（原版走位不是整格步进）。
@@ -1552,7 +1544,6 @@ func _advance_npc_idle(delta: float) -> void:
 	if story == null or not focused or story.running or story.objects_paused() or \
 			int(story.progress.cursor) != 0 or not story._pending.is_empty() or \
 			not story._motions.is_empty() or not _motions.is_empty() or \
-			(not dialogue.is_empty() and not dialogue.get("ordinary", false)) or \
 			menu_open or book_open or save_open or service_open() or \
 			world_map_view != null or battle_view != null or not boundary.is_empty() or \
 			not _encounter.is_empty() or not narration.is_empty() or not mastery.is_empty():
