@@ -2882,9 +2882,10 @@ func _walk_rect_free(foot: Vector2) -> bool:
 		var body := Rect2(Vector2(float(actor.x), float(actor.y)) * TILE, Vector2(TILE, TILE))
 		if rect.intersects(body):
 			return false
-	# 未开放的传送格按「暂时不能通行」处理。
+	# 未开放的传送格（包括存档里没有登记过的目标：地图物件那边也按灰色帧 165 画）按
+	# 「暂时不能通行」处理。只有存档明确写 true 才算开放。
 	for warp: Dictionary in story.map.info.get("warps", []):
-		if story.progress.warpEnabled.get(str(int(warp.get("destination_map_id", 0)))) != false:
+		if bool(story.progress.warpEnabled.get(str(int(warp.get("destination_map_id", 0))), false)):
 			continue
 		if rect.intersects(Rect2(Vector2(int(warp.tile_x), int(warp.tile_y)) * TILE,
 				Vector2(TILE, TILE)), true):
@@ -2971,7 +2972,7 @@ func _check_blocked_warp() -> void:
 			if not warp is Dictionary:
 				continue
 			var target := int(warp.get("destination_map_id", -1))
-			if story.progress.warpEnabled.get(str(target)) != false:
+			if bool(story.progress.warpEnabled.get(str(target), false)):
 				continue
 			if absi(tile.x - int(warp.get("tile_x", -1))) <= 1 and \
 					absi(tile.y - int(warp.get("tile_y", -1))) <= 1:
@@ -3000,7 +3001,7 @@ func _enter_warp(warp: Dictionary) -> bool:
 	var target := int(warp.destination_map_id)
 	# 原生 `Map_warpProc:17` 通过、`:59-60` 走 `Game_msgInit(0, fxt404)`：404 落在 index 0 消息条，
 	# 不换图，也不进 `Game_infoInit` 的 8 槽提示栈。
-	if story.progress.warpEnabled.get(str(target)) == false:
+	if not bool(story.progress.warpEnabled.get(str(target), false)):
 		_warp_blocked_bar.present(_assets.text_message(Msg.SOURCE, Msg.Id.MAP_BLOCKED),
 			MapNameView.Source.WARP)
 		return true

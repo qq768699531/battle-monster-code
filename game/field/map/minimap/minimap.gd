@@ -167,7 +167,7 @@ func _refresh_warps() -> void:
 		pulse = 255 - pulse
 	for index in _warps.size():
 		var warp: Dictionary = _warps[index]
-		var enabled: bool = _warp_enabled.get(str(int(warp.destination_map_id))) != false
+		var enabled: bool = bool(_warp_enabled.get(str(int(warp.destination_map_id)), false))
 		var color := enabled_warp_color if enabled else disabled_warp_color
 		var brightness := float(pulse) / 255.0
 		color = color + Color(brightness, brightness, brightness, 0) if enabled else \
