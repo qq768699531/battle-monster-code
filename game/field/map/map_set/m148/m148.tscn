@@ -68,4 +68,3 @@ metadata/map_npc = {
 metadata/npc_dialogue = "npc/npc0051.cht"
 
 [node name="Terrain" parent="." unique_id=1599635803 instance=ExtResource("1_whmg6")]
-visible = false
