@@ -270,6 +270,8 @@ func open(progress: Dictionary, catalog: GameplayData, text: Variant) -> void:
 
 
 func select_tab(index: int) -> void:
+	if not _may_leave_party(selected_tab, index):
+		return
 	if index < 0 or index >= Menu.MENU_TABS.size() or closed or \
 			status_allocation_open or status_confirmation_open or party_actions_open or party_equip_open \
 			or item_actions_open or item_discard_open or party_details_open or party_discard_open or quest_detail_open \
@@ -349,8 +351,22 @@ func request_save() -> void:
 		save_requested.emit(story_progress.duplicate(true))
 
 
+## 原生 `Menu_Party_mKeyPressed@0x4D37C:41-42`：队伍页按 −16 时先看 `Ball_stdPartys()`，
+## 队伍为空就 `Game_warnSet(2)`（fxt 133「请组建队伍」）留在本页，不切页也不关菜单。
+func _may_leave_party(current: int, target: int) -> bool:
+	if current != MenuModel.Tab.PARTY or target == MenuModel.Tab.PARTY:
+		return true
+	if not Menu.native_party_order(story_progress).is_empty():
+		return true
+	notice = _menu_text(Msg.Id.PARTY_REQUIRED)
+	_render_content()
+	return false
+
+
 func close_menu() -> void:
 	if closed:
+		return
+	if not _may_leave_party(selected_tab, -1):
 		return
 	if settings_open or help_open:
 		return
