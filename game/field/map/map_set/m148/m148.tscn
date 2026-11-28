@@ -18,7 +18,7 @@ texture_filter = 1
 z_index = -1
 texture = ExtResource("2_bg")
 centered = false
-scale = Vector2(2, 1)
+scale = Vector2(4, 1)
 
 [node name="Npcs" type="Node2D" parent="." unique_id=2077532432]
 
