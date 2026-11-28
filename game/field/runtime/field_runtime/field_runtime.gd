@@ -810,10 +810,8 @@ func _drain_effects() -> void:
 		match effect.kind:
 			"map":
 				# 换图：清掉未完成的脚本移动，重画地块、小地图与动态物件。
-				# 镜头中心跟着留用旧值：原生换图链路 `Map_warpProc:21-22` →
-				# `GameCanvas_mapLOAD:10-14`（`Map_mifLOAD`／`Map_mdtLOAD`）从不写
-				# `MapData.camera_origin`；清零只发生在 `Map_Init`，调用者只有
-				# `GameCanvas_load:10`（开局）与 `Map_Initialize:7`（引擎初始化）。
+				# 换图后镜头必须立刻落到新地图的合法中心：旧地图如果在边缘，旧镜头
+				# 对着新地图会是越界位置，逐帧缓动期间就会把地图外的黑底露出来。
 				var switched: bool = _shown_map_id != int(effect.mapId)
 				for id: int in _motions:
 					story.cancel_move(id)
@@ -824,6 +822,9 @@ func _drain_effects() -> void:
 					_stop(_map_view.last_error)
 				else:
 					_shown_map_id = int(effect.mapId)
+					_camera_initialized = false
+					_camera_pan.clear()
+					_camera_actor = -1
 					if switched:
 						_map_name_source = MapNameView.Source.WARP
 					_minimap.set_map(effect.map)
