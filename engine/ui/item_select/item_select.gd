@@ -80,6 +80,13 @@ func present_item(prompt: String, yes: String, no: String, icon: Texture2D, limi
 func handle_key(key: String) -> bool:
 	if $Window.is_transitioning():
 		return true
+	# 三个可选中项：数量、是、否。上下在「数量」与「是/否」之间换焦点，
+	# 左右在数量上改数值、在是/否上切换；−/＋ 不参与焦点，只接鼠标点击。
+	if key in ["ArrowUp", "ArrowDown"]:
+		step = 1 - step
+		_step_changed()
+		_render()
+		return true
 	if step == 0:
 		match key:
 			"ArrowLeft":
@@ -125,6 +132,9 @@ func _apply_window_size(kind: int) -> void:
 
 
 func _step_quantity(direction: int) -> void:
+	# 鼠标点 −/＋ 时把焦点移回数量；键盘左右在数量焦点上走同一条路径。
+	step = 0
+	_step_changed()
 	quantity = quantity + direction
 	if quantity > maximum:
 		quantity = 1
