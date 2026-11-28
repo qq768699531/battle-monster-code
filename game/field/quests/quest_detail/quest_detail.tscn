@@ -56,9 +56,9 @@ theme_override_styles/panel = SubResource("Frame")
 
 [node name="Name" parent="Content" instance=ExtResource("label")]
 offset_left = 98.0
-offset_top = 66.0
+offset_top = 64.0
 offset_right = 302.0
-offset_bottom = 76.0
+offset_bottom = 74.0
 color = Color(1, 1, 0.666667, 1)
 
 [node name="Desc0" parent="Content" instance=ExtResource("label")]
