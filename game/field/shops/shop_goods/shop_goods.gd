@@ -59,6 +59,8 @@ const TAB_SHEET := "common/ui_window/frame-014"
 ## 原版详情面板（`Menu_Item_DrawInfoEtc`／`Equip`）：`item_description.tscn` 就是这份实现
 ## （标题 `[ 名 X 数量 ]`／品级色、说明箭头、4 行属性、换行说明），菜单道具页与商店共用。
 const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
+## 角色物品栏上限的兜底（原生 `ParamData.itemCapacity` 缺键时；菜单道具页同一常量 72）。
+const ITEM_BAG_CAPACITY := 72
 
 var mode := BUY
 var shop_mode_code := 0
@@ -68,6 +70,9 @@ var group_index := 0
 ## 货架取不到时的原因（`shops.tres` 缺条目／事件参数／目录缺记录）；空串表示正常。
 var stock_error := ""
 var quantity := 1
+## 当前页的「物品栏上限」：卖页取角色 `progress.itemCapacity[袋号]`（原生 `Item_bagList` 的
+## `slot_capacity`），买页仍是列表格数。计数与滚动条都按这个上限画，不再写死 18。
+var capacity := 0
 
 var _records: Array[ItemDefinition] = []
 var _groups: Array[int] = []
@@ -233,8 +238,10 @@ func _rebuild() -> void:
 	var map_id := _map_id()
 	if mode == BUY:
 		_load_shelf(map_id)
+		capacity = cells
 	else:
 		_load_bag()
+		capacity = _bag_capacity(group_code())
 		# 买页保持原生 `Item_stdSet` 的货架顺序；卖页按 id 排（同一袋里 `Item_bagList` 就是这个序）。
 		_records.sort_custom(func(a: ItemDefinition, b: ItemDefinition) -> bool: return a.id < b.id)
 	cursor = clampi(cursor, 0, maxi(0, _records.size() - 1))
@@ -288,6 +295,13 @@ func _map_id() -> int:
 	return int(_story.progress.get("mapId", -1))
 
 
+func _bag_capacity(bag: int) -> int:
+	var caps: Variant = _story.progress.get("itemCapacity") if _story != null else null
+	if caps is Array and bag >= 0 and bag < caps.size():
+		return int(caps[bag])
+	return ITEM_BAG_CAPACITY
+
+
 func _refresh() -> void:
 	for slot in range(cells):
 		var index := _first + slot
@@ -309,7 +323,7 @@ func _refresh() -> void:
 			quantity_label.show()
 			quantity_label.present(str(owned))
 	$Content/Money/Number.present(str(money()))
-	$Content/Count.present("%d/%d" % [mini(_records.size(), cells), cells])
+	$Content/Count.present("%d/%d" % [mini(_records.size(), capacity), capacity])
 	var record := _record()
 	if record == null:
 		_detail.present_item({}, 0, "", "", null, _text)
@@ -459,6 +473,8 @@ func _decided(count: int) -> void:
 ## 拇指高度 `3*(1-页数) + 轨道`（最小 3），位置按首行在轨道内分页；只有一页时整条隐藏。
 func _refresh_scrollbar() -> void:
 	var pages := maxi(1, visible_rows)
+	if mode == SELL:
+		pages = maxi(1, ceili(float(capacity) / float(COLUMNS)))
 	var shown := pages > 1
 	_scrollbar.visible = shown
 	$Content/UpHit.visible = shown
