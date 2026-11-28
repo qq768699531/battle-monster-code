@@ -86,6 +86,9 @@ func set_choices_enabled(enabled: bool) -> void:
 
 func set_direct_choice(value: bool) -> void:
 	direct_choice = value
+	# 键盘 Enter 只交给页面处理；是/否只由鼠标/触控单击，避免数量阶段被 Enter 误确认。
+	for button: Button in [_confirm, _yes, _no]:
+		button.focus_mode = Control.FOCUS_NONE if value else Control.FOCUS_ALL
 
 
 ## OK／触控确认：确定页直接回报，选择页把当前光标当答案。
