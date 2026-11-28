@@ -252,6 +252,10 @@ var _camera_center := Vector2.ZERO
 var _camera_initialized := false
 ## 进行中的事件镜头推进（原生 `MapData+26` 的模式 + `+32` 未置位）：`{"id", "mode"}`。
 var _camera_pan: Dictionary = {}
+## 原生 `MapData +6` 的镜头锁定对象（`Evt_stdPROC` case 9 的 `MOVE_ACTOR` 带跟随参数时
+## 把该对象挂上去、`+31=1`）。锁着时相机跟这个对象；否则按 `Map_posFRONT` 跟主角并
+## 按面向偏移（垂直 30 px、水平 50 px）。-1 表示没有对象锁。
+var _camera_actor := -1
 var _shake := Vector2.ZERO
 var _battle_id := -1
 var _touch_key := 0
@@ -828,11 +832,13 @@ func _drain_effects() -> void:
 				_summons_removed = false
 				_sync_actors()
 			"focus":
+				_camera_actor = -1
 				_focus = _point(effect.position)
 				_position_camera()
 			"camera-pan":
 				# `Map_posFOCUS` 的模式 2／3／4：目标瓦片挂进 `+10`／`+14` 后逐帧推进，
 				# 到位那一刻才置 `+32`（由 `_step_camera_pan` 回调 `story.complete_camera`）。
+				_camera_actor = -1
 				_focus = _point(effect.position)
 				_camera_pan = {"id": int(effect.id), "mode": int(effect.mode)}
 			"move":
@@ -848,6 +854,10 @@ func _drain_effects() -> void:
 							_motions.erase(motion_id)
 					_motions[int(effect.id)] = {"actor": actor,
 						"destination": effect.destination, "follow": effect.follow}
+					# `p[2] > 0`：原版把移动对象本身锁成镜头目标（`+6`），相机跟着它走；
+					# 这条锁会持续到下一次 `Evt_camSET`／事件链结束，不是只跟一段。
+					if bool(effect.follow):
+						_camera_actor = int(actor.id)
 			"item-obtained":
 				_present_item_obtained(int(effect.itemId), int(effect.count),
 					int(effect.iconFrame))
@@ -1035,21 +1045,36 @@ static func _point(point: Dictionary) -> Vector2:
 
 func _position_camera(delta: float = 0.0) -> void:
 	var dimensions := Vector2(_map_view.map_size_tiles) * TILE
-	# `Map_posFOCUS` 在 `+33 == 1` 时用 `+10`／`+14` 的瓦片坐标重算目标
-	# （`16 * 瓦片 + 8`），不再看英雄；`+33 == 0` 才回到跟随。
-	var fixed: bool = story.progress.camera != null
-	var target: Vector2 = _point(story.progress.camera) if fixed else _focus
-	var follow_hero: bool = not fixed and not story.running and \
-		int(story.progress.cursor) == 0 and story._pending.is_empty() and story._motions.is_empty()
-	if follow_hero:
+	# `Map_posFOCUS` 的 `+33 == 1` 是事件锁定的镜头：`+6` 有对象就锁对象（`MOVE_ACTOR` 带
+	# 跟随参数时写进去），否则锁 `+10/+14` 的瓦片。`+33 == 0` 时跟主角，并按 `Map_posFRONT`
+	# 把目标往面向方向偏（水平 50、垂直 30），所以剧情里主角一转身镜头也跟着变，
+	# 面向侧的头顶表情不会被自己的取景框切掉。
+	var idle: bool = not story.running and int(story.progress.cursor) == 0 and \
+		story._pending.is_empty() and story._motions.is_empty()
+	if idle:
+		_camera_actor = -1
+	var fixed_tile: bool = story.progress.camera != null
+	var fixed_actor := false
+	var target: Vector2
+	if fixed_tile:
+		target = _point(story.progress.camera)
+	elif _camera_actor >= 0:
+		var locked := _actor(_camera_actor)
+		if locked.is_empty():
+			_camera_actor = -1
+		else:
+			fixed_actor = true
+			target = _point(locked)
+	if not fixed_tile and not fixed_actor:
 		var hero := _actor(0)
-		target = _point(hero)
-		var direction := int(hero.get("lastDirection", int(hero.direction) & FieldAction.VERTICAL_MASK))
-		match direction:
-			FieldAction.Facing.LEFT: target.x -= 50
-			FieldAction.Facing.RIGHT: target.x += 50
-			FieldAction.Facing.UP: target.y -= 30
-			FieldAction.Facing.DOWN: target.y += 30
+		target = _focus if hero.is_empty() else _point(hero)
+		if not hero.is_empty():
+			var direction := int(hero.get("lastDirection", int(hero.direction) & FieldAction.VERTICAL_MASK))
+			match direction:
+				FieldAction.Facing.LEFT: target.x -= 50
+				FieldAction.Facing.RIGHT: target.x += 50
+				FieldAction.Facing.UP: target.y -= 30
+				FieldAction.Facing.DOWN: target.y += 30
 	target = Vector2(
 		dimensions.x / 2 if dimensions.x < 400 else clampf(target.x, 200, dimensions.x - 200),
 		dimensions.y / 2 if dimensions.y < 240 else clampf(target.y, 120, dimensions.y - 120))
@@ -1058,8 +1083,8 @@ func _position_camera(delta: float = 0.0) -> void:
 		_camera_initialized = true
 	elif not _camera_pan.is_empty():
 		_camera_center = _step_camera_pan(target, delta)
-	elif not follow_hero:
-		# `+26` 为 0／1 或已到位：原生每次都按 `Map_posCENTER(x, y, 1)` 立即定位。
+	elif fixed_tile or fixed_actor:
+		# `+33 == 1` 的模式 1／4：原生每次都按 `Map_posCENTER(x, y, 1)` 立即定位。
 		_camera_center = target
 	elif delta > 0:
 		# Map_posFRONT retains three quarters per native frame; keep the Godot motion continuous.
