@@ -35,7 +35,6 @@ const MINIMUM_MONEY := MONEY_COST - 1
 ## `Field_Item_Food_Proc` 的 `LOWORD(v9) = 1`：产品写回 basic 第 1 组，索引不变。
 const PRODUCT_KIND := 1
 ## `Menu_Item_DrawInfoFood` 的 `JC_grpSetCHANGE(0, 0, 16711935)`：材料不够时数字换品红。
-const INSUFFICIENT_COLOR := Color("#ff00ff")
 ## `item_food.dat` 的 12 条食谱（`assets/food-recipes.tres`，由 `script\export_food_recipes.py`
 ## 从原字节导出）；取不到就报错，不在脚本里留第二份表。
 const RECIPE_PATH := "res://game/field/shops/food_shop/food-recipes.tres"
