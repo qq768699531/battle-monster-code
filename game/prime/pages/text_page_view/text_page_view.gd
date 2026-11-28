@@ -2,17 +2,19 @@ extends Node2D
 ## 帮助/说明分页展示层。
 
 const UI = preload("res://game/prime/ui/layout/layout.gd")
+const C = preload("res://game/prime/data/runtime_constants/runtime_constants.gd")
 var _page_number_texture: Texture2D
 var messages: Dictionary = {}
+var last_error := ""
 @onready var _frame_rect := UI.box4_window_frame($Frame.window_size)
 @onready var _title_origin: Vector2 = $Title.position
 
 
-func configure(view: Object, catalog: Object) -> bool:
-	messages = view.messages
+func configure(catalog: Object, texts: Dictionary) -> bool:
+	messages = texts
 	if not $Navigation.configure(catalog) or not $Back.configure(catalog, 1):
-		view.last_error = "Prime page navigation sprites are unavailable."
-		push_error(view.last_error)
+		last_error = "Prime page navigation sprites are unavailable."
+		push_error(last_error)
 		return false
 	_page_number_texture = $Navigation._numbers
 	return true
@@ -30,16 +32,23 @@ func live_regions(paint: Dictionary) -> Array[Dictionary]:
 	return $Navigation.regions(paint, back)
 
 
+## 帮助页自己的命中区（上一页、下一页、返回）。
+func regions(paint: Dictionary) -> Array[Dictionary]:
+	if not visible or int(paint.get("scene", -1)) != C.METHOD:
+		return []
+	return live_regions(paint)
+
+
 static func page_scroll_origin(scene: int) -> Vector2i:
 	var navigation = load("res://game/prime/ui/page_navigation/page_navigation.tscn").instantiate()
-	var origin: Vector2i = UI.control_rect(navigation.get_node("MethodScroll" if scene == 13 else "InfoScroll")).position
+	var origin: Vector2i = UI.control_rect(navigation.get_node("MethodScroll" if scene == C.METHOD else "InfoScroll")).position
 	navigation.free()
 	return origin
 
 
 func present(paint: Dictionary) -> void:
 	var state: int = paint.get("window_state", 0)
-	visible = paint.scene == 13 and state not in [-4, 0]
+	visible = paint.scene == C.METHOD and state not in [-4, 0]
 	if not visible:
 		return
 	var rect := UI.box4_window_rect(_frame_rect, state)

@@ -89,7 +89,7 @@ func test_prime_pages_take_the_window_slot() -> void:
 	host.size = Vector2(400, 240)
 	add_child_autofree(host)
 	host.add_child(view)
-	view.settings_view.messages = {213: "环境设定"}
+	view.get_node("Settings").messages = {213: "环境设定"}
 	view.present({"scene": RuntimeConstants.SETTINGS, "window_state": 2})
 	assert_eq(UiWindows.top(Manager.Kind.WINDOW), view, "环境设定页占窗口槽")
 	var shade: Control = UiWindows.shade()

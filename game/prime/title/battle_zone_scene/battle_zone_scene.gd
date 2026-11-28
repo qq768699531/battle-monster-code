@@ -20,7 +20,7 @@ func _ready() -> void:
 	get_node("TitlePreview").visible = preview
 
 
-func configure(messages: Dictionary) -> bool:
+func configure(_catalog: Object, messages: Dictionary) -> bool:
 	_messages = messages
 	for id in [250, 251, 253, 256, 257]:
 		if not messages.get(id) is String:

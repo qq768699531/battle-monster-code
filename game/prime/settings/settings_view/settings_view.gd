@@ -38,6 +38,13 @@ func configure(catalog: Object, texts: Dictionary) -> bool:
 	return $Content/Accept.configure(catalog, 0) and $Content/Back.configure(catalog, 1)
 
 
+## 环境设定页自己的命中区：窗口内的 OK／BACK，或游戏内入口的面板（原生 `EFC_mainTouch` 两种 style）。
+func regions(paint: Dictionary) -> Array[Dictionary]:
+	if int(paint.get("scene", -1)) != SCENE:
+		return []
+	return live_regions(paint)
+
+
 func live_regions(paint: Dictionary) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if not visible or int(paint.get("window_state", 0)) != OPEN_PHASE:

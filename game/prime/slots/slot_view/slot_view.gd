@@ -2,6 +2,7 @@ extends Node2D
 ## 存档槽选择展示层。
 
 const UI = preload("res://game/prime/ui/layout/layout.gd")
+const C = preload("res://game/prime/data/runtime_constants/runtime_constants.gd")
 const WorldResources = preload("res://engine/data/world_resources/world_resources.gd")
 
 var _npc_records: Array = []
@@ -10,6 +11,7 @@ var _slot_details: Array[Node2D] = []
 var _slot_window: Control
 var _portraits_released := true
 var messages: Dictionary = {}
+var last_error := ""
 @onready var _frame_rect := UI.box4_window_frame($Window.window_size)
 @onready var _title_origin: Vector2 = $Title.position
 @onready var _footer_origins: Array[Vector2] = [$Accept.position, $Back.position]
@@ -46,24 +48,31 @@ func live_regions(paint: Dictionary) -> Array[Dictionary]:
 	return result
 
 
-func configure(view: Object, catalog: Object) -> bool:
-	messages = view.messages
+## 存档槽页自己的命中区（两张卡、OK／BACK、删除）。网络页的存档槽子页由网络页汇总。
+func regions(paint: Dictionary) -> Array[Dictionary]:
+	if int(paint.get("scene", -1)) != C.SAVE_SELECT:
+		return []
+	return live_regions(paint)
+
+
+func configure(catalog: Object, texts: Dictionary) -> bool:
+	messages = texts
 	_slot_window = $Window
 	_slot_details.assign([$Card0, $Card1])
 	if not $Names.configure(catalog) or \
 			not $Card0.configure(catalog) or not $Card1.configure(catalog) or \
 			not $Accept.configure(catalog, 0) or not $Back.configure(catalog, 1) or \
 			not $Extra.configure(catalog, 2):
-		view.last_error = "Prime slot sprites are unavailable."
-		push_error(view.last_error)
+		last_error = "Prime slot sprites are unavailable."
+		push_error(last_error)
 		return false
 	var world := WorldResources.new()
 	if not world.initialize(catalog):
-		view.last_error = world.last_error
+		last_error = world.last_error
 		return false
 	var bindings: Variant = world.npc_bindings()
 	if bindings == null:
-		view.last_error = world.last_error
+		last_error = world.last_error
 		return false
 	_npc_records = bindings
 	return true
@@ -80,11 +89,10 @@ func slot_card_data(progress: Dictionary) -> Dictionary:
 		"level": int(parameter.level), "trait": int(parameter.trait)}
 
 
-func present(view: Object) -> void:
-	var paint: Dictionary = view._paint
-	var network: bool = paint.scene == 15 and paint.get("network_slot_page", false) and \
+func present(paint: Dictionary) -> void:
+	var network: bool = paint.scene == C.NETWORK and paint.get("network_slot_page", false) and \
 		not paint.get("network_menu_open", false) and not paint.get("network_detail", false)
-	var saving: bool = paint.scene == 11
+	var saving: bool = paint.scene == C.SAVE_SELECT
 	visible = saving or network
 	if not visible:
 		_release_portraits()

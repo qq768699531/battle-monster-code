@@ -5,8 +5,9 @@ const UI = preload("res://game/prime/ui/layout/layout.gd")
 var messages: Dictionary = {}
 
 
-func configure(texts: Dictionary) -> void:
+func configure(_catalog: Object, texts: Dictionary) -> bool:
 	messages = texts
+	return true
 
 
 func _modal_text(paint: Dictionary) -> String:
@@ -49,3 +50,22 @@ func present(paint: Dictionary) -> void:
 	$Warning.visible = paint.get("warning_kind", 0) != 0
 	if $Warning.visible:
 		$Warning.present(warning_layout(paint), int(paint.warning_state), [messages[138]], 0)
+	visible = $Modal.visible or $Warning.visible
+
+
+## 模态框或警告框开着时盖住整页：宿主据此决定命中区与整层可见性。
+func overlay_active(paint: Dictionary) -> bool:
+	return paint.get("modal_state", 0) != 0 or paint.get("warning_kind", 0) != 0
+
+
+## 警告框优先，而且会清空页面命中区；模态框整体替换页面命中区（原生 `Prime_Modal_*`）。
+func regions(paint: Dictionary) -> Array[Dictionary]:
+	if paint.get("warning_kind", 0) != 0:
+		var result: Array[Dictionary] = []
+		if paint.warning_state in [-1, 2, 3, 4]:
+			var layout := warning_layout(paint)
+			result.append(UI._region(TouchCode.Key.OK, $Warning.button_rects(layout, true)[0]))
+		return result
+	if paint.get("modal_state", 0) != 0:
+		return _modal_regions(paint)
+	return []

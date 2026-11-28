@@ -32,8 +32,9 @@ const StartupRuntime = preload("res://game/prime/startup/startup_runtime/startup
 var messages: Dictionary = {}
 
 
-func configure(texts: Dictionary) -> void:
+func configure(_catalog: Object, texts: Dictionary) -> bool:
 	messages = texts
+	return true
 
 
 ## 标题／正文记录号：原生两页共用同一绘制入口，只换文案。
@@ -73,3 +74,13 @@ func okay_rect(paint: Dictionary) -> Rect2i:
 	var layout := startup_layout(paint)
 	var footer := Layout.control_rect($Content/Footer, layout.rect)
 	return Layout.control_rect($Content/Footer/Choice, footer)
+
+
+## 确定键只在「空间不足」或欢迎页计时走完后才可点（原生进度条阶段没有按钮）。
+func regions(paint: Dictionary) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	if not visible:
+		return result
+	if paint.scene == C.NOT_SPACE or paint.startup_elapsed_ms > StartupRuntime.PROGRESS_FULL_MS:
+		result.append(Layout._region(TouchCode.Key.OK, okay_rect(paint)))
+	return result

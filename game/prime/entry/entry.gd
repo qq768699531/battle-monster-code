@@ -12,7 +12,7 @@ const Story = preload("res://engine/data/story/story.gd")
 const WorldResources = preload("res://engine/data/world_resources/world_resources.gd")
 const EventScripts = preload("res://game/field/runtime/event_scripts/event_scripts.gd")
 const FIELD_SCENE = preload("res://game/field/runtime/field_runtime/field_runtime.tscn")
-const PrimeView = preload("res://game/prime/startup/prime_view/prime_view.gd")
+const PrimeLayout = preload("res://game/prime/ui/layout/layout.gd")
 const TouchControls = preload("res://game/field/runtime/touch_controls/touch_controls.gd")
 const NativeTextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const StartupPreload = preload("res://engine/data/startup_preload/startup_preload.gd")
@@ -292,7 +292,7 @@ func _load_resources() -> void:
 		_title_textures.append(bar)
 
 func _load_prime_pages() -> void:
-	var font := PrimeView.UI_FONT
+	var font := PrimeLayout.UI_FONT
 	for target in [PrimeTitleRuntime.METHOD, PrimeTitleRuntime.INFO]:
 		var path := "skt/method.fxt" if target == PrimeTitleRuntime.METHOD else "common/info.fxt"
 		var resource: Variant = AssetCatalog.load_text(path)
@@ -319,8 +319,8 @@ func _load_prime_pages() -> void:
 				body += "\n[color=#F0F0F0]V1.0.0[/color]"
 			var classification: bool = target == PrimeTitleRuntime.INFO and index == 4
 			var title_layout := NativeTextLayout.layout(records[index].text,
-				font, PrimeView.FONT_SIZE, 0.0, false, Color("#FFB655"))
-			var body_layout := NativeTextLayout.layout(body, font, PrimeView.FONT_SIZE,
+				font, PrimeLayout.FONT_SIZE, 0.0, false, Color("#FFB655"))
+			var body_layout := NativeTextLayout.layout(body, font, PrimeLayout.FONT_SIZE,
 				0.0 if classification else 173.0, not classification)
 			if not title_layout.error.is_empty() or not body_layout.error.is_empty():
 				_startup_error = "Prime text layout failed: %s:%d: %s %s" % [

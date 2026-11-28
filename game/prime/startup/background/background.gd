@@ -1,7 +1,6 @@
 extends Node2D
 ## 标题背景：只更新投影与颜色，不改 Scene 几何。
 const Runtime = preload("res://game/prime/title/prime_title_runtime/prime_title_runtime.gd")
-const PrimeView = preload("res://game/prime/startup/prime_view/prime_view.gd")
 const UI = preload("res://game/prime/ui/layout/layout.gd")
 var scene := -1
 var captured: Texture2D

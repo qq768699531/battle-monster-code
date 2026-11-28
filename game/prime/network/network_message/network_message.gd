@@ -2,6 +2,8 @@ extends Node2D
 ## 网络页的提示消息框。
 
 const UI = preload("res://game/prime/ui/layout/layout.gd")
+const C = preload("res://game/prime/data/runtime_constants/runtime_constants.gd")
+const NetworkView = preload("res://game/prime/network/network_view/network_view.gd")
 @export var center := Vector2.ZERO
 @export var waiting_padding := 0
 @export var complete_padding := 0
@@ -19,6 +21,18 @@ func text_width() -> int:
 
 func okay_rect(layout: Dictionary) -> Rect2i:
 	return UI.control_rect($Content/Okay, layout.rect)
+
+
+## 网络页的提示浮层入口：可见性与版式都在这里，宿主只负责转发 paint。
+func present_page(paint: Dictionary, texts: Dictionary) -> void:
+	var show: bool = int(paint.get("scene", -1)) == C.NETWORK and (
+		paint.get("network_entry_request", false) or
+		paint.get("network_result", {}).get("entry_error", false) or
+		(paint.get("network_battle_zone", false) and not paint.get("network_detail", false) and
+			paint.get("network_request_pending", false)))
+	visible = show
+	if show:
+		present(paint, NetworkView.network_message_layout(paint), str(texts.get(138, "")))
 
 
 func present(paint: Dictionary, layout: Dictionary, ok_text: String) -> void:
