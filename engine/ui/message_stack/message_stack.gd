@@ -48,8 +48,22 @@ static func push_pseudo_item(label_text: String, count: int) -> bool:
 	return say_record(Msg.Id.PSEUDO_ITEM_OBTAINED, [label_text, count])
 
 
-## 获得精灵：图标是属性球图标，前缀是品级色码（`Battle.CAPTURE_GRADE_COLOR`）。
-static func push_monster(name_text: String, icon_frame: int, prefix: String) -> bool:
+## 品级（稀有度）颜色码：原生 `Ball_stdGradeINDEX@0x8133C` 的六档字符串，
+## 同一品级号也喂 `Ball_stdParty`（点数）与 `Ball_stdGradeRGB`（颜色）。
+const GRADE_COLORS := ["#CB", "#CA", "#CC", "#CD", "#CE", "#CF"]
+
+
+## 获得精灵（原生 `Ball_stdAddEx@0x85310`）：品级色码 + 性格名（`Ball_stdNickText`，有才加）
+## + fxt 478「%s获得」，图标取球上的属性帧。
+static func push_monster(name_text: String, icon_frame: int, grade: int,
+		nickname_code: int = 0) -> bool:
+	var prefix := ""
+	if grade >= 0 and grade < GRADE_COLORS.size():
+		prefix = GRADE_COLORS[grade]
+	if nickname_code > 0:
+		var nickname := _resolve(Msg.SOURCE, Msg.Id.NICKNAME_PREFIX + nickname_code, [])
+		if not nickname.is_empty():
+			prefix += nickname + " "
 	return notify(icon_frame, prefix + _resolve(Msg.SOURCE, Msg.Id.MONSTER_OBTAINED, [name_text]))
 
 

@@ -653,10 +653,17 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 	var code := int(result.get("code", ItemEffect.Code.FAILED))
 	# 随机球生成的那只（原生 `Ball_stdAddEx` 入包后要推 fxt 478「%s获得」）。
 	var generated_species := -1
+	var generated_grade := -1
+	var generated_nickname := 0
 	if generated_monster is Dictionary:
 		generated_species = int(generated_monster.get("species", -1))
+		# 随机球的品级＝球的档位（第 7 组 9–12 → 0–3），性格由 _generated_monster_record 掷。
+		generated_grade = ItemKind.index_of(item_id) - ItemEffect.ITEM_FIRST_RANDOM_BALL
+		generated_nickname = int(monsters.back().get("nickname", 0)) \
+			if not monsters.is_empty() and monsters.back() is Dictionary else 0
 	return {"ok": true, "item": selected, "member_index": member_index, "code": code,
-		"generated_species": generated_species,
+		"generated_species": generated_species, "generated_grade": generated_grade,
+		"generated_nickname": generated_nickname,
 		"message_id": ItemEffect.message_id(code),
 		"consumed": bool(result.get("consumed", false)),
 		"hp_restored": int(result.get("hp_restored", 0)),

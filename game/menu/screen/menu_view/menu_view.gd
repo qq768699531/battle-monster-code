@@ -831,7 +831,8 @@ func use_selected_item() -> bool:
 			return false
 		notice = ""
 		if int(direct.get("generated_species", -1)) >= 0:
-			_say_generated_monster(int(direct["generated_species"]))
+			_say_generated_monster(int(direct["generated_species"]),
+				int(direct.get("generated_grade", -1)), int(direct.get("generated_nickname", 0)))
 		last_progress_operation = {"kind": "use", "item_id": int(item.id), "member": -1,
 			"seed": direct_seed}
 		progress_changed.emit(story_progress.duplicate(true))
@@ -854,7 +855,7 @@ func use_selected_item() -> bool:
 
 ## 原生 `Ball_stdAddEx`：随机球把精灵入包后推一条栈消息，fxt 478「%s获得」，
 ## 图标取该精灵属性的球图标（`Menu_Party_DrawBall:32` 与捕获时同一条）。
-func _say_generated_monster(species: int) -> void:
+func _say_generated_monster(species: int, grade: int = -1, nickname: int = 0) -> void:
 	if species < 0 or gameplay_catalog == null or _assets == null:
 		return
 	var definition: MonsterDefinition = gameplay_catalog.monster(species)
@@ -867,7 +868,7 @@ func _say_generated_monster(species: int) -> void:
 	if definition != null:
 		var frame: Variant = Menu.menu_ball_icon(int(definition.attribute_group) + 1)
 		icon = int(frame) if frame is int else -1
-	MessageStack.push_monster(name_text, icon, "")
+	MessageStack.push_monster(name_text, icon, grade, nickname)
 
 
 ## 原生状态 11 选「丢弃」：数量从持有总数起算，堆叠上限为 1 的道具跳过数量选择。

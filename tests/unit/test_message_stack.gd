@@ -30,10 +30,12 @@ func test_typed_entries_build_the_fixed_styles() -> void:
 		AssetCatalog.text_message(Msg.SOURCE, Msg.Id.ITEM_OBTAINED) % ["#FFFFFF", "宝珠", 3],
 		"正文按 fxt 416 的固定格式拼")
 
-	MessageStack.push_monster("毛球兽", 153, "#FF0000")
+	MessageStack.push_monster("毛球兽", 153, 1, 2)
 	assert_eq(String(_stack.pushed[1][1]),
-		"#FF0000" + (AssetCatalog.text_message(Msg.SOURCE, Msg.Id.MONSTER_OBTAINED) % "毛球兽"),
-		"精灵提示带品级色前缀")
+		MessageStack.GRADE_COLORS[1] +
+		AssetCatalog.text_message(Msg.SOURCE, Msg.Id.NICKNAME_PREFIX + 2) + " " +
+		(AssetCatalog.text_message(Msg.SOURCE, Msg.Id.MONSTER_OBTAINED) % "毛球兽"),
+		"精灵提示 = 品级色 + 性格前缀 + 名称获得")
 
 	MessageStack.push_quest("测试任务", Msg.Id.QUEST_ACCEPT_SUFFIX)
 	assert_eq(int(_stack.pushed[2][0]), MessageStack.QUEST_ICON, "任务提示图标固定")
