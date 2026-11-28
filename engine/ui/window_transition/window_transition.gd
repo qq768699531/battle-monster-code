@@ -129,19 +129,21 @@ func _ready() -> void:
 
 func open_window() -> void:
 	if screen_shade:
-		var shade: ScreenShade = ScreenShade.acquire_frozen(self) if shade_frozen \
-			else ScreenShade.acquire(self)
+		var shade: ScreenShade = $Shade
+		shade.show()
+		if shade_frozen:
+			shade.freeze()
 		if _shade_snapshot != null:
 			shade.set_snapshot(_shade_snapshot)
+	else:
+		$Shade.hide()
 	$AnimationPlayer.play("open")
 	$AnimationPlayer.advance(0)
 
 
 func set_shade_snapshot(image: Image) -> void:
 	_shade_snapshot = image
-	var shade := ScreenShade.host_shade(self)
-	if shade != null:
-		shade.set_snapshot(image)
+	($Shade as ScreenShade).set_snapshot(image)
 
 
 func close_window() -> void:

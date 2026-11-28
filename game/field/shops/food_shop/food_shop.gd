@@ -204,7 +204,7 @@ func _refresh_strip() -> void:
 	# 原生 `Menu_Item_DrawListInfo` 在 n6=5 时 p_item_kind 为 null，底部条画的是
 	# 本页可制作的显示项数量与总条目数（“可选/上限”），不是物品描述或名字。
 	$Content/Name.call("configure", _assets)
-	$Content/Name.call("present", "%d/%d" % [_entries.size(), _entries.size()], 1)
+	$Content/Name.call("present", "%d/%d" % [_entries.size(), _entries.size()], 2)
 	$Content/Money/Number.present(str(money()))
 
 
@@ -233,7 +233,7 @@ func _refresh_materials() -> void:
 		row.get_node("Name").text = _item_name(material) if material != null else ""
 		var count_number: Control = row.get_node("Count")
 		count_number.call("configure", _assets)
-		count_number.call("present", "%d/%d" % [have, need], 1 if have < need else 0)
+		count_number.call("present", "%d/%d" % [have, need], 0)
 
 
 func _select_slot(slot: int) -> void:
