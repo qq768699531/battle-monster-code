@@ -125,23 +125,14 @@ func test_screen_shade_accepts_supplied_snapshot() -> void:
 	shade.set_snapshot(image)
 	assert_true(shade.snapshot() != null and shade.snapshot().get_size() == Vector2(4, 4),
 		"调用方抓的帧被原样用作快照")
-func test_open_windows_keep_the_shade_until_the_last_one_closes() -> void:
+func test_window_registration_tracks_visible_windows() -> void:
 	_window.show()
 	_window.open_window()
-	var second: Control = WindowScene.instantiate()
-	add_child_autofree(second)
-	second.show()
-	second.open_window()
-	var first_shade: Control = _window.get_node("Shade")
-	var second_shade: Control = second.get_node("Shade")
-	assert_true(WindowScript.any_open(), "两扇窗口同时打开时 shade 生效")
-	assert_false(first_shade.visible, "只有最上层窗口的 shade 可见")
-	assert_true(second_shade.visible, "最上层窗口的 shade 可见")
-	second.hide()
-	assert_true(WindowScript.any_open(), "关掉上层窗口后，只要还有一扇窗口，shade 仍生效")
-	assert_true(first_shade.visible, "关掉上层窗口后，下层窗口的 shade 重新可见")
+	assert_true(WindowScript.any_open(), "窗口打开时登记")
 	_window.hide()
-	assert_false(WindowScript.any_open(), "最后一扇窗口收起后 shade 才消失")
+	assert_false(WindowScript.any_open(), "窗口隐藏后注销")
+
+
 func test_hiding_the_parent_unregisters_the_window() -> void:
 	var holder := Control.new()
 	add_child_autofree(holder)
@@ -152,11 +143,3 @@ func test_hiding_the_parent_unregisters_the_window() -> void:
 	assert_true(WindowScript.any_open(), "窗口打开时登记")
 	holder.hide()
 	assert_false(WindowScript.any_open(), "父节点隐藏后窗口退出窗口栈")
-func test_shade_disabled_window_keeps_the_scene_visible() -> void:
-	var window: Control = WindowScene.instantiate()
-	add_child_autofree(window)
-	window.shade_enabled = false
-	window.show()
-	window.open_window()
-	assert_true(WindowScript.any_open(), "不画背景层的窗口仍然登记为窗口，地图保持冻结")
-	assert_false(window.get_node("Shade").visible, "图鉴这类窗口不画不透明模糊遮罩")

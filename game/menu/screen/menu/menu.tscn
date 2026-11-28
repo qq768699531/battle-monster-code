@@ -21,7 +21,6 @@
 [ext_resource type="PackedScene" path="res://game/menu/network/network.tscn" id="19"]
 [ext_resource type="Shader" path="res://engine/ui/touch_button/native_touch_blend.gdshader" id="34_p2357"]
 [ext_resource type="PackedScene" path="res://game/field/runtime/box2_prompt/box2_prompt.tscn" id="44_saveprompt"]
-[ext_resource type="PackedScene" path="res://engine/ui/screen_shade/screen_shade.tscn" id="20_shade"]
 
 [sub_resource type="AtlasTexture" id="Atlas_32_ygt0d"]
 atlas = ExtResource("Sheet_touch_ui_button")
@@ -292,8 +291,6 @@ custom_minimum_size = Vector2(400, 240)
 offset_right = 400.0
 offset_bottom = 240.0
 script = ExtResource("1")
-
-[node name="Shade" parent="." instance=ExtResource("20_shade")]
 
 [node name="TabBreath0" type="AnimationPlayer" parent="." unique_id=346484672]
 root_node = NodePath("../Tab0/Icon")

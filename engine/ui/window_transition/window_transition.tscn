@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" path="res://engine/ui/menu_outline/menu_outline.tscn" id="outline"]
 [ext_resource type="PackedScene" path="res://game/prime/network/dialog_panel/dialog_panel.tscn" id="dialog"]
 [ext_resource type="Script" path="res://engine/ui/window_transition/window_transition.gd" id="script"]
-[ext_resource type="PackedScene" path="res://engine/ui/screen_shade/screen_shade.tscn" id="shade"]
 
 [sub_resource type="StyleBoxFlat" id="BodyEdge"]
 draw_center = false
@@ -204,7 +203,6 @@ offset_bottom = 240.0
 mouse_filter = 2
 script = ExtResource("script")
 
-[node name="Shade" parent="." instance=ExtResource("shade")]
 [node name="Bounds" type="Control" parent="." unique_id=1179907789]
 offset_left = 86.0
 offset_right = 314.0

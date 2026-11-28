@@ -102,7 +102,6 @@ region = Rect2(13, 0, 13, 7)
 visible = false
 script = ExtResource("script")
 window_size = Vector2i(228, 240)
-shade_enabled = false
 
 [node name="Title" parent="Bounds" index="5"]
 text = "图鉴"

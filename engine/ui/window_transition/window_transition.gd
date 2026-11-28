@@ -100,17 +100,8 @@ const BOX4_CHROME_NODES := [
 		content_follows_window = value
 		if is_node_ready():
 			_apply_geometry()
-## 窗口背景的「半透明 + 模糊」只由本组件管理：第一扇窗口打开时抓一张整帧快照，
-## 之后所有窗口（含嵌套窗口）共用；只要还有窗口显示，`ScreenShade` 就可见且地图保持冻结，
-## 最后一扇窗口收起时才释放。页面不再各自抓帧、冻结或显隐 `ScreenShade`。
-## 只决定这扇窗口是否画全屏背景层；图鉴这类不需要模糊遮罩的页设为 false。
-## 是否登记为窗口、地图是否冻结仍只看窗口栈。
-@export var shade_enabled := true
-
+## 窗口栈与地图冻结判据。背景遮罩不在这里处理。
 static var _open_windows: Array = []
-## 整段窗口会话共用的整帧快照；同帧内换页（旧页 hide、新页立刻 open）沿用上一张。
-static var _capture: Image = null
-static var _capture_frame := -1
 
 var _normal_rect: Rect2i
 ## Box4 稳态下场景自己声明的构件显隐与页脚颜色（见 `BOX4_CHROME_NODES`）。
@@ -140,21 +131,11 @@ func open_window() -> void:
 	$AnimationPlayer.advance(0)
 
 
-## 任何窗口（包括菜单这种自绘全屏页）都通过这里登记；抓帧与 `ScreenShade` 显隐仍只由本组件负责。
+## 任何窗口（包括菜单这种自绘全屏页）都通过这里登记，只维护窗口栈与冻结判据。
 static func register_window(window: Control) -> void:
 	if _open_windows.has(window):
 		return
-	if _open_windows.is_empty():
-		if _shade_enabled(window):
-			var frame := Engine.get_process_frames()
-			if _capture == null or frame != _capture_frame:
-				_capture = _grab_screen(window)
-				_capture_frame = frame
-		else:
-			# 不需要背景层的页（图鉴）不抓帧，也不沿用上一段窗口会话的快照。
-			_capture = null
 	_open_windows.append(window)
-	_sync_shade()
 
 
 static func unregister_window(window: Control) -> void:
@@ -162,45 +143,6 @@ static func unregister_window(window: Control) -> void:
 	if index < 0:
 		return
 	_open_windows.remove_at(index)
-	_sync_shade()
-
-
-static func _grab_screen(window: Node) -> Image:
-	if Engine.is_editor_hint():
-		return null
-	var viewport := window.get_viewport()
-	return viewport.get_texture().get_image() if viewport != null else null
-
-
-## 只有最上层的窗口显隐自己的 `ScreenShade`；其余窗口的层收起，但整层仍然可见。
-## 最上层显式声明不需要背景层时（图鉴），所有窗口的背景层都收起，只留窗口本身。
-static func _sync_shade() -> void:
-	var top_enabled := _open_windows.size() > 0 and _shade_enabled(_open_windows[-1])
-	if top_enabled and _capture == null:
-		# 会话由不需要背景层的窗口（图鉴）开启，之后才叠上需要背景层的窗口：此时才抓。
-		_capture = _grab_screen(_open_windows[-1])
-		_capture_frame = Engine.get_process_frames()
-	for index in range(_open_windows.size()):
-		var window: Control = _open_windows[index]
-		if not is_instance_valid(window):
-			continue
-		var shade := window.get_node_or_null("Shade") as ScreenShade
-		if shade == null:
-			continue
-		if index == _open_windows.size() - 1 and top_enabled:
-			if _capture != null:
-				shade.set_snapshot(_capture)
-			else:
-				# 抓帧失败（例如无渲染的后端）时退回实时采样，至少保证窗口背景层仍然生效。
-				shade.set_snapshot(null)
-			shade.show()
-		else:
-			shade.hide()
-
-
-static func _shade_enabled(window: Control) -> bool:
-	var value: Variant = window.get("shade_enabled")
-	return value if value is bool else true
 
 
 func _notification(what: int) -> void:
