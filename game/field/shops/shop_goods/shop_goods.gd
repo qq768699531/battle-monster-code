@@ -313,6 +313,8 @@ func _refresh() -> void:
 			icon.texture = null
 			continue
 		var record: ItemDefinition = _records[index]
+		# 品级描边与菜单道具页同一套 `SlotGrade`（买/卖都按物品记录的 grade_index 画）。
+		cell.set_grade(SlotGrade.of(int(record.grade_index), false))
 		icon.texture = _assets.item_icon(record.icon) if record.icon >= 0 else null
 		var owned := _owned_count(record.id)
 		if mode == SELL and owned > 1:
