@@ -71,23 +71,20 @@ func _render_party_equipment() -> void:
 		var index := _first_index + slot
 		var cell := %Grid.get_child(slot) as ItemCell
 		var selected: bool = index == host.selected_equipment_index
-		cell.present_frame(host._party_frames[int(selected)], selected)
-		var icon: Control = cell.get_node("Icon")
-		var quantity: Control = cell.get_node("QuantityNumber")
-		cell.get_node("Quantity").hide()
-		icon.texture = null
-		cell.set_grade(null)
-		quantity.hide()
+		var frame: Texture2D = host._party_frames[1 if selected else 0]
+		var icon: Texture2D = null
+		var grade: Variant = null
+		var quantity := 0
 		if index < rows.size():
 			var item: Dictionary = rows[index]
 			var icon_id: int = host._item_icon_id(int(item["id"]))
 			if icon_id >= 0:
-				icon.texture = host._assets.item_icon(icon_id)
+				icon = host._assets.item_icon(icon_id)
 			var grade_index: Variant = item.get("grade_index")
 			if grade_index is int:
-				cell.set_grade(host._native_grade_color(grade_index, false))
-			quantity.visible = item.quantity > 1
-			quantity.present(str(item.quantity))
+				grade = host._native_grade_color(grade_index, false)
+			quantity = int(item.quantity)
+		cell.present_cell(icon, frame, selected, grade, quantity)
 	%DetailFrame.present(host, rows[host.selected_equipment_index]
 		if host.selected_equipment_index < rows.size() else {}, 1)
 	host._pages.items._update_scrollbar(%Scrollbar, selected_row, capacity / 6)

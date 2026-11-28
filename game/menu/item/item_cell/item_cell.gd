@@ -17,6 +17,27 @@ func _ready() -> void:
 	_sync_slot_size()
 
 
+## 通用单元格状态：格底、图标、品级、数量、状态角标；ITEM／PARTY／商店／数量框共用。
+## 页面只准备数据，不再各自摸 `Icon`／`QuantityNumber`／`Marker` 子节点。
+func present_cell(icon: Texture2D, frame: Texture2D, focused: bool, grade: Variant = null,
+		quantity := 0, marked := false, equipped := false,
+		marker_texture: Texture2D = null) -> void:
+	present_frame(frame, focused)
+	$Icon.texture = icon
+	set_grade(grade)
+	$Quantity.hide()
+	$QuantityNumber.visible = quantity > 1
+	if quantity > 1:
+		$QuantityNumber.present(str(quantity))
+	var marker: TextureRect = $Marker
+	marker.visible = marked
+	if marker_texture != null:
+		marker.texture = marker_texture
+	var equipment: TextureRect = get_node_or_null("EquipmentMarker") as TextureRect
+	if equipment != null:
+		equipment.visible = equipped
+
+
 ## 画格底并开关呼吸。贴图由调用方按 `SlotFrame.frame_of()`／`SlotFrame.index()` 取。
 func present_frame(texture: Texture2D, focused: bool) -> void:
 	set_frame_texture(texture)

@@ -303,23 +303,18 @@ func _refresh() -> void:
 		var index := _first + slot
 		var cell := _cell(slot)
 		var chosen := index == cursor
-		# 空位也用普通帧（原生 `a6` 是「在条目范围内」，见 `SlotFrame`）。
-		cell.present_frame(SlotFrame.frame_of(cell_frames, true, chosen), chosen)
-		cell.set_grade(null)
-		var quantity_label: Control = cell.get_node("QuantityNumber")
-		quantity_label.hide()
-		var icon: Control = cell.get_node("Icon")
-		if index >= _records.size():
-			icon.texture = null
-			continue
-		var record: ItemDefinition = _records[index]
-		# 品级描边与菜单道具页同一套 `SlotGrade`（买/卖都按物品记录的 grade_index 画）。
-		cell.set_grade(SlotGrade.of(int(record.grade_index), false))
-		icon.texture = _assets.item_icon(record.icon) if record.icon >= 0 else null
-		var owned := _owned_count(record.id)
-		if mode == SELL and owned > 1:
-			quantity_label.show()
-			quantity_label.present(str(owned))
+		# 格底、图标、品级、数量都走通用 `present_cell`（买页不画持有数，卖页画）。
+		var frame: Texture2D = SlotFrame.frame_of(cell_frames, true, chosen)
+		var icon: Texture2D = null
+		var grade: Variant = null
+		var quantity := 0
+		if index < _records.size():
+			var record: ItemDefinition = _records[index]
+			grade = SlotGrade.of(int(record.grade_index), false)
+			icon = _assets.item_icon(record.icon) if record.icon >= 0 else null
+			if mode == SELL:
+				quantity = _owned_count(record.id)
+		cell.present_cell(icon, frame, chosen, grade, quantity)
 	$Content/Money/Number.present(str(money()))
 	$Content/Count.present("%d/%d" % [mini(_records.size(), capacity), capacity])
 	var record := _record()

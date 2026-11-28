@@ -113,22 +113,19 @@ func _render_party() -> void:
 		var member_index := display_index if has_member else -1
 		var selected: bool = host.party_navigation_open and display_index == selected_index
 		cell.disabled = host.party_actions_open or host.party_discard_open
-		cell.get_node("Quantity").hide()
 		var in_capacity: bool = has_member or (capacity is int and display_index < capacity)
 		var frame_index := (0 if in_capacity else 2) + (1 if selected else 0)
-		cell.present_frame(host._party_frames[frame_index], selected)
-		var icon: Control = cell.get_node("Icon")
-		var marker: TextureRect = cell.get_node("Marker")
-		cell.set_grade(null)
-		icon.texture = null
-		marker.visible = has_member and order.has(member_index)
-		var equipment_marker: TextureRect = cell.get_node("EquipmentMarker")
-		equipment_marker.hide()
+		var icon: Texture2D = null
+		var grade: Variant = null
+		var marked := false
+		var equipped := false
 		if has_member:
 			var monster: Dictionary = monsters[member_index]
-			equipment_marker.visible = monster.nativeArguments[3] >= 0
-			cell.set_grade(host._party_grade_color(monster))
-			icon.texture = host._party_icon(monster)
+			equipped = monster.nativeArguments[3] >= 0
+			grade = host._party_grade_color(monster)
+			icon = host._party_icon(monster)
+			marked = order.has(member_index)
+		cell.present_cell(icon, host._party_frames[frame_index], selected, grade, 0, marked, equipped)
 	var has_slots: bool = not monsters.is_empty() or (capacity is int and capacity >= 0)
 	$EmptyNotice.visible = not has_slots
 	$Monster.hide()

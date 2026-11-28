@@ -146,24 +146,20 @@ func _render_items() -> void:
 		cell.visible = slot < 6 * visible_rows
 		cell.disabled = host.item_actions_open or host.item_discard_open
 		# 原生 `a6` 是「格号 < 上限」（`Menu_Item_DrawList@0x55360:139-155`），容量内的空格子照样用普通帧。
-		cell.present_frame(SlotFrame.frame_of(host._party_frames, item_index < capacity, focused),
-			focused)
-		var icon: Control = cell.get_node("Icon")
-		var quantity: Control = cell.get_node("QuantityNumber")
-		cell.get_node("Quantity").hide()
-		icon.texture = null
-		cell.set_grade(null)
-		quantity.hide()
+		var frame: Texture2D = SlotFrame.frame_of(host._party_frames, item_index < capacity, focused)
+		var icon: Texture2D = null
+		var grade: Variant = null
+		var quantity := 0
 		if has_item:
 			var entry: Dictionary = rows[item_index]
-			quantity.visible = entry.quantity > 1
-			quantity.present(str(entry.quantity))
+			quantity = int(entry.quantity)
 			var grade_index: Variant = entry.get("grade_index")
 			if grade_index is int:
-				cell.set_grade(host._native_grade_color(grade_index, false))
+				grade = host._native_grade_color(grade_index, false)
 			var icon_id: int = host._item_icon_id(int(entry["id"]))
 			if icon_id >= 0:
-				icon.texture = host._assets.item_icon(icon_id)
+				icon = host._assets.item_icon(icon_id)
+		cell.present_cell(icon, frame, focused, grade, quantity)
 	_present_details(rows, visible_rows == 1)
 	for scroll in [$ScrollOne, $ScrollTwo]:
 		scroll.get_node("UpHit").disabled = host.item_actions_open or host.item_discard_open

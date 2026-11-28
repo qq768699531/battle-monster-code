@@ -212,10 +212,7 @@ func _render() -> void:
 		plate.get_node("Number").present(str(_unit_price * quantity))
 
 
-## 道具格：边框用 `SlotFrame` 的“在范围内·常态”帧，品级色由宿主给；图标单独设。
+## 道具格：格底、图标、品级都走通用 `ItemCell.present_cell`。
 func _render_item(icon: Texture2D) -> void:
 	var cell: Control = $Window/Content/Item
-	cell.get_node("Icon").texture = icon
-	if _frame_texture != null:
-		cell.set_frame_texture(_frame_texture)
-	cell.set_grade(_grade_color)
+	cell.present_cell(icon, _frame_texture, false, _grade_color, 0)
