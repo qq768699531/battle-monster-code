@@ -1202,8 +1202,7 @@ func _say_monster_obtained() -> void:
 	# `Ball_stdAddEx` 的图标帧：属性球图标（`Menu_Party_DrawBall:32` 把同一个字段喂给
 	# `JC_fbmDrawSPRITE`）。球记录的 `attribute` 是 0..5，`menu_ball_icon` 收的是 1..6。
 	var icon: Variant = Menu.menu_ball_icon(int(_capture_ball.get("attribute", 0)) + 1)
-	MessageStack.notify(int(icon) if icon is int else -1,
-		prefix + (_presentation.message(Msg.Id.MONSTER_OBTAINED) % name_text))
+	MessageStack.push_monster(name_text, int(icon) if icon is int else -1, prefix)
 
 
 ## 原生 `Battle_Capture_Action_mPaint`：演出收尾后开 Box2 结果窗（`Menu_win_Box2_DrawOk`），

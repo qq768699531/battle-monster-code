@@ -401,8 +401,8 @@ func _present_item_obtained(item_id: int, count: int, icon_frame: int) -> void:
 		return
 	var type := ItemKind.kind_of(item_id)
 	if PSEUDO_OBTAINED_LABELS.has(type):
-		MessageStack.say_record(Msg.Id.PSEUDO_ITEM_OBTAINED,
-			[_assets.text_message(Msg.SOURCE, PSEUDO_OBTAINED_LABELS[type]), count])
+		MessageStack.push_pseudo_item(
+			_assets.text_message(Msg.SOURCE, PSEUDO_OBTAINED_LABELS[type]), count)
 		return
 	if _resources == null or not _resources.has_method("load_gameplay"):
 		return
@@ -418,7 +418,7 @@ func _present_item_obtained(item_id: int, count: int, icon_frame: int) -> void:
 	var grade: int = record.grade_index
 	var color: String = ITEM_GRADE_COLOR_CODES[grade] \
 		if grade >= 0 and grade < ITEM_GRADE_COLOR_CODES.size() else ""
-	MessageStack.say_record_icon(icon_frame, Msg.Id.ITEM_OBTAINED, [color, item_name, count])
+	MessageStack.push_item(item_name, count, icon_frame, color)
 
 
 ## 任务接取／完成提示（原生 `Game_infoInit(0x94, "#C5"+标题+后缀)`）：事件指令 21
@@ -430,11 +430,7 @@ func _present_quest_set(quest_id: int, source := TextTables.QUEST_SOURCE,
 	if quest_id < 0 or _assets == null:
 		return
 	var quest_title := _quest_title(quest_id, source)
-	if quest_title.is_empty():
-		MessageStack.say_record_icon(QUEST_ICON_FRAME, suffix_record)
-		return
-	MessageStack.notify(QUEST_ICON_FRAME, "%s%s%s" % [MESSAGE_HIGHLIGHT_CODE, quest_title,
-		_assets.text_message(Msg.SOURCE, suffix_record)])
+	MessageStack.push_quest(quest_title, suffix_record)
 
 
 ## `JC_fxtQUEST@0x20B64:10-33`：取文本资源第 3 页，把其中的「0/」换成「<当前>/」；
@@ -458,9 +454,8 @@ func _present_quest_progress(quest_id: int, count: int, from_event: bool) -> voi
 	if quest_id < 0 or _assets == null:
 		return
 	var source := EVENT_QUEST_TEXT_SOURCE if from_event else TextTables.QUEST_SOURCE
-	MessageStack.notify(QUEST_ICON_FRAME, MESSAGE_HIGHLIGHT_CODE + _quest_title(quest_id, source))
-	MessageStack.notify(-1, "%s[%s]" % [MESSAGE_HIGHLIGHT_CODE,
-		_quest_goal_text(quest_id, source, count)])
+	MessageStack.push_quest_progress(_quest_title(quest_id, source),
+		_quest_goal_text(quest_id, source, count))
 
 
 func _ready() -> void:

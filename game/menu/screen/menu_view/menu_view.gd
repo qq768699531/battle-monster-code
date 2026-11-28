@@ -867,7 +867,7 @@ func _say_generated_monster(species: int) -> void:
 	if definition != null:
 		var frame: Variant = Menu.menu_ball_icon(int(definition.attribute_group) + 1)
 		icon = int(frame) if frame is int else -1
-	MessageStack.say_record_icon(icon, Msg.Id.MONSTER_OBTAINED, [name_text])
+	MessageStack.push_monster(name_text, icon, "")
 
 
 ## 原生状态 11 选「丢弃」：数量从持有总数起算，堆叠上限为 1 的道具跳过数量选择。

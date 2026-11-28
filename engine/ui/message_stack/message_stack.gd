@@ -29,6 +29,44 @@ const BASE_Y := 220
 ## `y` 基准的固定档（400×240 下 220）。栈是全局顶层 HUD，位置不随地图／菜单改变。
 var base_y := BASE_Y
 
+## 提示种类：原生每条 `Game_infoInit(icon, fxtN)` 的形态是固定的（图标 + 固定格式 + 固定高亮色），
+## 所以调用方只给「类型 + 数据」，文本、颜色、图标都在这里拼——页面不再自己写 `#C5` 这类颜色码。
+enum Kind { ITEM, PSEUDO_ITEM, MONSTER, QUEST_ACCEPTED, QUEST_PROGRESS, QUEST_COMPLETED }
+## 原生 `Evt_msgSET`／`Qst_stdSET` 的标题高亮段。
+const HIGHLIGHT := "#C5"
+## 任务提示的图标帧（`Qst_stdSET`／`Qst_stdComplete` 的 `Game_infoInit(0x94, …)`）。
+const QUEST_ICON := 148
+
+
+## 获得道具：图标由调用方给（物品图标的帧号），名称颜色取道具品级色码。
+static func push_item(item_name: String, count: int, icon_frame: int, color_code: String) -> bool:
+	return say_record_icon(icon_frame, Msg.Id.ITEM_OBTAINED, [color_code, item_name, count])
+
+
+## 获得伪道具（经验／金币）：无图标、无品级色。
+static func push_pseudo_item(label_text: String, count: int) -> bool:
+	return say_record(Msg.Id.PSEUDO_ITEM_OBTAINED, [label_text, count])
+
+
+## 获得精灵：图标是属性球图标，前缀是品级色码（`Battle.CAPTURE_GRADE_COLOR`）。
+static func push_monster(name_text: String, icon_frame: int, prefix: String) -> bool:
+	return notify(icon_frame, prefix + _resolve(Msg.SOURCE, Msg.Id.MONSTER_OBTAINED, [name_text]))
+
+
+## 任务接取／完成：标题高亮 + 后缀记录（fxt 409「(接受)」／410「(完成)」）。
+static func push_quest(title: String, suffix_record: int, source: String = Msg.SOURCE) -> bool:
+	if title.is_empty():
+		return say_record_icon(QUEST_ICON, suffix_record)
+	return notify(QUEST_ICON, HIGHLIGHT + title + _resolve(source, suffix_record, []))
+
+
+## 任务进度：标题一行（带图标），目标「[当前/目标]」一行（无图标）。
+static func push_quest_progress(title: String, goal_text: String) -> bool:
+	var pushed := notify(QUEST_ICON, HIGHLIGHT + title)
+	notify(-1, "%s[%s]" % [HIGHLIGHT, goal_text])
+	return pushed
+
+
 ## 原生 `JC_fxt2Return` 的默认来源就是 `Msg.SOURCE`；绝大多数提示文本都是这个表里的记录号。
 
 ## 全局唯一实例。原生 `Game_infoInit` 是**全局函数**，任何系统都能直接推一条；
