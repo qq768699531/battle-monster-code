@@ -1,8 +1,8 @@
-[gd_scene format=4]
-[ext_resource type="Script" path="res://game/field/map/map.gd" id="MapRoot"]
+[gd_scene format=3]
 
 [ext_resource type="PackedScene" path="res://game/field/map/map_set/m6/t6_0.tscn" id="1_whmg6"]
-[ext_resource type="Texture2D" path="res://game/field/map/map_actor/map9_a_1/map9_a_1.webp" id="2_bg"]
+[ext_resource type="Texture2D" path="res://game/field/map/map_actor/map9_a_1/map9_a.webp" id="2_3w2ug"]
+[ext_resource type="Script" path="res://game/field/map/map.gd" id="MapRoot"]
 
 [node name="Map_148" type="Node2D" unique_id=404596519]
 script = ExtResource("MapRoot")
@@ -13,15 +13,25 @@ metadata/map_size_tiles = Vector2i(26, 20)
 metadata/map_palette_indices = PackedInt32Array(0, 0, 0, 0)
 metadata/map_objects = PackedInt32Array(3, 17, 3, 1, 15, 2, 0, 17, 1, 2, 7, 6, 4, 7, 7, 8, 0, 14, 5, 18, 7, 7, 20, 11, 6, 4, 11, 11, 5, 17, 10, 18, 14, 9, 8, 14, 12, 9, 13, 13, 10, 13)
 
-[node name="Background" type="CanvasLayer" parent="."]
+[node name="Background" type="CanvasLayer" parent="." unique_id=738512521]
 layer = -1
 
-[node name="Image" type="Sprite2D" parent="Background"]
-texture_filter = 1
+[node name="ImageLeft" type="Sprite2D" parent="Background" unique_id=917675865]
 z_index = -1
-texture = ExtResource("2_bg")
+texture_filter = 1
+position = Vector2(-6.3180923e-06, 0)
+scale = Vector2(1, 1.008)
+texture = ExtResource("2_3w2ug")
 centered = false
-scale = Vector2(4, 1)
+
+[node name="ImageRight" type="Sprite2D" parent="Background" unique_id=1997534129]
+z_index = -1
+texture_filter = 1
+position = Vector2(208, 0)
+scale = Vector2(1.0000001, 1.0079999)
+texture = ExtResource("2_3w2ug")
+centered = false
+flip_h = true
 
 [node name="Npcs" type="Node2D" parent="." unique_id=2077532432]
 
@@ -57,8 +67,5 @@ metadata/map_npc = {
 }
 metadata/npc_dialogue = "npc/npc0051.cht"
 
-[node name="Terrain" type="Node2D" parent="." unique_id=1599635803 instance=ExtResource("1_whmg6")]
-texture_filter = 1
-metadata/source_layout = "mdt/m6_0"
-metadata/map_size_tiles = Vector2i(26, 20)
-metadata/map_cell_flags = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQEBAQAAAAAAAAAAAAAAAAEBAQEBAQEBAQEAAAABAQAAAAAAAAAAAAAAAQEAAAEBAQEBAQAAAAEBAAAAAAAAAAAAAAABAAAAAAEBAAAAAAABAQEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQEBAQAAAAAAAAAAAAABAQEAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAABAQAAAAAAAAAAAAEAAAAAAAEBAQEBAAAAAAABAAAAAAAAAAAAAQAAAAAAAQEBAQEAAAAAAAEAAAAAAAAAAAABAQEBAQEBAQEBAQEBAQEBAQAAAAAAAAAAAAEBAQEBAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==")
+[node name="Terrain" parent="." unique_id=1599635803 instance=ExtResource("1_whmg6")]
+visible = false
