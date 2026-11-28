@@ -324,6 +324,12 @@ func _refresh() -> void:
 		var row := MenuModel.item_row(record)
 		row["quantity"] = maxi(1, _owned_count(record.id)) if mode == SELL else 1
 		var explanation := MenuModel.native_item_explanation(row, _text)
+		# 技能书（type 4）没有 `native_item_explanation` 分支；它的结果说明在
+		# `item_skill.dat` 的 `result_description_record` 里（菜单书本详情页同一份）。
+		if record.type == ItemKind.Kind.SKILL_BOOK and explanation.is_empty():
+			var skill_description: Variant = _names.get(str(record.result_description_record), "")
+			if skill_description is String:
+				explanation = skill_description
 		_detail.present_item(row, 1 if record.type == ItemKind.Kind.EQUIPMENT else 0, _item_name(record),
 			explanation, null, _text)
 	var price: Control = $Content/BuyPrice if mode == BUY else $Content/SellPrice
