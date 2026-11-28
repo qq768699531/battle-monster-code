@@ -332,3 +332,20 @@ offset_bottom = 219.0
 [node name="Select" parent="." index="3" unique_id=1098356483 instance=ExtResource("select")]
 visible = false
 anchors_preset = 0
+
+[node name="Icon" parent="Content/BuyPrice" index="0"]
+offset_top = 2.0
+offset_bottom = 7.0
+
+[node name="Number" parent="Content/BuyPrice" index="1"]
+offset_top = 2.0
+offset_bottom = 7.0
+
+[node name="Icon" parent="Content/SellPrice" index="0"]
+offset_top = 2.0
+offset_bottom = 7.0
+
+[node name="Number" parent="Content/SellPrice" index="1"]
+offset_top = 2.0
+offset_bottom = 7.0
+
