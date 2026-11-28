@@ -50,8 +50,19 @@ var _portrait_loaded := false
 var _portrait_action_valid := false
 var _portrait_render_action := -1
 var _entry_frame := 0
+## 立绘正在播淡出（原生没有这一段，是本工程给对话收尾补的退场）。
+var _exiting := false
 @onready var _portrait: Node2D = $PortraitLayers/PortraitAnimation
 @onready var _entry_player: AnimationPlayer = $PortraitEntry
+
+
+func _on_entry_finished(animation_name: StringName) -> void:
+	if animation_name != &"exit":
+		return
+	_exiting = false
+	_entry_player.pause()
+	_clear_portrait()
+	visible = false
 
 
 func _ready() -> void:
@@ -59,6 +70,7 @@ func _ready() -> void:
 	_catalog = get_node_or_null("/root/AssetCatalog")
 	portrait_layers = $PortraitLayers
 	_portrait.set_manual(true)
+	_entry_player.animation_finished.connect(_on_entry_finished)
 	_entry_player.play(&"enter")
 	_entry_player.seek(_entry_player.current_animation_length, true)
 	_entry_player.pause()
@@ -163,6 +175,11 @@ func present_record(record: Dictionary, speaker: String, record_identity: int = 
 func advance(delta: float) -> void:
 	if not is_finite(delta) or delta < 0:
 		return
+	if _exiting:
+		# 淡出期间照旧逐帧推进（播放器是 MANUAL），播完由 `_on_entry_finished()` 收尾。
+		_entry_player.advance(delta)
+		_update_layout()
+		return
 	if not visible:
 		return
 	_portrait.advance(delta)
@@ -210,6 +227,13 @@ func advance_text_page() -> bool:
 
 
 func clear_dialogue() -> void:
+	# 立绘还在场上就先播 `exit`（场景动画），播完在 `_on_entry_finished()` 里隐藏并清精灵；
+	# 否则（没立绘／不在树里）保持原来的立即隐藏。
+	_exiting = visible and _portrait_loaded and _entry_player.is_inside_tree()
+	if _exiting:
+		_entry_player.stop()
+		_entry_player.play(&"exit")
+		_entry_player.advance(0.0)
 	_record_key.clear()
 	_text_pages.clear()
 	_text_page_colors.clear()
@@ -220,12 +244,14 @@ func clear_dialogue() -> void:
 	portrait_action = -1
 	portrait_flags = 0
 	_entry_frame = 0
-	_entry_player.pause()
+	if not _exiting:
+		_entry_player.pause()
 	_portrait_loaded = false
 	_portrait_action_valid = false
 	_portrait_render_action = -1
-	_clear_portrait()
-	visible = false
+	if not _exiting:
+		_clear_portrait()
+		visible = false
 
 
 ## 原生正文 → 「逐字 + 颜色」。`#C`／`#P`／`[color=…]` 由 `MessageText.text_segments()` 消费，
