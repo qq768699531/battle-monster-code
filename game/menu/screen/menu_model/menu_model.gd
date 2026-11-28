@@ -8,6 +8,7 @@ const Battle = preload("res://game/battle/combat/battle.gd")
 const Story = preload("res://engine/data/story/story.gd")
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
+const PlayerData = preload("res://engine/data/player_data/player_data.gd")
 const MENU_WINDOW := {"x": 86, "y": 0, "width": 228, "height": 240}
 const MENU_TABS := ["status", "items", "party", "quests", "options", "network"]
 const TAB_NATIVE_INDICES := [0, 1, 2, 3, 5, 4]
@@ -49,7 +50,6 @@ const PARTY_MEMBER_MAX := 3
 ## 组队等级差上限（`Ball_stdIsPartyOn` 的 `n104->level > player_progress.level + 5`，
 ## 越界即 `msg 559`「不可与比主人公高5级以上的组队」）。
 const PARTY_LEVEL_GAP := 5
-const EQUIPMENT_BAG_CAPACITY := 72
 const STATUS_ATTRIBUTE_MAX := 239
 ## 动作号即 `common/msg.fxt` 的记录号（`Menu_List_Set`）。
 const ITEM_ACTION_USE := 176
@@ -465,7 +465,7 @@ static func unequip_party_member(progress: Dictionary, catalog: GameplayData,
 			occupied += quantity
 			if id == item_id and inventory_key.is_empty():
 				inventory_key = key
-	if occupied >= EQUIPMENT_BAG_CAPACITY:
+	if occupied >= PlayerData.item_capacity(progress, PlayerData.EQUIPMENT_BAG):
 		return {"ok": false, "error": "装备背包已满，未卸下装备"}
 	var next_args: Array = args.duplicate()
 	next_args[3] = -1
@@ -619,8 +619,7 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 	# 第 7 组 9–12：原生 `Ball_stdAddEx` 成功才 `v6 = 1` 扣道具；怪包满时返回 22、不扣。
 	var generated_monster: Variant = result.get("generated_monster")
 	if generated_monster is Dictionary:
-		var capacity: Variant = progress.get("monsterCapacity")
-		if capacity is int and monsters.size() >= int(capacity):
+		if monsters.size() >= PlayerData.monster_capacity(progress):
 			return _generated_failure(selected, member_index, ItemEffect.Code.RANDOM_BALL_FULL)
 		var species := int(generated_monster.get("species", 0))
 		monsters.append(_generated_monster_record(generated_monster, random_seed))
@@ -952,21 +951,20 @@ static func _add_generated_item(progress: Dictionary, item_id: int, count := 1) 
 		return false
 	var key := str(item_id)
 	var current := int(inventory.get(key, 0))
-	var capacity: Variant = progress.get("itemCapacity")
-	if capacity is Array and bag < capacity.size():
-		var occupied := _generated_stack_slots(current + count, ItemKind.max_stack(type, index))
-		for other: Variant in inventory:
-			var other_key := str(other)
-			if other_key == key or not other_key.is_valid_int():
-				continue
-			var other_id := int(other_key)
-			var other_type := ItemKind.kind_of(other_id)
-			var other_index := ItemKind.index_of(other_id)
-			if ItemKind.bag_of(other_type, other_index) == bag:
-				occupied += _generated_stack_slots(int(inventory[other]),
-					ItemKind.max_stack(other_type, other_index))
-		if occupied > int(capacity[bag]):
-			return false
+	var capacity := PlayerData.item_capacity(progress, bag)
+	var occupied := _generated_stack_slots(current + count, ItemKind.max_stack(type, index))
+	for other: Variant in inventory:
+		var other_key := str(other)
+		if other_key == key or not other_key.is_valid_int():
+			continue
+		var other_id := int(other_key)
+		var other_type := ItemKind.kind_of(other_id)
+		var other_index := ItemKind.index_of(other_id)
+		if ItemKind.bag_of(other_type, other_index) == bag:
+			occupied += _generated_stack_slots(int(inventory[other]),
+				ItemKind.max_stack(other_type, other_index))
+	if occupied > capacity:
+		return false
 	inventory[key] = current + count
 	progress["inventory"] = inventory
 	return true

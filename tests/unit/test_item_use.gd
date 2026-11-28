@@ -46,7 +46,7 @@ func test_direct_use_replays_identically() -> void:
 	for index in [9, 13]:
 		var item_id: int = ItemKind.id_of(ItemKind.Kind.GROUP_7, index)
 		var live := {"inventory": {str(item_id): 1}, "monsters": [], "monsterCapacity": 24,
-			"itemCapacity": [99, 99, 99, 99, 99], "parameter": {"moneyBalance": 0},
+			"itemCapacity": [99, 99, 99, 99, 99, 99], "parameter": {"moneyBalance": 0},
 			"quests": {"slots": []}}
 		var seed := 424242
 		var snapshot: Dictionary = live.duplicate(true)

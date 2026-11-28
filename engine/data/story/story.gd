@@ -13,6 +13,7 @@ const BattleSettlementModel = preload("res://game/battle/combat/battle_settlemen
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const MapEffectCatalog = preload("res://game/field/map/map_effect.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
+const PlayerData = preload("res://engine/data/player_data/player_data.gd")
 const QuestLogModel = preload("res://game/field/quests/quest_log/quest_log.gd")
 ## 事件记录的等待、淡入淡出、闪光与抖动都按帧计数（`Evt_stdPROC` 的 `step_count`），
 ## 折成秒一律乘 `FramePacing.NATIVE_FRAME_SECONDS`（原生默认档 50 ms/帧，
@@ -343,7 +344,8 @@ static func initial_progress(slot: int, trait_value: int = -1) -> Dictionary:
 			"warp_saved_map_id": WARP_SAVED_MAP_INITIAL,
 			"warp_saved_tile_x": WARP_SAVED_TILE_INITIAL,
 			"warp_saved_tile_y": WARP_SAVED_TILE_INITIAL},
-		"itemCapacity": [72, 72, 72, 72, 72, 72], "monsterCapacity": 20,
+		"itemCapacity": PlayerData.initial_item_capacities(),
+		"monsterCapacity": PlayerData.INITIAL_MONSTER_CAPACITY,
 		"inventory": {}, "monsters": [], "extraNpcs": [], "camera": null,
 		"book": {Book.BOOK_MONSTERS: [], Book.BOOK_SKILLS: []},
 		"quests": QuestLogModel.empty_dict(),
@@ -528,7 +530,14 @@ static func validate_progress(value: Variant, slot: int) -> bool:
 	for row: Variant in p["extraNpcs"]:
 		if not _integer_array(row, 5) or not row.all(func(n: int) -> bool: return _uint(n, 255)):
 			return false
-	if p.get("itemCapacity") != [72, 72, 72, 72, 72, 72] or p.get("monsterCapacity") != 20:
+	var item_caps: Variant = p.get("itemCapacity")
+	if not item_caps is Array or item_caps.size() != PlayerData.BAG_COUNT:
+		return false
+	for cap: Variant in item_caps:
+		if not cap is int or cap < 0:
+			return false
+	var monster_cap: Variant = p.get("monsterCapacity")
+	if not monster_cap is int or monster_cap <= 0:
 		return false
 	if p.has("book"):
 		var book: Variant = p["book"]
@@ -1253,7 +1262,7 @@ func _recruit_starter(index: int) -> bool:
 		if catalog.monster(species) == null:
 			_block("缺少原物种 %d" % species)
 			return false
-	if progress["monsters"].size() + recruits.size() > progress["monsterCapacity"]:
+	if progress["monsters"].size() + recruits.size() > PlayerData.monster_capacity(progress):
 		_block("原怪物背包已满")
 		return false
 	Book.reset_records(progress)
@@ -1566,7 +1575,7 @@ func _instruction(opcode: int, p: Array) -> bool:
 			if catalog == null or catalog.monster(int(p[0])) == null:
 				_block("缺少原物种 %d" % p[0])
 				return false
-			if s["monsters"].size() >= s["monsterCapacity"]:
+			if s["monsters"].size() >= PlayerData.monster_capacity(s):
 				_block("原怪物背包已满")
 				return false
 			# 同一支 `Ball_stdSet`：`feel_value` 与 `brain_current` 都传 0、`food_value` 写死 100、
@@ -1941,7 +1950,7 @@ func _add_inventory_item(item_id: int, quantity: int, blocking := true) -> bool:
 				_item_max_stack(existing_type, existing_index))
 	var final_slots := occupied + _stack_slots(previous + quantity,
 		_item_max_stack(type, index))
-	if final_slots > progress["itemCapacity"][bag]:
+	if final_slots > PlayerData.item_capacity(progress, bag):
 		_inventory_block("原物品包已满（分类 %d）" % bag, blocking)
 		return false
 	if existing_key.is_empty():
@@ -2323,7 +2332,7 @@ func capture_monster(record: Dictionary) -> String:
 	if _disposed or progress.is_empty():
 		return "存档尚未载入"
 	var monsters: Array = progress["monsters"]
-	if monsters.size() >= int(progress["monsterCapacity"]):
+	if monsters.size() >= PlayerData.monster_capacity(progress):
 		return "怪物背包已满，捕获到的精灵没有入包"
 	monsters.append(record)
 	Book.discover_monster(progress, int(record["species"]))

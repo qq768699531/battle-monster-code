@@ -26,7 +26,7 @@ func _scroll(direction: int) -> void:
 	host.item_navigation_open = true
 	host.item_focus = 1
 	host.selected_item_index = posmod(host.selected_item_index + direction,
-		host.ITEM_BAG_CAPACITY)
+		host.item_capacity())
 	host._render_content()
 
 
@@ -77,12 +77,12 @@ func handle_key(key: String) -> bool:
 			host.select_bag_category(posmod(host.selected_bag_category + direction, ItemKind.BAG_COUNT))
 		else:
 			host.selected_item_index = posmod(host.selected_item_index + direction,
-				host.ITEM_BAG_CAPACITY)
+				host.item_capacity())
 			host._render_content()
 		return true
 	if key in ["ArrowUp", "ArrowDown"] and host.item_focus == 1:
 		host.selected_item_index = posmod(host.selected_item_index +
-			(-6 if key == "ArrowUp" else 6), host.ITEM_BAG_CAPACITY)
+			(-6 if key == "ArrowUp" else 6), host.item_capacity())
 		host._render_content()
 		return true
 	return false
@@ -91,7 +91,7 @@ func handle_key(key: String) -> bool:
 func _render_items() -> void:
 	var rows: Array = host.Menu.native_inventory_rows(host.story_progress,
 		host.gameplay_catalog, host.selected_bag_category)
-	var capacity: int = host.ITEM_BAG_CAPACITY
+	var capacity: int = host.item_capacity()
 	host.selected_item_index = clampi(host.selected_item_index, 0, capacity - 1)
 	var visible_rows: int = host._item_visible_rows()
 	var selected_row := floori(float(host.selected_item_index) / 6.0)

@@ -1,4 +1,5 @@
 extends Control
+const PlayerData = preload("res://engine/data/player_data/player_data.gd")
 ## 队伍页：球列表与怪物资料。
 
 const StatusPortrait = preload("res://game/menu/status/status_portrait/status_portrait.gd")
@@ -18,7 +19,7 @@ func _ready() -> void:
 
 func slot_count() -> int:
 	var count: int = host._party_display_members().size()
-	var capacity: Variant = host.story_progress.get("monsterCapacity")
+	var capacity: Variant = PlayerData.monster_capacity(host.story_progress)
 	if capacity is int and capacity >= 0:
 		count = maxi(count, capacity)
 	return maxi(1, ceili(float(count) / 6.0)) * 6
@@ -99,7 +100,7 @@ func _render_party() -> void:
 	if not monsters is Array:
 		monsters = []
 	var order: Array = host.Menu.native_party_order(host.story_progress)
-	var capacity: Variant = host.story_progress.get("monsterCapacity")
+	var capacity: Variant = PlayerData.monster_capacity(host.story_progress)
 	_present_summary(monsters, order)
 	host.selected_party_member_index = clampi(host.selected_party_member_index, 0, slot_count() - 1)
 	var selected_index: int = host.selected_party_member_index
@@ -165,7 +166,7 @@ func _render_party() -> void:
 
 
 func _present_summary(monsters: Array, order: Array) -> void:
-	var capacity: Variant = host.story_progress.get("monsterCapacity")
+	var capacity: Variant = PlayerData.monster_capacity(host.story_progress)
 	var capacity_text := str(capacity) if capacity is int and capacity >= 0 else "--"
 	$BallCount.present("%d/%s" % [monsters.size(), capacity_text])
 	$BallCount.tooltip_text = "" if capacity_text != "--" else "当前进度未记录精灵球容量。"

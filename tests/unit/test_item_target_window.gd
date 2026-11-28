@@ -19,7 +19,7 @@ func test_item_target_opens_as_single_window() -> void:
 	var window_party: Control = window.get_node("Content/Party")
 	var menu_party: Control = menu.get_node("party")
 	menu.story_progress = {"monsters": [{"nativeArguments": [49, 5, 0, -1, 0],
-		"nickname": 0, "hp": 5, "sp": 5}], "partyOrder": [0], "monsterCapacity": 6,
+		"nickname": 0, "hp": 5, "sp": 5}], "partyOrder": [0], "monsterCapacity": 6, "itemCapacity": [72, 72, 72, 72, 72, 72],
 		"parameter": {}, "guildCode": 99}
 	menu.gameplay_catalog = Fixtures.data({"monsters": [{"id": 49, "kind": 0,
 		"attribute_group": 3, "attribute_entry": 0,
@@ -82,7 +82,7 @@ func test_item_use_stays_open_until_clear() -> void:
 	menu.story_progress = {"monsters": [
 		{"nativeArguments": [49, 5, 0, -1, 0], "nickname": 0, "hp": 5, "sp": 5},
 		{"nativeArguments": [49, 5, 0, -1, 0], "nickname": 0, "hp": 5, "sp": 5}],
-		"partyOrder": [0], "monsterCapacity": 6, "inventory": {"1001": 2, "1017": 1},
+		"partyOrder": [0], "monsterCapacity": 6, "itemCapacity": [72, 72, 72, 72, 72, 72], "inventory": {"1001": 2, "1017": 1},
 		"parameter": {}}
 	menu.gameplay_catalog = Fixtures.data({
 		"items": [

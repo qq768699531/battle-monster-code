@@ -49,7 +49,7 @@ enum OptionSavePhase {
 # Box2 弹窗的几何（`Menu_win_Box2_DrawWindow`）：宽是 `Menu_win_Box2_DrawMessage` 的立即数 0xA0（160），
 # 高 `13 × 行数 + 18`（纯消息）／`13 × 行数 + 44`（带确认按钮），在 400×240 里居中。
 # 窗宽与窗高都由 `components/box2_prompt` 按 `confirm_layout.gd` 的公式算，本文件不摆窗口几何。
-const ITEM_BAG_CAPACITY := 72
+const PlayerData = preload("res://engine/data/player_data/player_data.gd")
 ## 该袋在原生道具列表里只有一行（袋号 3 本身的含义未确认，这里只记录列表高度差异）。
 const ITEM_SINGLE_ROW_BAG := 3
 const WINDOW_RULE := Color("#196485")
@@ -58,6 +58,11 @@ var story_progress: Dictionary = {}
 ## 菜单只声明「做了哪个操作」，宿主持活状态用 `MenuModel.replay_operation` 重放对账；
 ## 随机球／技能书把本次种子一并带出，回放才能得到同一只怪／同一本书。
 var last_progress_operation: Dictionary = {}
+func item_capacity(category: int = -1) -> int:
+	var bag := selected_bag_category if category < 0 else category
+	return PlayerData.item_capacity(story_progress, bag)
+
+
 ## 原生 `Menu_Option_mKeyPressed:37-40`：`ParamData.current_event_resource_id <= 2` 时存档项
 ## 不开窗（层号不置 1），只推一条 `common/msg.fxt` 198「现在无法存档」。本项目事件号推进与
 ## 原生不等价，宿主按 `field_runtime.story_unsettled()`（没有稳定快照＝剧情／对话／战斗期间）
@@ -1392,7 +1397,7 @@ func _resolve_status_confirmation() -> void:
 
 
 func _select_inventory_item(index: int) -> void:
-	if item_actions_open or item_discard_open or index < 0 or index >= ITEM_BAG_CAPACITY:
+	if item_actions_open or item_discard_open or index < 0 or index >= item_capacity():
 		return
 	selected_item_index = index
 	item_navigation_open = true

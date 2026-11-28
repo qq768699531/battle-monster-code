@@ -59,8 +59,7 @@ const TAB_SHEET := "common/ui_window/frame-014"
 ## 原版详情面板（`Menu_Item_DrawInfoEtc`／`Equip`）：`item_description.tscn` 就是这份实现
 ## （标题 `[ 名 X 数量 ]`／品级色、说明箭头、4 行属性、换行说明），菜单道具页与商店共用。
 const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
-## 角色物品栏上限的兜底（原生 `ParamData.itemCapacity` 缺键时；菜单道具页同一常量 72）。
-const ITEM_BAG_CAPACITY := 72
+const PlayerData = preload("res://engine/data/player_data/player_data.gd")
 
 var mode := BUY
 var shop_mode_code := 0
@@ -296,10 +295,7 @@ func _map_id() -> int:
 
 
 func _bag_capacity(bag: int) -> int:
-	var caps: Variant = _story.progress.get("itemCapacity") if _story != null else null
-	if caps is Array and bag >= 0 and bag < caps.size():
-		return int(caps[bag])
-	return ITEM_BAG_CAPACITY
+	return PlayerData.item_capacity(_story.progress, bag)
 
 
 func _refresh() -> void:

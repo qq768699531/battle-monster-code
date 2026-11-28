@@ -6,6 +6,7 @@ const Msg = preload("res://engine/ui/msg/msg.gd")
 
 func _menu(party: Array) -> Control:
 	var progress := {"inventory": {}, "monsters": [], "partyOrder": party,
+		"monsterCapacity": 20, "itemCapacity": [72, 72, 72, 72, 72, 72],
 		"parameter": {"moneyBalance": 0, "level": 1, "development": {}},
 		"quests": {"slots": []}, "warpEnabled": {}}
 	var menu: Control = load("res://game/menu/screen/menu/menu.tscn").instantiate()

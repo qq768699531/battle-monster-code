@@ -1,4 +1,5 @@
 extends Control
+const PlayerData = preload("res://engine/data/player_data/player_data.gd")
 ## 精灵立绘组件：自己持有 `Hero`／`Monster` 两个 ANI 层与边框，谁把这份场景放进页面，
 ## 谁就在自己的渲染里调 `present_request()`。不再由 STATUS 页或菜单宿主跨页面驱动。
 ##
@@ -65,7 +66,7 @@ static func member_request(host: Control, member_index: int) -> Dictionary:
 		"path": "obj/ui_eff", "action": 1, "frame": 0, "direction": 0,
 	}]
 	var monsters: Variant = host.story_progress.get("monsters", [])
-	var capacity: Variant = host.story_progress.get("monsterCapacity")
+	var capacity: Variant = PlayerData.monster_capacity(host.story_progress)
 	if not monsters is Array:
 		return {}
 	if member_index < 0 or member_index >= monsters.size():

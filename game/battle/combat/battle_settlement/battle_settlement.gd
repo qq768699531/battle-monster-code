@@ -18,6 +18,7 @@ const Battle = preload("res://game/battle/combat/battle.gd")
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
+const PlayerData = preload("res://engine/data/player_data/player_data.gd")
 
 ## `Param_expINIT`：主角 `65 × 等级²`；`Ball_stdEXPS`：队员同一条公式。
 const EXPERIENCE_PER_LEVEL := 65
@@ -708,9 +709,7 @@ func _add_item(progress: Dictionary, item_id: int, count: int) -> bool:
 		return false
 	var key := str(item_id)
 	var previous := int(inventory.get(key, 0))
-	var capacity: Variant = progress.get("itemCapacity")
-	if not capacity is Array or bag >= capacity.size():
-		return false
+	var capacity := PlayerData.item_capacity(progress, bag)
 	var occupied := 0
 	for entry: Variant in inventory:
 		if str(entry) == key:
@@ -721,7 +720,7 @@ func _add_item(progress: Dictionary, item_id: int, count: int) -> bool:
 		occupied += _stack_slots(int(inventory[entry]),
 			ItemKind.max_stack(ItemKind.kind_of(other), ItemKind.index_of(other)))
 	var slots := occupied + _stack_slots(previous + count, ItemKind.max_stack(type, index))
-	if slots > int(capacity[bag]):
+	if slots > capacity:
 		return false
 	inventory[key] = previous + count
 	Book.discover_item(progress, item_id)

@@ -99,7 +99,7 @@ func test_legacy_suite() -> void:
 		story.progress["cursor"] == 0,
 		"sequential instructions run to the event end before the next trigger")
 	var invalid := initial.duplicate(true)
-	invalid["monsterCapacity"] = 21
+	invalid["monsterCapacity"] = -1
 	assert_true(not Story.validate_progress(invalid, 0), "malformed native state is rejected")
 	# 经验加成窗口（`ParamData.standard_progress + 7`）随存档保存：过一遍 JSON 序列化
 	# （存档文件的写法）后仍是同一个毫秒数，`validate_progress` 也放行。

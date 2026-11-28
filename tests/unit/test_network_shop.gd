@@ -13,7 +13,7 @@ class FakeHost extends Control:
 	var selected_network_index := 0
 	var network_scroll_start := 0
 	var notice := ""
-	var story_progress: Dictionary = {"inventory": {}, "parameter": {"moneyBalance": 0}}
+	var story_progress: Dictionary = {"inventory": {}, "itemCapacity": [72, 72, 72, 72, 72, 72], "parameter": {"moneyBalance": 0}}
 	var bought: Array = []
 	var renders := 0
 
@@ -30,7 +30,7 @@ class FakeHost extends Control:
 
 ## 付款阶段尚未接通：整包数量一次入包，金币不动。
 func test_model_adds_the_whole_package_without_payment() -> void:
-	var progress := {"inventory": {}, "parameter": {"moneyBalance": 0}}
+	var progress := {"inventory": {}, "itemCapacity": [72, 72, 72, 72, 72, 72], "parameter": {"moneyBalance": 0}}
 	var result := Menu.buy_network_offer(progress, {"id": 7000, "quantity": 6})
 	assert_true(bool(result.get("ok", false)), "没接通付款也照常入包")
 	assert_eq(int(progress["inventory"]["7000"]), 6, "整包数量一次写入背包")
@@ -48,7 +48,7 @@ func test_model_rejects_a_full_bag() -> void:
 ## 野外会把菜单提交的快照按 `last_progress_operation` 重放一遍校核（`_menu_progress_changed`），
 ## NET 购买走 Story 的入手入口，快照级重放仍要能对得上。
 func test_replay_reproduces_the_network_purchase() -> void:
-	var live := {"inventory": {}, "parameter": {"moneyBalance": 0}}
+	var live := {"inventory": {}, "itemCapacity": [72, 72, 72, 72, 72, 72], "parameter": {"moneyBalance": 0}}
 	var snapshot: Dictionary = live.duplicate(true)
 	var offer := {"id": 7000, "quantity": 6}
 	assert_true(bool(Menu.buy_network_offer(snapshot, offer).get("ok", false)), "先按面板那样买一单")
