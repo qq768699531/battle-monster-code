@@ -10,18 +10,10 @@ extends Node2D
 ## 子页统一实现 `present(paint)`；需要命中区的页再实现 `regions(paint)`，不在本页范围时返回空。
 ## 命中区优先级＝`_region_pages` 的顺序，对话框／警告浮层最后覆盖整页。
 
-const RuntimeConstants = preload("res://game/prime/data/runtime_constants/runtime_constants.gd")
 const Msg = preload("res://engine/ui/msg/msg.gd")
-const WindowTransitionScript = preload("res://engine/ui/window_transition/window_transition.gd")
 
-## 主菜单开出来的子页（原生都画成 `Menu_win_Box4_DrawWindow` 的窗）：环境设定／帮助／支持／
-## 网络连接，以及网络页弹出的两张网络提示页。这些页是同一个 `PrimeView` 换页画出来的，按「一扇窗口」
-## 登记给 `UiWindows`，半透明 + 模糊背景才会铺在标题页／野外下面。
-## 标题页与存档槽页不登记：前者是主菜单本身，后者是整页换屏而不是弹窗。
-const WINDOW_SCENES := [
-	RuntimeConstants.SETTINGS, RuntimeConstants.METHOD, RuntimeConstants.INFO,
-	RuntimeConstants.NETWORK, RuntimeConstants.PRESENT, RuntimeConstants.ZONE,
-]
+## 子页里的窗框（`settings_view` 本身、各页的 `Frame`）是 `WindowTransition`，它们自己管入栈；
+## 宿主不再按场景号替它们登记。
 
 ## 分发顺序：每个子页自己决定 `visible`。
 @onready var _pages: Array[Node] = [
@@ -75,7 +67,6 @@ func present(paint: Dictionary) -> void:
 				regions.assign(page_regions)
 				break
 	visible = _any_page_visible() or _dialogs.overlay_active(paint)
-	_sync_window(paint)
 
 
 ## 每个子页自己决定 `visible`；整层只在有页时渲染，比维护一张场景号清单更不容易漏。
@@ -84,16 +75,6 @@ func _any_page_visible() -> bool:
 		if (page as CanvasItem).visible:
 			return true
 	return false
-
-
-## 页由 `paint.scene` 切换，同一个节点换页时一直可见，`visibility_changed` 不会发，所以每次
-## `present()` 都显式登记／注销一次；重复调用在管理器里是幂等的（同一层入栈即返回）。
-func _sync_window(paint: Dictionary) -> void:
-	var scene := int(paint.get("scene", -1))
-	if is_inside_tree() and is_visible_in_tree() and scene in WINDOW_SCENES:
-		WindowTransitionScript.register_window(self)
-	else:
-		WindowTransitionScript.unregister_window(self)
 
 
 ## 网络提示页的文案由 `notice_view` 自己生成（原生 `Prime_Notice_*` 的标题与正文）。

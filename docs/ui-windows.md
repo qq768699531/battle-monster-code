@@ -47,21 +47,25 @@
 
 ## 4. 接入方式
 
-- **`WindowTransition` 及其子类**：`open_window()` 自动入栈（按 `kind` 分槽、按 `keep_previous`
-  决定旧窗去向），关窗／隐藏／释放自动出栈，不需要页面额外登记。
-- **自绘全屏页**（例如菜单 `menu_view`）：页面自己判断可见性，调用
-  `WindowTransition.register_window(self)` / `unregister_window(self)`，和 `WindowTransition`
-  占同一个窗口槽。
-- **主菜单子页**（`game/prime/startup/prime_view`）：环境设定／帮助／支持／网络连接与两张网络
-  提示页共用同一个 `PrimeView` 节点换页画，换页不发 `visibility_changed`，所以在 `present()`
-  末尾按 `paint.scene` 显式 `register_window` / `unregister_window`；标题页与存档槽页不登记。
+窗口自己声明契约，**宿主页与调用方不调任何登记接口**（没有 `register_window` 这类外部调用）：
+
+| 窗类 | 接入方式 |
+| --- | --- |
+| `WindowTransition` 及其子类 | 可见且相位不是 0／-4 就算开窗：`_ready`、可见性变化与 `phase` 赋值都会自己同步，开着的入栈、关掉的出栈；占哪个槽看 `kind`，旧窗去向看 `keep_previous`。 |
+| 自绘全屏页（如菜单 `menu_view`）| 继承 `engine/ui/self_drawn_window/self_drawn_window.gd`：可见即开窗、隐藏即关窗，`window_kind_slot`／`keep_previous` 在场景里声明。 |
+| 主菜单子页（环境设定／帮助／支持／网络连接…）| 由页里的窗框（`settings_view` 本身、各页的 `Frame`）自己入栈，宿主 `PrimeView` 只管分发 `paint`；存档槽页的窗框（`background.tscn` 的 `Box`）同理。 |
+
+窗口只实现三个契约方法：`window_open()`（现在算不算开着）、`window_kind()`（窗口还是确认框）、
+`window_previous()`（旧窗出栈还是收起）。管理器 `sync()` 只调这三个方法，不认具体窗类。
+
 - **冻结判据**：`WindowTransition.any_open()` 转发到 `UiWindows.any_open()`，野外据此停住推进
   （`field_runtime` 的 `_field_paused()`）。
 
 管理器不抓帧、不销毁页面、不替页面决定生命周期；它只维护栈、可见性和背景层的挂载位置。
+背景层挂载会改树，所以统一推迟到空闲帧（`_apply_shade.call_deferred()`）执行。
 
 ## 5. 验证
 
 `tests/unit/test_window_manager.gd` 覆盖：背景层紧贴窗层前面、第二个窗口顶掉第一个、
 确认框与窗口共存、`keep_previous` 的恢复、最后一扇收起后背景层与冻结判据一起复位，
-以及主菜单子页（`PrimeView` 换页）按窗口登记／出栈。
+以及主菜单子页里的窗框（`settings_view`）自己入栈／回标题页出栈。

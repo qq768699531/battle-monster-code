@@ -39,12 +39,25 @@ var _entries: Array[Dictionary] = []
 var _manager_hidden: Array[CanvasItem] = []
 ## 整个栈共用的背景层；最后一扇窗层收起后保留实例、只隐藏，下次开窗接着用。
 var _shade: ScreenShade
+## 背景层挂载会动树（reparent／move_child），不能在可见性传播、节点进出树的途中做，统一推到空闲帧。
+var _shade_queued := false
+
+
+## 窗口自己状态变了（可见性／开合相位）就调它同步一次：开着的入栈，关掉的出栈。
+## 管理器只认窗口的契约方法 `window_open()`／`window_kind()`／`window_previous()`，不认具体窗类；
+## 外面（宿主页、调用方）不需要也不应该手工登记窗口。
+func sync(window: CanvasItem) -> void:
+	if window == null or not is_instance_valid(window) or not window.is_inside_tree():
+		return
+	if bool(window.call("window_open")):
+		_push(window, int(window.call("window_kind")), int(window.call("window_previous")))
+	else:
+		_pop(window)
 
 
 ## 窗层入栈。同一宿主同一类里已经有一扇时按 `previous` 收起它，再让 `layer` 成为新的栈顶。
-## 重复入栈同一层只刷新背景（页面重开动画时不该再顶掉自己）。
-## `layer` 是 `CanvasItem`：`WindowTransition`（Control）与自绘全屏页（Node2D，如 PrimeView）都能登记。
-func push(layer: CanvasItem, kind: Kind, previous: Previous = Previous.DISMISS) -> bool:
+## 重复入栈同一层只刷新背景（页面重开动画时不该再顶掉自己）。只由 `sync()` 调用。
+func _push(layer: CanvasItem, kind: Kind, previous: Previous) -> bool:
 	if layer == null or not is_instance_valid(layer):
 		return false
 	if _index_of(layer) >= 0:
@@ -66,8 +79,11 @@ func push(layer: CanvasItem, kind: Kind, previous: Previous = Previous.DISMISS) 
 
 
 ## 窗层出栈：若它当时是该宿主该类的栈顶，栈里剩下的最新一扇（被 `KEEP_HIDDEN` 收起的）
-## 恢复显示，再把背景层挪到新的最底层下面。
-func pop(layer: CanvasItem) -> void:
+## 恢复显示，再把背景层挪到新的最底层下面。只由 `sync()` 与树/可见性回流调用。
+func _pop(layer: CanvasItem) -> void:
+	# 管理器自己收起的那一扇：它的可见性变化不算关窗，不能把自己从栈里摘掉。
+	if _manager_hidden.has(layer):
+		return
 	var index := _index_of(layer)
 	if index < 0:
 		return
@@ -141,17 +157,25 @@ func _on_visibility_changed(layer: CanvasItem) -> void:
 	if _index_of(layer) < 0 or _manager_hidden.has(layer):
 		return
 	if is_instance_valid(layer) and not layer.is_visible_in_tree():
-		pop(layer)
+		_pop(layer)
 	else:
 		_sync_shade()
 
 
 func _on_tree_exited(layer: CanvasItem) -> void:
-	pop(layer)
+	_pop(layer)
 
 
 ## 背景层：可见时挂在最底层那一扇窗层的紧下方，没有窗层就隐藏。
 func _sync_shade() -> void:
+	if _shade_queued:
+		return
+	_shade_queued = true
+	_apply_shade.call_deferred()
+
+
+func _apply_shade() -> void:
+	_shade_queued = false
 	var bottom := _bottom_layer()
 	if bottom == null:
 		if _shade != null and is_instance_valid(_shade):

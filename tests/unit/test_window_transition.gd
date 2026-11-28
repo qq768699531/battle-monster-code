@@ -17,6 +17,8 @@ func before_each() -> void:
 	super()
 	_window = WindowScene.instantiate()
 	add_child_autofree(_window)
+	# 可见即开窗（窗口自己同步入栈），用例里默认收起，需要开窗的用例自己 show()。
+	_window.hide()
 
 
 func test_content_shows_once_the_frame_reaches_the_strip_phase() -> void:

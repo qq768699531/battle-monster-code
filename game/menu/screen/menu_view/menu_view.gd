@@ -1,6 +1,4 @@
-extends Control
-
-const WindowTransitionScript = preload("res://engine/ui/window_transition/window_transition.gd")
+extends "res://engine/ui/self_drawn_window/self_drawn_window.gd"
 
 const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 ## 管理菜单的展示与导航状态机；进度持久化与运行时接入由 host（field_runtime）负责。
@@ -198,9 +196,6 @@ func _ready() -> void:
 		notice = _native_ui_error
 	_build_frame()
 	_render_content()
-	visibility_changed.connect(_sync_shade_window)
-	tree_exited.connect(_unregister_shade_window)
-	_sync_shade_window()
 
 
 func bind(progress: Dictionary, catalog: GameplayData, text: Variant) -> void:
@@ -1423,16 +1418,3 @@ func _select_party_equipment(index: int) -> void:
 	selected_equipment_index = index
 	notice = ""
 	_render_content()
-
-
-## 菜单是自绘全屏页，本身不是 WindowTransition；它只向窗口栈声明「我这里有一扇窗口」，
-## 半透明 + 模糊的背景层由 `UiWindows` 挂在栈底窗层下面。
-func _sync_shade_window() -> void:
-	if is_inside_tree() and is_visible_in_tree():
-		WindowTransitionScript.register_window(self)
-	else:
-		WindowTransitionScript.unregister_window(self)
-
-
-func _unregister_shade_window() -> void:
-	WindowTransitionScript.unregister_window(self)

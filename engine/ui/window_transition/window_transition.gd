@@ -92,6 +92,7 @@ const BOX4_CHROME_NODES := [
 		if is_node_ready():
 			_apply_geometry()
 			phase_changed.emit(value)
+			_sync_membership()
 ## 正文是否跟着 `box4_window_rect` 的开合矩形走。原生各页的正文都相对
 ## `Menu_win_Box4_DrawWindow` 写回的那个矩形画（相位 3 是 `y-6`、`height+12` 的条文），
 ## 所以开了这一项的页把 `Content` 的子节点按稳态窗框相对摆位，相位偏移由组件统一给。
@@ -121,6 +122,37 @@ func _ready() -> void:
 		_box4_chrome_visible[path] = (get_node(path) as Control).visible
 	$AnimationPlayer.animation_finished.connect(_finished)
 	_apply_geometry()
+	_sync_membership()
+
+
+## 可见性就是窗口的开合：整页被宿主收起、关窗动画走到隐藏，都从这里出栈。
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_VISIBILITY_CHANGED:
+		_sync_membership()
+
+
+## 窗口契约：管理器只认这三个方法，不认具体窗类。
+## 相位 0／-4 是「一点窗框都不画」，即使节点还可见也不算开着。
+func window_open() -> bool:
+	return is_inside_tree() and is_visible_in_tree() and phase != 0 and phase != BoxPhase.CLOSED
+
+
+## 原生 `Menu_win_Box4_DrawWindow` 是页窗口、`Menu_win_Box2_DrawWindow` 是确认框：
+## 两者各占一个槽，所以确认框可以叠在窗口上而不把窗口顶掉。
+func window_kind() -> int:
+	return UiWindowManager.Kind.DIALOG if kind == BoxKind.BOX2 else UiWindowManager.Kind.WINDOW
+
+
+## 开本级时旧窗层的去向，由本窗场景里的 `keep_previous` 声明。
+func window_previous() -> int:
+	return UiWindowManager.Previous.KEEP_HIDDEN if keep_previous else UiWindowManager.Previous.DISMISS
+
+
+## 自己状态变了就向管理器同步一次；窗口不把栈的规则写在页面里。
+func _sync_membership() -> void:
+	var manager := _window_manager()
+	if manager != null:
+		manager.call("sync", self)
 
 
 ## 只要还有窗口／确认框在显示，这个查询就为真；野外据此冻结地图。
@@ -129,37 +161,11 @@ static func any_open() -> bool:
 	return bool(manager.call("any_open")) if manager != null else false
 
 
-## 开窗：先入栈（按 `keep_previous` 顶掉或收起旧的同类窗层），再播开合动画。
-## 半透明 + 模糊的背景层由管理器挂在栈底那一扇窗层的紧下方，这里不碰可见性。
+## 开窗：只播开合动画。入栈／出栈由窗口自己根据相位与可见性同步，背景层由管理器挂，
+## 页面（宿主）不再拿 `keep_previous` 或 `kind` 去调登记接口。
 func open_window() -> void:
-	var manager := _window_manager()
-	if manager != null:
-		manager.call("push", self, _slot_kind(self),
-			UiWindowManager.Previous.KEEP_HIDDEN if keep_previous else UiWindowManager.Previous.DISMISS)
 	$AnimationPlayer.play("open")
 	$AnimationPlayer.advance(0)
-
-
-## 任何窗口（包括菜单这种自绘全屏页）都通过这里登记：`kind` 决定它占窗口还是确认框的槽。
-static func register_window(window: CanvasItem) -> void:
-	var manager := _window_manager()
-	if manager != null:
-		manager.call("push", window, _slot_kind(window), UiWindowManager.Previous.DISMISS)
-
-
-static func unregister_window(window: CanvasItem) -> void:
-	var manager := _window_manager()
-	if manager != null:
-		manager.call("pop", window)
-
-
-## 原生 `Menu_win_Box4_DrawWindow` 是页窗口、`Menu_win_Box2_DrawWindow` 是确认框：
-## 两者各占一个槽，所以确认框可以叠在窗口上而不把窗口顶掉。
-static func _slot_kind(window: Node) -> int:
-	var value: Variant = window.get("kind")
-	if value is int and int(value) == int(BoxKind.BOX2):
-		return UiWindowManager.Kind.DIALOG
-	return UiWindowManager.Kind.WINDOW
 
 
 ## 管理器是 autoload；本脚本是 `@tool`，编辑器里没有 autoload 时返回 null。
