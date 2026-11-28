@@ -1672,11 +1672,13 @@ func _refresh_display() -> void:
 		# 第二参是「当前按住的键」：`present()` 会把它记成 `held_key`，用来挡掉同一次按住里的重复
 		# 命中。过去这里恒传 0，每帧刷新都把 `held_key` 冲掉，按住 AUTO 时的轻微抖动／拖动会再发
 		# 一次同一个键——AUTO 于是被连按两次（开一次、关一次），表现成「按一次只走一手」。
+		# 战斗里任何相位都要留着底部操作界面：出手动画、结算、捕获这些相位原来落到 `0`
+		# （= 不画），玩家在看演出时手上没有任何键。原生 `EFC_mainTouchDRAW` 对战斗状态
+		# 始终给出档位，所以这里最后一档统一落到 `COMMAND`，不再传 0。
 		$TouchControls.present($SysMenu.touch_style() if phase == "sys" else
-			TouchStyle.COMMAND if phase in ["command", "action", "position"] \
-			and not (phase == "action" and _capture_result_pending) else
 			TouchStyle.SELECT if phase in ["target", "flee", "encounter", "items"] else
-			TouchStyle.INFO if phase == "info" else 0, $TouchControls.held_key)
+			TouchStyle.INFO if phase == "info" else
+			TouchStyle.COMMAND, $TouchControls.held_key)
 		# 原生 `EFC_mainTouchDRAW:138-162`：自动战斗开着时 AUTO 键按 `GRP_MODE_BRIGHT` 画，亮度
 		# 取样成 64／0／64／128，即在 0 与 128 之间来回。那四档是按帧号取样的量化痕迹，本工程在
 		# `bright` 动画里做 0→128→0 的线性呼吸（0.4 秒一轮），按钮保持半透明，这里只切状态。
