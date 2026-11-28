@@ -13,7 +13,10 @@ metadata/map_size_tiles = Vector2i(26, 20)
 metadata/map_palette_indices = PackedInt32Array(0, 0, 0, 0)
 metadata/map_objects = PackedInt32Array(3, 17, 3, 1, 15, 2, 0, 17, 1, 2, 7, 6, 4, 7, 7, 8, 0, 14, 5, 18, 7, 7, 20, 11, 6, 4, 11, 11, 5, 17, 10, 18, 14, 9, 8, 14, 12, 9, 13, 13, 10, 13)
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Image" type="Sprite2D" parent="Background"]
 texture_filter = 1
 z_index = -1
 texture = ExtResource("2_bg")
