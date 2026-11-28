@@ -169,18 +169,18 @@ func group_code() -> int:
 	return _groups[group_index] if group_index >= 0 and group_index < _groups.size() else -1
 
 
-## 单笔上限：买受钱与堆叠限制，卖受持有数与堆叠限制；0 表示这一步不能成交。
+## 单笔上限：买受钱限制，卖受持有数限制。**不再用单格堆叠上限**——精灵球这类
+## `Item_stdMax == 1` 的道具也要能一次买/卖多个，堆叠只决定入包时占几格。
 func max_quantity() -> int:
 	var record := _record()
 	if record == null:
 		return 0
-	var stack := ItemKind.max_stack(record.type, record.index)
 	if mode == SELL:
-		return mini(_owned_count(record.id), stack)
+		return _owned_count(record.id)
 	var unit := StoryRuntime.shop_buy_price(record, 1)
 	if unit <= 0:
 		return 0
-	return mini(money() / unit, stack)
+	return money() / unit
 
 
 ## 原生 `Field_Item_Buy_mKeyPressed`／`Field_Item_Sell_mKeyPressed` 的成交与拒绝分支。
