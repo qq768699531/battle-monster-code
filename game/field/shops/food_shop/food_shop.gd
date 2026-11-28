@@ -119,12 +119,15 @@ func craft() -> int:
 	if not _has_materials(entry):
 		return _note(Msg.Id.FOOD_CRAFT_NO_MATERIAL)
 	var product_id := int(entry.product_id)
+	var product: ItemDefinition = entry.product
 	# 原生顺序：先 `Item_stdAddEx`（不管返回值）→ `Param_moneySET(-100)` → 递归那一趟才扣材料。
 	# 本工程把入包失败当成中止（原生会静默丢材料），不编造提示。
-	if not _story._add_inventory_item(product_id, int(entry.product_count), false):
+	# 获得物品的提示与商店买入同一条栈：立即推，不走延迟的 effect，避免关页后才补弹。
+	if not _story._add_inventory_item(product_id, int(entry.product_count), false, false):
 		push_error("食物制作：%d 放不进背包，本次不扣材料也不扣钱。" % product_id)
 		_refresh()
 		return notice_id
+	MessageStack.push_item(_item_name(product), int(entry.product_count), product.icon, product.grade_index)
 	_story.progress["parameter"]["moneyBalance"] = money() - MONEY_COST
 	for material: Dictionary in entry.materials:
 		_story.consume_item(int(material.id), int(material.count))
