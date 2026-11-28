@@ -756,7 +756,7 @@ func _encounter_ready() -> void:
 	if encounter_view != null:
 		move_child(encounter_view, get_child_count() - 1)
 		encounter_view.z_index = 320
-	_open_battle(-2)
+	_create_battle_view(int(_encounter.get("battle_id", -2)))
 
 
 func _encounter_finished() -> void:
@@ -765,6 +765,11 @@ func _encounter_finished() -> void:
 	remove_child(encounter_view)
 	encounter_view.queue_free()
 	encounter_view = null
+	# 剧情战的转场层收掉就只剩战斗界面：清 `_encounter` 并把暂停交回 `_field_paused()`，
+	# 否则战斗结束后的 `story.complete_battle()` 会被暂停挡住、后续剧情不再推进。
+	if _battle_id != -2:
+		_encounter.clear()
+		_restore_field_pause()
 	_refresh()
 
 
@@ -835,6 +840,12 @@ func _drain_effects() -> void:
 				if actor.is_empty():
 					story.fail_effect(effect.id, "移动角色不存在")
 				else:
+					# 原生一个对象只有一份 start/dest（新的 `Object_objARRIVE` 直接覆盖旧的），
+					# 先把同一演员的上一段移动取消，避免两个目的地同时生效、互相对拉。
+					for motion_id: int in _motions.keys():
+						if int(_motions[motion_id].actor.get("id", -1)) == int(actor.id):
+							story.cancel_move(motion_id)
+							_motions.erase(motion_id)
 					_motions[int(effect.id)] = {"actor": actor,
 						"destination": effect.destination, "follow": effect.follow}
 			"item-obtained":
@@ -1096,6 +1107,14 @@ func _advance_motions(delta: float) -> float:
 	for id: int in _motions.keys():
 		var motion: Dictionary = _motions[id]
 		var actor: Dictionary = motion.actor
+		# 原生 `Field_procCurr` case 1 只在对象 `animation_id == 6`（脚本走）时推进移动；
+		# 摆位／剧情动作／删除对象都会让这一段移动作废。否则旧目的地会继续拉扯演员，
+		# 与后来的移动互相对拉，`_motions` 永远清不掉（角色卡死、没有触控界面）。
+		var live := _actor(int(actor.get("id", -1)))
+		if live.is_empty() or int(actor.get("action", 0)) != FieldAction.Hero.SCRIPT_WALK:
+			_motions.erase(id)
+			story.cancel_move(id)
+			continue
 		var current := Vector2(actor.x, actor.y)
 		var destination := Vector2(motion.destination.x, motion.destination.y)
 		var next := current.move_toward(destination, SCRIPT_MOVE_SPEED * delta)
@@ -1350,6 +1369,61 @@ func _apply_walk_top() -> void:
 	_sync_actors()
 
 
+## 原生 `Object_objNEAR(3, -1, -1, x, y, direction_code, 900)`：只找 kind 3（NPC），按
+## `direction_code` 的半平面筛选（上：候选 y ≤ 主角 y；下：≥；左：x ≤；右：≥），
+## 距离平方 < 900（30 px）取最近。`Field_Basic_mRun:24` 每帧调它。
+func _facing_npc(hero: Dictionary, facing: int) -> Dictionary:
+	var picked: Dictionary = {}
+	var best := 900.0
+	for actor: Dictionary in story.progress.actors:
+		if int(actor.id) == 0 or int(actor.id) >= 1000:
+			continue
+		var dx := (float(actor.x) - float(hero.x)) * TILE
+		var dy := (float(actor.y) - float(hero.y)) * TILE
+		if (facing == FieldAction.Facing.UP and dy > 0.0) or \
+				(facing == FieldAction.Facing.DOWN and dy < 0.0) or \
+				(facing == FieldAction.Facing.LEFT and dx > 0.0) or \
+				(facing == FieldAction.Facing.RIGHT and dx < 0.0):
+			continue
+		var distance := dx * dx + dy * dy
+		if distance >= best:
+			continue
+		picked = actor
+		best = distance
+	return picked
+
+
+## 原生 `Object_objLOOK(hero, npc)` → `Object_objLookAt`：先调非主轴、再调主轴，
+## 所以 `direction_code` 是主轴、`direction_flags` 保留另一轴。
+func _look_at(hero: Dictionary, target: Dictionary) -> void:
+	var dx := float(target.x) - float(hero.x)
+	var dy := float(target.y) - float(hero.y)
+	var facings: Array[int] = []
+	if absf(dx) < absf(dy):
+		if dx != 0.0:
+			facings.append(FieldAction.Facing.LEFT if dx < 0.0 else FieldAction.Facing.RIGHT)
+		if dy != 0.0:
+			facings.append(FieldAction.Facing.UP if dy < 0.0 else FieldAction.Facing.DOWN)
+	else:
+		if dy != 0.0:
+			facings.append(FieldAction.Facing.UP if dy < 0.0 else FieldAction.Facing.DOWN)
+		if dx != 0.0:
+			facings.append(FieldAction.Facing.LEFT if dx < 0.0 else FieldAction.Facing.RIGHT)
+	var flags := int(hero.get("direction", 0))
+	var code := int(hero.get("lastDirection", FieldAction.Facing.DOWN))
+	var changed := false
+	for facing: int in facings:
+		var pair: Array[int] = Story._object_direct(flags, facing)
+		changed = changed or pair[0] != flags or pair[1] != code
+		flags = pair[0]
+		code = pair[1]
+	if not changed:
+		return
+	hero["direction"] = flags
+	hero["lastDirection"] = code
+	_sync_actors()
+
+
 ## 原生 Object_objDIRECT：新方向写入 direction_code，复合 direction_flags 保留
 ## 上一次的垂直／水平位（横向保留 0x30 并以 32 兜底，纵向保留 0x03 并以 1 兜底）。
 func _face(direction: Vector2i) -> void:
@@ -1423,11 +1497,22 @@ func interact_npc() -> bool:
 			not narration.is_empty() or not mastery.is_empty() or \
 			story.stable_state().is_empty():
 		return false
+	var hero := _actor(0)
+	if hero.is_empty():
+		return false
+	var facing_npc := _facing_npc(hero, int(hero.get("lastDirection",
+		int(hero.get("direction", FieldAction.Facing.DOWN)))))
+	if facing_npc.is_empty():
+		note = ""
+		_refresh()
+		return false
+	_look_at(hero, facing_npc)
 	for actor: Dictionary in story.progress.actors:
-		if int(actor.id) == 0 or int(actor.id) >= 1000 or \
-				absf(actor.x - story.progress.player.x) + \
-				absf(actor.y - story.progress.player.y) != 1:
+		if int(actor.id) != int(facing_npc.id):
 			continue
+		# 原生 `Field_Basic_mRun` 每帧用 `Object_objNEAR(3, -1, -1, hero.x, hero.y, direction_code, 900)`
+		# 选出「面前最近的 NPC」：朝向上的半平面 + 30 px 半径；`Field_Basic_mKeyPressed` 的 -5
+		# 只对这一个成立，并先 `Object_objLOOK(hero, npc)` 把主角转向 NPC。
 		# 原生 Evt_stdKEY：事件首记录是触发器 4 且定义号匹配时，
 		# 确定键先满足剧情门，不再只播 NPC 的 CHT 组 0。
 		if story.trigger_interaction(int(actor.id)):
@@ -1812,6 +1897,11 @@ func _begin_pending_warp(map_id: int, tile_x: int, tile_y: int) -> void:
 		return
 	_pending_warp = {"map_id": map_id, "tile_x": tile_x, "tile_y": tile_y}
 	_clear_walk_input()
+	# 待定传送会作废脚下的脚本移动；模型里那份也要取消，否则 `stable_state()` 永远为空，
+	# 换图动画播完后仍不出触控界面。
+	if story != null:
+		for motion_id: int in _motions.keys():
+			story.cancel_move(motion_id)
 	_motions.clear()
 	hero.action = FieldAction.Hero.WARP
 	hero["animationEndMode"] = ONE_SHOT_ANIMATION_END_MODE
@@ -3214,10 +3304,43 @@ func _reject_menu_progress() -> void:
 	_menu_notice("当前流程不稳定或菜单变更无效；没有改变原流程记录。")
 
 
+## 原生 `Evt_stdPROC` case 0x21：先把现场抓成一帧（`Field_Basic_Capture` 的 50% 黑 + 3×3 模糊），
+## 播完 `Game_Ready_Battle` 的 15 帧后才 `GameCanvas_SetNext(GAME_STATE_GUILD_BATTLE_6, p0)`。
+## 所以剧情战也要走和野外接触相同的「战斗准备 → Battle_Ready 淡出」转场，不能直接盖上战斗界面。
+## `id == -2` 是已经播过转场或自己负责进场的两条路（野外接触、公会挑战）。
 func _open_battle(id: int) -> void:
+	if id != -2:
+		if _encounter.is_empty():
+			_begin_battle_transition(id)
+		return
+	_create_battle_view(id)
+
+
+## 剧情战的 `Field_Basic_Capture` 起点：先抓一帧现场，再建转场层。
+func _begin_battle_transition(id: int) -> void:
 	_battle_id = id
-	# 脚本战／公会战没有遇敌转场：敌方 3 只在开战前补进预读队列并一次读完。
-	# 队内 3 只已由 `start_slot` 排过，这里补的是对手与（换人后的）本场阵容。
+	_encounter = {"stage": "capture", "battle_id": id}
+	_clear_walk_input()
+	_sync_actors()
+	_refresh()
+	call_deferred("_capture_battle_transition")
+
+
+func _capture_battle_transition() -> void:
+	if _encounter.get("stage") != "capture":
+		return
+	await RenderingServer.frame_post_draw
+	if not is_inside_tree() or _encounter.get("stage") != "capture":
+		return
+	_encounter.stage = "transition"
+	_create_encounter_view()
+	encounter_view.present(get_viewport().get_texture().get_image(),
+		_world.position + _point(_actor(0)))
+
+
+func _create_battle_view(id: int) -> void:
+	_battle_id = id
+	# 敌方 3 只在开战前补进预读队列并一次读完；队内 3 只已由 `start_slot` 排过。
 	# `battle_view.start()` 的 `_load_action` 对没读过的物种要同步 `load()` ANI 场景
 	# （冷缓存 12～15 ms／只，见 `wiki\battle\battle-performance-notes.md`）。
 	if story != null and story.combat != null:
@@ -3229,6 +3352,10 @@ func _open_battle(id: int) -> void:
 	battle_view.event_drop = story.event_drop_for
 	add_child(battle_view)
 	BigScenes.enter_battle(battle_view)
+	# `BigScenes` 收野外画布时会把同级的转场层一起藏掉；转场层还要播 `Battle_Ready`
+	# 那 5 帧黑幕淡出，所以在它上面重新打开（z 320 仍高于战斗界面）。
+	if encounter_view != null:
+		encounter_view.visible = true
 	battle_view.completed.connect(_battle_completed)
 	battle_view.abandoned.connect(_battle_abandoned)
 	battle_view.title_requested.connect(_battle_title_requested)
@@ -3268,6 +3395,14 @@ func _battle_completed(outcome: Dictionary) -> void:
 		return
 	_close_battle()
 	_apply_used_items(outcome)
+	# 剧情战收尾兜底：转场层若还在先拆掉，再清 `_encounter`、交回暂停，
+	# `story.complete_battle()` 里的 `pump()` 才能继续战后事件。
+	if encounter_view != null:
+		remove_child(encounter_view)
+		encounter_view.queue_free()
+		encounter_view = null
+	_encounter.clear()
+	_restore_field_pause()
 	story.complete_battle(_battle_id, outcome.get("settlement"))
 	_drain_effects()
 	# `game-over`（原事件战败北：`Game_out()`）已经把 `story.combat` 置空并回了标题，没有场景可刷。
