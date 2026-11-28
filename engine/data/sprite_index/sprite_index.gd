@@ -21,6 +21,7 @@ const FRAMES := {
 	"common/ui_battle/frame-015": ["res://game/battle/presentation/hud/ui_battle.webp", Rect2(0, 159, 96, 16)],
 	"common/ui_battle/frame-016": ["res://game/battle/presentation/hud/ui_battle.webp", Rect2(422, 159, 127, 9)],
 	"common/ui_battle/frame-017": ["res://game/battle/presentation/hud/ui_battle.webp", Rect2(844, 159, 393, 8)],
+	"common/ui_window/frame-014": ["res://game/field/shops/shop_goods/tabs.webp", Rect2(0, 0, 198, 60)],
 	"common/ui_grade/frame-000": ["res://game/prime/title/title_visual/title_visual.webp", Rect2(0, 0, 79, 87)],
 	"common/ui_grade/frame-001": ["res://game/prime/title/title_visual/title_visual.webp", Rect2(79, 0, 76, 87)],
 	"common/ui_name/frame-000": ["res://game/prime/title/title_view/ui_name.webp", Rect2(0, 0, 109, 11)],

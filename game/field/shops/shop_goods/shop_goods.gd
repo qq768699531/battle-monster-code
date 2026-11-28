@@ -51,6 +51,9 @@ static func sell_bags(shop_mode: int) -> Array[int]:
 ## `Field_Item_Buy_SetList` 的货架表（`script\export_shops.py` 从反编译立即数导出）。
 const Shops = preload("res://game/field/shops/shop_goods/shops.tres")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
+## 原版页签图标：`Menu_winDrawIcon14` 从 `MenuRes.window_ui_resource` 第 14 帧裁 33×30，
+## `(33 * 页签号, 30 * (选中 0 / 未选 1))`。页签号就是组号（道具 0、装备 1、书 3）。
+const TAB_SHEET := "common/ui_window/frame-014"
 ## 原版详情面板（`Menu_Item_DrawInfoEtc`／`Equip`）：`item_description.tscn` 就是这份实现
 ## （标题 `[ 名 X 数量 ]`／品级色、说明箭头、4 行属性、换行说明），菜单道具页与商店共用。
 const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
@@ -71,11 +74,17 @@ var _first := 0
 
 
 func _ready() -> void:
+	# 原版买／卖页的装备／道具页签是 3 行 18 格（`Field_Item_DrawList:274-289` 的页签行数表）；
+	# 技能书页签 3 才是 2 行。先把可见行数改掉，再连格子信号。
+	visible_rows = 3
+	cells = COLUMNS * visible_rows
 	super()
-	for slot in range(CELLS):
+	for slot in range(cells):
 		_cell(slot).pressed.connect(_select_slot.bind(slot))
 	$Content/AcceptHit.pressed.connect(_on_accept_pressed)
 	$Content/BackHit.pressed.connect(_on_back_pressed)
+	$Content/TabHit0.pressed.connect(_select_tab.bind(0))
+	$Content/TabHit1.pressed.connect(_select_tab.bind(1))
 	$Select.decided.connect(_decided)
 	$Select.cancelled.connect(_cancelled)
 
@@ -105,6 +114,7 @@ func present(story: Object, assets: Node, next_mode: int = BUY, next_shop_mode: 
 	# 所以这里写相对窗口的 149／170（绝对 244／256）。
 	$Content/Price.position.x = 149.0 if mode == BUY else 170.0
 	_rebuild()
+	_refresh_tabs()
 	show()
 	open_window()
 
@@ -263,7 +273,7 @@ func _map_id() -> int:
 
 
 func _refresh() -> void:
-	for slot in range(CELLS):
+	for slot in range(cells):
 		var index := _first + slot
 		var cell := _cell(slot)
 		var chosen := index == cursor
@@ -283,8 +293,8 @@ func _refresh() -> void:
 			quantity_label.show()
 			quantity_label.present(str(owned))
 	$Content/Money/Number.present(str(money()))
+	$Content/Count.text = "%d/%d" % [mini(_records.size(), cells), cells]
 	var record := _record()
-	$Content/InfoName.text = _item_name(record) if record != null else ""
 	if record == null:
 		_detail.present_item({}, 0, "", "", null, _text)
 	else:
@@ -345,6 +355,40 @@ func _switch_group(step: int) -> void:
 	quantity = 1
 	notice_id = -1
 	_rebuild()
+	_refresh_tabs()
+
+
+## 点页签：原版 `Field_Item_Buy_mKeyPressed` 页签行的 `-5` 是「换到该页并把焦点移进网格」。
+func _select_tab(index: int) -> void:
+	if _closing or is_transitioning() or index < 0 or index >= _groups.size() or \
+			index == group_index:
+		return
+	group_index = index
+	cursor = 0
+	_first = 0
+	quantity = 1
+	notice_id = -1
+	_rebuild()
+	_refresh_tabs()
+
+
+## 页签行：组数 1～2，选中行 0 / 未选中行 1；图标从 `ui_window` 第 14 帧切 33×30。
+func _refresh_tabs() -> void:
+	var sheet: Variant = _assets.load_sprite(TAB_SHEET) if _assets != null else null
+	for index in range(2):
+		var tab: TextureRect = $Content.get_node("Tab%d" % index)
+		var hit: Button = $Content.get_node("TabHit%d" % index)
+		var visible_tab: bool = index < _groups.size() and sheet is AtlasTexture
+		tab.visible = visible_tab
+		hit.visible = visible_tab
+		if not visible_tab:
+			continue
+		var code := _groups[index]
+		var row := 0 if index == group_index else 1
+		var atlas := AtlasTexture.new()
+		atlas.atlas = (sheet as AtlasTexture).atlas
+		atlas.region = Rect2(33 * code, 30 * row, 33, 30)
+		tab.texture = atlas
 
 
 func _move(step: int) -> void:
@@ -361,9 +405,9 @@ func _scroll_to_cursor() -> void:
 	var first_row := _first / COLUMNS
 	if row < first_row:
 		first_row = row
-	elif row > first_row + VISIBLE_ROWS - 1:
-		first_row = row - VISIBLE_ROWS + 1
-	var last_row := maxi(0, (_records.size() - 1) / COLUMNS - VISIBLE_ROWS + 1)
+	elif row > first_row + visible_rows - 1:
+		first_row = row - visible_rows + 1
+	var last_row := maxi(0, (_records.size() - 1) / COLUMNS - visible_rows + 1)
 	_first = clampi(first_row, 0, last_row) * COLUMNS
 
 

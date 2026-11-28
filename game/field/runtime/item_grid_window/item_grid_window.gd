@@ -11,9 +11,12 @@ const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 const SlotFrame = preload("res://game/menu/party/slot_frame/slot_frame.gd")
 
 ## `Field_Item_DrawList` 的 6 列 × 2 行（`32 × 6 + 20` 宽、`32 × 行数 + 15` 高）。
+## 食物制作页固定 2 行；买／卖页按页签改 `visible_rows`（原版页签 0/1/2/4/5 是 3 行、3/6 是 2 行）。
 const COLUMNS := 6
 const VISIBLE_ROWS := 2
 const CELLS := COLUMNS * VISIBLE_ROWS
+var visible_rows := VISIBLE_ROWS
+var cells := CELLS
 
 ## 格子背景（`Menu_winDrawIcon16` 的 30×30 四帧，与其它页面共用 `assets/ui/slot/`，顺序见 `SlotFrame.Frame`）。
 @export var cell_frames: Array[Texture2D] = []

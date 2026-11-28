@@ -52,17 +52,56 @@ cell_frames = Array[Texture2D]([ExtResource("cell_filled"), ExtResource("cell_fi
 offset_left = 9
 offset_top = 52
 offset_right = 221
-offset_bottom = 131
+offset_bottom = 163
 mouse_filter = 2
 theme_override_styles/panel = SubResource("ListBorder")
 
 [node name="InfoStrip" type="ColorRect" parent="Content"]
 offset_left = 10
-offset_top = 119
+offset_top = 151
 offset_right = 220
-offset_bottom = 130
+offset_bottom = 162
 mouse_filter = 2
 color = Color(0.054902, 0.105882, 0.184314, 1)
+[node name="Tab0" type="TextureRect" parent="Content"]
+visible = false
+offset_left = 9.0
+offset_top = 21.0
+offset_right = 42.0
+offset_bottom = 51.0
+mouse_filter = 2
+texture_filter = 1
+
+[node name="TabHit0" type="Button" parent="Content"]
+offset_left = 9.0
+offset_top = 21.0
+offset_right = 42.0
+offset_bottom = 51.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Tab1" type="TextureRect" parent="Content"]
+visible = false
+offset_left = 44.0
+offset_top = 21.0
+offset_right = 77.0
+offset_bottom = 51.0
+mouse_filter = 2
+texture_filter = 1
+
+[node name="TabHit1" type="Button" parent="Content"]
+offset_left = 44.0
+offset_top = 21.0
+offset_right = 77.0
+offset_bottom = 51.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
 
 [node name="Cell0" parent="Content" instance=ExtResource("cell")]
 offset_left = 13
@@ -136,17 +175,55 @@ offset_top = 87
 offset_right = 203
 offset_bottom = 117
 
-[node name="InfoName" parent="Content" instance=ExtResource("label")]
+
+[node name="Cell12" parent="Content" instance=ExtResource("cell")]
 offset_left = 13
-offset_top = 120
-offset_right = 123
-offset_bottom = 130
+offset_top = 119
+offset_right = 43
+offset_bottom = 149
+
+[node name="Cell13" parent="Content" instance=ExtResource("cell")]
+offset_left = 45
+offset_top = 119
+offset_right = 75
+offset_bottom = 149
+
+[node name="Cell14" parent="Content" instance=ExtResource("cell")]
+offset_left = 77
+offset_top = 119
+offset_right = 107
+offset_bottom = 149
+
+[node name="Cell15" parent="Content" instance=ExtResource("cell")]
+offset_left = 109
+offset_top = 119
+offset_right = 139
+offset_bottom = 149
+
+[node name="Cell16" parent="Content" instance=ExtResource("cell")]
+offset_left = 141
+offset_top = 119
+offset_right = 171
+offset_bottom = 149
+
+[node name="Cell17" parent="Content" instance=ExtResource("cell")]
+offset_left = 173
+offset_top = 119
+offset_right = 203
+offset_bottom = 149
+
+[node name="Count" parent="Content" instance=ExtResource("label")]
+offset_left = 0
+offset_top = 152
+offset_right = 38
+offset_bottom = 162
+horizontal_alignment = 2
 
 [node name="Money" parent="Content" instance=ExtResource("money")]
-offset_left = 133
-offset_top = 230
-offset_right = 225
-offset_bottom = 237
+offset_left = 126
+offset_top = 153
+offset_right = 218
+offset_bottom = 160
 
 [node name="Detail" parent="Content" instance=ExtResource("item_desc")]
 offset_left = 9
