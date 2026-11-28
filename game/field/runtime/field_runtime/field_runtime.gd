@@ -1511,23 +1511,25 @@ func _dispatch_npc_service(npc_id: int) -> void:
 	# 原生交互码 1 走到这里说明 `Qst_chtMENU(id, 1)` 没切页（状态 2 的「可接」在交互码 1 上
 	# 不切详情，见 `Qst_chtMENU` 的 `a2 == 1` 分支），落点是 `FIELD_STATE_GUILD_LIST`(6)；
 	# 公会页要先记住这只见习 NPC。
+	var opened := false
 	if page == ServicePage.GUILD:
 		guild_npc_id = npc_id
-		_open_guild_menu(0)
-		return
-	# 交互码 3／6 都进商店列表页，靠 `shop_mode` 区分买卖（见 `SERVICE_ROUTES`）。
-	if shop_mode != SHOP_MODE_NONE:
-		_open_shop(shop_mode)
-		return
-	# 剩下三页（`MONSTER_MENU`／`WARP_WORLD`／`INN`）的打开者都不带参数；
-	# `ServicePage.QUEST` 不在这条路上（没有交互码路由，见 `SERVICE_PAGES`）。
-	match page:
-		ServicePage.MONSTER_MENU:
-			_open_monster_menu()
-		ServicePage.WARP_WORLD:
-			_open_warp_world()
-		ServicePage.INN:
-			_open_inn()
+		opened = _open_guild_menu(0)
+	elif shop_mode != SHOP_MODE_NONE:
+		# 交互码 3／6 都进商店列表页，靠 `shop_mode` 区分买卖（见 `SERVICE_ROUTES`）。
+		opened = _open_shop(shop_mode)
+	elif page == ServicePage.MONSTER_MENU:
+		opened = _open_monster_menu()
+	elif page == ServicePage.WARP_WORLD:
+		opened = _open_warp_world()
+	elif page == ServicePage.INN:
+		opened = _open_inn()
+	# 页面没打开（缺资源／数据、或前置条件不满足）时不能把野外留在 `_freeze_field()` 的冻结里：
+	# 原生这一步等价于 `SetNext(FIELD_STATE_BASIC)`，这里补一次解冻＋重绘，否则角色不能动、
+	# 底部操作界面也不会画出来。
+	if not opened and not service_open():
+		_restore_field_pause()
+		_refresh()
 
 
 ## 原生交互码 3／6 → `FIELD_STATE_ITEM_LIST`(12)，差别只在 `ItemData.shop_mode_code`

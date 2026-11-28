@@ -227,6 +227,9 @@ func advance_text_page() -> bool:
 
 
 func clear_dialogue() -> void:
+	# 淡出中：本函数每帧都会被 `_refresh_dialogue()` 调到，这里直接返回，让 `exit` 播完自己收尾。
+	if _exiting:
+		return
 	# 立绘还在场上就先播 `exit`（场景动画），播完在 `_on_entry_finished()` 里隐藏并清精灵；
 	# 否则（没立绘／不在树里）保持原来的立即隐藏。
 	_exiting = visible and _portrait_loaded and _entry_player.is_inside_tree()
