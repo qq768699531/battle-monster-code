@@ -7,9 +7,10 @@ var map_size_tiles := Vector2i.ZERO
 var tile_count := 0
 var _airship_background: CanvasLayer
 ## 原生 `FieldCanvas_load:30-31`：地图组 6（飞艇）额外加载 `Object_resLOAD(15, 91)`；
-## `Map_Proc:22-25` 在画瓦片前把它画在 (104,0)／(312,0)，作为飞艇地图的背景层。
+## `Map_Proc:22-25` 在画瓦片前把它画在 (104,0)／(312,0)，作为飞艇地图下方的独立风景背景。
+## 对应 `map9_a_1`（104×320，天空/山野），不是水晶等地图物件。
 const AIRSHIP_MAP_GROUP := 6
-const AIRSHIP_BACKGROUND_SPRITE := "obj/obj_f_99/frame-091"
+const AIRSHIP_BACKGROUND_SPRITE := "obj/map9_a_1/frame-000"
 const AIRSHIP_BACKGROUND_POSITIONS := [Vector2(104, 0), Vector2(312, 0)]
 
 
