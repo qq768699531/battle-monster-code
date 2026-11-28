@@ -2,6 +2,7 @@ extends "res://tests/unit/gut_case.gd"
 
 const ItemEffect = preload("res://game/battle/combat/item_effect/item_effect.gd")
 const ItemKind = preload("res://game/menu/item/item_kind/item_kind.gd")
+const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
 
 
 func _item(group: int, index: int) -> Dictionary:
@@ -36,3 +37,21 @@ func test_direct_use_skips_the_target_down_guard() -> void:
 	var used: Dictionary = ItemEffect.apply({}, bonus)
 	assert_true(bool(used.get("ok", false)) and bool(used.get("consumed", false)),
 		"经验加成无目标也能用并消耗：%s" % str(used))
+
+## 野外 `_menu_progress_changed` 会按 `last_progress_operation` 把同一操作在活存档上重放一次，
+## 结果必须与提交快照逐字段相等；随机球／随机书这种结果由种子决定，所以直用必须把种子记进操作。
+func test_direct_use_replays_identically() -> void:
+	var catalog: GameplayData = AssetCatalog.load_gameplay_catalog()
+	for index in [9, 13]:
+		var item_id: int = ItemKind.id_of(ItemKind.Kind.GROUP_7, index)
+		var live := {"inventory": {str(item_id): 1}, "monsters": [], "monsterCapacity": 24,
+			"itemCapacity": [99, 99, 99, 99, 99], "parameter": {"moneyBalance": 0},
+			"quests": {"slots": []}}
+		var seed := 424242
+		var snapshot: Dictionary = live.duplicate(true)
+		assert_true(bool(Menu.use_item(snapshot, catalog, item_id, -1, seed).get("ok", false)),
+			"第 7 组 %d 无目标可用" % index)
+		var replay := Menu.replay_operation(live, catalog, {"kind": "use", "item_id": item_id,
+			"member": -1, "seed": seed})
+		assert_true(bool(replay.get("ok", false)), "重放认得无目标 use")
+		assert_eq(replay["progress"], snapshot, "同种子重放结果与提交快照逐字段相等")

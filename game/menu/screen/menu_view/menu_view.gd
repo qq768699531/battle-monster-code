@@ -804,13 +804,18 @@ func use_selected_item() -> bool:
 		return false
 	if not Menu.item_needs_target(item):
 		# 原生第二层状态 5：`Ball_stdUseEx(0, 0, record)` —— 不选精灵，效果直接结算。
-		var direct: Dictionary = Menu.use_item(story_progress, gameplay_catalog, int(item.id), -1)
+		# 随机球／随机书这类结果由种子决定，_menu_progress_changed 会按 last_progress_operation
+		# 重放一次校核，所以种子必须记进操作里，否则重放结果不同、整单会被拒。
+		var direct_seed := randi()
+		var direct: Dictionary = Menu.use_item(story_progress, gameplay_catalog, int(item.id), -1,
+			direct_seed)
 		if not bool(direct.get("ok", false)):
 			notice = str(direct.get("error", _menu_text(Msg.Id.ITEM_UNUSABLE)))
 			_render_content()
 			return false
 		notice = ""
-		last_progress_operation = {"kind": "use", "item_id": int(item.id), "member": -1}
+		last_progress_operation = {"kind": "use", "item_id": int(item.id), "member": -1,
+			"seed": direct_seed}
 		progress_changed.emit(story_progress.duplicate(true))
 		_render_content()
 		return true
