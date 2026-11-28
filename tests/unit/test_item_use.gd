@@ -3,6 +3,7 @@ extends "res://tests/unit/gut_case.gd"
 const ItemEffect = preload("res://game/battle/combat/item_effect/item_effect.gd")
 const ItemKind = preload("res://game/menu/item/item_kind/item_kind.gd")
 const Menu = preload("res://game/menu/screen/menu_model/menu_model.gd")
+const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 
 
 func _item(group: int, index: int) -> Dictionary:
@@ -55,3 +56,25 @@ func test_direct_use_replays_identically() -> void:
 			"member": -1, "seed": seed})
 		assert_true(bool(replay.get("ok", false)), "重放认得无目标 use")
 		assert_eq(replay["progress"], snapshot, "同种子重放结果与提交快照逐字段相等")
+class FakeStack extends Control:
+	var last: Array = []
+
+	func push(icon_frame: int, text: String) -> void:
+		last.append([icon_frame, text])
+
+
+## 原生 `Ball_stdAddEx` 入包后要推 fxt 478「%s获得」：随机球拿到的精灵必须出现在栈消息里。
+func test_random_ball_pushes_a_stack_message() -> void:
+	var menu: Control = load("res://game/menu/screen/menu/menu.tscn").instantiate()
+	add_child_autofree(menu)
+	await get_tree().process_frame
+	menu.gameplay_catalog = AssetCatalog.load_gameplay_catalog()
+	menu.set("_assets", AssetCatalog)
+	var stack := FakeStack.new()
+	add_child_autofree(stack)
+	var previous = MessageStack.active
+	MessageStack.active = stack
+	menu._say_generated_monster(113)
+	MessageStack.active = previous
+	assert_eq(stack.last.size(), 1, "推了一条栈消息")
+	assert_true(str(stack.last[0][1]).contains("获得"), "正文应含「获得」：" + str(stack.last[0][1]))

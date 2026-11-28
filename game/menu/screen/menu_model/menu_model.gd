@@ -651,7 +651,12 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 		member["brainCurrent"] = int(ball["brain_current"])
 		progress["monsters"] = monsters
 	var code := int(result.get("code", ItemEffect.Code.FAILED))
+	# 随机球生成的那只（原生 `Ball_stdAddEx` 入包后要推 fxt 478「%s获得」）。
+	var generated_species := -1
+	if generated_monster is Dictionary:
+		generated_species = int(generated_monster.get("species", -1))
 	return {"ok": true, "item": selected, "member_index": member_index, "code": code,
+		"generated_species": generated_species,
 		"message_id": ItemEffect.message_id(code),
 		"consumed": bool(result.get("consumed", false)),
 		"hp_restored": int(result.get("hp_restored", 0)),
