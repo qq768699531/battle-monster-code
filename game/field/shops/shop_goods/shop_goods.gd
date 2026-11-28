@@ -87,6 +87,7 @@ func _ready() -> void:
 		_cell(slot).pressed.connect(_select_slot.bind(slot))
 	$Content/TabHit0.pressed.connect(_select_tab.bind(0))
 	$Content/TabHit1.pressed.connect(_select_tab.bind(1))
+	$Content/TabHit2.pressed.connect(_select_tab.bind(2))
 	$Content/UpHit.pressed.connect(_scroll_row.bind(-1))
 	$Content/DownHit.pressed.connect(_scroll_row.bind(1))
 	$Select.decided.connect(_decided)
@@ -385,7 +386,7 @@ func _select_tab(index: int) -> void:
 ## 页签行：组数 1～2，选中行 0 / 未选中行 1；图标从 `ui_window` 第 14 帧切 33×30。
 func _refresh_tabs() -> void:
 	var sheet: Variant = _assets.load_sprite(TAB_SHEET) if _assets != null else null
-	for index in range(2):
+	for index in range(3):
 		var tab: TextureRect = $Content.get_node("Tab%d" % index)
 		var hit: Button = $Content.get_node("TabHit%d" % index)
 		var visible_tab: bool = index < _groups.size() and sheet is AtlasTexture
