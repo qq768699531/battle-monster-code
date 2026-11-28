@@ -217,7 +217,10 @@ func _apply_name_plate() -> void:
 		return
 	_name_label.set("text", _name_text)
 	_name_label.size = Vector2(width, 10)
-	_name_label.position = Vector2(10.0 if icon_index >= 0 else 0.0, 12.0)
+	# 原生 `JC_fntDrawStringBold(x_1, y, ...)` 的 y 是 24 px 框的**竖直中线**（框顶 a2-59、
+	# 框心 a2-47）；`native_label` 从矩形顶边往下画 10 px，所以顶边取 12-5=7 才是居中
+	# （写 12 时文字贴框底，参考图里名字是在框内居中的）。
+	_name_label.position = Vector2(10.0 if icon_index >= 0 else 0.0, 7.0)
 	_name_label.visible = true
 	if icon_index >= 0:
 		var texture := _icon_texture(icon_index)
