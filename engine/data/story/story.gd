@@ -794,11 +794,35 @@ func _populate() -> bool:
 			encounter_pool = encounter.pool
 	var actors: Array = progress["actors"].filter(func(a: Dictionary) -> bool: return a["id"] == 0)
 	for npc: Dictionary in map["info"].get("npcs", []):
-		actors.append(_new_actor(npc["resource_id"], npc["tile_x"], npc["tile_y"]))
+		var actor := _new_actor(npc["resource_id"], npc["tile_x"], npc["tile_y"])
+		# `Map_npcCREATE`: `Object_objDIRECT(32)` → `Object_objDIRECT(direction_code + 1)`；
+		# MIF 的 0 = 左、1 = 右，第二次 DIRECT 保留 down 位，所以 flags 带 down、code 是左/右。
+		match int(npc.get("direction_code", 0)):
+			0:
+				actor["direction"] = FieldAction.Facing.LEFT | FieldAction.Facing.DOWN
+				actor["lastDirection"] = FieldAction.Facing.LEFT
+			1:
+				actor["direction"] = FieldAction.Facing.RIGHT | FieldAction.Facing.DOWN
+				actor["lastDirection"] = FieldAction.Facing.RIGHT
+			_:
+				actor["direction"] = FieldAction.Facing.DOWN
+				actor["lastDirection"] = FieldAction.Facing.DOWN
+		actors.append(actor)
 	for row: Array in progress["extraNpcs"]:
 		if row[0] == map["id"]:
 			var actor := _new_actor(row[3], row[1], row[2])
-			actor["direction"] = (FieldAction.Facing.LEFT | FieldAction.Facing.DOWN) if row[4] == 1 else (FieldAction.Facing.RIGHT | FieldAction.Facing.DOWN)
+			# `Map_npcCREATE` 的事件分支：先 `DIRECT(2)`、`DIRECT(32)`，再按 direction_code
+			# 1 = 左、2 = 右、0 = 下（0 会保留先写的右位，flags = 下|右）。
+			match int(row[4]):
+				1:
+					actor["direction"] = FieldAction.Facing.LEFT | FieldAction.Facing.DOWN
+					actor["lastDirection"] = FieldAction.Facing.LEFT
+				2:
+					actor["direction"] = FieldAction.Facing.RIGHT | FieldAction.Facing.DOWN
+					actor["lastDirection"] = FieldAction.Facing.RIGHT
+				_:
+					actor["direction"] = FieldAction.Facing.RIGHT | FieldAction.Facing.DOWN
+					actor["lastDirection"] = FieldAction.Facing.DOWN
 			actors.append(actor)
 	var total := 0
 	for entry: EncounterEntry in encounter_pool:

@@ -304,7 +304,13 @@ func available(table: QuestTable, npc_id: int, context: Dictionary) -> Array[int
 ## 工程还没有事件步类型建模，**不是静默返回 0**，而是没有入口。
 ## `counts` 用于 `goal_kind` 1／2 的现场清点（任务号 → 当前持有量），0 走 `progress_value`。
 func status(table: QuestTable, npc_id: int, context: Dictionary, counts: Dictionary = {}) -> int:
-	for index in SLOT_COUNT:
+	# `Qst_icoGET:19-45`：先扫普通槽 1..10，最后才扫公会槽 0；同一 NPC 同时挂在两类槽时，
+	# 原版显示普通任务的状态，公会槽不抢先。
+	var order: Array[int] = []
+	for index in range(SLOT_FIRST_NORMAL, SLOT_LAST_NORMAL + 1):
+		order.append(index)
+	order.append(SLOT_GUILD)
+	for index: int in order:
 		var slot: Dictionary = slots[index]
 		if slot.is_empty() or int(slot["npc"]) != npc_id:
 			continue

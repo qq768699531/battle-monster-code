@@ -256,6 +256,15 @@ var _camera_pan: Dictionary = {}
 ## 把该对象挂上去、`+31=1`）。锁着时相机跟这个对象；否则按 `Map_posFRONT` 跟主角并
 ## 按面向偏移（垂直 30 px、水平 50 px）。-1 表示没有对象锁。
 var _camera_actor := -1
+## NPC 待机游走（原生 `Field_Npc_procNext` → `Field_procNext(npc, 40)`）：
+## 无事件时每段待机结束有 50% 概率在**出生点** ±40 px 内随机走一段（`Object_objARRIVE`
+## 的目标就是 `&y+3/+4` 的 home 坐标），走近主角 30 px 内则 `Object_objLOOK` 转向主角。
+const NPC_WANDER_RADIUS := 40.0
+## 原生 `Field_procCurr` 的 NPC 逐帧位移约 1 px / 50 ms（20 px/s）。
+const NPC_WALK_SPEED := 20.0
+var _npc_home: Dictionary = {}
+var _npc_home_map := -1
+var _npc_idle: Dictionary = {}
 var _shake := Vector2.ZERO
 var _battle_id := -1
 var _touch_key := 0
@@ -669,6 +678,7 @@ func advance(delta: float) -> void:
 			_event_covered = false
 		_refresh_followers()
 		_position_camera(delta)
+		_advance_npc_idle(delta)
 		_actors.advance(delta, not objects_paused, not manual_movement)
 		_tick_map_harvest()
 		_drain_effects()
@@ -1464,8 +1474,15 @@ func _facing_npc(hero: Dictionary, facing: int) -> Dictionary:
 ## 原生 `Object_objLOOK(hero, npc)` → `Object_objLookAt`：先调非主轴、再调主轴，
 ## 所以 `direction_code` 是主轴、`direction_flags` 保留另一轴。
 func _look_at(hero: Dictionary, target: Dictionary) -> void:
-	var dx := float(target.x) - float(hero.x)
-	var dy := float(target.y) - float(hero.y)
+	_face_pixel(hero, _point(target))
+	_sync_actors()
+
+
+## 朝向一个**像素**点：`Object_objLookAt`／`Object_objARRIVE` 的同一套主轴规则。
+func _face_pixel(actor: Dictionary, pixel: Vector2) -> void:
+	var center := Vector2(float(actor.x), float(actor.y)) * TILE + Vector2(8, 8)
+	var dx := pixel.x - center.x
+	var dy := pixel.y - center.y
 	var facings: Array[int] = []
 	if absf(dx) < absf(dy):
 		if dx != 0.0:
@@ -1477,19 +1494,108 @@ func _look_at(hero: Dictionary, target: Dictionary) -> void:
 			facings.append(FieldAction.Facing.UP if dy < 0.0 else FieldAction.Facing.DOWN)
 		if dx != 0.0:
 			facings.append(FieldAction.Facing.LEFT if dx < 0.0 else FieldAction.Facing.RIGHT)
-	var flags := int(hero.get("direction", 0))
-	var code := int(hero.get("lastDirection", FieldAction.Facing.DOWN))
-	var changed := false
+	var flags := int(actor.get("direction", 0))
+	var code := int(actor.get("lastDirection", FieldAction.Facing.DOWN))
 	for facing: int in facings:
 		var pair: Array[int] = Story._object_direct(flags, facing)
-		changed = changed or pair[0] != flags or pair[1] != code
 		flags = pair[0]
 		code = pair[1]
-	if not changed:
+	actor["direction"] = flags
+	actor["lastDirection"] = code
+
+
+## NPC 的出生点（原生 `&y+3/+4` 的 home）：地图 NPC 取 MIF 记录，事件 NPC 取 `extraNpcs`。
+## 换图时清空；之后第一次见到的坐标就是它的 home。
+func _sync_npc_home() -> void:
+	var map_id := int(story.map.get("id", -1))
+	if map_id == _npc_home_map:
 		return
-	hero["direction"] = flags
-	hero["lastDirection"] = code
-	_sync_actors()
+	_npc_home_map = map_id
+	_npc_home.clear()
+	_npc_idle.clear()
+	if not story.map.get("info") is Dictionary:
+		return
+	for npc: Dictionary in story.map.info.get("npcs", []):
+		_npc_home[int(npc.resource_id)] = Vector2(float(npc.tile_x), float(npc.tile_y))
+	for row: Array in story.progress.extraNpcs:
+		if row[0] == map_id:
+			_npc_home[int(row[3])] = Vector2(float(row[1]), float(row[2]))
+
+
+## NPC 记录第 20 字节（`NpcDefinition.idle_movement_gate`，`Field_Npc_procNext` 的
+## `out_bytes[36]`）：0 表示不随机游走，只会在主角靠近时转身。
+func _npc_movement_gate(npc_id: int) -> int:
+	var binding: Dictionary = _npc_binding(npc_id)
+	return int(binding.get("idle_movement_gate", 0))
+
+
+## `Field_Npc_procNext`：无事件时，主角在 30 px 内就先 `Object_objLOOK` 转向主角；否则
+## 50% 概率 `Field_procNext(npc, 40)` → 在 home ±40 px 内随机 `Object_objARRIVE(..., 5)`
+## 走一段。每段结束回待机，等下一次判定。
+func _advance_npc_idle(delta: float) -> void:
+	if story == null or not focused or story.running or story.objects_paused() or \
+			int(story.progress.cursor) != 0 or not story._pending.is_empty() or \
+			not story._motions.is_empty() or not _motions.is_empty() or \
+			not dialogue.is_empty() or menu_open or book_open or save_open or service_open() or \
+			world_map_view != null or battle_view != null or not boundary.is_empty() or \
+			not _encounter.is_empty() or not narration.is_empty() or not mastery.is_empty():
+		return
+	_sync_npc_home()
+	var hero := _actor(0)
+	var dimensions := Vector2(_map_view.map_size_tiles) * TILE
+	for actor: Dictionary in story.progress.actors:
+		var id := int(actor.id)
+		if id == 0 or id >= 1000 or bool(actor.get("party_follower", false)):
+			continue
+		if not _npc_home.has(id):
+			_npc_home[id] = Vector2(float(actor.x), float(actor.y))
+		var state: Dictionary = _npc_idle.get(id, {"wait": 0.3 + randf() * 0.9, "target": null})
+		if state.get("target") is Vector2:
+			var target: Vector2 = state.target
+			var pixel := Vector2(float(actor.x), float(actor.y)) * TILE + Vector2(8, 8)
+			var next := pixel.move_toward(target, NPC_WALK_SPEED * delta)
+			actor.x = (next.x - 8.0) / TILE
+			actor.y = (next.y - 8.0) / TILE
+			_actors.update_position(actor)
+			if next.distance_to(target) < 0.5:
+				state["target"] = null
+				state["wait"] = 0.5 + randf() * 0.5
+				actor.action = FieldAction.Hero.IDLE
+				_sync_actors()
+			_npc_idle[id] = state
+			continue
+		if int(actor.action) not in [FieldAction.Hero.IDLE, FieldAction.Hero.WALK,
+				FieldAction.Hero.RUN, 5, FieldAction.Hero.SCRIPT_WALK]:
+			continue
+		if int(actor.action) != FieldAction.Hero.IDLE:
+			# 上一段剧情走位结束后可能停在 5／6；待机逻辑接手时先回 0。
+			actor.action = FieldAction.Hero.IDLE
+			_sync_actors()
+		state["wait"] = float(state["wait"]) - delta
+		if float(state["wait"]) > 0.0:
+			_npc_idle[id] = state
+			continue
+		if not hero.is_empty():
+			var dx := (float(actor.x) - float(hero.x)) * TILE
+			var dy := (float(actor.y) - float(hero.y)) * TILE
+			if dx * dx + dy * dy <= 899.0:
+				_look_at(actor, hero)
+				state["wait"] = 0.4 + randf() * 0.4
+				_npc_idle[id] = state
+				continue
+		if _npc_movement_gate(id) != 0 and randf() > 0.5:
+			var home: Vector2 = _npc_home.get(id, Vector2(float(actor.x), float(actor.y)))
+			var px := clampf(home.x * TILE + 8.0 +
+				randf_range(-NPC_WANDER_RADIUS, NPC_WANDER_RADIUS), 8.0, maxf(8.0, dimensions.x - 8.0))
+			var py := clampf(home.y * TILE + 8.0 +
+				randf_range(-NPC_WANDER_RADIUS, NPC_WANDER_RADIUS), 8.0, maxf(8.0, dimensions.y - 8.0))
+			_face_pixel(actor, Vector2(px, py))
+			actor.action = 5
+			state["target"] = Vector2(px, py)
+			_sync_actors()
+		else:
+			state["wait"] = 0.5 + randf() * 0.5
+		_npc_idle[id] = state
 
 
 ## 原生 Object_objDIRECT：新方向写入 direction_code，复合 direction_flags 保留
