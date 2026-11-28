@@ -28,8 +28,6 @@ signal completed   ## 制作成功过一次（宿主可刷新 HUD 金钱）
 ## 原生列表最短 12 格（`Field_Item_Food_init` 的 `n12 = 12`）。
 const MINIMUM_SLOTS := 12
 const SlotGrade = preload("res://game/menu/party/slot_grade/slot_grade.gd")
-const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
-const ScrollbarScene = preload("res://game/menu/screen/scrollbar/scrollbar.tscn")
 ## `Field_Item_Food_Proc` 的 `Param_moneySET(-100)`：固定 100，与 `item_food.dat` 无关。
 const MONEY_COST := 100
 ## `Field_Item_Food_mKeyPressed` 的 `money_balance <= 0x63` 拒绝（要留够 100）。
@@ -54,8 +52,6 @@ func _ready() -> void:
 	super()
 	for slot in range(CELLS):
 		_cell(slot).pressed.connect(_select_slot.bind(slot))
-	$Content/AcceptHit.pressed.connect(craft)
-	$Content/BackHit.pressed.connect(close)
 	$Content/UpHit.pressed.connect(_scroll_row.bind(-1))
 	$Content/DownHit.pressed.connect(_scroll_row.bind(1))
 
@@ -71,8 +67,6 @@ func present(story: Object, assets: Node) -> void:
 	_names = assets.text_messages("common/item_basic.dat")
 	_recipes = load(RECIPE_PATH) as FoodRecipes
 	$Bounds/Title.text = _text(Msg.Id.FOOD_CRAFT_TITLE)
-	$Content/Accept.configure(assets, 0)
-	$Content/Back.configure(assets, 1)
 	_build_entries()
 	_refresh()
 	show()
@@ -209,12 +203,10 @@ func _refresh_cells() -> void:
 ## `Menu_Item_DrawListInfo`：选中名在条左侧、持有金钱在右侧。
 func _refresh_strip() -> void:
 	var entry := _entry()
-	# 原生 `Field_Item_DrawList` 的 n6=5（食物）在底部条画的是所选食物的说明文本，
-	# 不是只画名字；名字放在下方 `Menu_Item_DrawInfoFood` 的标题里。
-	var description := ""
-	if not entry.is_empty():
-		description = MenuModel.native_item_explanation(MenuModel.item_row(entry.product), _text)
-	$Content/Name.text = description
+	# 原生 `Menu_Item_DrawListInfo` 在 n6=5 时 p_item_kind 为 null，底部条画的是
+	# 本页可制作的显示项数量与总条目数（“可选/上限”），不是物品描述或名字。
+	$Content/Name.text = "" if entry.is_empty() else \
+		"%d/%d" % [int(entry.get("product_count", 0)), _entries.size()]
 	$Content/Money/Number.present(str(money()))
 
 
@@ -241,9 +233,9 @@ func _refresh_materials() -> void:
 		row.get_node("Icon").texture = _assets.item_icon(material.icon) \
 			if material != null and material.icon >= 0 else null
 		row.get_node("Name").text = _item_name(material) if material != null else ""
-		var count_label: Label = row.get_node("Count")
-		count_label.text = "" if slot >= materials.size() else "%d/%d" % [have, need]
-		count_label.add_theme_color_override("font_color", Color.WHITE if have >= need else INSUFFICIENT_COLOR)
+		var count_number: Control = row.get_node("Count")
+		count_number.call("configure", _assets)
+		count_number.call("present", "%d/%d" % [have, need], 0)
 
 
 func _select_slot(slot: int) -> void:
@@ -268,13 +260,13 @@ func _move(step: int) -> void:
 
 
 func _refresh_scrollbar() -> void:
-	var pages := maxi(1, (_entries.size() + COLUMNS - 1) / COLUMNS)
+	var pages := maxi(1, ceili(float(_entries.size()) / COLUMNS))
 	var shown := pages > 1
 	$Content/Scrollbar.visible = shown
 	$Content/UpHit.visible = shown
 	$Content/DownHit.visible = shown
 	if shown:
-		$Content/Scrollbar.call("set_page", 0, pages)
+		$Content/Scrollbar.call("set_page", cursor / COLUMNS, pages)
 
 
 func _scroll_row(step: int) -> void:
