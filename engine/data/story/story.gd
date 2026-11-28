@@ -1884,7 +1884,7 @@ func trigger_interaction(id: int) -> bool:
 	return true
 
 
-func _add_inventory_item(item_id: int, quantity: int, blocking := true) -> bool:
+func _add_inventory_item(item_id: int, quantity: int, blocking := true, announce := true) -> bool:
 	if item_id < 0 or quantity <= 0:
 		_inventory_block("原添加物品指令参数未确认", blocking)
 		return false
@@ -1907,7 +1907,8 @@ func _add_inventory_item(item_id: int, quantity: int, blocking := true) -> bool:
 		# 原生 `Item_stdAddEx@0x85BE4:47-59`：组 23–26 入账后一律由 `Item_datBasic` 填好的
 		# detail_text（组 23／25「经验值」、组 24／26「金币」）与数量套 `JC_fxt2Return(415)`，
 		# 最后 `Game_infoInit(0xFFFFFFFF, s)` 推一条**无图标**的入手提示。
-		_emit("item-obtained", {"itemId": item_id, "count": quantity, "iconFrame": -1})
+		if announce:
+			_emit("item-obtained", {"itemId": item_id, "count": quantity, "iconFrame": -1})
 		return true
 	var index := ItemKind.index_of(item_id)
 	var catalog: GameplayData = _gameplay()
@@ -1960,7 +1961,8 @@ func _add_inventory_item(item_id: int, quantity: int, blocking := true) -> bool:
 	# 原生 `Item_stdAddEx@0x85BE4:73-76`：普通道具真正进袋的分支推一条
 	# `Game_infoInit(kind_specific_85_bits, fxt416)`，图标帧就是道具记录第 133 字节
 	# （`ItemDefinition.icon`，`common/ui_item` 的帧号）。伪道具走 fxt415（无图标），不在此列。
-	_emit("item-obtained", {"itemId": item_id, "count": quantity, "iconFrame": record.icon})
+	if announce:
+		_emit("item-obtained", {"itemId": item_id, "count": quantity, "iconFrame": record.icon})
 	# 原生 `Item_stdAddEx@0x85BE4:77-78`：入袋后先 `Qst_stdCHECK(2, 道具号)`（素材袋清点），
 	# 再 `Evt_stdCHECK(3, 道具号)`（当前事件步的「持有数量」条件）。
 	_check_material_quest(item_id)
@@ -2188,7 +2190,7 @@ func buy_item(item_id: int, quantity: int) -> String:
 	var money := int(progress["parameter"].get("moneyBalance", 0))
 	if money < total:
 		return "金币不足"
-	if not _add_inventory_item(item_id, quantity):
+	if not _add_inventory_item(item_id, quantity, true, false):
 		return "背包放不下这些道具"
 	progress["parameter"]["moneyBalance"] = money - total
 	return ""
