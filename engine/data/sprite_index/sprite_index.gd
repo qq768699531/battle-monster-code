@@ -3,7 +3,6 @@ extends RefCounted
 ## 生成方式见仓库提交说明：图集按排序后的帧网格排布，区域由原帧尺寸推得。
 
 const FRAMES := {
-	"obj/map9_a_1/full": ["res://game/field/map/map_actor/map9_a_1/map9_a_1.webp", Rect2(0, 0, 208, 320)],
 	"common/ui_battle/frame-000": ["res://game/battle/presentation/hud/ui_battle.webp", Rect2(0, 0, 78, 13)],
 	"common/ui_battle/frame-001": ["res://game/battle/presentation/hud/ui_battle.webp", Rect2(422, 0, 21, 13)],
 	"common/ui_battle/frame-002": ["res://game/battle/presentation/hud/ui_battle.webp", Rect2(844, 0, 422, 7)],

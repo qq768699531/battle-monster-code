@@ -2,6 +2,7 @@
 [ext_resource type="Script" path="res://game/field/map/map.gd" id="MapRoot"]
 
 [ext_resource type="PackedScene" path="res://game/field/map/map_set/m6/t6_0.tscn" id="1_whmg6"]
+[ext_resource type="Texture2D" path="res://game/field/map/map_actor/map9_a_1/map9_a_1.webp" id="2_bg"]
 
 [node name="Map_148" type="Node2D" unique_id=404596519]
 script = ExtResource("MapRoot")
@@ -11,6 +12,13 @@ metadata/map_index = 0
 metadata/map_size_tiles = Vector2i(26, 20)
 metadata/map_palette_indices = PackedInt32Array(0, 0, 0, 0)
 metadata/map_objects = PackedInt32Array(3, 17, 3, 1, 15, 2, 0, 17, 1, 2, 7, 6, 4, 7, 7, 8, 0, 14, 5, 18, 7, 7, 20, 11, 6, 4, 11, 11, 5, 17, 10, 18, 14, 9, 8, 14, 12, 9, 13, 13, 10, 13)
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 1
+z_index = -1
+texture = ExtResource("2_bg")
+centered = false
+scale = Vector2(2, 1)
 
 [node name="Npcs" type="Node2D" parent="." unique_id=2077532432]
 
