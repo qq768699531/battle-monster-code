@@ -229,7 +229,7 @@ func _handle_confirm_key(key: String) -> bool:
 	match key:
 		"ArrowLeft", "ArrowRight":
 			$Confirm.select(WarpConfirmBox.Answer.NO
-				if $Confirm.cursor == WarpConfirmBox.Answer.YES else WarpConfirmBox.Answer.YES)
+				if $Confirm.selection() == WarpConfirmBox.Answer.YES else WarpConfirmBox.Answer.YES)
 		"Enter", "Space":
 			_decide()
 		"Escape", "Backspace":
@@ -244,7 +244,7 @@ func _handle_confirm_key(key: String) -> bool:
 func _decide() -> void:
 	if _closing or page != Page.CONFIRM:
 		return
-	if $Confirm.cursor != WarpConfirmBox.Answer.YES:
+	if $Confirm.selection() != WarpConfirmBox.Answer.YES:
 		_cancel_confirm()
 		return
 	var destination := candidates[selected]
