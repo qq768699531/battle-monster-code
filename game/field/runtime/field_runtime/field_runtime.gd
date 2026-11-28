@@ -192,6 +192,9 @@ var monster_enchant_view: Control
 ## 待定传送（原生 `MapData.warp_target_map_id/tile_x/tile_y`）：WARP1／WARP2 只写目的地，
 ## 换图发生在英雄 ANI 10 播完之后（`Field_Hero_procNext` → `Map_warpProc`）。
 var _pending_warp: Dictionary = {}
+## 英雄 ANI 10 播完后只置位，等当前帧的对象池推进结束、下一帧 `advance` 再换图；
+## 否则换图会在 `field_actors.advance` 的循环里重建 actor 节点，循环继续用已释放的节点崩溃。
+var _warp_ready := false
 var encounter_view: Control
 var _store: RefCounted
 var _resources: Object
@@ -665,6 +668,9 @@ func advance(delta: float) -> void:
 		push_warning("Legacy save has no recorded play time; its historical duration remains unknown.")
 		_legacy_time_reported = true
 	if battle_view == null:
+		if _warp_ready and not _pending_warp.is_empty():
+			_apply_pending_warp()
+			return
 		var manual_movement := false
 		# 暂停期间对象池整段不推进：已在飞的脚本位移冻在原地（剩余时间不消费、也不补帧）。
 		var remaining := 0.0 if objects_paused else _advance_motions(delta)
@@ -2156,6 +2162,7 @@ func _begin_pending_warp(map_id: int, tile_x: int, tile_y: int) -> void:
 	if hero.is_empty():
 		return
 	_pending_warp = {"map_id": map_id, "tile_x": tile_x, "tile_y": tile_y}
+	_warp_ready = false
 	_clear_walk_input()
 	# 待定传送会作废脚下的脚本移动；模型里那份也要取消，否则 `stable_state()` 永远为空，
 	# 换图动画播完后仍不出触控界面。
@@ -2174,6 +2181,7 @@ func _begin_pending_warp(map_id: int, tile_x: int, tile_y: int) -> void:
 ## 时把目标图记为已通过（`Map_warpSetPASS`），随后英雄落到目标格中心、跟随者贴齐。
 ## `Field_Hero_procNext` 的 ANI 10 分支之后还会播 ANI 11（落地动作）。
 func _apply_pending_warp() -> void:
+	_warp_ready = false
 	var target := int(_pending_warp.get("map_id", -1))
 	var tile_x := int(_pending_warp.get("tile_x", 0))
 	var tile_y := int(_pending_warp.get("tile_y", 0))
@@ -2226,7 +2234,9 @@ func _on_actor_animation_finished(actor_id: int) -> void:
 	var hero := _actor(0)
 	var action := int(hero.get("action", 0))
 	if action == FieldAction.Hero.WARP and not _pending_warp.is_empty():
-		_apply_pending_warp()
+		# 不在这里换图：当前正处在 `field_actors.advance` 的 body 动画回调里，
+		# 换图会重建/释放 actor；下一帧 `advance` 开头再执行。
+		_warp_ready = true
 	elif action in [FieldAction.Hero.MINE_ORE, FieldAction.Hero.SHAKE_TREE]:
 		# 采集是「一遍一播 + 显式重播」：每遍末帧算一次，第二遍结束才收回待机并结算。
 		if not _harvest.is_empty() and int(_harvest.get("action", -1)) == action:
