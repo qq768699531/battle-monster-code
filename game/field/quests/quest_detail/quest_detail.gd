@@ -33,6 +33,7 @@ signal accepted(quest_id: int, slot: int)
 
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const UI_THEME = preload("res://engine/ui/native_label/ui_theme.tres")
+const ScreenShade = preload("res://engine/ui/screen_shade/screen_shade.gd")
 
 ## 任务正文走 `TextTables.QUEST_SOURCE`（`qst/qstlist.fxt:<任务号>`），payload 是
 ## 「标题 \t 说明 \t 目标 \t 关联地域号 \t 目标地域号 \t 地域名」六段（尾段可能整体缺失）。
@@ -133,7 +134,8 @@ func _ready() -> void:
 ## `counts` 是 `goal_kind` 1／2 的现场清点（任务号 → 当前持有量，原生 `Ball_bagFindCount`）。
 ## `progress` 是整份存档进度，世界地图取 `mapId`／`warpEnabled`／`warpPassed`。
 func present(assets: Node, table: QuestTable, log: QuestLog, id: int,
-		quest_context: int, counts: Dictionary = {}, progress: Dictionary = {}) -> bool:
+		quest_context: int, counts: Dictionary = {}, progress: Dictionary = {},
+		field_snapshot: Image = null) -> bool:
 	_assets = assets
 	$Content/Accept.configure(assets, 0)
 	$Content/Back.configure(assets, 1)
@@ -171,6 +173,12 @@ func present(assets: Node, table: QuestTable, log: QuestLog, id: int,
 	_render_pages()
 	_render()
 	show()
+	# 进任务详情前先在野外抓好的那一帧（`Field_Basic_Capture`）。详情页与世界地图共用这
+	# 一张定格背景；地图入栈时不会重新抓帧，所以不会把详情窗拍进背景、看起来像叠窗。
+	if field_snapshot != null and not field_snapshot.is_empty():
+		var shade := ScreenShade.acquire(self)
+		if shade != null:
+			shade.set_snapshot(field_snapshot)
 	open_window()
 	return true
 
@@ -302,19 +310,16 @@ func _open_map() -> void:
 		_notice = "世界地图节点表缺失；未打开世界地图。"
 		return
 	# 原生 `Qst_chtDRAW` 的层 1 **只画** `Menu_world_Draw` 一扇窗：详情窗框、标题、正文、页脚
-	# 整段不画。先把地图窗从详情页移到野外父节点、再把详情页整页 `hide()`，然后才让地图
-	# `open()` 抓背景——否则地图的定格帧会把详情窗一起拍进去，看起来就像地图叠在窗上。
-	var field := get_parent()
-	if field != null:
-		_world_map.reparent(field)
-		_world_map.z_index = z_index
-	hide()
+	# 整段不画。这里按「窗口栈」处理：详情页三块可见层收起（根节点与它那一层定格背景保留），
+	# 地图窗压在最上面并复用详情页的遮罩／快照——不重新抓帧，所以不会把详情窗拍进背景里。
+	$Bounds.visible = false
+	$Content.visible = false
+	$Confirm.hide()
 	if not _world_map.open(_assets, data, int(_progress.get("mapId", 0)),
 			_progress.get("warpEnabled", {}), _progress.get("warpPassed", {}),
 			segments, focus_map_id):
-		if field != null:
-			_world_map.reparent(self)
-		show()
+		$Bounds.visible = true
+		$Content.visible = true
 		return
 	_layer = LAYER_WORLD_MAP
 
@@ -340,11 +345,10 @@ func _close_world_map() -> void:
 		return
 	# 层 0 只画 `Menu_win_Box4_DrawWindow`：地图窗同帧退场，逐拍（`Map_worldDRAW` 的镜头折半）也停。
 	_world_map.leave()
-	if _world_map.get_parent() != self:
-		_world_map.reparent(self)
-	_world_map.z_index = 0
 	_layer = LAYER_DETAIL
-	show()
+	# 窗口栈出栈：恢复详情页的可见层，相位从条形重放（原生写回 1）。
+	$Bounds.visible = true
+	$Content.visible = true
 	open_window()
 
 

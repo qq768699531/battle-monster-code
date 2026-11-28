@@ -256,6 +256,9 @@ var _camera_pan: Dictionary = {}
 ## 把该对象挂上去、`+31=1`）。锁着时相机跟这个对象；否则按 `Map_posFRONT` 跟主角并
 ## 按面向偏移（垂直 30 px、水平 50 px）。-1 表示没有对象锁。
 var _camera_actor := -1
+## 交互开始前抓的野外帧：任务详情与世界地图共用这张定格背景（原生 `Field_Basic_Capture`），
+## 不能等对话窗关掉后再抓，否则会把 NPC 对话一起拍进背景。
+var _service_snapshot: Image = null
 ## NPC 待机游走（原生 `Field_Npc_procNext` → `Field_procNext(npc, 40)`）：
 ## 无事件时每段待机结束有 50% 概率在**出生点** ±40 px 内随机走一段（`Object_objARRIVE`
 ## 的目标就是 `&y+3/+4` 的 home 坐标），走近主角 30 px 内则 `Object_objLOOK` 转向主角。
@@ -1722,6 +1725,8 @@ func interact_npc() -> bool:
 	var hero := _actor(0)
 	if hero.is_empty():
 		return false
+	var viewport := get_viewport()
+	_service_snapshot = viewport.get_texture().get_image() if viewport != null else null
 	var facing_npc := _facing_npc(hero, int(hero.get("lastDirection",
 		int(hero.get("direction", FieldAction.Facing.DOWN)))))
 	if facing_npc.is_empty():
@@ -1960,6 +1965,12 @@ func _open_quest_detail(quest_id: int, context: int) -> bool:
 	var table := _quest_table_resource()
 	if table == null or story == null or service_open() or _assets == null:
 		return false
+	# 原生进门先 `Field_Basic_Capture`；任务详情与世界地图共用这张定格背景（窗口栈的底），
+	# 地图压上来时不再重新抓帧，详情窗不会出现在自己的背景里。
+	var snapshot: Image = _service_snapshot
+	if snapshot == null or snapshot.is_empty():
+		var viewport := get_viewport()
+		snapshot = viewport.get_texture().get_image() if viewport != null else null
 	quest_view = QuestDetailScene.instantiate()
 	quest_view.z_index = 250
 	add_child(quest_view)
@@ -1969,7 +1980,7 @@ func _open_quest_detail(quest_id: int, context: int) -> bool:
 	_clear_walk_input()
 	story.paused = true
 	var shown: bool = quest_view.call("present", _assets, table, story.quest_log(), quest_id, context,
-		{}, story.progress)
+		{}, story.progress, snapshot)
 	if not shown:
 		_close_quest()
 		return false
