@@ -97,7 +97,7 @@ enum Id {
 	FIELD_SAVE_IN_PROGRESS = 39,   ## 数据存档ing...
 	FIELD_SAVE_DONE = 41,          ## 已存档
 	LOCKED = 150,             ## [已上锁]（道具/装备栏的空位提示）
-	MAP_BLOCKED = 404,        ## 暂时不能通国.
+	MAP_BLOCKED = 404,        ## 暂时不能通过.
 	## 精灵管理所（`GAME_STATE_MONSTER_LIST` = 21）：`Game_Monster_List_mPaint` 传给
 	## `Game_Menu_List_Draw` 的三处 `JC_fxt2Return` 实参——标题 102、两个条目 103／104。
 	MONSTER_OFFICE = 102,     ## 精灵管理所
