@@ -6,6 +6,7 @@ extends Node2D
 ## Optionally set_visible_world_rect(camera_bounds) to freeze offscreen emotions.
 
 const HERO := "hero/h_f_01"
+const TILE := 16.0
 const ACTOR_SCENE = preload("res://game/field/actors/actor/actor.tscn")
 # 地图物件只需要绘制体，不需要 actor 场景里的 Emotion（它内部还会再实例化一套 ANI）。
 ## 地图物件外壳：`Shake` 层承载 Scene 抖动动画，`Shake/Body` 仍是 `actor_layers` 绘制体。
@@ -48,6 +49,9 @@ var _map_objects: Array[Dictionary] = []
 var _limits: Array[String] = []
 var _visible_world_rect: Variant = null
 var _dialogue_speaker := -1
+## 原生 `Field_Basic_mRun:24` 的「当前面向对象」：`Object_objNEAR(3, -1, -1, hero.x, hero.y,
+## direction_code, 900)` 选出的最近 NPC（30 px 内的朝向上半平面）；名字条与对话目标都读它。
+var _facing_id := -1
 
 
 func configure(catalog: Object) -> void:
@@ -469,6 +473,13 @@ func sync(actors: Array, bindings: Array = []) -> void:
 			body.animation_finished.connect(_on_body_animation_finished.bind(id))
 		var view: Dictionary = _actors[id]
 		view["actor"] = actor
+		view["name_text"] = ""
+		for binding: Dictionary in bindings:
+			if int(binding.get("record_index", -1)) == id:
+				var prompt_name: Variant = binding.get("name_text")
+				if prompt_name is String and not prompt_name.is_empty():
+					view["name_text"] = prompt_name
+				break
 		var art := field_artwork(actor, bindings)
 		var request := [art, actor.get("action", 0), actor.get("animationEndMode", 0)]
 		if view.get("body_request") != request:
@@ -505,12 +516,45 @@ func _sync_emotion(view: Dictionary) -> void:
 	var actor_id := int(actor.id)
 	var speaking := _dialogue_speaker >= 0 and actor_id < 1000 and \
 		(1 if actor_id == 0 else actor_id) == maxi(1, _dialogue_speaker)
-	view.emotion_node.present(actor, speaking, _limit)
+	view.emotion_node.present(actor, speaking, _limit, actor_id == _facing_id,
+		str(view.get("name_text", "")))
 	view.emotion = view.emotion_node.drawing()
+
+
+## 原生 `Field_Basic_mRun` 的每帧面向对象判定：只找 kind 3（NPC，id 不为 0 且 < 1000），
+## 按 `direction_code` 的半平面筛候选（上：y ≤ 主角 y；下：≥；左：x ≤；右：≥），
+## 距离平方 < 900（30 px）取最近。
+func _refresh_facing() -> void:
+	var hero_view: Dictionary = _actors.get(0, {})
+	if hero_view.is_empty() or hero_view.get("actor", {}).is_empty():
+		_facing_id = -1
+		return
+	var hero: Dictionary = hero_view.actor
+	var facing := int(hero.get("lastDirection", int(hero.get("direction", FieldAction.Facing.DOWN))))
+	var picked := -1
+	var best := 900.0
+	for id: int in _actors:
+		if id == 0 or id >= 1000:
+			continue
+		var actor: Dictionary = _actors[id].actor
+		var dx := (float(actor.x) - float(hero.x)) * TILE
+		var dy := (float(actor.y) - float(hero.y)) * TILE
+		if (facing == FieldAction.Facing.UP and dy > 0.0) or \
+				(facing == FieldAction.Facing.DOWN and dy < 0.0) or \
+				(facing == FieldAction.Facing.LEFT and dx > 0.0) or \
+				(facing == FieldAction.Facing.RIGHT and dx < 0.0):
+			continue
+		var distance := dx * dx + dy * dy
+		if distance >= best:
+			continue
+		picked = id
+		best = distance
+	_facing_id = picked
 
 
 ## `quest_status` 这类由外部写进 actor 的字段变化后重画表情层（`present` 会跳过没变的请求）。
 func refresh_emotions() -> void:
+	_refresh_facing()
 	for view: Dictionary in _actors.values():
 		_sync_emotion(view)
 
@@ -569,6 +613,7 @@ func restart_hero_action() -> bool:
 func advance(delta: float, animate_bodies: bool = true, animate_hero: bool = true) -> void:
 	if not is_finite(delta) or delta < 0:
 		return
+	_refresh_facing()
 	for view: Dictionary in _map_objects:
 		_apply_map_object_revert(view)
 		if animate_bodies:
@@ -580,13 +625,11 @@ func advance(delta: float, animate_bodies: bool = true, animate_hero: bool = tru
 		if animate_bodies and (animate_hero or int(actor.id) != 0) and not body.is_empty():
 			view.body_node.advance(delta)
 			body.frame = view.body_node.frame_index()
-		var emotion: Dictionary = view["emotion"]
-		if emotion.is_empty():
-			continue
 		if _visible_world_rect != null and not body.is_empty():
 			var body_bounds: Rect2 = view["group"].get_global_transform() * body["bounds"]
 			if not body_bounds.intersects(_visible_world_rect, true):
 				continue
+		# 名字条的相位与朝向每帧都要重算，所以即使当前没有气泡／任务图标也推进并同步。
 		view.emotion_node.advance(delta)
 		_sync_emotion(view)
 	_apply_occlusion_fade()
