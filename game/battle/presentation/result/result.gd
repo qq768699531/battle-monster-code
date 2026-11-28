@@ -73,7 +73,6 @@ func open(model: RefCounted, presentation: RefCounted, progress: Dictionary,
 	_clock = 0.0
 	$Bounds/Title.text = presentation.message(title_id)
 	$Content/Footer.configure(presentation.assets, 0)
-	$Shade.show_shade()
 	show()
 	_render()
 	stage = "opening"

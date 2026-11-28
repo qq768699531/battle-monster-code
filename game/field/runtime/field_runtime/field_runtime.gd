@@ -22,6 +22,7 @@ const EncounterScene = preload("res://game/field/encounters/encounter_transition
 const BattleScene = preload("res://game/battle/combat/battle.tscn")
 const MenuScene = preload("res://game/menu/screen/menu/menu.tscn")
 const BookScene = preload("res://game/menu/book/book.tscn")
+const WindowTransitionScript = preload("res://engine/ui/window_transition/window_transition.gd")
 const GuildMenuScene = preload("res://game/field/guild/guild_menu/guild_menu.tscn")
 const GuildInfoScene = preload("res://game/field/guild/guild_info/guild_info.tscn")
 const ShopListScene = preload("res://game/field/shops/shop_list/shop_list.tscn")
@@ -261,9 +262,6 @@ var _camera_pan: Dictionary = {}
 ## 把该对象挂上去、`+31=1`）。锁着时相机跟这个对象；否则按 `Map_posFRONT` 跟主角并
 ## 按面向偏移（垂直 30 px、水平 50 px）。-1 表示没有对象锁。
 var _camera_actor := -1
-## 交互开始前抓的野外帧：任务详情与世界地图共用这张定格背景（原生 `Field_Basic_Capture`），
-## 不能等对话窗关掉后再抓，否则会把 NPC 对话一起拍进背景。
-var _service_snapshot: Image = null
 ## NPC 待机游走（原生 `Field_Npc_procNext` → `Field_procNext(npc, 40)`）：
 ## 无事件时每段待机结束有 50% 概率在**出生点** ±40 px 内随机走一段（`Object_objARRIVE`
 ## 的目标就是 `&y+3/+4` 的 home 坐标），走近主角 30 px 内则 `Object_objLOOK` 转向主角。
@@ -635,7 +633,7 @@ func advance(delta: float) -> void:
 	_warp_blocked_bar.advance(delta)
 	# 预读排在菜单／转场／对话这些等待帧里做，不额外占一帧。
 	_advance_battle_warmup()
-	if menu_open or book_open or save_open or service_open():
+	if menu_open or book_open or save_open or service_open() or WindowTransitionScript.any_open():
 		return
 	if not narration.is_empty():
 		_narration_view.advance(delta)
@@ -1371,7 +1369,7 @@ func close_service_page() -> void:
 ## （`FieldCanvas_mRun` 只跑当前页的 `run_callback_address`，弹出框
 ## `Field_Box_mRun` 返回 1 时连那一页也不跑）。
 func _field_paused() -> bool:
-	return not focused or menu_open or book_open or save_open or \
+	return not focused or menu_open or book_open or save_open or WindowTransitionScript.any_open() or \
 		not boundary.is_empty() or not _encounter.is_empty()
 
 
@@ -1727,8 +1725,6 @@ func interact_npc() -> bool:
 	var hero := _actor(0)
 	if hero.is_empty():
 		return false
-	var viewport := get_viewport()
-	_service_snapshot = viewport.get_texture().get_image() if viewport != null else null
 	var facing_npc := _facing_npc(hero, int(hero.get("lastDirection",
 		int(hero.get("direction", FieldAction.Facing.DOWN)))))
 	if facing_npc.is_empty():
@@ -1965,12 +1961,6 @@ func _open_quest_detail(quest_id: int, context: int) -> bool:
 	var table := _quest_table_resource()
 	if table == null or story == null or service_open() or _assets == null:
 		return false
-	# 原生进门先 `Field_Basic_Capture`；任务详情与世界地图共用这张定格背景（窗口栈的底），
-	# 地图压上来时不再重新抓帧，详情窗不会出现在自己的背景里。
-	var snapshot: Image = _service_snapshot
-	if snapshot == null or snapshot.is_empty():
-		var viewport := get_viewport()
-		snapshot = viewport.get_texture().get_image() if viewport != null else null
 	quest_view = QuestDetailScene.instantiate()
 	quest_view.z_index = 250
 	add_child(quest_view)
@@ -1979,7 +1969,7 @@ func _open_quest_detail(quest_id: int, context: int) -> bool:
 	service_page = ServicePage.QUEST
 	_clear_walk_input()
 	var shown: bool = quest_view.call("present", _assets, table, story.quest_log(), quest_id, context,
-		{}, story.progress, snapshot)
+		{}, story.progress)
 	if not shown:
 		_close_quest()
 		return false
@@ -3157,13 +3147,9 @@ func _open_book(knowledge: Dictionary = {}) -> bool:
 		note = "玩法数值目录缺失；未打开图鉴。"
 		_refresh()
 		return false
-	var frame: Image = null
-	if get_viewport() != null:
-		frame = get_viewport().get_texture().get_image()
 	book_view = BookScene.instantiate()
 	book_view.z_index = 250
 	add_child(book_view)
-	book_view.call("set_shade_snapshot", frame)
 	book_view.closed.connect(_close_book)
 	if not book_view.open(_assets, catalog, story.progress, knowledge):
 		remove_child(book_view)

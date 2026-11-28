@@ -14,6 +14,5 @@ mouse_filter = 2
 script = ExtResource("1")
 
 [node name="SavingWindow" parent="." instance=ExtResource("2")]
-shade_frozen = true
 
 [node name="Window" parent="." instance=ExtResource("2")]

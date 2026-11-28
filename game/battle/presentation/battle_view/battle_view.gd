@@ -1319,7 +1319,7 @@ func _choose_flee() -> void:
 ## 原生状态 28 DIE（`Battle_Die_init`）：有复活道具先出子状态 3 的「使用%s[%s]复活吗?」，
 ## 没有就出子状态 5 的「使用100元的情报使用费可以复活」；两页的「否／确定」都落到
 ## 子状态 2／6 的「返回主菜单吗?」。整屏先 `Battle_info_Capture()` 拍成模糊半透明底
-## （`$Defeat` 的 `screen_shade`），再在这个 Box2 窗口里逐页换文。
+## （`$Defeat` 是 WindowTransition，背景层由窗口栈统一管理），再在这个 Box2 窗口里逐页换文。
 func _open_defeat() -> void:
 	if phase == "defeat" or _closed:
 		return

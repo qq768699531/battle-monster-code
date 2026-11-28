@@ -100,17 +100,15 @@ const BOX4_CHROME_NODES := [
 		content_follows_window = value
 		if is_node_ready():
 			_apply_geometry()
-## 窗口背景的「半透明 + 模糊」统一由本组件处理：所有窗口默认在 `Content` 之下挂一层
-## `ScreenShade`，页面不再各自写 `screen_shade`／手动 `ScreenShade.acquire*`。
-@export var screen_shade := true
-## 以开窗前快照为背景的页（世界地图／存档／任务详情等原生 `Field_Basic_Capture`）
-## 把这一项设为 true，组件在抓帧后冻结快照；其余窗口采样实时屏幕。
-@export var shade_frozen := false
+## 窗口背景的「半透明 + 模糊」只由本组件管理：第一扇窗口打开时抓一张整帧快照，
+## 之后所有窗口（含嵌套窗口）共用；只要还有窗口显示，`ScreenShade` 就可见且地图保持冻结，
+## 最后一扇窗口收起时才释放。页面不再各自抓帧、冻结或显隐 `ScreenShade`。
+static var _open_windows: Array = []
+## 整段窗口会话共用的整帧快照；同帧内换页（旧页 hide、新页立刻 open）沿用上一张。
+static var _capture: Image = null
+static var _capture_frame := -1
 
 var _normal_rect: Rect2i
-## 页面在 `_ready` 之前或之后提供的背景快照（存档页用存档截图、任务详情用野外快照）；
-## 统一由 WindowTransition 转交给 ScreenShade，页面不再自己 `acquire()`／`set_snapshot()`。
-var _shade_snapshot: Image
 ## Box4 稳态下场景自己声明的构件显隐与页脚颜色（见 `BOX4_CHROME_NODES`）。
 var _box4_chrome_visible: Dictionary = {}
 var _box4_title_visible: bool
@@ -127,23 +125,70 @@ func _ready() -> void:
 	_apply_geometry()
 
 
+## 只要还有窗口在显示，这个查询就为真；野外据此冻结地图。
+static func any_open() -> bool:
+	return not _open_windows.is_empty()
+
+
 func open_window() -> void:
-	if screen_shade:
-		var shade: ScreenShade = $Shade
-		shade.show()
-		if shade_frozen:
-			shade.freeze()
-		if _shade_snapshot != null:
-			shade.set_snapshot(_shade_snapshot)
-	else:
-		$Shade.hide()
+	register_window(self)
 	$AnimationPlayer.play("open")
 	$AnimationPlayer.advance(0)
 
 
-func set_shade_snapshot(image: Image) -> void:
-	_shade_snapshot = image
-	($Shade as ScreenShade).set_snapshot(image)
+## 任何窗口（包括菜单这种自绘全屏页）都通过这里登记；抓帧与 `ScreenShade` 显隐仍只由本组件负责。
+static func register_window(window: Control) -> void:
+	if _open_windows.has(window):
+		return
+	if _open_windows.is_empty():
+		var frame := Engine.get_process_frames()
+		if _capture == null or frame != _capture_frame:
+			_capture = _grab_screen(window)
+			_capture_frame = frame
+	_open_windows.append(window)
+	_sync_shade()
+
+
+static func unregister_window(window: Control) -> void:
+	var index := _open_windows.find(window)
+	if index < 0:
+		return
+	_open_windows.remove_at(index)
+	_sync_shade()
+
+
+static func _grab_screen(window: Node) -> Image:
+	if Engine.is_editor_hint():
+		return null
+	var viewport := window.get_viewport()
+	return viewport.get_texture().get_image() if viewport != null else null
+
+
+## 只有最上层的窗口显隐自己的 `ScreenShade`；其余窗口的层收起，但整层仍然可见。
+static func _sync_shade() -> void:
+	for index in range(_open_windows.size()):
+		var window: Control = _open_windows[index]
+		if not is_instance_valid(window):
+			continue
+		var shade := window.get_node_or_null("Shade") as ScreenShade
+		if shade == null:
+			continue
+		if index == _open_windows.size() - 1:
+			if _capture != null:
+				shade.set_snapshot(_capture)
+			else:
+				# 抓帧失败（例如无渲染的后端）时退回实时采样，至少保证窗口背景层仍然生效。
+				shade.set_snapshot(null)
+			shade.show()
+		else:
+			shade.hide()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_VISIBILITY_CHANGED and not is_visible_in_tree():
+		unregister_window(self)
+	elif what == NOTIFICATION_EXIT_TREE:
+		unregister_window(self)
 
 
 func close_window() -> void:

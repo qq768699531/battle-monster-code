@@ -47,14 +47,7 @@ func open(texts: Dictionary, message_id: int, saves: bool) -> void:
 	_closing = false
 	_pending_done = 0
 	_substate = 1 if saves else 3
-	# 先读回本层显示之前的完整一帧，再 show；`acquire_frozen` 的即时抓帧可能落在
-	# 「窗口刚可见、场景还没重绘」的空帧上，树木这类高 z 地图物件会被冻掉。
-	var viewport := get_viewport()
-	var image: Image = viewport.get_texture().get_image() \
-		if viewport != null else null
 	show()
-	if image != null and not image.is_empty():
-		_saving_window.set_shade_snapshot(image)
 	if saves:
 		_window.hide()
 		_saving_window.present(_text(message_id), Box2Prompt.Form.MESSAGE)

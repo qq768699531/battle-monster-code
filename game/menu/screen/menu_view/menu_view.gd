@@ -1,5 +1,7 @@
 extends Control
 
+const WindowTransitionScript = preload("res://engine/ui/window_transition/window_transition.gd")
+
 const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 ## 管理菜单的展示与导航状态机；进度持久化与运行时接入由 host（field_runtime）负责。
 ##
@@ -196,10 +198,9 @@ func _ready() -> void:
 		notice = _native_ui_error
 	_build_frame()
 	_render_content()
-	# 菜单窗口开之前调 Field_Basic_Capture；菜单各页与从任务页开出的世界地图都画同一张冻结背景。
-	var shade := ScreenShade.host_shade(self)
-	if shade != null:
-		shade.freeze()
+	visibility_changed.connect(_sync_shade_window)
+	tree_exited.connect(_unregister_shade_window)
+	_sync_shade_window()
 
 
 func bind(progress: Dictionary, catalog: GameplayData, text: Variant) -> void:
@@ -1422,3 +1423,16 @@ func _select_party_equipment(index: int) -> void:
 	selected_equipment_index = index
 	notice = ""
 	_render_content()
+
+
+## 菜单是自绘全屏页，本身不是 WindowTransition；它只向 WindowTransition 声明「我这里有一扇窗口」，
+## ScreenShade 的抓帧、显隐与多窗共存仍由 WindowTransition 统一管理。
+func _sync_shade_window() -> void:
+	if is_inside_tree() and is_visible_in_tree():
+		WindowTransitionScript.register_window(self)
+	else:
+		WindowTransitionScript.unregister_window(self)
+
+
+func _unregister_shade_window() -> void:
+	WindowTransitionScript.unregister_window(self)

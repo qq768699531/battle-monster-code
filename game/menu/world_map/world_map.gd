@@ -70,7 +70,7 @@ func open(catalog: Object, data: Variant, map_id: int, enabled: Dictionary, pass
 	_closing = false
 	_elapsed = 0.0
 	set_process(true)
-	# 开图那一刻定格背景由 WindowTransition.shade_frozen 统一处理（原生 `Field_Basic_Capture`）。
+	# 开图那一刻的定格背景由 WindowTransition 的窗口栈统一抓取（原生 `Field_Basic_Capture`）。
 	show()
 	open_window()
 	return true

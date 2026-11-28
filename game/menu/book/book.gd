@@ -51,12 +51,6 @@ func open(assets: Node, catalog: GameplayData, progress: Dictionary,
 	return true
 
 
-## 图鉴是原生 `Game_Book_*` 的捕获式窗口：宿主在开窗前读回完整一帧，三个子页共用同一张
-## 定格背景，避免 `screen_texture` 只取到半帧时把下半屏画黑。
-func set_shade_snapshot(image: Image) -> void:
-	for page_name in PAGES:
-		get_node(page_name).call("set_shade_snapshot", image)
-
 func close() -> void:
 	if _closing:
 		return

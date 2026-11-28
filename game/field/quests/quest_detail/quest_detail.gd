@@ -133,8 +133,7 @@ func _ready() -> void:
 ## `counts` 是 `goal_kind` 1／2 的现场清点（任务号 → 当前持有量，原生 `Ball_bagFindCount`）。
 ## `progress` 是整份存档进度，世界地图取 `mapId`／`warpEnabled`／`warpPassed`。
 func present(assets: Node, table: QuestTable, log: QuestLog, id: int,
-		quest_context: int, counts: Dictionary = {}, progress: Dictionary = {},
-		field_snapshot: Image = null) -> bool:
+		quest_context: int, counts: Dictionary = {}, progress: Dictionary = {}) -> bool:
 	_assets = assets
 	$Content/Accept.configure(assets, 0)
 	$Content/Back.configure(assets, 1)
@@ -172,10 +171,6 @@ func present(assets: Node, table: QuestTable, log: QuestLog, id: int,
 	_render_pages()
 	_render()
 	show()
-	# 进任务详情前先在野外抓好的那一帧（`Field_Basic_Capture`）。详情页与世界地图共用这
-	# 一张定格背景；地图入栈时不会重新抓帧，所以不会把详情窗拍进背景、看起来像叠窗。
-	if field_snapshot != null and not field_snapshot.is_empty():
-		set_shade_snapshot(field_snapshot)
 	open_window()
 	return true
 

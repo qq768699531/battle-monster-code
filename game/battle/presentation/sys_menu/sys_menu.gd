@@ -102,7 +102,6 @@ var _exit_after_close := false
 
 
 func _ready() -> void:
-	$Shade.hide()
 	$List.hide()
 	$Prompt.hide()
 	for window: Node in [$List, $Prompt, $Settings, $Method/Frame]:
@@ -138,7 +137,6 @@ func open(position: int = ReturnCode.MENU) -> void:
 		return
 	_opened = true
 	show()
-	$Shade.show_shade()
 	_pending_page = NO_PAGE
 	_pending_cursor = 0
 	_exit_after_close = false
@@ -367,7 +365,6 @@ func _leave() -> void:
 	_opened = false
 	_pending_page = NO_PAGE
 	cursor = ReturnCode.MENU
-	$Shade.hide()
 	$List.hide()
 	$Prompt.hide()
 	$Settings.hide()

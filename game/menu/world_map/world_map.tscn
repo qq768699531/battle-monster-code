@@ -53,7 +53,6 @@ window_size = Vector2i(228, 208)
 side_width = 12
 header_height = 12
 content_follows_window = true
-shade_frozen = true
 
 [node name="TitleIcon" type="TextureRect" parent="Bounds"]
 layout_mode = 0

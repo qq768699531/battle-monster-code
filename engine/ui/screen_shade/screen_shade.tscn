@@ -8,6 +8,7 @@ resource_local_to_scene = true
 shader = ExtResource("blur")
 
 [node name="ScreenShade" type="ColorRect"]
+visible = false
 material = SubResource("ShadeMaterial")
 anchors_preset = 15
 anchor_right = 1.0
