@@ -7,11 +7,14 @@ var map_size_tiles := Vector2i.ZERO
 var tile_count := 0
 var _airship_background: CanvasLayer
 ## 原生 `FieldCanvas_load:30-31`：地图组 6（飞艇）额外加载 `Object_resLOAD(15, 91)`；
-## `Map_Proc:22-25` 在画瓦片前把它画在 (104,0)／(312,0)，作为飞艇地图下方的独立风景背景。
-## 对应 `map9_a_1`（104×320，天空/山野），不是水晶等地图物件。
+## `Map_Proc:22-25` 在画瓦片前把它画到整张地图背景上。`map9_a_1` 的一帧是 104×320，
+## 地图 26×20 格＝416×320；横向按 104 像素连续铺 4 列 (0/104/208/312,0) 覆盖满整张地图，
+## 不再只画源码里那两个采样点而让其余区域透出黑底。
 const AIRSHIP_MAP_GROUP := 6
 const AIRSHIP_BACKGROUND_SPRITE := "obj/map9_a_1/frame-000"
-const AIRSHIP_BACKGROUND_POSITIONS := [Vector2(104, 0), Vector2(312, 0)]
+const AIRSHIP_BACKGROUND_POSITIONS := [
+	Vector2(0, 0), Vector2(104, 0), Vector2(208, 0), Vector2(312, 0),
+]
 
 
 func render_map(map_data: Dictionary) -> bool:
