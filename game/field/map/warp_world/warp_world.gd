@@ -46,16 +46,19 @@ enum Page { MAP, CONFIRM }
 ## `Menu_win_Box2_DrawSelect` 的 cursor（0 = 左「是」、1 = 右「否」）只有 `warp_confirm.gd`
 ## 的 `Answer` 一份：确认框是它的实例，本页写的就是框自己的光标值。
 
-## 一条候选目的地（原生静态表的前三项）。
+## 一条候选目的地（原生 `world_warp_candidates` 的 5 字：地图号、落点、世界地图节点偏移）。
 class Destination:
 	var map_id: int
 	var tile_x: int
 	var tile_y: int
+	## 原生表里的节点相对坐标（`candidates[3]/[4]`），用于复用世界地图的节点布局。
+	var offset: Vector2i
 
-	func _init(p_map_id: int, p_tile_x: int, p_tile_y: int) -> void:
+	func _init(p_map_id: int, p_tile_x: int, p_tile_y: int, p_offset: Vector2i = Vector2i.ZERO) -> void:
 		map_id = p_map_id
 		tile_x = p_tile_x
 		tile_y = p_tile_y
+		offset = p_offset
 
 
 ## 游标表（`Field_Warp2_mKeyPressed`）：`[方向][当前选中项]` = 新选中项。
@@ -118,7 +121,8 @@ func open(catalog: Object, data: Variant, saved_map_id: int, saved_tile_x: int,
 		push_error("世界地图节点表缺失：不能打开飞艇世界地图。")
 		return false
 	candidates = _static_candidates()
-	candidates[Slot.CURRENT] = Destination.new(saved_map_id, saved_tile_x, saved_tile_y)
+	candidates[Slot.CURRENT] = Destination.new(saved_map_id, saved_tile_x, saved_tile_y,
+		_static_candidates()[Slot.CURRENT].offset)
 	for destination: Destination in candidates:
 		if data.node(destination.map_id).is_empty():
 			push_error("世界地图里没有 %d 号地图：不能打开飞艇世界地图。" % destination.map_id)
@@ -181,12 +185,13 @@ func handle_key(key: String) -> bool:
 ## 不在这一页另写一份数字。
 static func _static_candidates() -> Array[Destination]:
 	var result: Array[Destination] = [
-		Destination.new(6, 15, 15),    # 雷因城
-		Destination.new(36, 21, 15),   # 耶迪思城
-		Destination.new(66, 17, 19),   # 卡林胡城
+		Destination.new(6, 15, 15, Vector2i(100, 40)),    # 雷因城
+		Destination.new(36, 21, 15, Vector2i(30, 100)),   # 耶迪思城
+		Destination.new(66, 17, 19, Vector2i(170, 100)),  # 卡林胡城
 		Destination.new(StoryRuntime.WARP_SAVED_MAP_INITIAL,     # 上船位置占位
-			StoryRuntime.WARP_SAVED_TILE_INITIAL, StoryRuntime.WARP_SAVED_TILE_INITIAL),
-		Destination.new(97, 15, 13),   # 未知岛1
+			StoryRuntime.WARP_SAVED_TILE_INITIAL, StoryRuntime.WARP_SAVED_TILE_INITIAL,
+			Vector2i(100, 90)),
+		Destination.new(97, 15, 13, Vector2i(100, 140)),  # 未知岛1
 	]
 	return result
 
@@ -263,6 +268,7 @@ func _cancel_confirm() -> void:
 
 
 func _present_candidates() -> void:
+	_layout_candidates()
 	for index in range(candidates.size()):
 		var destination := candidates[index]
 		var slot := _slot(index)
@@ -278,6 +284,22 @@ func _present_candidates() -> void:
 		# `Map_warpIsPASS == 0` 时原生整帧用 `GRP_MODE_GRAY` 画，这里换成灰阶材质。
 		icon.material = null if _is_passed(destination.map_id) else _gray_material
 		slot.get_node("Disabled").visible = not _is_enabled(destination.map_id)
+
+
+func _layout_candidates() -> void:
+	var current := candidates[Slot.CURRENT].offset
+	var slots: Control = $Content/Map/Slots
+	for index in range(candidates.size()):
+		var slot: Control = slots.get_child(index)
+		slot.position = Vector2(candidates[index].offset) - slot.size * 0.5
+	$Content/Map/Links.position = Vector2(current)
+	var link_targets := {
+		"ToTop": Slot.TOP, "ToLeft": Slot.LEFT, "ToRight": Slot.RIGHT, "ToBottom": Slot.BOTTOM,
+	}
+	for link_name: String in link_targets:
+		var target: Destination = candidates[link_targets[link_name]]
+		var line: Line2D = $Content/Map/Links.get_node(link_name)
+		line.points = PackedVector2Array([Vector2.ZERO, Vector2(target.offset - current)])
 
 
 ## 选中项由飞艇小人标出（原生 `Object_drawBASIC(icon_x, icon_y, …, 1026, run_counter, 1)`）。
