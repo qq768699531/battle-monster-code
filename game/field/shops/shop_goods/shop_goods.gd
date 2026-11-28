@@ -22,6 +22,8 @@ extends "res://game/field/runtime/item_grid_window/item_grid_window.gd"
 
 signal completed   ## 一次成交结束（宿主可刷新 HUD 金钱）
 
+const SlotGrade = preload("res://game/menu/party/slot_grade/slot_grade.gd")
+
 const BUY := 0
 const SELL := 1
 ## `Field_Item_Buy_Get`：道具店（`shop_mode_code` 0）只有 0 号组、装备店（1）1 号组；
@@ -431,11 +433,13 @@ func _open_select() -> void:
 		trade(1)
 		return
 	quantity = 1
+	var frame: Texture2D = SlotFrame.frame_of(cell_frames, true, false) if not cell_frames.is_empty() else null
+	var grade: Variant = SlotGrade.of(int(record.grade_index), false)
 	$Select.present(_text(Msg.Id.SHOP_BUY_PROMPT if mode == BUY else Msg.Id.SHOP_SELL_PROMPT),
 		_text(Msg.Id.ANSWER_YES), _text(Msg.Id.ANSWER_NO),
 		_assets.item_icon(record.icon) if record.icon >= 0 else null, limit,
 		ConfirmLayout.ItemSelect.BUY if mode == BUY else ConfirmLayout.ItemSelect.SELL,
-		_unit_price(record))
+		_unit_price(record), frame, grade)
 
 
 func _decided(count: int) -> void:

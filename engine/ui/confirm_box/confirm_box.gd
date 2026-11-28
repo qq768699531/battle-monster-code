@@ -103,6 +103,31 @@ func body_text() -> String:
 	return _body
 
 
+## 正文行的水平对齐（原生数量框 `Field_Item_DrawSelect` 的提示行是居中，普通消息仍是左对齐）。
+## 行节点由 `text_line_list` 按需创建，所以要在 `present_*` 之后调用。`Plain` 是
+## `plain_label`（用 `anchor` + 绘制原点对齐，没有宽度自适应的 `horizontal_alignment`），
+## 所以居中时把绘制原点挪到行宽的一半；富文本行才用 `native_label.horizontal_alignment`。
+func set_body_alignment(alignment: int) -> void:
+	var width := _lines.size.x
+	var origin := width * 0.5 if alignment == 1 else (width if alignment == 2 else 0.0)
+	for index in range(1, _lines.get_child_count()):
+		var row: Control = _lines.get_child(index)
+		for path: String in ["Line/Normal/Plain", "Line/Indented/Plain"]:
+			var label: Variant = row.get_node_or_null(path)
+			if label == null:
+				continue
+			var plain := false
+			for property: Dictionary in label.get_property_list():
+				if property.name == "anchor":
+					plain = true
+					break
+			if plain:
+				label.set("anchor", alignment)
+				label.position.x = origin
+			else:
+				label.horizontal_alignment = alignment
+
+
 func selection() -> int:
 	return _selected
 

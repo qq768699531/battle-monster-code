@@ -71,6 +71,29 @@ offset_right = 141.0
 offset_bottom = 33.0
 mouse_filter = 2
 texture = SubResource("Plus")
+
+[node name="MinusHit" type="Button" parent="Window/Content"]
+offset_left = 54.0
+offset_top = 9.0
+offset_right = 79.0
+offset_bottom = 33.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="PlusHit" type="Button" parent="Window/Content"]
+offset_left = 116.0
+offset_top = 9.0
+offset_right = 141.0
+offset_bottom = 33.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
 [node name="Price" parent="Window/Content" instance=ExtResource("10")]
 visible = false
 offset_left = 93.0
