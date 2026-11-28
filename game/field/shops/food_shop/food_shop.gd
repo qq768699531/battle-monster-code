@@ -182,7 +182,7 @@ func _refresh() -> void:
 	_refresh_strip()
 	_refresh_materials()
 	_refresh_scrollbar()
-	$Content/Price/Number.present(str(MONEY_COST))
+	$Content/Price.present(MONEY_COST)
 
 
 func _refresh_cells() -> void:
@@ -205,7 +205,7 @@ func _refresh_strip() -> void:
 	# 本页可制作的显示项数量与总条目数（“可选/上限”），不是物品描述或名字。
 	$Content/Name.call("configure", _assets)
 	$Content/Name.call("present", "%d/%d" % [_entries.size(), _entries.size()], 0)
-	$Content/Money/Number.present(str(money()))
+	$Content/Money.present(money())
 
 
 ## `Menu_Item_DrawInfoFood`：标题是 `[ 产品名 X 件数 ]`（原生前面还带

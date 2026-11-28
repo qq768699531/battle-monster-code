@@ -64,7 +64,7 @@ func _render_party_equipment() -> void:
 	if balance == null:
 		%Money.get_node("Unknown").present("--")
 	else:
-		%Money.get_node("Number").present(host._pages.items._format_money(balance))
+		%Money.present(host._pages.items._format_money(balance))
 	for slot in range(18):
 		var index := _first_index + slot
 		var cell := %Grid.get_child(slot) as ItemCell

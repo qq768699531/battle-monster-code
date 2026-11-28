@@ -313,7 +313,7 @@ func _refresh() -> void:
 			if mode == SELL:
 				quantity = _owned_count(record.id)
 		cell.present_cell(icon, frame, chosen, grade, quantity)
-	$Content/Money/Number.present(str(money()))
+	$Content/Money.present(money())
 	$Content/Count.present("%d/%d" % [mini(_records.size(), capacity), capacity])
 	var record := _record()
 	if record == null:
@@ -331,7 +331,7 @@ func _refresh() -> void:
 		_detail.present_item(row, 1 if record.type == ItemKind.Kind.EQUIPMENT else 0, _item_name(record),
 			explanation, null, _text)
 	var price: Control = $Content/BuyPrice if mode == BUY else $Content/SellPrice
-	price.get_node("Number").present(str(_unit_price(record) * maxi(1, quantity)))
+	price.present(_unit_price(record) * maxi(1, quantity))
 	_refresh_scrollbar()
 
 

@@ -415,8 +415,8 @@ func _refresh() -> void:
 		else Color("#186385")
 	$Content/Confirm/Option1/Outer.modulate = $Content/Confirm/Option1/Inner.modulate
 	$Content/Confirm/Percent.present(str(_percent()))
-	$Content/Confirm/Fee/Number.present(str(MonsterMix.FEE))
-	$Content/ListMoney/Number.present(str(_money()))
+	$Content/Confirm/Fee.present(MonsterMix.FEE)
+	$Content/ListMoney.present(_money())
 	$Content/ListCount.present("%d/%d" % [mini(_monsters.size(), MONSTER_COLUMNS), _monsters.size()])
 	_refresh_monster_cells()
 	_refresh_info()

@@ -270,6 +270,8 @@ offset_bottom = 160.0
 mouse_filter = 2
 
 [node name="Money" parent="Content" index="27" unique_id=1745630772 instance=ExtResource("money")]
+length = 92.0
+height = 7.0
 layout_mode = 0
 offset_left = 126.0
 offset_top = 153.0
@@ -291,6 +293,8 @@ offset_right = 221.0
 offset_bottom = 223.0
 
 [node name="BuyPrice" parent="Content" index="32" unique_id=108367652 instance=ExtResource("money")]
+length = 60.0
+height = 9.0
 layout_mode = 0
 offset_left = 158.0
 offset_top = 210.0
@@ -298,6 +302,8 @@ offset_right = 218.0
 offset_bottom = 219.0
 
 [node name="SellPrice" parent="Content" index="33" unique_id=1944189255 instance=ExtResource("money")]
+length = 48.0
+height = 9.0
 visible = false
 layout_mode = 0
 offset_left = 170.0

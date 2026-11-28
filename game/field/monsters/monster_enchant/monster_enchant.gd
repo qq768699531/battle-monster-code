@@ -329,8 +329,8 @@ func _refresh() -> void:
 	$Content/Confirm/Option1/Outer.modulate = $Content/Confirm/Option1/Inner.modulate
 	$Content/Confirm/Percent.present(str(MonsterGrowth.percent(_brain_current(),
 		orb_index if orb_index >= 0 else -1)))
-	$Content/Confirm/Fee/Number.present(str(MonsterGrowth.FEE))
-	$Content/ListMoney/Number.present(str(_money()))
+	$Content/Confirm/Fee.present(MonsterGrowth.FEE)
+	$Content/ListMoney.present(_money())
 	$Content/ListCount.present("%d/%d" % [mini(_monsters.size(), MONSTER_COLUMNS),
 		_monsters.size()])
 	_refresh_monster_cells()

@@ -152,7 +152,7 @@ func _render_network() -> void:
 	$Count.present("%d/%d" % [_offers.size(), _offers.size()])
 	var offer: Dictionary = _offers[host.selected_network_index] \
 		if host.selected_network_index < _offers.size() else {}
-	$Price/Number.present(str(offer.cash_price if not offer.is_empty() else 0))
+	$Price.present(offer.cash_price if not offer.is_empty() else 0)
 	$Description.present(host, offer if host.network_navigation_open else {}, 5)
 	var track: Control = $Scroll/Track
 	var thumb: Control = $Scroll/Thumb

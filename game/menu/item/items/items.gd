@@ -176,7 +176,7 @@ func _present_details(rows: Array, book: bool) -> void:
 	$BookDetailFrame/Recipe0.hide()
 	$BookDetailFrame/Recipe1.hide()
 	$BookDetailFrame/Cost.visible = book
-	$BookDetailFrame/Cost/Number.present("0")
+	$BookDetailFrame/Cost.present(0)
 	$BookDetailFrame/Unknown.hide()
 	if not host.item_navigation_open or host.item_focus == 0 or \
 			host.selected_item_index >= rows.size() or host.item_target_open:
@@ -220,7 +220,7 @@ func _present_book(selected: Dictionary) -> void:
 			row.get_node("Icon").texture = host._assets.item_icon(icon_id)
 		row.get_node("Count").source_y = 0 if owned >= required else 21
 		row.get_node("Count").present("%d/%d" % [owned, required])
-	$BookDetailFrame/Cost/Number.present(str(host.Menu.MIX_FEE))
+	$BookDetailFrame/Cost.present(host.Menu.MIX_FEE)
 
 
 func _present_book_result(text: String) -> void:

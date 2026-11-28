@@ -164,4 +164,4 @@ func _layout() -> void:
 ## 行绘制走 `list_menu_window`，本页只补窗口下部的金钱条。
 func _render() -> void:
 	super()
-	$Content/Money/Number.present(str(money()))
+	$Content/Money.present(money())
