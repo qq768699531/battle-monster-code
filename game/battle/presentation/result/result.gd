@@ -204,16 +204,9 @@ func _render_items() -> void:
 		icon.visible = icon.texture != null
 		_set_item_name(row.get_node("Name"), record, int(item.count))
 	var scrollbar: Control = $Content/Scrollbar
-	scrollbar.visible = settlement.items.size() > ITEM_ROWS
-	if not scrollbar.visible:
-		return
 	# 原生 `Menu_Item_DrawScroll(x, y, 52, index, count - 2)`：三行可视、共 count−2 个滚动位。
 	var slots := maxi(1, settlement.items.size() - ITEM_ROWS)
-	var track: Control = scrollbar.get_node("Track")
-	var thumb: Control = scrollbar.get_node("Thumb")
-	var length := maxi(3, int(track.size.y) - 3 * slots)
-	thumb.position = track.position + Vector2(0, int(scroll * (track.size.y - length) / slots))
-	thumb.size = Vector2(track.size.x, length)
+	scrollbar.call("set_page", scroll, slots + 1)
 
 
 ## `Battle_Win_Draw` 的行文本：主角是 `#PFF5#C0公会称号 #C6角色名`，

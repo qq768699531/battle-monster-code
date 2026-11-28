@@ -147,16 +147,7 @@ func _render() -> void:
 func _update_scrollbar() -> void:
 	var scrollbar: Control = $Content/Scroll
 	var pages := Book.skill_cursor_slots(_count) / CELL_COLUMNS
-	scrollbar.visible = pages > 1
-	if not scrollbar.visible:
-		return
-	var track: Control = scrollbar.get_node("Track")
-	var thumb: Control = scrollbar.get_node("Thumb")
-	var length := maxi(3, int(track.size.y) - 3 * (pages - 1))
-	var page := clampi(cursor / CELL_COLUMNS, 0, pages - 1)
-	var offset := int(page * (track.size.y - length) / (pages - 1))
-	thumb.position = track.position + Vector2(0, offset)
-	thumb.size = Vector2(track.size.x, length)
+	scrollbar.call("set_page", cursor / CELL_COLUMNS, pages)
 
 
 ## `Menu_skill_DrawBookList` 的详情：NO. 是「技能号 + 1」，名称与说明来自技能书道具记录的

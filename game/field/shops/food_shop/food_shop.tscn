@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3]
 [ext_resource type="Texture2D" path="res://engine/ui/tab_cell/tab_cell.webp" id="part_tab_cell"]
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_small.tscn" id="number_small"]
-[ext_resource type="PackedScene" path="res://game/menu/screen/scrollbar/scrollbar.tscn" id="scrollbar"]
+[ext_resource type="PackedScene" path="res://engine/ui/scrollbar/scrollbar.tscn" id="scrollbar"]
 
 [ext_resource type="Script" path="res://game/field/shops/food_shop/food_shop.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
@@ -43,8 +43,6 @@ corner_radius_top_right = 1
 corner_radius_bottom_left = 1
 corner_radius_bottom_right = 1
 anti_aliasing = false
-
-[sub_resource type="StyleBoxEmpty" id="Empty"]
 
 [node name="FoodShop" instance=ExtResource("window")]
 visible = false
@@ -150,11 +148,12 @@ offset_top = 87.0
 offset_right = 289.0
 offset_bottom = 117.0
 
-[node name="Name" parent="Content" instance=ExtResource("label")]
+[node name="Name" parent="Content" instance=ExtResource("number_small")]
 offset_left = 99.0
 offset_top = 120.0
 offset_right = 209.0
 offset_bottom = 130.0
+alignment = 0
 
 [node name="Money" parent="Content" instance=ExtResource("money")]
 offset_left = 212.0
@@ -273,25 +272,8 @@ offset_right = 304.0
 offset_bottom = 219.0
 
 [node name="Scrollbar" parent="Content" instance=ExtResource("scrollbar")]
-offset_left = 295.0
+offset_left = 291.0
 offset_top = 56.0
-offset_right = 308.0
+offset_right = 304.0
 offset_bottom = 116.0
 
-[node name="UpHit" type="Button" parent="Content"]
-offset_left = 295.0
-offset_top = 56.0
-offset_right = 308.0
-offset_bottom = 64.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-
-[node name="DownHit" type="Button" parent="Content"]
-offset_left = 295.0
-offset_top = 108.0
-offset_right = 308.0
-offset_bottom = 116.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")

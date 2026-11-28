@@ -476,8 +476,6 @@ func _refresh_scrollbar() -> void:
 		pages = maxi(1, ceili(float(capacity) / float(COLUMNS)))
 	var shown := pages > 1
 	_scrollbar.visible = shown
-	$Content/UpHit.visible = shown
-	$Content/DownHit.visible = shown
 	if not shown:
 		return
 	# 滑块几何属于滚动条组件（`scrollbar.set_page`），商店页只给首行与页数，不碰 position／size。

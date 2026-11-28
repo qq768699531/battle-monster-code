@@ -469,16 +469,7 @@ func _render_grid() -> void:
 func _update_scrollbar() -> void:
 	var scrollbar: Control = $Content/Scroll
 	var pages: int = (Book.MONSTER_SLOTS + Book.MONSTER_COLUMNS - 1) / Book.MONSTER_COLUMNS
-	scrollbar.visible = pages > 1
-	if not scrollbar.visible:
-		return
-	var track: Control = scrollbar.get_node("Track")
-	var thumb: Control = scrollbar.get_node("Thumb")
-	var length := maxi(3, int(track.size.y) - 3 * (pages - 1))
-	var page := clampi(cursor / Book.MONSTER_COLUMNS, 0, pages - 1)
-	var offset := int(page * (track.size.y - length) / (pages - 1))
-	thumb.position = track.position + Vector2(0, offset)
-	thumb.size = Vector2(track.size.x, length)
+	scrollbar.call("set_page", cursor / Book.MONSTER_COLUMNS, pages)
 
 
 func _render_detail() -> void:

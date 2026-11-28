@@ -4,7 +4,7 @@
 
 [ext_resource type="Script" path="res://game/menu/network/network.gd" id="script"]
 [ext_resource type="PackedScene" path="res://game/menu/item/item_cell/item_cell.tscn" id="cell"]
-[ext_resource type="PackedScene" path="res://game/menu/screen/scrollbar/scrollbar.tscn" id="scroll"]
+[ext_resource type="PackedScene" path="res://engine/ui/scrollbar/scrollbar.tscn" id="scroll"]
 [ext_resource type="PackedScene" path="res://game/menu/item/item_description/item_description.tscn" id="description"]
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://engine/ui/currency_amount/currency_amount.tscn" id="currency"]

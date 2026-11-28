@@ -22,8 +22,6 @@ func _ready() -> void:
 	$Window.transition_finished.connect(_transition_finished)
 	for slot in 18:
 		%Grid.get_child(slot).pressed.connect(func(): select(scroll_start + slot, true))
-	%Scrollbar.get_node("UpHit").pressed.connect(func(): select(posmod(selected - 6, slot_count())))
-	%Scrollbar.get_node("DownHit").pressed.connect(func(): select(posmod(selected + 6, slot_count())))
 
 
 ## `previous` 只在从目标选择退回道具窗口时传入（原生保留光标位置），其余情况从第一格开始。
@@ -128,12 +126,7 @@ func _render() -> void:
 	%DetailFrame.present_item(item, 4 if mode == "capture" else 0,
 		_presentation.item_name(item), _presentation.item_explanation(item),
 		_presentation.item_color(item), _presentation.message)
-	var track: Control = %Scrollbar.get_node("Track")
-	var thumb: Control = %Scrollbar.get_node("Thumb")
-	var row_count := capacity / 6
-	var length := maxi(3, int(track.size.y) - 3 * (row_count - 1))
-	thumb.position = track.position + Vector2(0, int(row * (track.size.y - length) / (row_count - 1)))
-	thumb.size = Vector2(track.size.x, length)
+	%Scrollbar.call("set_page", row, capacity / 6)
 
 
 func _format_money(value: int) -> String:

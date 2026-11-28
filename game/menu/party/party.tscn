@@ -4,7 +4,7 @@
 
 [ext_resource type="Script" path="res://game/menu/party/party.gd" id="1"]
 [ext_resource type="PackedScene" path="res://game/menu/party/party_ball/party_ball.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://game/menu/screen/scrollbar/scrollbar.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://engine/ui/scrollbar/scrollbar.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://game/menu/status/status_monster/status_monster.tscn" id="monster"]
 [ext_resource type="PackedScene" path="res://game/menu/status/status_portrait/status_portrait.tscn" id="portrait"]
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="num_default"]
@@ -62,24 +62,6 @@ offset_left = 290.0
 offset_top = 54.0
 offset_right = 303.0
 offset_bottom = 82.0
-[node name="UpHit" type="Button" parent="Scrollbar"]
-offset_right = 13.0
-offset_bottom = 8.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-[node name="DownHit" type="Button" parent="Scrollbar"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -8.0
-offset_right = 13.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
 [node name="Slots" type="HBoxContainer" parent="."]
 offset_left = 98.0
 offset_top = 53.0

@@ -52,8 +52,6 @@ func _ready() -> void:
 	super()
 	for slot in range(CELLS):
 		_cell(slot).pressed.connect(_select_slot.bind(slot))
-	$Content/UpHit.pressed.connect(_scroll_row.bind(-1))
-	$Content/DownHit.pressed.connect(_scroll_row.bind(1))
 
 
 ## 原生该页由列表页 `FieldCanvas_SetNext(15)` 直接进入，没有参数。
@@ -205,8 +203,8 @@ func _refresh_strip() -> void:
 	var entry := _entry()
 	# 原生 `Menu_Item_DrawListInfo` 在 n6=5 时 p_item_kind 为 null，底部条画的是
 	# 本页可制作的显示项数量与总条目数（“可选/上限”），不是物品描述或名字。
-	$Content/Name.text = "" if entry.is_empty() else \
-		"%d/%d" % [int(entry.get("product_count", 0)), _entries.size()]
+	$Content/Name.call("configure", _assets)
+	$Content/Name.call("present", "%d/%d" % [int(entry.get("product_count", 0)), _entries.size()], 0)
 	$Content/Money/Number.present(str(money()))
 
 
@@ -263,11 +261,5 @@ func _refresh_scrollbar() -> void:
 	var pages := maxi(1, ceili(float(_entries.size()) / COLUMNS))
 	var shown := pages > 1
 	$Content/Scrollbar.visible = shown
-	$Content/UpHit.visible = shown
-	$Content/DownHit.visible = shown
 	if shown:
 		$Content/Scrollbar.call("set_page", cursor / COLUMNS, pages)
-
-
-func _scroll_row(step: int) -> void:
-	_move(step * COLUMNS)

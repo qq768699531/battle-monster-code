@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" path="res://game/menu/item/item_category/item_category.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_top.tscn" id="num_top"]
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="num_default"]
-[ext_resource type="PackedScene" path="res://game/menu/screen/scrollbar/scrollbar.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://engine/ui/scrollbar/scrollbar.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://game/menu/item/item_description/item_description.tscn" id="description"]
 [ext_resource type="Shader" path="res://engine/ui/number/native_number_palette.gdshader" id="key"]
@@ -236,43 +236,6 @@ offset_left = 290.0
 offset_top = 86.0
 offset_right = 303.0
 offset_bottom = 146.0
-[node name="UpHit" type="Button" parent="ScrollOne"]
-offset_right = 13.0
-offset_bottom = 8.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-[node name="DownHit" type="Button" parent="ScrollOne"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -8.0
-offset_right = 13.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-[node name="UpHit" type="Button" parent="ScrollTwo"]
-offset_right = 13.0
-offset_bottom = 8.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-[node name="DownHit" type="Button" parent="ScrollTwo"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -8.0
-offset_right = 13.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-
 [node name="Categories" type="HBoxContainer" parent="."]
 offset_left = 94.0
 offset_top = 50.0

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3]
 [ext_resource type="Texture2D" path="res://game/battle/presentation/hud/ui_battle.webp" id="Sheet_common_ui_battle"]
-[ext_resource type="Script" path="res://game/menu/screen/scrollbar/scrollbar.gd" id="1_script"]
+[ext_resource type="Script" path="res://engine/ui/scrollbar/scrollbar.gd" id="1_script"]
 [sub_resource type="AtlasTexture" id="Atlas_sheet"]
 atlas = ExtResource("Sheet_common_ui_battle")
 region = Rect2(422, 0, 21, 13)
@@ -46,3 +46,4 @@ offset_right = 8.0
 offset_bottom = 13.0
 mouse_filter = 2
 color = Color(0.0745098, 0.4, 1, 1)
+

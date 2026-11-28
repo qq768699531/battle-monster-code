@@ -14,8 +14,6 @@ func _ready() -> void:
 		var button: Button = %Grid.get_child(slot)
 		button.pressed.connect(func():
 			host._select_party_equipment(_first_index + slot))
-	%Scrollbar.get_node("UpHit").pressed.connect(func(): _move_selection(-6))
-	%Scrollbar.get_node("DownHit").pressed.connect(func(): _move_selection(6))
 
 
 func slot_count() -> int:

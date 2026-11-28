@@ -13,8 +13,6 @@ func _ready() -> void:
 		var button: Button = $Slots.get_child(slot)
 		button.pressed.connect(func():
 			host._select_party_slot(_first_index + slot))
-	$Scrollbar/UpHit.pressed.connect(func(): _move_selection(-6))
-	$Scrollbar/DownHit.pressed.connect(func(): _move_selection(6))
 
 
 func slot_count() -> int:
@@ -131,8 +129,6 @@ func _render_party() -> void:
 	$Monster.hide()
 	$Error.hide()
 	var has_selected_member: bool = host.party_navigation_open and selected_index < monsters.size()
-	$Scrollbar/UpHit.disabled = host.party_actions_open or host.party_discard_open
-	$Scrollbar/DownHit.disabled = host.party_actions_open or host.party_discard_open
 	$ActionAnchor/Actions.present()
 	if host.party_actions_open:
 		var cell: Control = $Slots.get_child(selected_index % 6)
@@ -186,11 +182,4 @@ func _present_summary(monsters: Array, order: Array) -> void:
 
 
 func _update_scrollbar(page: int, page_count: int) -> void:
-	$Scrollbar.visible = page_count > 1
-	if $Scrollbar.visible:
-		var track: Control = $Scrollbar/Track
-		var length := maxi(3, int(track.size.y) - 3 * (page_count - 1))
-		var offset := int(clampi(page, 0, page_count - 1) *
-			(track.size.y - length) / (page_count - 1))
-		$Scrollbar/Thumb.position = track.position + Vector2(0, offset)
-		$Scrollbar/Thumb.size = Vector2(track.size.x, length)
+	$Scrollbar.call("set_page", page, page_count)

@@ -15,9 +15,6 @@ func _ready() -> void:
 	for slot in range(12):
 		var button: Button = $Grid.get_child(slot)
 		button.pressed.connect(func(): host._select_inventory_item(_first_index + slot))
-	for scrollbar in [$ScrollOne, $ScrollTwo]:
-		scrollbar.get_node("UpHit").pressed.connect(func(): _scroll(-6))
-		scrollbar.get_node("DownHit").pressed.connect(func(): _scroll(6))
 
 
 func _scroll(direction: int) -> void:
@@ -161,9 +158,6 @@ func _render_items() -> void:
 				icon = host._assets.item_icon(icon_id)
 		cell.present_cell(icon, frame, focused, grade, quantity)
 	_present_details(rows, visible_rows == 1)
-	for scroll in [$ScrollOne, $ScrollTwo]:
-		scroll.get_node("UpHit").disabled = host.item_actions_open or host.item_discard_open
-		scroll.get_node("DownHit").disabled = host.item_actions_open or host.item_discard_open
 	$ActionAnchor/Actions.present()
 	if host.item_actions_open:
 		var cell: Control = $Grid.get_child(host.selected_item_index - _first_index)
@@ -256,12 +250,4 @@ func _format_money(balance: int) -> String:
 
 
 func _update_scrollbar(scrollbar: Control, page: int, page_count: int) -> void:
-	scrollbar.visible = page_count > 1
-	if scrollbar.visible:
-		var track: Control = scrollbar.get_node("Track")
-		var thumb: Control = scrollbar.get_node("Thumb")
-		var length := maxi(3, int(track.size.y) - 3 * (page_count - 1))
-		var offset := int(clampi(page, 0, page_count - 1) *
-			(track.size.y - length) / (page_count - 1))
-		thumb.position = track.position + Vector2(0, offset)
-		thumb.size = Vector2(track.size.x, length)
+	scrollbar.call("set_page", page, page_count)

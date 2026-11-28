@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://game/menu/party/party_equipment/party_equipment.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://game/menu/item/item_cell/item_cell.tscn" id="cell"]
-[ext_resource type="PackedScene" path="res://game/menu/screen/scrollbar/scrollbar.tscn" id="scroll"]
+[ext_resource type="PackedScene" path="res://engine/ui/scrollbar/scrollbar.tscn" id="scroll"]
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="num_default"]
 [ext_resource type="PackedScene" path="res://engine/ui/currency_amount/currency_amount.tscn" id="money"]
 [ext_resource type="PackedScene" path="res://game/menu/item/item_description/item_description.tscn" id="description"]
@@ -85,24 +85,6 @@ offset_left = 291.0
 offset_top = 56.0
 offset_right = 304.0
 offset_bottom = 148.0
-[node name="UpHit" type="Button" parent="Window/Content/Scrollbar"]
-offset_right = 13.0
-offset_bottom = 8.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-[node name="DownHit" type="Button" parent="Window/Content/Scrollbar"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -8.0
-offset_right = 13.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
 [node name="Grid" type="GridContainer" parent="Window/Content"]
 unique_name_in_owner = true
 offset_left = 99.0
