@@ -17,7 +17,6 @@ extends Control
 signal save_requested
 signal closed
 
-const ScreenShade = preload("res://engine/ui/screen_shade/screen_shade.gd")
 
 const Box2Prompt = preload("res://game/field/runtime/box2_prompt/box2_prompt.gd")
 
@@ -54,9 +53,8 @@ func open(texts: Dictionary, message_id: int, saves: bool) -> void:
 	var image: Image = viewport.get_texture().get_image() \
 		if viewport != null else null
 	show()
-	var shade := ScreenShade.acquire_frozen(self)
 	if image != null and not image.is_empty():
-		shade.set_snapshot(image)
+		_saving_window.set_shade_snapshot(image)
 	if saves:
 		_window.hide()
 		_saving_window.present(_text(message_id), Box2Prompt.Form.MESSAGE)

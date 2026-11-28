@@ -11,7 +11,6 @@
 visible = false
 script = ExtResource("script")
 window_size = Vector2i(228, 208)
-screen_shade = true
 
 [node name="Option0" parent="Content" instance=ExtResource("card")]
 layout_mode = 0

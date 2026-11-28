@@ -100,12 +100,17 @@ const BOX4_CHROME_NODES := [
 		content_follows_window = value
 		if is_node_ready():
 			_apply_geometry()
-## 以模糊快照为背景的全屏窗（世界地图 `Menu_world_Draw`／飞艇移动页
-## `Field_Warp2_Draw`，两者开窗前都有 `Field_Basic_Capture`）在开窗时
-## 登记「半透明 + 模糊」那一层；树上已有可见的一层（菜单整体那一层）时直接复用。
-@export var screen_shade := false
+## 窗口背景的「半透明 + 模糊」统一由本组件处理：所有窗口默认在 `Content` 之下挂一层
+## `ScreenShade`，页面不再各自写 `screen_shade`／手动 `ScreenShade.acquire*`。
+@export var screen_shade := true
+## 以开窗前快照为背景的页（世界地图／存档／任务详情等原生 `Field_Basic_Capture`）
+## 把这一项设为 true，组件在抓帧后冻结快照；其余窗口采样实时屏幕。
+@export var shade_frozen := false
 
 var _normal_rect: Rect2i
+## 页面在 `_ready` 之前或之后提供的背景快照（存档页用存档截图、任务详情用野外快照）；
+## 统一由 WindowTransition 转交给 ScreenShade，页面不再自己 `acquire()`／`set_snapshot()`。
+var _shade_snapshot: Image
 ## Box4 稳态下场景自己声明的构件显隐与页脚颜色（见 `BOX4_CHROME_NODES`）。
 var _box4_chrome_visible: Dictionary = {}
 var _box4_title_visible: bool
@@ -124,9 +129,19 @@ func _ready() -> void:
 
 func open_window() -> void:
 	if screen_shade:
-		ScreenShade.acquire(self)
+		var shade: ScreenShade = ScreenShade.acquire_frozen(self) if shade_frozen \
+			else ScreenShade.acquire(self)
+		if _shade_snapshot != null:
+			shade.set_snapshot(_shade_snapshot)
 	$AnimationPlayer.play("open")
 	$AnimationPlayer.advance(0)
+
+
+func set_shade_snapshot(image: Image) -> void:
+	_shade_snapshot = image
+	var shade := ScreenShade.host_shade(self)
+	if shade != null:
+		shade.set_snapshot(image)
 
 
 func close_window() -> void:

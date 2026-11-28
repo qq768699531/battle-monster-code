@@ -71,7 +71,6 @@ visible = false
 script = ExtResource("script")
 window_size = Vector2i(228, 240)
 cell_frames = Array[Texture2D]([ExtResource("cell_filled"), ExtResource("cell_filled_focused"), ExtResource("cell_empty"), ExtResource("cell_empty_focused")])
-screen_shade = true
 
 [node name="Subtitle" parent="Content" instance=ExtResource("label")]
 offset_left = 94.0

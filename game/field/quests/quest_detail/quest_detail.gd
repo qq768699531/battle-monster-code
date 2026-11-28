@@ -33,7 +33,6 @@ signal accepted(quest_id: int, slot: int)
 
 const TextLayout = preload("res://engine/ui/native_text_layout/native_text_layout.gd")
 const UI_THEME = preload("res://engine/ui/native_label/ui_theme.tres")
-const ScreenShade = preload("res://engine/ui/screen_shade/screen_shade.gd")
 
 ## 任务正文走 `TextTables.QUEST_SOURCE`（`qst/qstlist.fxt:<任务号>`），payload 是
 ## 「标题 \t 说明 \t 目标 \t 关联地域号 \t 目标地域号 \t 地域名」六段（尾段可能整体缺失）。
@@ -176,9 +175,7 @@ func present(assets: Node, table: QuestTable, log: QuestLog, id: int,
 	# 进任务详情前先在野外抓好的那一帧（`Field_Basic_Capture`）。详情页与世界地图共用这
 	# 一张定格背景；地图入栈时不会重新抓帧，所以不会把详情窗拍进背景、看起来像叠窗。
 	if field_snapshot != null and not field_snapshot.is_empty():
-		var shade := ScreenShade.acquire(self)
-		if shade != null:
-			shade.set_snapshot(field_snapshot)
+		set_shade_snapshot(field_snapshot)
 	open_window()
 	return true
 

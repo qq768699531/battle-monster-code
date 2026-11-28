@@ -5,5 +5,4 @@
 
 [node name="Defeat" instance=ExtResource("confirm")]
 visible = false
-screen_shade = true
 script = ExtResource("script")

@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" path="res://game/battle/presentation/sys_menu/sys_menu.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/confirm_box/confirm_box.tscn" id="confirm_box"]
-[ext_resource type="PackedScene" path="res://engine/ui/screen_shade/screen_shade.tscn" id="shade"]
 [ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://game/menu/options/option_card/option_card.tscn" id="card"]
 [ext_resource type="PackedScene" path="res://game/prime/settings/settings_view/settings_view.tscn" id="settings"]
@@ -18,9 +17,6 @@ custom_minimum_size = Vector2(400, 240)
 offset_right = 400.0
 offset_bottom = 240.0
 script = ExtResource("script")
-
-[node name="Shade" parent="." instance=ExtResource("shade")]
-visible = false
 
 [node name="List" parent="." instance=ExtResource("window")]
 visible = false

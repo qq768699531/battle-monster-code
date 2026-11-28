@@ -160,7 +160,6 @@ func present_starter(assets: Node, catalog: GameplayData, mastery: int, species:
 	_render()
 	# 状态 15 与 16 共用同一张 `Field_Basic_Capture` 快照（`Evt_stdPROC` case 0x20 只抓一次），
 	# 图鉴页自己开窗时也要这层模糊，否则二级页背景会变成实时画面。
-	screen_shade = true
 	show()
 	open_window()
 

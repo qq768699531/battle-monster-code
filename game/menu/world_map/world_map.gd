@@ -70,11 +70,7 @@ func open(catalog: Object, data: Variant, map_id: int, enabled: Dictionary, pass
 	_closing = false
 	_elapsed = 0.0
 	set_process(true)
-	# 开图那一刻定格背景：原生 `Field_Basic_Capture` 在窗口出现前把画面模糊一次写进
-	# `MapRes.map_scratch_image`，之后每帧 `Map_Copy()` 都拷同一张，所以地图场景是静止的。
-	# 从任务页开出来时复用菜单那一层与它已有的快照，不再叠第二层、也不重抓。
-	if screen_shade:
-		ScreenShade.acquire_frozen(self)
+	# 开图那一刻定格背景由 WindowTransition.shade_frozen 统一处理（原生 `Field_Basic_Capture`）。
 	show()
 	open_window()
 	return true
