@@ -81,8 +81,6 @@ func _ready() -> void:
 	super()
 	for slot in range(cells):
 		_cell(slot).pressed.connect(_select_slot.bind(slot))
-	$Content/AcceptHit.pressed.connect(_on_accept_pressed)
-	$Content/BackHit.pressed.connect(_on_back_pressed)
 	$Content/TabHit0.pressed.connect(_select_tab.bind(0))
 	$Content/TabHit1.pressed.connect(_select_tab.bind(1))
 	$Select.decided.connect(_decided)
@@ -107,8 +105,6 @@ func present(story: Object, assets: Node, next_mode: int = BUY, next_shop_mode: 
 	for source: String in ["common/item_basic.dat", "common/item_skill.dat"]:
 		_names.merge(assets.text_messages(source))
 	$Bounds/Title.text = _text(_title_id())
-	$Content/Accept.configure(assets, 0)
-	$Content/Back.configure(assets, 1)
 	$Content/Price.size = Vector2(60.0 if mode == BUY else 48.0, 9.0)
 	# 原生 `Field_Item_Buy_DrawPrice` 在窗 x+149、`Sell_DrawPrice` 在窗 x+170；`Content` 已随窗口，
 	# 所以这里写相对窗口的 149／170（绝对 244／256）。
@@ -433,22 +429,6 @@ func _open_select() -> void:
 func _decided(count: int) -> void:
 	quantity = count
 	trade(count)
-
-
-## 页脚 OK／CLR 在数量确认框开着时的归属（原生 `Field_Item_Buy_mKeyPressed` 的子状态：
-## 确认框占着 -5／-16，退出确认框而不是退页）；关框后回到买／卖页自己的入口。
-func _on_accept_pressed() -> void:
-	if $Select.visible:
-		$Select.handle_key("Enter")
-		return
-	_open_select()
-
-
-func _on_back_pressed() -> void:
-	if $Select.visible:
-		$Select.handle_key("Escape")
-		return
-	close()
 
 
 func _cancelled() -> void:

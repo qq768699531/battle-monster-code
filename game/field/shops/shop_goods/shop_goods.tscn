@@ -1,9 +1,8 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://game/field/shops/shop_goods/shop_goods.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/window_transition/window_transition.tscn" id="window"]
 [ext_resource type="PackedScene" path="res://game/menu/item/item_cell/item_cell.tscn" id="cell"]
-[ext_resource type="PackedScene" path="res://engine/ui/window_footer/window_footer.tscn" id="footer"]
 [ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="label"]
 [ext_resource type="PackedScene" path="res://engine/ui/currency_amount/currency_amount.tscn" id="money"]
 [ext_resource type="PackedScene" path="res://game/field/shops/shop_select/shop_select.tscn" id="select"]
@@ -236,39 +235,5 @@ offset_left = 158
 offset_top = 210
 offset_right = 218
 offset_bottom = 219
-
-[node name="Accept" parent="Content" instance=ExtResource("footer")]
-offset_left = 4
-offset_top = 226
-offset_right = 46
-offset_bottom = 238
-
-[node name="Back" parent="Content" instance=ExtResource("footer")]
-offset_left = 182
-offset_top = 226
-offset_right = 224
-offset_bottom = 238
-
-[node name="AcceptHit" type="Button" parent="Content"]
-offset_left = 4
-offset_top = 226
-offset_right = 46
-offset_bottom = 238
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-
-[node name="BackHit" type="Button" parent="Content"]
-offset_left = 182
-offset_top = 226
-offset_right = 224
-offset_bottom = 238
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
 
 [node name="Select" parent="." instance=ExtResource("select")]

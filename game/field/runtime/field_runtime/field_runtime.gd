@@ -1201,14 +1201,16 @@ func handle_touch(position: Vector2, phase: String) -> bool:
 			_release_walk_direction(TouchView.DIRECTIONS[_touch_key])
 		_touch_key = 0
 		_chat_view.set_touch_key(0)
-		_touch_view.present(_field_touch_style(), 0)
+		_touch_view.present(_field_touch_style(true), 0)
 		if menu_view != null:
 			menu_view.set_touch_key(0)
 		return handled
-	if phase not in ["down", "move"] or not focused or menu_open or book_open or save_open or service_open() or \
+	if phase not in ["down", "move"] or not focused or menu_open or book_open or save_open or \
 			battle_view != null or world_map_view != null or not boundary.is_empty():
 		return false
 	var point := Vector2i(position)
+	if service_open():
+		return _service_touch(position, phase)
 	if not narration.is_empty():
 		# 原生 `Evt_stdKEY:51-55`：字幕步骤只接受键码 35（确定），其余触控一律吞掉；
 		# 确定键＝直接结束整条指令（`+10` 置 1 → `Evt_stdPROC:168-171` 调 `Evt_scrFINAL`）。
@@ -1271,14 +1273,55 @@ func handle_touch(position: Vector2, phase: String) -> bool:
 	return not keys.is_empty() or _field_touch_style() != 0
 
 
-func _field_touch_style() -> int:
-	if story == null or menu_open or book_open or save_open or service_open() or battle_view != null or \
+func _field_touch_style(allow_service: bool = false) -> int:
+	if story == null or menu_open or book_open or save_open or battle_view != null or \
+			(service_open() and not allow_service) or \
 			world_map_view != null or not _pending_warp.is_empty() or \
 			not _encounter.is_empty() or not boundary.is_empty() or \
 			not dialogue.is_empty() or not narration.is_empty() or not mastery.is_empty() or \
 			story.stable_state().is_empty() or not _motions.is_empty():
 		return 0
 	return TouchView.field_style(int(story.map.info.map_group))
+
+
+## 服务页的触控：原版野外触控面板（十字／OK／CLR）在窗口打开时仍在，按键分派给当前页的
+## `handle_key`——OK→Enter、CLR→Escape、十字→Arrow*。页内的真实 Button（格子、页签、
+## 地图／接受键等）仍先吃自己的点击，只有落在面板上的触点走这里。
+func _service_touch(position: Vector2, phase: String) -> bool:
+	if phase != "down":
+		return true
+	_last_touch = Vector2i(position)
+	var keys: Array[int] = _touch_view.touch_keys(
+		_touch_view.get_transform().affine_inverse() * position)
+	for key: int in keys:
+		var action := _service_touch_action(key)
+		if action.is_empty():
+			continue
+		_touch_key = key
+		_touch_view.present(_field_touch_style(true), key)
+		var page: Control = _service_page_view(service_page)
+		if page != null:
+			page.call("handle_key", action)
+		_refresh()
+		return true
+	return false
+
+
+func _service_touch_action(key: int) -> String:
+	if key == TouchCode.Key.OK:
+		return "Enter"
+	if key == TouchCode.Key.BACK:
+		return "Escape"
+	if not TouchView.DIRECTIONS.has(key):
+		return ""
+	var direction: Vector2i = TouchView.DIRECTIONS[key]
+	if direction.x < 0:
+		return "ArrowLeft"
+	if direction.x > 0:
+		return "ArrowRight"
+	if direction.y < 0:
+		return "ArrowUp"
+	return "ArrowDown"
 
 
 ## 野外服务页（原生 `FIELD_STATE` 4..16 的那批页面：飞艇两页／公会／商店／任务／旅店，以及
@@ -3673,7 +3716,7 @@ func _refresh() -> void:
 	# 事件推进、计数达标时刷新），所以每次刷新界面状态都重算一次。
 	_sync_quest_icons()
 	var style := _field_touch_style()
-	_touch_view.present(style, _touch_key)
+	_touch_view.present(_field_touch_style(true), _touch_key)
 	_hero_summary.visible = style != 0
 	_sync_exp_bonus_hud(style)
 	_minimap.visible = style != 0 and world_map_view == null
