@@ -57,6 +57,9 @@ func present(prompt: String, yes: String, no: String, icon: Texture2D, limit: in
 	_no = no
 	_render()
 	show()
+	# `Window` 在场景里是 `visible = false`（`confirm_box` 自己不会在 `open_window` 里 show），
+	# 不显式打开的话根节点可见、窗口本身仍然隐藏——数量框就“没有实现”。
+	$Window.show()
 	$Window.open_window()
 
 

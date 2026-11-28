@@ -1558,6 +1558,14 @@ func _advance_npc_idle(delta: float) -> void:
 			var target: Vector2 = state.target
 			var pixel := Vector2(float(actor.x), float(actor.y)) * TILE + Vector2(8, 8)
 			var next := pixel.move_toward(target, NPC_WALK_SPEED * delta)
+			if not _npc_pixel_free(next, id):
+				# 地形／其它实体挡住就到不了：原地待机，不穿墙。
+				state["target"] = null
+				state["wait"] = 0.5 + randf() * 0.5
+				actor.action = FieldAction.Hero.IDLE
+				_sync_actors()
+				_npc_idle[id] = state
+				continue
 			actor.x = (next.x - 8.0) / TILE
 			actor.y = (next.y - 8.0) / TILE
 			_actors.update_position(actor)
@@ -1589,17 +1597,53 @@ func _advance_npc_idle(delta: float) -> void:
 				continue
 		if _npc_movement_gate(id) != 0 and randf() > 0.5:
 			var home: Vector2 = _npc_home.get(id, Vector2(float(actor.x), float(actor.y)))
-			var px := clampf(home.x * TILE + 8.0 +
-				randf_range(-NPC_WANDER_RADIUS, NPC_WANDER_RADIUS), 8.0, maxf(8.0, dimensions.x - 8.0))
-			var py := clampf(home.y * TILE + 8.0 +
-				randf_range(-NPC_WANDER_RADIUS, NPC_WANDER_RADIUS), 8.0, maxf(8.0, dimensions.y - 8.0))
-			_face_pixel(actor, Vector2(px, py))
-			actor.action = 5
-			state["target"] = Vector2(px, py)
-			_sync_actors()
+			var chosen := Vector2.ZERO
+			var found := false
+			for attempt in range(8):
+				var px := clampf(home.x * TILE + 8.0 +
+					randf_range(-NPC_WANDER_RADIUS, NPC_WANDER_RADIUS), 8.0, maxf(8.0, dimensions.x - 8.0))
+				var py := clampf(home.y * TILE + 8.0 +
+					randf_range(-NPC_WANDER_RADIUS, NPC_WANDER_RADIUS), 8.0, maxf(8.0, dimensions.y - 8.0))
+				if _npc_pixel_free(Vector2(px, py), id):
+					chosen = Vector2(px, py)
+					found = true
+					break
+			if found:
+				_face_pixel(actor, chosen)
+				actor.action = 5
+				state["target"] = chosen
+				_sync_actors()
+			else:
+				state["wait"] = 0.5 + randf() * 0.5
 		else:
 			state["wait"] = 0.5 + randf() * 0.5
 		_npc_idle[id] = state
+
+
+## NPC 的 16×16 脚点碰撞：地形格不可走、或与其它实体（含主角，排除自己）重叠都算挡住。
+## 原生 NPC 走到墙前就停，不会穿地形；随机目标也要先过这一步才采用。
+func _npc_pixel_free(pixel: Vector2, npc_id: int) -> bool:
+	if story == null or not story.map.get("terrain") is Dictionary:
+		return false
+	var terrain: Dictionary = story.map.terrain
+	var min_px := pixel - Vector2(TILE, TILE) * 0.5
+	var x0 := floori(min_px.x / TILE)
+	var y0 := floori(min_px.y / TILE)
+	var x1 := floori((min_px.x + TILE - 0.001) / TILE)
+	var y1 := floori((min_px.y + TILE - 0.001) / TILE)
+	if x0 < 0 or y0 < 0 or x1 >= int(terrain.width_tiles) or y1 >= int(terrain.height_tiles):
+		return false
+	for ty in range(y0, y1 + 1):
+		for tx in range(x0, x1 + 1):
+			if story.tile_blocked(tx, ty):
+				return false
+	var rect := Rect2(min_px, Vector2(TILE, TILE))
+	for actor: Dictionary in story.progress.actors:
+		if int(actor.id) == npc_id:
+			continue
+		if rect.intersects(Rect2(Vector2(float(actor.x), float(actor.y)) * TILE, Vector2(TILE, TILE))):
+			return false
+	return true
 
 
 ## 原生 Object_objDIRECT：新方向写入 direction_code，复合 direction_flags 保留

@@ -4,6 +4,7 @@ extends Control
 const SlotFrame = preload("res://game/menu/party/slot_frame/slot_frame.gd")
 
 var host: Control
+var _was_open := false
 
 
 func _ready() -> void:
@@ -14,7 +15,14 @@ func _ready() -> void:
 
 
 func render() -> void:
-	visible = host.item_discard_open
+	var opening: bool = host.item_discard_open
+	visible = opening
+	if opening and not _was_open:
+		# `$Window` 场景里是 `visible = false`，开窗时显式 show 并播开窗；关闭由 confirm／CLR 走
+		# `close_window`，下一次打开再从相位 1 重播。
+		$Window.show()
+		$Window.open_window()
+	_was_open = opening
 	if not visible:
 		return
 	var item: Dictionary = host.item_discard_item

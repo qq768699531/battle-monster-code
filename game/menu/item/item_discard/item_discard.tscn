@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://engine/ui/message_choice/message_choice.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://engine/ui/dotted_line/dotted_line.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_top.tscn" id="num_top"]
+[ext_resource type="PackedScene" path="res://engine/ui/number/number_small.tscn" id="num_small"]
 [ext_resource type="Theme" path="res://engine/ui/native_label/ui_theme.tres" id="9"]
 
 [sub_resource type="AtlasTexture" id="Atlas_7"]
@@ -56,13 +57,12 @@ offset_right = 113.0
 offset_bottom = 33.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
-[node name="Quantity" parent="Window/Content" instance=ExtResource("num_top")]
+[node name="Quantity" parent="Window/Content" instance=ExtResource("num_small")]
 offset_left = 82.0
 offset_top = 17.0
 offset_right = 113.0
 offset_bottom = 24.0
 mouse_filter = 2
-texture = SubResource("Atlas_7")
 alignment = 1
 [node name="Plus" type="TextureRect" parent="Window/Content"]
 offset_left = 116.0

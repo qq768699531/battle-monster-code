@@ -193,8 +193,15 @@ func trade(count: int) -> int:
 		reason = _story.sell_item(record.id, count)
 		if not reason.is_empty():
 			return _note(Msg.Id.SHOP_CANNOT_SELL)
+	var bought_name := _item_name(record) if mode == BUY else ""
+	var bought_icon := record.icon
+	var bought_grade := record.grade_index
 	_rebuild()
 	completed.emit()
+	# 原生 `Item_stdAddEx` 成功后走 `Game_infoInit` 的「获得道具」栈消息（与捡道具同一套），
+	# 不是商店自己的静态提示行。
+	if mode == BUY:
+		MessageStack.push_item(bought_name, count, bought_icon, bought_grade)
 	return -1
 
 
@@ -293,7 +300,7 @@ func _refresh() -> void:
 			quantity_label.show()
 			quantity_label.present(str(owned))
 	$Content/Money/Number.present(str(money()))
-	$Content/Count.text = "%d/%d" % [mini(_records.size(), cells), cells]
+	$Content/Count.present("%d/%d" % [mini(_records.size(), cells), cells])
 	var record := _record()
 	if record == null:
 		_detail.present_item({}, 0, "", "", null, _text)
