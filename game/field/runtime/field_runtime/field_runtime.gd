@@ -626,7 +626,7 @@ func advance(delta: float) -> void:
 	_actors.set_monster_running(story != null and focused and boundary.is_empty() and
 		not menu_open and not book_open and not save_open and not service_open() and battle_view == null and
 		_encounter.is_empty() and
-		not dialogue.get("ordinary", false) and narration.is_empty() and mastery.is_empty() and
+		narration.is_empty() and mastery.is_empty() and
 		not objects_paused)
 	if story == null or not focused or not boundary.is_empty() or \
 			not is_finite(delta) or delta < 0:
@@ -702,7 +702,7 @@ func advance(delta: float) -> void:
 
 
 func _advance_wild(delta: float) -> void:
-	if not _encounter.is_empty() or not dialogue.is_empty() or \
+	if not _encounter.is_empty() or \
 			story.stable_state().is_empty():
 		return
 	var hero := Vector2(_actor(0).x, _actor(0).y) * TILE
@@ -3793,8 +3793,7 @@ func _close_battle() -> void:
 func set_focused(value: bool) -> void:
 	focused = value
 	_actors.set_monster_running(value and not menu_open and not book_open and not save_open and not service_open() and
-		boundary.is_empty() and battle_view == null and _encounter.is_empty() and
-		not dialogue.get("ordinary", false))
+		boundary.is_empty() and battle_view == null and _encounter.is_empty())
 	if not value:
 		handle_touch(Vector2.ZERO, "up")
 		_clear_walk_input()
