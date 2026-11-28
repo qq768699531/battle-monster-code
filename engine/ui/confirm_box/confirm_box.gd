@@ -14,6 +14,9 @@ extends "res://engine/ui/window_transition/window_transition.gd"
 signal chosen(accepted: bool)
 ## 确定页（单个确认键）的结果。
 signal confirmed
+## true 时鼠标/触控点到是／否就直接选中并确认（数量框用）；
+## false 保留原生触控的两步：先移光标，再按一次才确认。
+var direct_choice := false
 
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
 
@@ -79,6 +82,10 @@ func move_selection(change: int) -> void:
 func set_choices_enabled(enabled: bool) -> void:
 	for button: Button in [_confirm, _yes, _no]:
 		button.disabled = not enabled
+
+
+func set_direct_choice(value: bool) -> void:
+	direct_choice = value
 
 
 ## OK／触控确认：确定页直接回报，选择页把当前光标当答案。
@@ -211,6 +218,11 @@ func _choose(accepted: bool) -> void:
 	if _form != Form.SELECT or is_transitioning():
 		return
 	var index := 0 if accepted else 1
+	if direct_choice:
+		_selected = index
+		_refresh_choices()
+		chosen.emit(accepted)
+		return
 	if index != _selected:
 		_selected = index
 		_refresh_choices()

@@ -65,6 +65,7 @@ func present_item(prompt: String, yes: String, no: String, icon: Texture2D, limi
 	_frame_texture = frame_texture
 	_grade_color = grade_color
 	_render_item(icon)
+	$Window.set_direct_choice(true)
 	$Window.present_neutral(prompt)
 	$Window.set_body_alignment(1)
 	_apply_window_size(kind)
@@ -191,7 +192,10 @@ func _step_changed() -> void:
 ## 未选中那只确认键是灰字、没有底色（`Menu_win_Box2_DrawSelect` 的 0x808080 分支）。
 func _render() -> void:
 	var choosing := step == 0
-	$Window/Content/QuantityBackground.color = Color("#ff9600") if choosing else Color.BLACK
+	var quantity_plate: Panel = $Window/Content/QuantityBackground
+	var plate_style: StyleBoxFlat = quantity_plate.get_theme_stylebox("panel") as StyleBoxFlat
+	if plate_style != null:
+		plate_style.bg_color = Color("#ff9600") if choosing else Color.BLACK
 	$Window/Content/Quantity.modulate = Color.BLACK if choosing else Color.WHITE
 	# 数量本身用字体（仅这一处；价格、计数仍走原生数字图集）。
 	$Window/Content/Quantity.text = str(quantity)

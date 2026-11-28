@@ -16,6 +16,14 @@
 [sub_resource type="AtlasTexture" id="Atlas_7"]
 atlas = ExtResource("Sheet_common_ui_number")
 region = Rect2(0, 0, 87, 28)
+[sub_resource type="StyleBoxFlat" id="QuantityPlate"]
+bg_color = Color(1, 0.588235, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 
 [sub_resource type="AtlasTexture" id="Minus"]
@@ -50,13 +58,13 @@ offset_right = 79.0
 offset_bottom = 33.0
 mouse_filter = 2
 texture = SubResource("Minus")
-[node name="QuantityBackground" type="ColorRect" parent="Window/Content"]
+[node name="QuantityBackground" type="Panel" parent="Window/Content"]
 offset_left = 82.0
 offset_top = 9.0
 offset_right = 113.0
 offset_bottom = 33.0
 mouse_filter = 2
-color = Color(1, 0.588235, 0, 1)
+theme_override_styles/panel = SubResource("QuantityPlate")
 [node name="Quantity" type="Label" parent="Window/Content"]
 offset_left = 82.0
 offset_top = 9.0
