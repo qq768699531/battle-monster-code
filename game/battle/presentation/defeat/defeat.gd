@@ -9,5 +9,5 @@ extends "res://engine/ui/confirm_box/confirm_box.gd"
 ## 子状态 1 的正文取 `Item_datBasic` 的道具说明（本工程的文本表没有该说明，故不单独出页）。
 ##
 ## `Battle_Die_init` 先 `Battle_info_Capture()` 把当前画面拍成模糊 + 半透明底，所以本窗用
-## 背景层由 WindowTransition 的窗口栈统一管理；窗高与正文摆位和其余 Box2 页共用 `ConfirmLayout`，
+## 背景层由 `UiWindows` 的窗口栈统一挂在窗口下面；窗高与正文摆位和其余 Box2 页共用 `ConfirmLayout`，
 ## 与逃跑窗是同一个 `engine/ui/confirm_box`，只是多挂一层压暗。

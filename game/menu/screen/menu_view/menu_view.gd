@@ -1425,8 +1425,8 @@ func _select_party_equipment(index: int) -> void:
 	_render_content()
 
 
-## 菜单是自绘全屏页，本身不是 WindowTransition；它只向 WindowTransition 声明「我这里有一扇窗口」，
-## ScreenShade 的抓帧、显隐与多窗共存仍由 WindowTransition 统一管理。
+## 菜单是自绘全屏页，本身不是 WindowTransition；它只向窗口栈声明「我这里有一扇窗口」，
+## 半透明 + 模糊的背景层由 `UiWindows` 挂在栈底窗层下面。
 func _sync_shade_window() -> void:
 	if is_inside_tree() and is_visible_in_tree():
 		WindowTransitionScript.register_window(self)

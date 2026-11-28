@@ -18,6 +18,7 @@ signal transition_finished(opened: bool)
 signal phase_changed(value: int)
 
 const Layout = preload("res://game/prime/ui/layout/layout.gd")
+const UiWindowManager = preload("res://engine/ui/window_manager/ui_window_manager.gd")
 
 ## 窗框种类：原生 `Menu_win_Box4_DrawWindow@0x4F82C`（带头部白条／标题／页脚，正文窗）与
 ## `Menu_win_Box2_DrawWindow@0x4ADE8`（只有 `Menu_win_Box2_Draw@0x4AD78` 三层描边＋填充的
@@ -100,8 +101,10 @@ const BOX4_CHROME_NODES := [
 		content_follows_window = value
 		if is_node_ready():
 			_apply_geometry()
-## 窗口栈与地图冻结判据。背景遮罩不在这里处理。
-static var _open_windows: Array = []
+## 开本级时旧窗层的去向：false = 出栈（管理器收起它，调用方自己关窗／释放），
+## true = 旧窗层留在栈里先收起，本级关掉后自动恢复（菜单收起 `Frame` 再开二级选择窗那种）。
+## 窗口栈、背景层与冻结判据都归 `UiWindows`（`engine/ui/window_manager`）。
+@export var keep_previous := false
 
 var _normal_rect: Rect2i
 ## Box4 稳态下场景自己声明的构件显隐与页脚颜色（见 `BOX4_CHROME_NODES`）。
@@ -120,36 +123,51 @@ func _ready() -> void:
 	_apply_geometry()
 
 
-## 只要还有窗口在显示，这个查询就为真；野外据此冻结地图。
+## 只要还有窗口／确认框在显示，这个查询就为真；野外据此冻结地图。
 static func any_open() -> bool:
-	return not _open_windows.is_empty()
+	var manager := _window_manager()
+	return bool(manager.call("any_open")) if manager != null else false
 
 
+## 开窗：先入栈（按 `keep_previous` 顶掉或收起旧的同类窗层），再播开合动画。
+## 半透明 + 模糊的背景层由管理器挂在栈底那一扇窗层的紧下方，这里不碰可见性。
 func open_window() -> void:
-	register_window(self)
+	var manager := _window_manager()
+	if manager != null:
+		manager.call("push", self, _slot_kind(self),
+			UiWindowManager.Previous.KEEP_HIDDEN if keep_previous else UiWindowManager.Previous.DISMISS)
 	$AnimationPlayer.play("open")
 	$AnimationPlayer.advance(0)
 
 
-## 任何窗口（包括菜单这种自绘全屏页）都通过这里登记，只维护窗口栈与冻结判据。
+## 任何窗口（包括菜单这种自绘全屏页）都通过这里登记：`kind` 决定它占窗口还是确认框的槽。
 static func register_window(window: Control) -> void:
-	if _open_windows.has(window):
-		return
-	_open_windows.append(window)
+	var manager := _window_manager()
+	if manager != null:
+		manager.call("push", window, _slot_kind(window), UiWindowManager.Previous.DISMISS)
 
 
 static func unregister_window(window: Control) -> void:
-	var index := _open_windows.find(window)
-	if index < 0:
-		return
-	_open_windows.remove_at(index)
+	var manager := _window_manager()
+	if manager != null:
+		manager.call("pop", window)
 
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_VISIBILITY_CHANGED and not is_visible_in_tree():
-		unregister_window(self)
-	elif what == NOTIFICATION_EXIT_TREE:
-		unregister_window(self)
+## 原生 `Menu_win_Box4_DrawWindow` 是页窗口、`Menu_win_Box2_DrawWindow` 是确认框：
+## 两者各占一个槽，所以确认框可以叠在窗口上而不把窗口顶掉。
+static func _slot_kind(window: Node) -> int:
+	var value: Variant = window.get("kind")
+	if value is int and int(value) == int(BoxKind.BOX2):
+		return UiWindowManager.Kind.DIALOG
+	return UiWindowManager.Kind.WINDOW
+
+
+## 管理器是 autoload；本脚本是 `@tool`，编辑器里没有 autoload 时返回 null。
+static func _window_manager() -> Node:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null or tree.root == null:
+		return null
+	return tree.root.get_node_or_null("UiWindows")
 
 
 func close_window() -> void:

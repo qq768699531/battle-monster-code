@@ -34,6 +34,8 @@ addons/          GUT 9.7.1（vendored，MIT）
 | AudioManager | content/audio/audio_manager/audio_manager.tscn | 音频播放与总线 |
 | NativeTouchFeedback | game/field/runtime/native_touch_feedback/native_touch_feedback.tscn | 触控反馈 |
 | Messages | ngine/ui/message_stack/message_stack.tscn | 原生 Game_infoDraw 提示栈：全局浮层，任何脚本用 MessageStack.say* 静态入口推送，不再从主场景下发节点 |
+| BigScenes | engine/ui/big_scene_manager/big_scene_manager.gd | 大型场景（菜单／野外／战斗）同一时刻只让一个渲染 |
+| UiWindows | engine/ui/window_manager/ui_window_manager.gd | 窗口／确认框栈与背景层：同一宿主同一类只留一扇可见，半透明 + 模糊层挂在栈底窗层下面，见 [ui-windows.md](ui-windows.md) |
 
 ## 三条约定
 

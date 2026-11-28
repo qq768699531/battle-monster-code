@@ -1,11 +1,13 @@
 class_name ScreenShade
 extends ColorRect
-## 屏幕「半透明 + 模糊」层。生命周期只由 `WindowTransition` 统一管理：
-## 只要还有一扇窗口显示，这一层就可见；最后一扇窗口收起时它才消失。
+## 屏幕「半透明 + 模糊」层。整个场景只建一个实例，生命周期由 `UiWindows`
+## （`engine/ui/window_manager`）统一管理：窗口栈里还有一扇窗口／确认框时这一层就可见，
+## 并且挂在栈底那一扇的紧下方；最后一扇收起时才隐藏。
 ##
 ## 原生 `Field_Basic_Capture`／`Battle_info_Capture` 在第一扇窗口打开前把整帧画面写进
 ## `MapRes.map_scratch_image`，之后所有窗口层（含嵌套窗口）每帧 `Map_Copy()` 都拷同一张；
-## 因此快照由 `WindowTransition` 在第一扇窗口打开时抓取并共享，本脚本只负责显示这张快照。
+## 因此需要定格背景的调用方通过 `set_snapshot()` 传一张快照；不传时直接采样实时屏幕，
+## 本脚本只负责把这张图连同半透明黑一起画出来。
 
 ## 逻辑分辨率 400×240（显示 800×480 的 2 倍）。原生 FillBLUR 在 400×240 缓存上按整像素取点，
 ## 放大后步长仍是 1 个逻辑像素。
@@ -26,7 +28,7 @@ func _on_visibility_changed() -> void:
 		_apply_snapshot()
 
 
-## 由 `WindowTransition` 在第一扇窗口打开时设置；之后所有窗口共用同一张。
+## 由调用方设置一张定格背景（原生 `Field_Basic_Capture` 的时机）；不设时采样实时屏幕。
 func set_snapshot(image: Image) -> void:
 	_snapshot = ImageTexture.create_from_image(image) \
 		if image != null and not image.is_empty() else null

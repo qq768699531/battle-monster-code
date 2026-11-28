@@ -70,7 +70,7 @@ func open(catalog: Object, data: Variant, map_id: int, enabled: Dictionary, pass
 	_closing = false
 	_elapsed = 0.0
 	set_process(true)
-	# 开图那一刻的定格背景由 WindowTransition 的窗口栈统一抓取（原生 `Field_Basic_Capture`）。
+	# 开图那一刻的背景层由 `UiWindows` 挂在窗口下面（原生 `Field_Basic_Capture` 的位置）。
 	show()
 	open_window()
 	return true
