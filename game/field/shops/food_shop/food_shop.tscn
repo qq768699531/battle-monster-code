@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3]
 [ext_resource type="Texture2D" path="res://engine/ui/tab_cell/tab_cell.webp" id="part_tab_cell"]
-[ext_resource type="PackedScene" path="res://engine/ui/number/number_small.tscn" id="number_small"]
+[ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="number_default"]
 [ext_resource type="PackedScene" path="res://engine/ui/scrollbar/scrollbar.tscn" id="scrollbar"]
 
 [ext_resource type="Script" path="res://game/field/shops/food_shop/food_shop.gd" id="script"]
@@ -148,7 +148,7 @@ offset_top = 87.0
 offset_right = 289.0
 offset_bottom = 117.0
 
-[node name="Name" parent="Content" instance=ExtResource("number_small")]
+[node name="Name" parent="Content" instance=ExtResource("number_default")]
 offset_left = 99.0
 offset_top = 120.0
 offset_right = 209.0
@@ -196,7 +196,7 @@ offset_top = 26.0
 offset_right = 133.0
 offset_bottom = 36.0
 
-[node name="Count" parent="Content/Panel/Row0" instance=ExtResource("number_small")]
+[node name="Count" parent="Content/Panel/Row0" instance=ExtResource("number_default")]
 offset_left = 60.0
 offset_top = 26.0
 offset_right = 133.0
@@ -223,7 +223,7 @@ offset_top = 48.0
 offset_right = 133.0
 offset_bottom = 58.0
 
-[node name="Count" parent="Content/Panel/Row1" instance=ExtResource("number_small")]
+[node name="Count" parent="Content/Panel/Row1" instance=ExtResource("number_default")]
 offset_left = 60.0
 offset_top = 48.0
 offset_right = 133.0
@@ -250,7 +250,7 @@ offset_top = 70.0
 offset_right = 133.0
 offset_bottom = 80.0
 
-[node name="Count" parent="Content/Panel/Row2" instance=ExtResource("number_small")]
+[node name="Count" parent="Content/Panel/Row2" instance=ExtResource("number_default")]
 offset_left = 60.0
 offset_top = 70.0
 offset_right = 133.0
