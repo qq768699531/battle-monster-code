@@ -1,6 +1,7 @@
 extends "res://tests/unit/gut_case.gd"
 
 const Story = preload("res://engine/data/story/story.gd")
+const FieldActors = preload("res://game/field/runtime/field_actors/field_actors.gd")
 const Battle = preload("res://game/battle/combat/battle.gd")
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const Fixtures = preload("res://tests/unit/gameplay_fixtures.gd")
@@ -336,7 +337,7 @@ func test_quest_progress_prompt() -> void:
 func test_event_battle_defeat() -> void:
 	for trigger: int in [Story.Trigger.BATTLE_RETURNED_ALT, Story.Trigger.BATTLE_RETURNED,
 			Story.Trigger.MAP]:
-		var story = _lost_story(trigger)
+		var story = _battle_story("lost", trigger)
 		var completed: bool = story.complete_battle(story._battle_effect)
 		var healed: bool = int(story.progress["monsters"][0].get("hp", 0)) > 0
 		var quit: bool = story.take_effects().any(func(effect: Dictionary) -> bool:
@@ -344,6 +345,20 @@ func test_event_battle_defeat() -> void:
 		assert_true(completed and healed == (trigger == Story.Trigger.BATTLE_RETURNED_ALT) and
 			quit == (trigger != Story.Trigger.BATTLE_RETURNED_ALT),
 			"a lost event battle resumes only for the post-battle trigger %d" % trigger)
+
+
+## 胜利的「已打回来」标志同样读**后继事件**的触发器：原生 `EvtData.step_kind` 在战斗确认前
+## 已经 INIT 到后继事件，7／8 才置位并继续战后剧情；其它触发器只回地图。
+func test_battle_win_uses_the_successor_trigger() -> void:
+	var story = _battle_story("won", Story.Trigger.BATTLE_RETURNED)
+	assert_true(story.complete_battle(story._battle_effect, FakeSettlement.new()), "胜利释放战斗门")
+	assert_eq(int(story.progress["quest"]), 12,
+		"后继触发器 7：置「已打回来」并执行战后剧情")
+	var neutral = _battle_story("won", Story.Trigger.MAP)
+	assert_true(neutral.complete_battle(neutral._battle_effect, FakeSettlement.new()) and
+		int(neutral.progress["quest"]) == 9 and not neutral.take_effects().any(
+		func(effect: Dictionary) -> bool: return effect.kind == "game-over"),
+		"后继触发器不是 7／8：不置标志，只执行战斗事件自己的收尾记录")
 
 
 ## P0-8：事件 2 的初始包带 `Op.ADD_ITEM(26000, 2000)`。原生 `Item_stdAdd` 的组 26 走
@@ -488,13 +503,16 @@ func test_event_camera_modes() -> void:
 		"收敛到位后 complete_camera 放行并继续执行后续指令")
 
 
-## 造一场「已打完并输掉」的事件战：战后事件（eventId）的触发器是 `trigger`，
-## 队伍三只写在 progress 里，`combat.result` 直接置 `lost`。
-func _lost_story(trigger: int) -> RefCounted:
+## 造一场「已打完」的事件战：战斗事件自己的触发器是 RECT（用不存在的地图号停在门口），
+## 战后**后继事件**（eventId + 1）的触发器是 `trigger`；队伍三只写在 progress 里，
+## `combat.result` 由 `result` 指定。
+func _battle_story(result: String, trigger: int) -> RefCounted:
 	var provider := FixtureProvider.new()
+	provider.events[0] = {"records": [_record(Story.Trigger.RECT, [99, 0, 0, 0, 0]),
+		_record(21, [9, 0, 0, 0, 0])]}
 	# 触发器 1（MAP）用不存在的地图号，保证 initialize() 时事件停在门口不进记录。
 	var params: Array = [99 if trigger == Story.Trigger.MAP else 0, 0, 0, 0, 0]
-	provider.events[0] = {"records": [_record(trigger, params), _record(21, [9, 0, 0, 0, 0])]}
+	provider.events[1] = {"records": [_record(trigger, params), _record(21, [12, 0, 0, 0, 0])]}
 	var story = _story(provider)
 	var members: Array = []
 	for _index in range(3):
@@ -510,7 +528,8 @@ func _lost_story(trigger: int) -> RefCounted:
 		func(_limit: int) -> int: return 0)
 	for ball: Dictionary in story.combat.balls:
 		ball.hp = 0
-	story.combat.result = "lost"
+	story.combat.result = result
+	story.progress["cursor"] = 1
 	story._battle_returned = false
 	story._battle_effect = story._emit("battle", {"scriptId": 1})
 	story._pending = {"kind": "battle", "id": story._battle_effect, "eventId": 0,
@@ -668,6 +687,45 @@ func test_starter_select_recycles_prologue_monsters() -> void:
 	assert_eq([story.progress["parameter"]["identity"], story.progress["parameter"]["level"],
 		story.progress["guildCode"]], [0, 1, 99],
 		"同一条剧情里的 Op.INIT_PARAMETERS（Param_stdInit(0, 1, 99)）把角色状态与公会码回到初始")
+
+
+## `Object_objARRIVE`（`Evt_stdPROC` case 9）：斜向走位先按 x／y 增量各调一次
+## `Object_objDIRECT`，再按主轴把非主轴换成**本次移动**的方向。NPC 的行走帧组与镜像
+## 都读复合 flags，所以「面向左、向右上走」必须是 RIGHT|UP，而不是原来的 LEFT|DOWN。
+func test_scripted_diagonal_walk_uses_the_new_direction() -> void:
+	var provider := FixtureProvider.new()
+	provider.events[0] = {"records": [
+		_record(0),
+		_record(Story.Op.PLACE_ACTOR, [2, 1005, 0, 0, 0]),
+		_record(Story.Op.MOVE_ACTOR, [2, 1204, 0, 0, 0])]}
+	var story = _story(provider)
+	var actor: Dictionary = story._actor(2)
+	assert_eq([int(actor["direction"]), int(actor["lastDirection"]), int(actor["action"])],
+		[FieldAction.Facing.RIGHT | FieldAction.Facing.UP, FieldAction.Facing.RIGHT,
+			FieldAction.Hero.SCRIPT_WALK],
+		"向右上斜走：x 写 RIGHT、y 写 UP，主轴 RIGHT，纵向位留在 flags 里")
+	var art: Dictionary = FieldActors.field_artwork(actor,
+		[{"record_index": 2, "field_sprite_id": 6}])
+	assert_eq([int(art.get("action", -1)), int(art.get("direction", -1))], [3, 1],
+		"NPC 行走帧组取新的纵向位（向上=3），镜像取新的横向位（右=1）")
+
+
+## 原生 `Object_objARRIVE` 只写对象自己的 start/dest 四个字段：一个对象同时只有一个
+## 移动目标，后一条 `Op.MOVE_ACTOR` 直接覆盖前一条。两段未完成移动同时存在会把演员
+## 拉在原地（`_motions` 永远清不掉，`stable_state()` 一直为空，野外不出触控界面）。
+func test_scripted_move_overwrites_the_previous_destination() -> void:
+	var provider := FixtureProvider.new()
+	provider.events[0] = {"records": [
+		_record(0),
+		_record(Story.Op.PLACE_ACTOR, [2, 1005, 0, 0, 0]),
+		_record(Story.Op.MOVE_ACTOR, [2, 902, 0, 0, 0]),
+		_record(Story.Op.MOVE_ACTOR, [2, 1405, 0, 0, 0]),
+		_record(Story.Op.WAIT, [8, 0, 0, 0, 0])]}
+	var story = _story(provider)
+	assert_eq(story._motions.size(), 1, "同一演员只保留一段未完成移动")
+	var motion: Dictionary = story._motions.values()[0]
+	assert_eq([int(motion.destination.x), int(motion.destination.y)], [14, 5],
+		"保留的是后一条记录的终点")
 
 
 ## `Evt_stdPROC` case 0xA（`:264-274`）与 `Object_procNEXT`：`p[2]` 原样写进

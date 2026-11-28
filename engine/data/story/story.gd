@@ -1285,6 +1285,19 @@ func _set_emotion(actor: Dictionary, action: int, repeats: int) -> void:
 	actor["emotionRevision"] = actor.get("emotionRevision", 0) + 1
 
 
+## 原生 `Object_objDIRECT(obj, n16)`：`n16` 是朝向码（1 左／2 右／16 上／32 下），
+## 同时写复合的 `direction_flags` 与单一的 `direction_code`；不是朝向码的值原样写进两者。
+## 返回 `[flags, code]`。`Object_objARRIVE` 要求按顺序调用它（见 `Op.MOVE_ACTOR`）。
+static func _object_direct(flags: int, facing: int) -> Array[int]:
+	if facing == FieldAction.Facing.UP or facing == FieldAction.Facing.DOWN:
+		var horizontal := flags & (FieldAction.Facing.LEFT | FieldAction.Facing.RIGHT)
+		return [(horizontal if horizontal != 0 else FieldAction.Facing.LEFT) | facing, facing]
+	if facing == FieldAction.Facing.LEFT or facing == FieldAction.Facing.RIGHT:
+		var vertical := flags & FieldAction.VERTICAL_MASK
+		return [(vertical if vertical != 0 else FieldAction.Facing.DOWN) | facing, facing]
+	return [facing, facing]
+
+
 func _instruction(opcode: int, p: Array) -> bool:
 	var s := progress
 	var point := {"x": int(p[1] / 100), "y": p[1] % 100}
@@ -1353,16 +1366,34 @@ func _instruction(opcode: int, p: Array) -> bool:
 				return true
 			var dx: float = point["x"] - actor["x"]
 			var dy: float = point["y"] - actor["y"]
-			if dx != 0 or dy != 0:
-				var direction := (FieldAction.Facing.LEFT if dx < 0 else FieldAction.Facing.RIGHT) \
-					if absf(dx) > absf(dy) else \
-					(FieldAction.Facing.UP if dy < 0 else FieldAction.Facing.DOWN)
-				actor["lastDirection"] = direction
-				var old: int = actor["direction"]
-				var retained := old & (FieldAction.VERTICAL_MASK if direction <= FieldAction.Facing.RIGHT else 3)
-				actor["direction"] = (retained if retained != 0 else
-					FieldAction.Facing.DOWN if direction <= FieldAction.Facing.RIGHT else
-					FieldAction.Facing.LEFT) | direction
+			# `Object_objARRIVE`：先按 x／y 增量各调一次 `Object_objDIRECT`（另一轴保留旧位），
+			# 再按主轴（|dx| > |dy|，相等按纵向）把非主轴换成**本次移动**的新方向，
+			# 最后 `Object_objANI(obj, 6)`。斜向走位时 NPC 的行走帧组与镜像读的就是这里
+			# 的复合 flags，所以不能拿演员原来的朝向补齐非主轴。
+			var flags := int(actor.get("direction", 0))
+			var code := int(actor.get("lastDirection", 0))
+			if dx != 0:
+				var horizontal := _object_direct(flags,
+					FieldAction.Facing.RIGHT if dx > 0 else FieldAction.Facing.LEFT)
+				flags = horizontal[0]
+				code = horizontal[1]
+			if dy != 0:
+				var vertical := _object_direct(flags,
+					FieldAction.Facing.DOWN if dy > 0 else FieldAction.Facing.UP)
+				flags = vertical[0]
+				code = vertical[1]
+			var axis := flags & FieldAction.VERTICAL_MASK
+			if absf(dx) > absf(dy):
+				axis = flags & (FieldAction.Facing.LEFT | FieldAction.Facing.RIGHT)
+			var dominant := _object_direct(flags, axis)
+			actor["direction"] = dominant[0]
+			actor["lastDirection"] = dominant[1]
+			# 原生 `Object_objARRIVE` 只写对象自己的 start/dest 四个字段，一个对象同时只有
+			# 一个移动目标：后一条记录直接覆盖前一条。先取消同一演员的未完成移动，否则
+			# 两段目的地会同时生效、把演员拉在原地（`_motions` 永远清不掉）。
+			for motion_id: int in _motions.keys():
+				if int(_motions[motion_id].actor.get("id", -1)) == int(actor.get("id", -1)):
+					_motions.erase(motion_id)
 			actor["action"] = FieldAction.Hero.SCRIPT_WALK
 			actor.erase("animationEndMode")
 			_actors()
@@ -2376,6 +2407,29 @@ func quest_log() -> QuestLog:
 	return QuestLogModel.new(progress["quests"])
 
 
+## 战后触发器的数值：原生 `Battle_Win_mKeyPressed`／`Battle_Position_mRun` 读的
+## `EvtData.step_kind` 在战斗确认时已经指向「战斗之后那个事件」的首记录——处理完战斗记录
+## 就 `Evt_stdNEXT` 越过本事件末尾、INIT 后继事件；所以这里取 `eventId + 1` 的触发器，
+## 不是当前这条含战斗记录的事件的触发器（事件 7／12／14… 的触发器是 5／1）。
+## 战斗记录本来就是本事件最后一条时（事件 1 的序章战），`_start_battle` 已经 INIT 到后继，
+## 此时当前事件的首记录就是战后触发器。
+func _post_battle_trigger() -> int:
+	var event_id := int(progress["eventId"])
+	# 战斗记录本来就是本事件最后一条时，`_start_battle` 已经 `_next_event()` 把当前事件
+	# 换成后继（cursor 回到 0）；这时战后触发器就是当前事件的首记录。
+	if int(progress["cursor"]) == 0:
+		var current := _records(event_id)
+		if not current.is_empty() and current[0].get("opcode") is int:
+			return int(current[0]["opcode"])
+	var successor := event_id + 1
+	if not _has_event(successor):
+		return -1
+	var next := _records(successor)
+	if next.is_empty() or not next[0].get("opcode") is int:
+		return -1
+	return int(next[0]["opcode"])
+
+
 ## The scene runs the emitted combat model; outcomes are never supplied/invented
 ## by the caller. Only BattleModel's terminal result can release this gate.
 ## `settlement` 是胜利时战斗视图算好的 `BattleSettlement`（原生状态 26 `Battle_Win_SetResult`）：
@@ -2400,10 +2454,9 @@ func complete_battle(id: int, settlement: RefCounted = null) -> bool:
 		var party_args: Variant = party[index].get("native_arguments")
 		if party_args is Array and party_args.size() > 5 and member.get("nativeArguments") is Array:
 			member["nativeArguments"][2] = int(party_args[5])
-	var records := _records(progress["eventId"])
+	var trigger := _post_battle_trigger()
 	if not boundary.is_empty():
 		return false
-	var trigger: int = records[0]["opcode"]
 	if combat.result == "won":
 		var grant: RefCounted = settlement
 		if grant == null:
