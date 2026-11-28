@@ -196,7 +196,10 @@ func _ready() -> void:
 		notice = _native_ui_error
 	_build_frame()
 	_render_content()
-	# 背景静止只由 WindowTransition 的 ScreenShade 负责；菜单不再自己 freeze 快照。
+	# 菜单窗口开之前调 Field_Basic_Capture；菜单各页与从任务页开出的世界地图都画同一张冻结背景。
+	var shade := ScreenShade.host_shade(self)
+	if shade != null:
+		shade.freeze()
 
 
 func bind(progress: Dictionary, catalog: GameplayData, text: Variant) -> void:
