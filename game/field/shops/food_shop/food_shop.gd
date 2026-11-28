@@ -232,7 +232,7 @@ func _refresh_materials() -> void:
 		row.get_node("Name").text = _item_name(material) if material != null else ""
 		var count_number: Control = row.get_node("Count")
 		count_number.call("configure", _assets)
-		count_number.call("present", "%d/%d" % [have, need], 0)
+		count_number.call("present", "%d/%d" % [have, need], 0 if have >= need else 3)
 
 
 func _select_slot(slot: int) -> void:
