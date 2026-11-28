@@ -192,7 +192,8 @@ func _render() -> void:
 	var choosing := step == 0
 	$Window/Content/QuantityBackground.color = Color("#ff9600") if choosing else Color.BLACK
 	$Window/Content/Quantity.modulate = Color.BLACK if choosing else Color.WHITE
-	$Window/Content/Quantity.present(str(quantity))
+	# 数量本身用字体（仅这一处；价格、计数仍走原生数字图集）。
+	$Window/Content/Quantity.text = str(quantity)
 	if choosing:
 		$Window.present_neutral($Window.body_text())
 	else:

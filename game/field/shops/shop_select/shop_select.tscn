@@ -57,13 +57,17 @@ offset_right = 113.0
 offset_bottom = 33.0
 mouse_filter = 2
 color = Color(1, 0.588235, 0, 1)
-[node name="Quantity" parent="Window/Content" instance=ExtResource("num_small")]
+[node name="Quantity" type="Label" parent="Window/Content"]
 offset_left = 82.0
-offset_top = 17.0
+offset_top = 9.0
 offset_right = 113.0
-offset_bottom = 24.0
+offset_bottom = 33.0
 mouse_filter = 2
-alignment = 1
+theme = ExtResource("9")
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Plus" type="TextureRect" parent="Window/Content"]
 offset_left = 116.0
 offset_top = 9.0
@@ -102,3 +106,12 @@ offset_right = 141.0
 offset_bottom = 46.0[editable path="Window"][editable path="Window/Bounds/Outline"]
 [editable path="Window/Content/Item"]
 [editable path="Window/Content/Price"]
+
+[node name="Icon" parent="Window/Content/Price" index="0"]
+offset_top = 2.0
+offset_bottom = 7.0
+
+[node name="Number" parent="Window/Content/Price" index="1"]
+offset_top = 2.0
+offset_bottom = 7.0
+
