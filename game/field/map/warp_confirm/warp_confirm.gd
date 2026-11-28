@@ -34,7 +34,6 @@ var _closing := false
 func _ready() -> void:
 	super()
 	chosen.connect(_chosen)
-	transition_finished.connect(_transition_finished)
 
 
 ## 宿主开窗：`catalog` 提供 `text_message()`（`common/msg.fxt` 的 42／44／85／86），

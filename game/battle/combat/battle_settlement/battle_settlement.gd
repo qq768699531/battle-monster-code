@@ -137,10 +137,17 @@ func _init(combat: RefCounted, progress: Dictionary, catalog: GameplayData,
 	_build_rows(progress)
 	_build_mastery_experience(combat, result_experience)
 	var gain := _base_experience(combat, auto_battle, progress.get("parameter", {}))
-	for row: Dictionary in rows:
+	for row_index in range(rows.size()):
+		var row: Dictionary = rows[row_index]
 		var amount := gain
 		if row.kind == "member":
-			var bonus := int(_passive(combat.balls[row.member_index], 23))
+			# 结果页的成员行按出战位次排（rows[1..] 依次是队伍第 0／1／2 只），与 `combat.balls`
+			# 同序；`row.member_index` 是怪物背包下标（可以远大于 3），不能拿来索引球——
+			# 之前直接 `combat.balls[row.member_index]`，背包里第 7 只以后就下标越界崩溃。
+			var ball_index := row_index - 1
+			var bonus := 0
+			if ball_index >= 0 and ball_index < combat.balls.size():
+				bonus = int(_passive(combat.balls[ball_index], 23))
 			if bonus > 0:
 				# 原生 `(v15 * v20 + 99) / 100 + v15`：队员经验加成被动。
 				amount = (gain * bonus + 99) / 100 + gain

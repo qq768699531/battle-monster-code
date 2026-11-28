@@ -28,7 +28,6 @@ func _ready() -> void:
 	super()
 	chosen.connect(_chosen)
 	confirmed.connect(close)
-	transition_finished.connect(_transition_finished)
 
 
 ## `assets` 提供 `text_message()`；`story` 是 `StoryRuntime`，`inn_rest()` 返回空串表示成功。
