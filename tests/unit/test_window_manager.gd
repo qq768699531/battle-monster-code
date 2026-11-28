@@ -7,6 +7,8 @@ extends "res://tests/unit/gut_case.gd"
 const WindowScene = preload("res://engine/ui/window_transition/window_transition.tscn")
 const WindowScript = preload("res://engine/ui/window_transition/window_transition.gd")
 const Manager = preload("res://engine/ui/window_manager/ui_window_manager.gd")
+const PrimeViewScene = preload("res://game/prime/startup/prime_view/prime_view.tscn")
+const RuntimeConstants = preload("res://game/prime/data/runtime_constants/runtime_constants.gd")
 
 var _host: Control
 var _first: Control
@@ -77,3 +79,22 @@ func test_shade_leaves_with_the_last_window() -> void:
 	_first.hide()
 	assert_false(UiWindows.any_open(), "窗层收起后恢复推进")
 	assert_false(UiWindows.shade().is_visible_in_tree(), "背景层跟着收起")
+
+
+## 主菜单的环境设定／帮助／支持／网络连接共用同一个 `PrimeView` 换页画，换页不发
+## `visibility_changed`，靠 `present()` 自己登记／注销；回到标题页要出栈。
+func test_prime_pages_take_the_window_slot() -> void:
+	var view: Node2D = PrimeViewScene.instantiate()
+	var host := Control.new()
+	host.size = Vector2(400, 240)
+	add_child_autofree(host)
+	host.add_child(view)
+	view.settings_view.messages = {213: "环境设定"}
+	view.present({"scene": RuntimeConstants.SETTINGS, "window_state": 2})
+	assert_eq(UiWindows.top(Manager.Kind.WINDOW), view, "环境设定页占窗口槽")
+	var shade: Control = UiWindows.shade()
+	assert_eq(shade.get_index() + 1, view.get_index(), "背景层排在 PrimeView 前面")
+	view.present({"scene": RuntimeConstants.TITLE, "window_state": 0,
+		"menu_open": true, "frame": 0})
+	assert_false(UiWindows.any_open(), "回标题页就出栈")
+	assert_eq(UiWindows.top(Manager.Kind.WINDOW), null)

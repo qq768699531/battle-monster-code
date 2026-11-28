@@ -36,14 +36,15 @@ const LOGICAL_SIZE := Vector2(400, 240)
 ## 入栈顺序（栈底在前）。`host` 记入栈时的父节点：出栈时窗层可能已经被换父或释放。
 var _entries: Array[Dictionary] = []
 ## 管理器自己收起的窗层：紧随其后的 `visibility_changed` 不算调用方关窗。
-var _manager_hidden: Array[Control] = []
+var _manager_hidden: Array[CanvasItem] = []
 ## 整个栈共用的背景层；最后一扇窗层收起后保留实例、只隐藏，下次开窗接着用。
 var _shade: ScreenShade
 
 
 ## 窗层入栈。同一宿主同一类里已经有一扇时按 `previous` 收起它，再让 `layer` 成为新的栈顶。
 ## 重复入栈同一层只刷新背景（页面重开动画时不该再顶掉自己）。
-func push(layer: Control, kind: Kind, previous: Previous = Previous.DISMISS) -> bool:
+## `layer` 是 `CanvasItem`：`WindowTransition`（Control）与自绘全屏页（Node2D，如 PrimeView）都能登记。
+func push(layer: CanvasItem, kind: Kind, previous: Previous = Previous.DISMISS) -> bool:
 	if layer == null or not is_instance_valid(layer):
 		return false
 	if _index_of(layer) >= 0:
@@ -66,7 +67,7 @@ func push(layer: Control, kind: Kind, previous: Previous = Previous.DISMISS) -> 
 
 ## 窗层出栈：若它当时是该宿主该类的栈顶，栈里剩下的最新一扇（被 `KEEP_HIDDEN` 收起的）
 ## 恢复显示，再把背景层挪到新的最底层下面。
-func pop(layer: Control) -> void:
+func pop(layer: CanvasItem) -> void:
 	var index := _index_of(layer)
 	if index < 0:
 		return
@@ -79,15 +80,15 @@ func pop(layer: Control) -> void:
 	var latest := _latest(int(entry.kind), entry.host)
 	if latest >= 0 and bool(_entries[latest].hidden):
 		_entries[latest].hidden = false
-		var older: Control = _entries[latest].layer
+		var older: CanvasItem = _entries[latest].layer
 		if is_instance_valid(older):
 			older.show()
 	_sync_shade()
 
 
 ## 该类当前可见的栈顶（`KEEP_HIDDEN` 收起的层不算）。
-func top(kind: Kind) -> Control:
-	var found: Control = null
+func top(kind: Kind) -> CanvasItem:
+	var found: CanvasItem = null
 	for entry: Dictionary in _entries:
 		if int(entry.kind) == int(kind) and not bool(entry.hidden):
 			found = entry.layer
@@ -97,7 +98,7 @@ func top(kind: Kind) -> Control:
 ## 当前是否还有可见的窗口／确认框（野外据此停住推进）。
 func any_open() -> bool:
 	for entry: Dictionary in _entries:
-		var layer: Control = entry.layer
+		var layer: CanvasItem = entry.layer
 		if is_instance_valid(layer) and layer.is_visible_in_tree():
 			return true
 	return false
@@ -127,7 +128,7 @@ func _supersede(host: Node, kind: Kind, previous: Previous) -> void:
 ## 管理器收回一扇窗层的可见性。`_manager_hidden` 只在这一帧生效：随后的
 ## `visibility_changed` 由 `_on_visibility_changed` 忽略，不会把它当成关窗。
 func _hide_by_manager(entry: Dictionary) -> void:
-	var layer: Control = entry.layer
+	var layer: CanvasItem = entry.layer
 	entry.hidden = true
 	if not is_instance_valid(layer) or not layer.visible:
 		return
@@ -136,7 +137,7 @@ func _hide_by_manager(entry: Dictionary) -> void:
 	_manager_hidden.erase(layer)
 
 
-func _on_visibility_changed(layer: Control) -> void:
+func _on_visibility_changed(layer: CanvasItem) -> void:
 	if _index_of(layer) < 0 or _manager_hidden.has(layer):
 		return
 	if is_instance_valid(layer) and not layer.is_visible_in_tree():
@@ -145,7 +146,7 @@ func _on_visibility_changed(layer: Control) -> void:
 		_sync_shade()
 
 
-func _on_tree_exited(layer: Control) -> void:
+func _on_tree_exited(layer: CanvasItem) -> void:
 	pop(layer)
 
 
@@ -162,11 +163,11 @@ func _sync_shade() -> void:
 
 
 ## 最底层的可见窗层：按有效 `z_index` 取最小，同值取先入栈的（树序＝绘制序）。
-func _bottom_layer() -> Control:
-	var bottom: Control = null
+func _bottom_layer() -> CanvasItem:
+	var bottom: CanvasItem = null
 	var bottom_z := 0
 	for entry: Dictionary in _entries:
-		var layer: Control = entry.layer
+		var layer: CanvasItem = entry.layer
 		if not is_instance_valid(layer) or not layer.is_visible_in_tree():
 			continue
 		var z := _effective_z(layer)
@@ -197,7 +198,7 @@ func _ensure_shade() -> ScreenShade:
 
 ## 把背景层摆到 `layer` 前面一格：同父节点、同 `z_index`，所以它压住窗层下面的场景，
 ## 又不会盖住窗层本身；确认框是窗层的子节点时也仍然在这张背景之上。
-func _mount_under(shade_instance: ScreenShade, layer: Control) -> void:
+func _mount_under(shade_instance: ScreenShade, layer: CanvasItem) -> void:
 	var parent := layer.get_parent()
 	if parent == null:
 		return
@@ -218,7 +219,7 @@ func _mount_under(shade_instance: ScreenShade, layer: Control) -> void:
 	shade_instance.global_position = Vector2.ZERO
 
 
-func _index_of(layer: Control) -> int:
+func _index_of(layer: CanvasItem) -> int:
 	for index in range(_entries.size()):
 		if _entries[index].layer == layer:
 			return index

@@ -141,13 +141,13 @@ func open_window() -> void:
 
 
 ## 任何窗口（包括菜单这种自绘全屏页）都通过这里登记：`kind` 决定它占窗口还是确认框的槽。
-static func register_window(window: Control) -> void:
+static func register_window(window: CanvasItem) -> void:
 	var manager := _window_manager()
 	if manager != null:
 		manager.call("push", window, _slot_kind(window), UiWindowManager.Previous.DISMISS)
 
 
-static func unregister_window(window: Control) -> void:
+static func unregister_window(window: CanvasItem) -> void:
 	var manager := _window_manager()
 	if manager != null:
 		manager.call("pop", window)

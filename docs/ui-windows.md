@@ -52,6 +52,9 @@
 - **自绘全屏页**（例如菜单 `menu_view`）：页面自己判断可见性，调用
   `WindowTransition.register_window(self)` / `unregister_window(self)`，和 `WindowTransition`
   占同一个窗口槽。
+- **主菜单子页**（`game/prime/startup/prime_view`）：环境设定／帮助／支持／网络连接与两张网络
+  提示页共用同一个 `PrimeView` 节点换页画，换页不发 `visibility_changed`，所以在 `present()`
+  末尾按 `paint.scene` 显式 `register_window` / `unregister_window`；标题页与存档槽页不登记。
 - **冻结判据**：`WindowTransition.any_open()` 转发到 `UiWindows.any_open()`，野外据此停住推进
   （`field_runtime` 的 `_field_paused()`）。
 
@@ -60,4 +63,5 @@
 ## 5. 验证
 
 `tests/unit/test_window_manager.gd` 覆盖：背景层紧贴窗层前面、第二个窗口顶掉第一个、
-确认框与窗口共存、`keep_previous` 的恢复、最后一扇收起后背景层与冻结判据一起复位。
+确认框与窗口共存、`keep_previous` 的恢复、最后一扇收起后背景层与冻结判据一起复位，
+以及主菜单子页（`PrimeView` 换页）按窗口登记／出栈。
