@@ -38,12 +38,18 @@ func test_startup_reports_no_errors() -> void:
 	assert_eq(_assets.get_startup_errors(), [], "启动期没有资源错误")
 
 
-## 点阵字库没有「娲」「樨」两字（精灵 20／60 的名字），主题必须挂一个 CJK 回退字体，
-## 否则整条名字在 `native_label` 里报缺字并不绘制。
-func test_native_label_has_cjk_fallback() -> void:
+## 点阵字库补齐「娲」「樨」两字后不再挂系统字体回退：缺字就当场暴露，不靠回退掩盖。
+func test_native_label_uses_the_pixel_font_without_fallback() -> void:
 	var theme: Theme = load("res://engine/ui/native_label/ui_theme.tres")
-	var font := theme.default_font as FontVariation
-	assert_true(font != null and not font.fallbacks.is_empty(), "原生点阵字挂了回退字体")
+	var font: Font = theme.default_font
+	assert_not_null(font, "主题挂了字体")
+	assert_eq(String(font.resource_path),
+		"res://engine/ui/theme/boutique-bitmap-regular-proportional-10px-round.ttf", "回到 10px 点阵字")
+	assert_eq(font.fallbacks.size(), 0, "不再有缺字回退")
+	# 旧点阵字缺的正是这几个字：新字库必须自带，否则等于把问题从“回退掩盖”换成“画不出来”。
+	for text: String in ["女娲", "木樨兽", "狼毛"]:
+		for character: String in text:
+			assert_true(font.has_char(character.unicode_at(0)), "新字库含「%s」" % character)
 	assert_eq(_assets.text_message("common/item_mon.dat", "item_mon.group.59.name"), "木樨兽",
 		"No.060 的名字仍有原文，不靠改词规避缺字")
 	assert_eq(_assets.text_message("common/item_mon.dat", "item_mon.group.19.name"), "女娲",
