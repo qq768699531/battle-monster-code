@@ -8,7 +8,7 @@ const Battle = preload("res://game/battle/combat/battle.gd")
 const Story = preload("res://engine/data/story/story.gd")
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
-const PlayerData = preload("res://engine/data/player_data/player_data.gd")
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 const MENU_WINDOW := {"x": 86, "y": 0, "width": 228, "height": 240}
 const MENU_TABS := ["status", "items", "party", "quests", "options", "network"]
 const TAB_NATIVE_INDICES := [0, 1, 2, 3, 5, 4]
@@ -120,10 +120,10 @@ static func native_item_explanation(item: Dictionary, text: Callable) -> String:
 
 
 static func native_party_order(progress: Dictionary) -> Array:
-	var recorded: Variant = progress.get("partyOrder")
+	var recorded: Variant = SaveData.party_order(progress)
 	if recorded is Array:
 		return recorded.duplicate()
-	var monsters: Array = progress.get("monsters", [])
+	var monsters: Array = SaveData.monsters(progress)
 	var order: Array = []
 	for index in range(mini(PARTY_MEMBER_MAX, monsters.size())):
 		order.append(index)
@@ -153,7 +153,7 @@ static func leave_party(progress: Dictionary, index: int) -> Dictionary:
 
 
 static func discard_party_member(progress: Dictionary, index: int) -> Dictionary:
-	var monsters: Variant = progress.get("monsters")
+	var monsters: Variant = SaveData.monsters(progress)
 	if not monsters is Array or index < 0 or index >= monsters.size() or \
 			not monsters[index] is Dictionary:
 		return {"ok": false, "error": "此成员不存在"}
@@ -174,7 +174,7 @@ static func discard_party_member(progress: Dictionary, index: int) -> Dictionary
 static func party_points(progress: Dictionary, catalog: GameplayData, order: Array) -> Variant:
 	if order.is_empty():
 		return 0
-	var monsters: Variant = progress.get("monsters")
+	var monsters: Variant = SaveData.monsters(progress)
 	if not monsters is Array:
 		return null
 	var points := 0
@@ -242,7 +242,7 @@ static func standard_level(progress: Dictionary) -> int:
 ## 原生 `Ball_stdIsPartyOn`：队伍满（−2／`msg 470`）、PARTY 点超上限（−3／`msg 471`）、
 ## 等级差超过 5（−4／`msg 559`）三条拒绝分支，其余返回已出战的只数。
 static func join_party(progress: Dictionary, catalog: GameplayData, index: int) -> Dictionary:
-	var monsters: Variant = progress.get("monsters")
+	var monsters: Variant = SaveData.monsters(progress)
 	if not monsters is Array or index < 0 or index >= monsters.size() or \
 			not monsters[index] is Dictionary:
 		return {"ok": false, "error": "此成员不存在"}
@@ -388,7 +388,7 @@ static func _status_development(progress: Dictionary) -> Dictionary:
 
 static func equip_party_member(progress: Dictionary, catalog: GameplayData,
 		member_index: int, item_id: int) -> Dictionary:
-	var monsters: Variant = progress.get("monsters", [])
+	var monsters: Variant = SaveData.monsters(progress)
 	if not monsters is Array or \
 			member_index < 0 or member_index >= monsters.size() or \
 			not monsters[member_index] is Dictionary:
@@ -437,7 +437,7 @@ static func equip_party_member(progress: Dictionary, catalog: GameplayData,
 
 static func unequip_party_member(progress: Dictionary, catalog: GameplayData,
 		member_index: int) -> Dictionary:
-	var monsters: Variant = progress.get("monsters", [])
+	var monsters: Variant = SaveData.monsters(progress)
 	if not monsters is Array or \
 			member_index < 0 or member_index >= monsters.size() or \
 			not monsters[member_index] is Dictionary:
@@ -465,7 +465,7 @@ static func unequip_party_member(progress: Dictionary, catalog: GameplayData,
 			occupied += quantity
 			if id == item_id and inventory_key.is_empty():
 				inventory_key = key
-	if occupied >= PlayerData.item_capacity(progress, PlayerData.EQUIPMENT_BAG):
+	if occupied >= SaveData.item_capacity(progress, SaveData.EQUIPMENT_BAG):
 		return {"ok": false, "error": "装备背包已满，未卸下装备"}
 	var next_args: Array = args.duplicate()
 	next_args[3] = -1
@@ -480,7 +480,7 @@ static func unequip_party_member(progress: Dictionary, catalog: GameplayData,
 
 
 static func native_member_details(progress: Dictionary, catalog: GameplayData, index: int) -> Dictionary:
-	var monsters: Array = progress.get("monsters", [])
+	var monsters: Array = SaveData.monsters(progress)
 	if index < 0 or index >= monsters.size() or not monsters[index] is Dictionary:
 		return {"ok": false, "error": "成员不存在"}
 	var member: Dictionary = monsters[index]
@@ -562,7 +562,7 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 		item_id: int, member_index: int, random_seed: int = -1) -> Dictionary:
 	# 原生二级选择是 `Menu_Party_Draw` 的 `Ball_bagList`：全部持有精灵都能当目标，
 	# 不限于 `partyOrder` 的三只出战队伍。
-	var monsters: Variant = progress.get("monsters")
+	var monsters: Variant = SaveData.monsters(progress)
 	# `member_index < 0` = 原生第二层状态 5 的 `Ball_stdUseEx(0, 0, record)`：不选精灵。
 	var direct := member_index < 0
 	if not monsters is Array or (not direct and (member_index >= monsters.size() or \
@@ -619,7 +619,7 @@ static func use_item(progress: Dictionary, catalog: GameplayData,
 	# 第 7 组 9–12：原生 `Ball_stdAddEx` 成功才 `v6 = 1` 扣道具；怪包满时返回 22、不扣。
 	var generated_monster: Variant = result.get("generated_monster")
 	if generated_monster is Dictionary:
-		if monsters.size() >= PlayerData.monster_capacity(progress):
+		if monsters.size() >= SaveData.monster_capacity(progress):
 			return _generated_failure(selected, member_index, ItemEffect.Code.RANDOM_BALL_FULL)
 		var species := int(generated_monster.get("species", 0))
 		monsters.append(_generated_monster_record(generated_monster, random_seed))
@@ -846,7 +846,7 @@ static func material_recipe_possible(progress: Dictionary, item: Dictionary) -> 
 ## 已登记偏差：第 4 组的合成效果还没落地，原生是「先扣钱再见效果」，这里在扣钱之前先问
 ## `ItemEffect.supports`，不支持就直接返回提示、不扣钱，避免白扣 200。
 static func mix_item(progress: Dictionary, item: Dictionary, member_index: int) -> Dictionary:
-	var monsters: Variant = progress.get("monsters")
+	var monsters: Variant = SaveData.monsters(progress)
 	if not monsters is Array or member_index < 0 or member_index >= monsters.size() or \
 			not monsters[member_index] is Dictionary:
 		return {"ok": false, "error": "此精灵不在当前队伍中"}
@@ -951,7 +951,7 @@ static func _add_generated_item(progress: Dictionary, item_id: int, count := 1) 
 		return false
 	var key := str(item_id)
 	var current := int(inventory.get(key, 0))
-	var capacity := PlayerData.item_capacity(progress, bag)
+	var capacity := SaveData.item_capacity(progress, bag)
 	var occupied := _generated_stack_slots(current + count, ItemKind.max_stack(type, index))
 	for other: Variant in inventory:
 		var other_key := str(other)

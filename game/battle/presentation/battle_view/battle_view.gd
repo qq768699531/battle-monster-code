@@ -1,5 +1,5 @@
 extends Control
-const PlayerData = preload("res://engine/data/player_data/player_data.gd")
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 
 const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
 ## The caller supplies the encounter and resources; settlement remains caller-owned.
@@ -1183,8 +1183,8 @@ func _say_monster_obtained() -> void:
 		return
 	# 原生 `Ball_stdAdd` 在怪物背包满时返回空指针，`Ball_stdAddEx` 也就不推这条提示；
 	# 本工程的入包推迟到战斗结束，所以用同一条容量规则先判一次（`_captures` 已含本次）。
-	var capacity := int(PlayerData.monster_capacity(_progress))
-	var monsters: Variant = _progress.get("monsters")
+	var capacity := int(SaveData.monster_capacity(_progress))
+	var monsters: Variant = SaveData.monsters(_progress)
 	if capacity > 0 and monsters is Array and monsters.size() + _captures.size() > capacity:
 		return
 	var species := int(_capture_ball.get("species", 0))

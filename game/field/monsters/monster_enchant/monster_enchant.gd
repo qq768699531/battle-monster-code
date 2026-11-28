@@ -1,4 +1,5 @@
 extends "res://game/field/monsters/monster_work_window/monster_work_window.gd"
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 
 ## 原生 `GAME_STATE_MONSTER_ENCHANT`（23，`GameCanvas` 落点页；精灵管理所游标 1 的 −5 进入）：
 ## `Game_Monster_Enchant_init` 建显示表（`Game_Monster_SetList(1)`＝含出战精灵的整包）、
@@ -80,7 +81,7 @@ func present(story: Object, assets: Node) -> void:
 	$Content/Confirm/FeeLabel.text = _text(Msg.Id.MONSTER_ENCHANT_FEE)
 	$Content/Confirm/Percent.configure(assets)
 	$Content/ListCount.configure(assets)
-	_monsters = story.progress.get("monsters", [])
+	_monsters = SaveData.monsters(story.progress)
 	_rebuild_items()
 	_refresh()
 	show()
@@ -339,7 +340,7 @@ func _refresh() -> void:
 
 ## 出战位（`partyOrder` 里的下标）画角标。
 func _monster_marked(slot: int, _entry: Dictionary) -> bool:
-	var order: Array = _story.progress.get("partyOrder", [])
+	var order: Array = SaveData.party_order(_story.progress)
 	return order.has(slot)
 
 

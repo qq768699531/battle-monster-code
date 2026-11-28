@@ -1,4 +1,5 @@
 extends Node2D
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 
 ## 可行动状态（地图）的总控：驱动 Story、角色绘制、镜头、HUD、菜单与战斗的切换。
 ## 对应原生 Field_Basic / Map_* / Evt_* 这一层；具体规则由 story.gd 与各模型脚本承担，
@@ -3359,7 +3360,7 @@ func _menu_progress_changed(progress: Dictionary) -> void:
 		_reject_menu_progress()
 		return
 	var candidate: Dictionary = story.progress.duplicate(true)
-	var party_order: Variant = progress.get("partyOrder")
+	var party_order: Variant = SaveData.party_order(progress)
 	if party_order is Array:
 		candidate["partyOrder"] = party_order.duplicate()
 	else:
@@ -3382,8 +3383,8 @@ func _menu_progress_changed(progress: Dictionary) -> void:
 			_reject_menu_progress()
 			return
 	else:
-		var gear_changes: Variant = _menu_equipment_changes(story.progress.get("monsters"),
-			progress.get("monsters"))
+		var gear_changes: Variant = _menu_equipment_changes(SaveData.monsters(story.progress),
+			SaveData.monsters(progress))
 		if gear_changes == null or \
 				not _menu_snapshot_matches_except_mutations(story.progress, progress):
 			_reject_menu_progress()
@@ -3411,8 +3412,8 @@ func _menu_progress_changed(progress: Dictionary) -> void:
 
 
 func _menu_expected_discard_progress(proposed: Dictionary) -> Dictionary:
-	var before: Variant = story.progress.get("monsters")
-	var after: Variant = proposed.get("monsters")
+	var before: Variant = SaveData.monsters(story.progress)
+	var after: Variant = SaveData.monsters(proposed)
 	if not before is Array or not after is Array or before.size() != after.size() + 1:
 		return {}
 	for index in range(before.size()):
@@ -3446,7 +3447,7 @@ func _menu_party_order_valid(proposed: Dictionary) -> bool:
 
 
 func _menu_expected_item_use(proposed: Dictionary, item_id: int) -> Dictionary:
-	var monsters: Variant = story.progress.get("monsters", [])
+	var monsters: Variant = SaveData.monsters(story.progress)
 	for member_index in range(monsters.size() if monsters is Array else 0):
 		var candidate: Dictionary = story.progress.duplicate(true)
 		var result := MenuModel.use_item(candidate, menu_view.gameplay_catalog,
@@ -3465,8 +3466,8 @@ func _menu_snapshot_matches_except_mutations(live: Dictionary, proposed: Diction
 		state.erase("monsters")
 	if expected != actual:
 		return false
-	var live_monsters: Variant = live.get("monsters")
-	var proposed_monsters: Variant = proposed.get("monsters")
+	var live_monsters: Variant = SaveData.monsters(live)
+	var proposed_monsters: Variant = SaveData.monsters(proposed)
 	if not live_monsters is Array or not proposed_monsters is Array or \
 			live_monsters.size() != proposed_monsters.size():
 		return false

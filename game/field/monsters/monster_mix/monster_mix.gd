@@ -1,4 +1,5 @@
 extends "res://game/field/monsters/monster_work_window/monster_work_window.gd"
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 
 ## 原生 `GAME_STATE_MONSTER_MIX`（22，精灵管理所游标 0 的 −5 进入）：
 ## `Game_Monster_Mix_init` 清四个选中槽 → `Game_Monster_SetList(0)`（**排除**出战三只）
@@ -380,8 +381,8 @@ func _choose(index: int) -> void:
 ## `Game_Monster_SetList(0)`：`Ball_bagList` 的顺序里**排除**出战三只。
 func _rebuild_monsters() -> void:
 	_monsters.clear()
-	var order: Array = _story.progress.get("partyOrder", [])
-	var monsters: Array = _story.progress.get("monsters", [])
+	var order: Array = SaveData.party_order(_story.progress)
+	var monsters: Array = SaveData.monsters(_story.progress)
 	for index in range(monsters.size()):
 		if order.has(index) or not monsters[index] is Dictionary:
 			continue
@@ -519,7 +520,7 @@ func _percent() -> int:
 
 
 func _monster_record(index: int) -> Dictionary:
-	var monsters: Array = _story.progress.get("monsters", [])
+	var monsters: Array = SaveData.monsters(_story.progress)
 	if index < 0 or index >= monsters.size() or not monsters[index] is Dictionary:
 		return {}
 	return monsters[index]

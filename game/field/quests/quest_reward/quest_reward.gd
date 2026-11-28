@@ -1,4 +1,5 @@
 extends RefCounted
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 ## 原生 `Field_Quest_Complete_SetResult` 的奖励模型。
 ##
 ## 任务完成页（状态 11）整页复用战斗结算窗（`Battle_Win_mPaint`／`mRun`／`mKeyPressed`），
@@ -59,7 +60,7 @@ func _build_rows(progress: Dictionary) -> void:
 	var hero_level := int(parameter.get("level", 1))
 	rows.append(BattleSettlement.make_row("hero", -1, -1, 0, hero_level,
 		int(development.get("experience", 0))))
-	var monsters: Array = progress.get("monsters", [])
+	var monsters: Array = SaveData.monsters(progress)
 	var order: Array = MenuModel.native_party_order(progress)
 	for slot in range(mini(3, order.size())):
 		var index := int(order[slot])
@@ -146,7 +147,7 @@ func apply(progress: Dictionary, catalog: GameplayData) -> Dictionary:
 				gains[slot] = attribute_experience
 			BattleSettlement.add_mastery_experience(development, gains,
 				BattleSettlement.preferred_mastery(progress))
-	var monsters: Array = progress.get("monsters", [])
+	var monsters: Array = SaveData.monsters(progress)
 	for index in range(1, rows.size()):
 		var row: Dictionary = rows[index]
 		var member_index := int(row.member_index)

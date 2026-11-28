@@ -49,7 +49,7 @@ enum OptionSavePhase {
 # Box2 弹窗的几何（`Menu_win_Box2_DrawWindow`）：宽是 `Menu_win_Box2_DrawMessage` 的立即数 0xA0（160），
 # 高 `13 × 行数 + 18`（纯消息）／`13 × 行数 + 44`（带确认按钮），在 400×240 里居中。
 # 窗宽与窗高都由 `components/box2_prompt` 按 `confirm_layout.gd` 的公式算，本文件不摆窗口几何。
-const PlayerData = preload("res://engine/data/player_data/player_data.gd")
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 ## 该袋在原生道具列表里只有一行（袋号 3 本身的含义未确认，这里只记录列表高度差异）。
 const ITEM_SINGLE_ROW_BAG := 3
 const WINDOW_RULE := Color("#196485")
@@ -60,7 +60,7 @@ var story_progress: Dictionary = {}
 var last_progress_operation: Dictionary = {}
 func item_capacity(category: int = -1) -> int:
 	var bag := selected_bag_category if category < 0 else category
-	return PlayerData.item_capacity(story_progress, bag)
+	return SaveData.item_capacity(story_progress, bag)
 
 
 ## 原生 `Menu_Option_mKeyPressed:37-40`：`ParamData.current_event_resource_id <= 2` 时存档项
@@ -474,7 +474,7 @@ func open_party_discard() -> void:
 func open_party_equipment() -> void:
 	if party_equip_open:
 		return
-	var monsters: Variant = story_progress.get("monsters", [])
+	var monsters: Variant = SaveData.monsters(story_progress)
 	if not monsters is Array or selected_party_member_index < 0 or \
 			selected_party_member_index >= monsters.size():
 		return
@@ -843,7 +843,7 @@ func use_selected_item() -> bool:
 		progress_changed.emit(story_progress.duplicate(true))
 		_render_content()
 		return true
-	var monsters: Variant = story_progress.get("monsters")
+	var monsters: Variant = SaveData.monsters(story_progress)
 	if not monsters is Array or monsters.is_empty():
 		notice = "当前没有可选择的精灵。"
 		_render_content()
@@ -934,7 +934,7 @@ func confirm_item_target() -> bool:
 	if not item_target_open:
 		return false
 	# 与 PARTY 页一致：光标停在没有记录的格位时 OK 什么也不做（原生 `n2 > ::n2` 直接返回）。
-	var monsters: Variant = story_progress.get("monsters")
+	var monsters: Variant = SaveData.monsters(story_progress)
 	if not monsters is Array or selected_party_member_index < 0 or \
 			selected_party_member_index >= monsters.size():
 		return false
@@ -996,7 +996,7 @@ func use_selected_item_on_target() -> bool:
 	if not item_target_open:
 		return false
 	var item := item_target_item
-	var monsters: Variant = story_progress.get("monsters")
+	var monsters: Variant = SaveData.monsters(story_progress)
 	if item.is_empty() or _item_target_quantity(item) <= 0:
 		# 原生 `Ball_stdUseEx` 的 default 分支：道具已用完／不可用只提示 510，不关窗。
 		notice = _menu_text(Msg.Id.ITEM_UNUSABLE)
@@ -1252,7 +1252,7 @@ func _item_visible_rows() -> int:
 
 
 func _party_display_members() -> Array[int]:
-	var monsters: Variant = story_progress.get("monsters", [])
+	var monsters: Variant = SaveData.monsters(story_progress)
 	var members: Array[int] = []
 	if monsters is Array:
 		for index in range(monsters.size()):

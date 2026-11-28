@@ -13,7 +13,7 @@ const BattleSettlementModel = preload("res://game/battle/combat/battle_settlemen
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const MapEffectCatalog = preload("res://game/field/map/map_effect.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
-const PlayerData = preload("res://engine/data/player_data/player_data.gd")
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 const QuestLogModel = preload("res://game/field/quests/quest_log/quest_log.gd")
 ## 事件记录的等待、淡入淡出、闪光与抖动都按帧计数（`Evt_stdPROC` 的 `step_count`），
 ## 折成秒一律乘 `FramePacing.NATIVE_FRAME_SECONDS`（原生默认档 50 ms/帧，
@@ -344,8 +344,8 @@ static func initial_progress(slot: int, trait_value: int = -1) -> Dictionary:
 			"warp_saved_map_id": WARP_SAVED_MAP_INITIAL,
 			"warp_saved_tile_x": WARP_SAVED_TILE_INITIAL,
 			"warp_saved_tile_y": WARP_SAVED_TILE_INITIAL},
-		"itemCapacity": PlayerData.initial_item_capacities(),
-		"monsterCapacity": PlayerData.INITIAL_MONSTER_CAPACITY,
+		"itemCapacity": SaveData.initial_item_capacities(),
+		"monsterCapacity": SaveData.INITIAL_MONSTER_CAPACITY,
 		"inventory": {}, "monsters": [], "extraNpcs": [], "camera": null,
 		"book": {Book.BOOK_MONSTERS: [], Book.BOOK_SKILLS: []},
 		"quests": QuestLogModel.empty_dict(),
@@ -504,7 +504,7 @@ static func validate_progress(value: Variant, slot: int) -> bool:
 				["emotionRevision", MAX_SAFE_INTEGER], ["lastDirection", 255]]:
 			if a.has(pair[0]) and not _uint(a[pair[0]], pair[1]):
 				return false
-	if not p.get("monsters") is Array or p["monsters"].size() > 20:
+	if not SaveData.monsters(p) is Array or p["monsters"].size() > 20:
 		return false
 	for m: Variant in p["monsters"]:
 		if not m is Dictionary or not _uint(m.get("species")) or not _uint(m.get("level"), 99) or \
@@ -531,7 +531,7 @@ static func validate_progress(value: Variant, slot: int) -> bool:
 		if not _integer_array(row, 5) or not row.all(func(n: int) -> bool: return _uint(n, 255)):
 			return false
 	var item_caps: Variant = p.get("itemCapacity")
-	if not item_caps is Array or item_caps.size() != PlayerData.BAG_COUNT:
+	if not item_caps is Array or item_caps.size() != SaveData.BAG_COUNT:
 		return false
 	for cap: Variant in item_caps:
 		if not cap is int or cap < 0:
@@ -720,7 +720,7 @@ func initialize(continuing: bool = false) -> void:
 		legacy_development["masteryExperience"] = MonsterAttribute.zero_points()
 	# 老存档的怪物记录没有 BRAIN 这两项：按 `Ball_stdSet` 建记录的初值补
 	# （`brain_limit` 恒 99、`brain_current` 由调用方给，事件 0x1F 那支传 0）。
-	for legacy_member: Variant in progress.get("monsters", []):
+	for legacy_member: Variant in SaveData.monsters(progress):
 		if legacy_member is Dictionary:
 			if not legacy_member.has("brainCurrent"):
 				legacy_member["brainCurrent"] = Battle.BRAIN_CURRENT_INITIAL
@@ -1262,7 +1262,7 @@ func _recruit_starter(index: int) -> bool:
 		if catalog.monster(species) == null:
 			_block("缺少原物种 %d" % species)
 			return false
-	if progress["monsters"].size() + recruits.size() > PlayerData.monster_capacity(progress):
+	if progress["monsters"].size() + recruits.size() > SaveData.monster_capacity(progress):
 		_block("原怪物背包已满")
 		return false
 	Book.reset_records(progress)
@@ -1575,7 +1575,7 @@ func _instruction(opcode: int, p: Array) -> bool:
 			if catalog == null or catalog.monster(int(p[0])) == null:
 				_block("缺少原物种 %d" % p[0])
 				return false
-			if s["monsters"].size() >= PlayerData.monster_capacity(s):
+			if s["monsters"].size() >= SaveData.monster_capacity(s):
 				_block("原怪物背包已满")
 				return false
 			# 同一支 `Ball_stdSet`：`feel_value` 与 `brain_current` 都传 0、`food_value` 写死 100、
@@ -1725,7 +1725,7 @@ func _heal_party(hp_percent: int, sp_percent: int) -> bool:
 func restore_downed_monsters() -> int:
 	if _disposed or progress.is_empty():
 		return 0
-	var monsters: Variant = progress.get("monsters")
+	var monsters: Variant = SaveData.monsters(progress)
 	if not monsters is Array:
 		return 0
 	var restored := 0
@@ -1741,7 +1741,7 @@ func restore_downed_monsters() -> int:
 
 ## 出战队伍（原生 `ItemData.party_monsters[0..2]`）。
 func _party_indices() -> Array:
-	var recorded: Variant = progress.get("partyOrder")
+	var recorded: Variant = SaveData.party_order(progress)
 	if recorded is Array:
 		return recorded
 	var order: Array = []
@@ -1950,7 +1950,7 @@ func _add_inventory_item(item_id: int, quantity: int, blocking := true) -> bool:
 				_item_max_stack(existing_type, existing_index))
 	var final_slots := occupied + _stack_slots(previous + quantity,
 		_item_max_stack(type, index))
-	if final_slots > PlayerData.item_capacity(progress, bag):
+	if final_slots > SaveData.item_capacity(progress, bag):
 		_inventory_block("原物品包已满（分类 %d）" % bag, blocking)
 		return false
 	if existing_key.is_empty():
@@ -2332,7 +2332,7 @@ func capture_monster(record: Dictionary) -> String:
 	if _disposed or progress.is_empty():
 		return "存档尚未载入"
 	var monsters: Array = progress["monsters"]
-	if monsters.size() >= PlayerData.monster_capacity(progress):
+	if monsters.size() >= SaveData.monster_capacity(progress):
 		return "怪物背包已满，捕获到的精灵没有入包"
 	monsters.append(record)
 	Book.discover_monster(progress, int(record["species"]))
@@ -2373,7 +2373,7 @@ func _start_battle(id: int) -> bool:
 	if config == null or config.constructors.size() != 3:
 		_block("缺少原脚本战斗配置 %d" % id)
 		return false
-	_battle_order = progress.get("partyOrder", range(mini(3, progress["monsters"].size()))).duplicate()
+	_battle_order = SaveData.party_order(progress).duplicate()
 	if _battle_order.size() != 3:
 		_block("原脚本战斗 %d 需要三名出战队员；当前队伍不足" % id)
 		return false

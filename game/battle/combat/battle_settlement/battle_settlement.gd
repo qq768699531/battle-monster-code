@@ -18,7 +18,7 @@ const Battle = preload("res://game/battle/combat/battle.gd")
 const Book = preload("res://game/menu/book/book_model/book_model.gd")
 const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
-const PlayerData = preload("res://engine/data/player_data/player_data.gd")
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 
 ## `Param_expINIT`：主角 `65 × 等级²`；`Ball_stdEXPS`：队员同一条公式。
 const EXPERIENCE_PER_LEVEL := 65
@@ -233,7 +233,7 @@ func _build_rows(progress: Dictionary) -> void:
 	rows.append(make_row("hero", -1, -1, 0, hero_level,
 		int(development.get("experience", 0))))
 	var order: Array = MenuModel.native_party_order(progress)
-	var monsters: Array = progress.get("monsters", [])
+	var monsters: Array = SaveData.monsters(progress)
 	for slot in range(3):
 		if slot >= order.size():
 			break
@@ -643,7 +643,7 @@ func apply(progress: Dictionary, add_item := Callable()) -> Dictionary:
 		development.points = int(development.get("points", 0)) + int(hero.points)
 		add_mastery_experience(development, mastery_experience,
 			preferred_mastery(progress))
-	var monsters: Array = progress.get("monsters", [])
+	var monsters: Array = SaveData.monsters(progress)
 	for index in range(1, rows.size()):
 		var row: Dictionary = rows[index]
 		var member_index := int(row.member_index)
@@ -709,7 +709,7 @@ func _add_item(progress: Dictionary, item_id: int, count: int) -> bool:
 		return false
 	var key := str(item_id)
 	var previous := int(inventory.get(key, 0))
-	var capacity := PlayerData.item_capacity(progress, bag)
+	var capacity := SaveData.item_capacity(progress, bag)
 	var occupied := 0
 	for entry: Variant in inventory:
 		if str(entry) == key:

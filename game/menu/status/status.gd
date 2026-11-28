@@ -1,4 +1,5 @@
 extends Control
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 ## 状态页：顶部页签下的人物/怪物切换与能力分配入口。
 
 const MonsterAttribute = preload("res://game/growth/monster_attribute/monster_attribute.gd")
@@ -137,7 +138,7 @@ func _render_status() -> void:
 			frame_index = 0 if host.status_navigation_open and host.selected_status_page == 0 else 7
 		elif slot <= order.size() and host.status_navigation_open and host.selected_status_page == slot:
 			var member_index := int(order[slot - 1])
-			var members: Variant = host.story_progress.get("monsters", [])
+			var members: Variant = SaveData.monsters(host.story_progress)
 			if members is Array and member_index >= 0 and member_index < members.size():
 				frame_index = host._member_attribute_group(members[member_index])
 				if frame_index < 1 or frame_index > 6:
@@ -173,7 +174,7 @@ func _render_status() -> void:
 		_render_hero(parameter, order)
 	else:
 		var member_index = int(order[host.selected_status_page - 1])
-		var members: Variant = host.story_progress.get("monsters", [])
+		var members: Variant = SaveData.monsters(host.story_progress)
 		var member: Variant = members[member_index] if members is Array and \
 			member_index >= 0 and member_index < members.size() else null
 		var details = host.Menu.native_member_details(host.story_progress, host.gameplay_catalog, member_index)

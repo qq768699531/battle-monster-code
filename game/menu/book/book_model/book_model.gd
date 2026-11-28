@@ -1,4 +1,5 @@
 extends RefCounted
+const SaveData = preload("res://engine/data/save_data/save_data.gd")
 
 ## 图鉴（原生 `Game_Book_List`／`Game_Book_Monster`／`Game_Book_Skill`）的数据投影与导航规则。
 ##
@@ -113,7 +114,7 @@ static func reset_records(progress: Dictionary) -> void:
 ## （直接写 `monsters`／`inventory`）时靠这一步补齐；幂等，返回新记录了几条。
 static func record_owned(progress: Dictionary) -> int:
 	var added := 0
-	var monsters: Variant = progress.get("monsters")
+	var monsters: Variant = SaveData.monsters(progress)
 	if monsters is Array:
 		for member: Variant in monsters:
 			if member is Dictionary and member.get("species") is int and \
