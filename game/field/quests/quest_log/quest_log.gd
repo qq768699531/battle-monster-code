@@ -153,9 +153,14 @@ func is_completed(quest_id: int) -> bool:
 	return quest_id >= 0 and quest_id <= COMPLETED_MAX and completed_ids.has(quest_id)
 
 
-## `Qst_stdQuest` 的第一段：在册且 `npc_id` 相同的槽直接返回它的任务号。
+## `Qst_stdQuest:12-21` 的第一段：在册且 `npc_id` 相同的槽直接返回它的任务号。
+## 槽序同 `Qst_icoGET`：普通槽 1..10 先，公会槽 0 最后。
 func active_for(npc_id: int) -> int:
-	for index in SLOT_COUNT:
+	var order: Array[int] = []
+	for index in range(SLOT_FIRST_NORMAL, SLOT_LAST_NORMAL + 1):
+		order.append(index)
+	order.append(SLOT_GUILD)
+	for index: int in order:
 		var slot: Dictionary = slots[index]
 		if not slot.is_empty() and int(slot["npc"]) == npc_id:
 			return int(slot["quest"])

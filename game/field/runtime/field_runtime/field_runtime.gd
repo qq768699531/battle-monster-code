@@ -1706,31 +1706,43 @@ func interact_npc() -> bool:
 			_stop("NPC %d 没有 NPC 绑定记录；未猜测对话编号。" % int(actor.id))
 			_refresh()
 			return false
-		var source := _npc_dialogue_source(int(actor.id))
+		var npc_id := int(actor.id)
+		var source := _npc_dialogue_source(npc_id)
 		if source.is_empty():
-			_stop("NPC %d 的地图节点没有声明 npc_dialogue；未猜测对话编号。" % int(actor.id))
+			_stop("NPC %d 的地图节点没有声明 npc_dialogue；未猜测对话编号。" % npc_id)
 			_refresh()
 			return false
-		var doc: Variant = _resources.call("load_dialogue", source) \
-			if _resources.has_method("load_dialogue") else null
-		if doc is Resource:
-			doc = doc.get_meta("payload", null)
-		if not doc is Dictionary or not doc.get("groups") is Array or doc.groups.is_empty() or \
-				not doc.groups[0] is Dictionary or not doc.groups[0].get("records") is Array or \
-				doc.groups[0].records.is_empty():
-			_stop("NPC 普通 CHT 组 0 缺失或契约不兼容：%s" % source)
+		# `Field_Basic_Chat:13-42`：`Qst_icoGET(npc_id)` 是 2／3／4 时**不读 NPC CHT**，
+		# 改读 `qst/qst%04d.cht`（任务号来自 `Qst_stdQuest`），组号 0／1／2 对应
+			# 可接／进行中／目标达成；读不到才回退到 NPC CHT 组 0。
+		var group := 0
+		var doc: Variant = null
+		var icon := _quest_icon_code(npc_id, story.event_step())
+		if icon in [2, 3, 4]:
+			var log: QuestLog = story.quest_log()
+			var table: QuestTable = _quest_table_resource()
+			var quest_id := -1
+			if log != null and table != null:
+				quest_id = log.offered(table, npc_id, _quest_context())
+			if quest_id >= 0:
+				var quest_source := "qst/qst%04d.cht" % quest_id
+				var quest_group := icon - 2
+				var quest_doc: Variant = _dialogue_doc(quest_source)
+				var quest_records: Array = _dialogue_records(quest_doc, quest_group)
+				if not quest_records.is_empty():
+					doc = quest_doc
+					source = quest_source
+					group = quest_group
+		if doc == null:
+			doc = _dialogue_doc(source)
+			group = 0
+		var records: Array = _dialogue_records(doc, group)
+		if records.is_empty():
+			_stop("NPC %d 的 CHT 组 %d 缺失或契约不兼容：%s" % [npc_id, group, source])
 			_refresh()
 			return false
-		for record: Variant in doc.groups[0].records:
-			if not record is Dictionary or not record.has("text") or \
-					not (record.text is String or \
-					(record.text == null and record.get("text_status") == "unmapped")):
-				_stop("NPC 普通 CHT 组 0 契约不兼容：%s" % source)
-				_refresh()
-				return false
-		dialogue = {"ordinary": true, "source": source, "group": 0,
-			"npc_id": int(actor.id),
-			"records": doc.groups[0].records.duplicate(true)}
+		dialogue = {"ordinary": true, "source": source, "group": group,
+			"npc_id": npc_id, "records": records.duplicate(true)}
 		dialogue_index = 0
 		note = ""
 		_refresh()
@@ -2543,6 +2555,37 @@ func _npc_dialogue_source(npc_id: int) -> String:
 				return declared if declared is String else ""
 	# 事件 `Op.NPC_RECORDS`（`progress.extraNpcs`）生成的 NPC 没有地图节点，按 NPC 记录号取默认源。
 	return NpcDefinition.dialogue_source(npc_id)
+
+
+## `Field_Basic_Chat:32-42` 的 CHT 装载：`Evt_chtINIT(RES, n3, 0)` 里 `n3` 选组，
+## 找不到资源时原生回退到 `npc/npc%04d.cht` 组 0（由调用方处理）。
+func _dialogue_doc(source: String) -> Variant:
+	if _resources == null or not _resources.has_method("load_dialogue"):
+		return null
+	var doc: Variant = _resources.call("load_dialogue", source)
+	if doc is Resource:
+		doc = doc.get_meta("payload", null)
+	if not doc is Dictionary or not doc.get("groups") is Array:
+		return null
+	return doc
+
+
+## 组内每条记录必须带 `text`（可空但 `text_status == "unmapped"`），否则整组不采用。
+func _dialogue_records(doc: Variant, group: int) -> Array:
+	if not doc is Dictionary or not doc.get("groups") is Array:
+		return []
+	var groups: Array = doc.groups
+	if group < 0 or group >= groups.size() or not groups[group] is Dictionary:
+		return []
+	var records: Variant = groups[group].get("records")
+	if not records is Array or records.is_empty():
+		return []
+	for record: Variant in records:
+		if not record is Dictionary or not record.has("text") or \
+				not (record.text is String or \
+				(record.text == null and record.get("text_status") == "unmapped")):
+			return []
+	return records
 
 
 func _npc_binding(npc_id: int) -> Dictionary:
