@@ -204,6 +204,8 @@ var _map_name_view: Control
 ## 原生第二条消息条（`Game_msgInit(0, …)` 的 index 0）：`Map_warpProc:59-60` 的 404 走这里，
 ## 不进 `Game_infoInit` 的 8 槽提示栈。场景里由 `bar_index = 0` 的同一个 `MapNameView` 实例上移 20 px。
 var _warp_blocked_bar: Control
+## 当前靠近的灰色传送点键（地图:目的地），避免同一处每帧重播名称条。
+var _blocked_warp_key := ""
 ## 下一条地图名称条的来源（`MapNameView.Source`）：原生 `Map_warpProc:54` 在 `GameCanvas_mapLOAD`
 ## 之后无条件 `Game_msgInit(1, MapData.reserved_0x10)`，同图传送也弹一次；剧情 opcode 14
 ## （`Evt_stdPROC` 的 case 0xE）载入当前这张图时没有换图，不重播（bm-P2-104）。
@@ -646,7 +648,10 @@ func advance(delta: float) -> void:
 	if _minimap.visible:
 		_minimap.advance(delta)
 	if dialogue.get("ordinary", false):
-		_actors.advance(delta, false)
+		# 普通 NPC 对话只开聊天窗，不冻结地图：继续推进 NPC 待机／环境动画；
+		# 只有任务接取等服务页才按窗口通用逻辑冻结。
+		_actors.advance(delta, true)
+		_advance_npc_idle(delta)
 		_chat_view.advance(delta)
 		_refresh()
 		return
@@ -684,6 +689,7 @@ func advance(delta: float) -> void:
 		_position_camera(delta)
 		_advance_npc_idle(delta)
 		_actors.advance(delta, not objects_paused, not manual_movement)
+		_check_blocked_warp()
 		_tick_map_harvest()
 		_drain_effects()
 		_chat_view.advance(delta)
@@ -1544,16 +1550,18 @@ func _advance_npc_idle(delta: float) -> void:
 	if story == null or not focused or story.running or story.objects_paused() or \
 			int(story.progress.cursor) != 0 or not story._pending.is_empty() or \
 			not story._motions.is_empty() or not _motions.is_empty() or \
-			not dialogue.is_empty() or menu_open or book_open or save_open or service_open() or \
+			(not dialogue.is_empty() and not dialogue.get("ordinary", false)) or \
+			menu_open or book_open or save_open or service_open() or \
 			world_map_view != null or battle_view != null or not boundary.is_empty() or \
 			not _encounter.is_empty() or not narration.is_empty() or not mastery.is_empty():
 		return
 	_sync_npc_home()
+	var talking := int(dialogue.get("npc_id", -1)) if dialogue.get("ordinary", false) else -1
 	var hero := _actor(0)
 	var dimensions := Vector2(_map_view.map_size_tiles) * TILE
 	for actor: Dictionary in story.progress.actors:
 		var id := int(actor.id)
-		if id == 0 or id >= 1000 or bool(actor.get("party_follower", false)):
+		if id == 0 or id >= 1000 or id == talking or bool(actor.get("party_follower", false)):
 			continue
 		if not _npc_home.has(id):
 			_npc_home[id] = Vector2(float(actor.x), float(actor.y))
@@ -2945,6 +2953,37 @@ func _follow_walk_tile(hero: Dictionary) -> bool:
 			continue
 		return _enter_warp(warp)
 	return false
+
+
+## 灰色传送点（`warpEnabled[目标] == false`）不可通行：走到相邻格时借用地图名称条
+## （index 0，原生 `Map_warpProc:59-60` 的 `Game_msgInit(0, fxt404)`）提示，不切图、不进消息栈。
+func _check_blocked_warp() -> void:
+	if story == null or _assets == null:
+		return
+	var hero := _actor(0)
+	if hero.is_empty():
+		return
+	var tile := Vector2i(floori(float(hero.x)), floori(float(hero.y)))
+	var key := ""
+	var warps: Variant = story.map.info.get("warps", [])
+	if warps is Array:
+		for warp: Variant in warps:
+			if not warp is Dictionary:
+				continue
+			var target := int(warp.get("destination_map_id", -1))
+			if story.progress.warpEnabled.get(str(target)) != false:
+				continue
+			if absi(tile.x - int(warp.get("tile_x", -1))) <= 1 and \
+					absi(tile.y - int(warp.get("tile_y", -1))) <= 1:
+				key = "%d:%d" % [int(story.map.get("id", -1)), target]
+				break
+	if key == _blocked_warp_key:
+		return
+	_blocked_warp_key = key
+	if key.is_empty():
+		return
+	_warp_blocked_bar.present(_assets.text_message(Msg.SOURCE, Msg.Id.MAP_BLOCKED),
+		MapNameView.Source.WARP)
 
 
 ## MIF 传送点：目标缺失或落点越界时明确报错，不猜目的地、不改地图。
