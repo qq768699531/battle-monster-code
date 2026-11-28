@@ -1291,6 +1291,10 @@ func _field_touch_style(allow_service: bool = false) -> int:
 			not dialogue.is_empty() or not narration.is_empty() or not mastery.is_empty() or \
 			story.stable_state().is_empty() or not _motions.is_empty():
 		return 0
+	# 服务页（商店/任务等）的窗口操作是原版窗口态：十字 + OK + CLR，没有野外那套 MENU/SAVE
+	# 页按钮。OK 确认、CLR 关闭，和 `Menu_win_Box_DrawKeyInfo` 的窗口态一致。
+	if allow_service and service_open():
+		return TouchView.Style.PAD_KEYS
 	return TouchView.field_style(int(story.map.info.map_group))
 
 

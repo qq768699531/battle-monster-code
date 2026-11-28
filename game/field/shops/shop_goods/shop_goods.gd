@@ -71,6 +71,8 @@ var _records: Array[ItemDefinition] = []
 var _groups: Array[int] = []
 var _first := 0
 @onready var _detail: Control = $Content/Detail
+@onready var _scrollbar: Control = $Content/Scrollbar
+@onready var _scroll_thumb: ColorRect = $Content/Scrollbar/Thumb
 
 
 func _ready() -> void:
@@ -83,6 +85,8 @@ func _ready() -> void:
 		_cell(slot).pressed.connect(_select_slot.bind(slot))
 	$Content/TabHit0.pressed.connect(_select_tab.bind(0))
 	$Content/TabHit1.pressed.connect(_select_tab.bind(1))
+	$Content/UpHit.pressed.connect(_scroll_row.bind(-1))
+	$Content/DownHit.pressed.connect(_scroll_row.bind(1))
 	$Select.decided.connect(_decided)
 	$Select.cancelled.connect(_cancelled)
 
@@ -300,6 +304,7 @@ func _refresh() -> void:
 		_detail.present_item(row, 1 if record.type == ItemKind.Kind.EQUIPMENT else 0, _item_name(record),
 			explanation, null, _text)
 	$Content/Price/Number.present(str(_unit_price(record) * maxi(1, quantity)))
+	_refresh_scrollbar()
 
 
 func _detail_text(record: ItemDefinition) -> String:
@@ -429,6 +434,33 @@ func _open_select() -> void:
 func _decided(count: int) -> void:
 	quantity = count
 	trade(count)
+
+
+## 页脚滚动条：`Menu_Item_DrawScroll(x=291, y=56, a3=32*行数-4, 首行, 页数)`。
+## 拇指高度 `3*(1-页数) + 轨道`（最小 3），位置按首行在轨道内分页；只有一页时整条隐藏。
+func _refresh_scrollbar() -> void:
+	var pages := maxi(1, visible_rows)
+	var height := 32 * visible_rows - 4
+	_scrollbar.size = Vector2(13, float(height))
+	var shown := pages > 1
+	_scrollbar.visible = shown
+	$Content/UpHit.visible = shown
+	$Content/DownHit.visible = shown
+	if not shown:
+		return
+	var track := height - 20
+	var thumb_height := maxi(3, 3 * (1 - pages) + track)
+	var row := _first / COLUMNS
+	var span := track - thumb_height
+	_scroll_thumb.position.y = 10.0 + (float(row) * float(span) / float(pages - 1))
+	_scroll_thumb.size.y = float(thumb_height)
+
+
+## 滚动条上/下箭头：原生 `Menu_Item_DrawScroll` 登记 -1／-2；页内就是游标上下移一行。
+func _scroll_row(step: int) -> void:
+	if _closing or is_transitioning() or $Select.visible:
+		return
+	_move(step * COLUMNS)
 
 
 func _cancelled() -> void:
