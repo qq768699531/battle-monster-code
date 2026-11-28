@@ -3157,9 +3157,13 @@ func _open_book(knowledge: Dictionary = {}) -> bool:
 		note = "玩法数值目录缺失；未打开图鉴。"
 		_refresh()
 		return false
+	var frame: Image = null
+	if get_viewport() != null:
+		frame = get_viewport().get_texture().get_image()
 	book_view = BookScene.instantiate()
 	book_view.z_index = 250
 	add_child(book_view)
+	book_view.call("set_shade_snapshot", frame)
 	book_view.closed.connect(_close_book)
 	if not book_view.open(_assets, catalog, story.progress, knowledge):
 		remove_child(book_view)
