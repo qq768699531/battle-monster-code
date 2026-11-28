@@ -120,6 +120,9 @@ func _ready() -> void:
 	$Content/MapButton.pressed.connect(_on_page_pressed.bind(PAGE_MAP))
 	$Content/ActionButton.pressed.connect(_on_page_pressed.bind(PAGE_ACTION))
 	$Content/BackHit.pressed.connect(close)
+	# 原生 `Menu_win_Box_DrawKeyInfo` 在 Box4 稳态画的两颗页脚键：左 OK＝执行当前
+	# 页脚项（同键盘 Enter），右 CLR＝关窗（`Qst_chtKeyPress` 层 0 的 -16）。
+	$Content/AcceptHit.pressed.connect(_activate_page)
 	$Confirm.transition_finished.connect(_confirm_transition_finished)
 	$Confirm.chosen.connect(_on_confirm_choice)
 	_world_map = $WorldMap
@@ -132,6 +135,8 @@ func _ready() -> void:
 func present(assets: Node, table: QuestTable, log: QuestLog, id: int,
 		quest_context: int, counts: Dictionary = {}, progress: Dictionary = {}) -> bool:
 	_assets = assets
+	$Content/Accept.configure(assets, 0)
+	$Content/Back.configure(assets, 1)
 	_table = table
 	_log = log
 	_counts = counts
@@ -339,6 +344,7 @@ func _open_confirm() -> void:
 	_closing_confirm = false
 	_choice = CHOICE_YES
 	_notice = ""
+	$Confirm.show()
 	$Confirm.present_select(
 		_assets.text_message(Msg.SOURCE, Msg.Id.QUEST_FIELD_ACCEPT_PROMPT), _choice)
 	$Confirm.open_window()

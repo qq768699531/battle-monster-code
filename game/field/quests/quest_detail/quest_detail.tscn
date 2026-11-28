@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://game/field/quests/quest_detail/quest_detail.gd" id="script"]
 [ext_resource type="PackedScene" path="res://engine/ui/confirm_box/confirm_box.tscn" id="confirm_box"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://engine/ui/dotted_line/dotted_line.tscn" id="line"]
 [ext_resource type="PackedScene" path="res://engine/ui/message_choice/message_choice.tscn" id="choice"]
 [ext_resource type="PackedScene" path="res://game/menu/world_map/world_map.tscn" id="world_map"]
+[ext_resource type="PackedScene" path="res://engine/ui/window_footer/window_footer.tscn" id="footer"]
 
 [sub_resource type="StyleBoxFlat" id="Frame"]
 draw_center = false
@@ -28,124 +29,126 @@ anti_aliasing = false
 visible = false
 script = ExtResource("script")
 window_size = Vector2i(228, 212)
+content_follows_window = true
 screen_shade = true
 
 [node name="TypeBar" type="ColorRect" parent="Content"]
-offset_left = 95.0
-offset_top = 53.0
-offset_right = 305.0
-offset_bottom = 64.0
+offset_left = 9
+offset_top = 23
+offset_right = 219
+offset_bottom = 34
 mouse_filter = 2
 color = Color(0.0156863, 0.027451, 0.0470588, 1)
 
 [node name="BodyFill" type="ColorRect" parent="Content"]
-offset_left = 95.0
-offset_top = 64.0
-offset_right = 305.0
-offset_bottom = 207.0
+offset_left = 9
+offset_top = 34
+offset_right = 219
+offset_bottom = 193
 mouse_filter = 2
 color = Color(0.054902, 0.105882, 0.184314, 1)
 
 [node name="Frame" type="Panel" parent="Content"]
-offset_left = 94.0
-offset_top = 52.0
-offset_right = 306.0
-offset_bottom = 208.0
+offset_left = 8
+offset_top = 22
+offset_right = 220
+offset_bottom = 194
 mouse_filter = 2
 theme_override_styles/panel = SubResource("Frame")
 
 [node name="Name" parent="Content" instance=ExtResource("label")]
-offset_left = 98.0
-offset_top = 66.0
-offset_right = 302.0
-offset_bottom = 76.0
+offset_left = 12
+offset_top = 38
+offset_right = 216
+offset_bottom = 48
 color = Color(1, 1, 0.666667, 1)
 
 [node name="Desc0" parent="Content" instance=ExtResource("label")]
-offset_left = 98.0
-offset_top = 80.0
-offset_right = 302.0
-offset_bottom = 90.0
+offset_left = 12
+offset_top = 52
+offset_right = 216
+offset_bottom = 62
 
 [node name="Desc1" parent="Content" instance=ExtResource("label")]
-offset_left = 98.0
-offset_top = 92.0
-offset_right = 302.0
-offset_bottom = 102.0
+offset_left = 12
+offset_top = 64
+offset_right = 216
+offset_bottom = 74
 
 [node name="Desc2" parent="Content" instance=ExtResource("label")]
-offset_left = 98.0
-offset_top = 104.0
-offset_right = 302.0
-offset_bottom = 114.0
+offset_left = 12
+offset_top = 76
+offset_right = 216
+offset_bottom = 86
 
 [node name="NpcCaption" parent="Content" instance=ExtResource("label")]
-offset_left = 98.0
-offset_top = 124.0
-offset_right = 302.0
-offset_bottom = 134.0
+offset_left = 12
+offset_top = 110
+offset_right = 216
+offset_bottom = 120
 color = Color(0.427451, 0.713725, 1, 1)
 
 [node name="NpcName" parent="Content" instance=ExtResource("label")]
-offset_left = 98.0
-offset_top = 136.0
-offset_right = 302.0
-offset_bottom = 146.0
+offset_left = 12
+offset_top = 124
+offset_right = 216
+offset_bottom = 134
 
 [node name="GoalCaption" parent="Content" instance=ExtResource("label")]
-offset_left = 98.0
-offset_top = 96.0
-offset_right = 302.0
-offset_bottom = 106.0
+offset_left = 12
+offset_top = 82
+offset_right = 216
+offset_bottom = 92
 color = Color(0.427451, 0.713725, 1, 1)
 
 [node name="GoalText" parent="Content" instance=ExtResource("label")]
-offset_left = 98.0
-offset_top = 110.0
-offset_right = 302.0
-offset_bottom = 120.0
+offset_left = 12
+offset_top = 96
+offset_right = 216
+offset_bottom = 106
 
 [node name="RegionCaption" parent="Content" instance=ExtResource("label")]
-offset_left = 98.0
-offset_top = 152.0
-offset_right = 148.0
-offset_bottom = 162.0
+offset_left = 12
+offset_top = 138
+offset_right = 62
+offset_bottom = 148
 color = Color(0.713725, 1, 0.333333, 1)
 
 [node name="RegionNames" parent="Content" instance=ExtResource("label")]
-offset_left = 98.0
-offset_top = 166.0
-offset_right = 302.0
-offset_bottom = 176.0
+offset_left = 12
+offset_top = 152
+offset_right = 216
+offset_bottom = 162
 
 [node name="Reward" parent="Content" instance=ExtResource("label")]
-offset_left = 126.0
-offset_top = 152.0
-offset_right = 302.0
-offset_bottom = 162.0
+visible = false
+offset_left = 40
+offset_top = 138
+offset_right = 216
+offset_bottom = 148
 horizontal_alignment = 2
 
 [node name="Notice" parent="Content" instance=ExtResource("label")]
 visible = false
-offset_left = 98.0
-offset_top = 194.0
-offset_right = 306.0
-offset_bottom = 204.0
+offset_left = 12
+offset_top = 180
+offset_right = 220
+offset_bottom = 190
 color = Color(1, 0.313726, 0.313726, 1)
 
 [node name="Divider" type="ColorRect" parent="Content"]
-offset_left = 97.0
-offset_top = 180.0
-offset_right = 303.0
-offset_bottom = 181.0
+offset_left = 11
+offset_top = 166
+offset_right = 217
+offset_bottom = 167
 mouse_filter = 2
 color = Color(0.152941, 0.203922, 0.282353, 1)
 
 [node name="MapButton" parent="Content" instance=ExtResource("button")]
-offset_left = 98.0
-offset_top = 183.0
-offset_right = 147.0
-offset_bottom = 205.0
+offset_left = 12
+offset_top = 169
+offset_right = 61
+offset_bottom = 191
 button_pressed = true
 tooltip_text = "打开世界地图，定位任务关联地域。"
 
@@ -153,20 +156,43 @@ tooltip_text = "打开世界地图，定位任务关联地域。"
 text = "世界地图"
 
 [node name="ActionButton" parent="Content" instance=ExtResource("button")]
-offset_left = 253.0
-offset_top = 183.0
-offset_right = 302.0
-offset_bottom = 205.0
+offset_left = 179
+offset_top = 169
+offset_right = 228
+offset_bottom = 191
 tooltip_text = "接受这项任务。"
 
 [node name="Caption" parent="Content/ActionButton" index="0"]
 text = "接受"
 
 [node name="BackHit" type="Button" parent="Content"]
-offset_left = 268.0
-offset_top = 209.0
-offset_right = 310.0
-offset_bottom = 221.0
+offset_left = 182
+offset_top = 197
+offset_right = 224
+offset_bottom = 209
+focus_mode = 0
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+
+[node name="Accept" parent="Content" instance=ExtResource("footer")]
+offset_left = 4
+offset_top = 197
+offset_right = 46
+offset_bottom = 209
+
+[node name="Back" parent="Content" instance=ExtResource("footer")]
+offset_left = 182
+offset_top = 197
+offset_right = 224
+offset_bottom = 209
+
+[node name="AcceptHit" type="Button" parent="Content"]
+offset_left = 4
+offset_top = 197
+offset_right = 46
+offset_bottom = 209
 focus_mode = 0
 theme_override_styles/normal = SubResource("Empty")
 theme_override_styles/hover = SubResource("Empty")
@@ -175,7 +201,6 @@ theme_override_styles/focus = SubResource("Empty")
 
 [node name="Confirm" parent="." instance=ExtResource("confirm_box")]
 visible = false
-visible = true
 [node name="WorldMap" parent="." instance=ExtResource("world_map")]
 visible = false
 
