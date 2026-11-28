@@ -107,26 +107,6 @@ offset_top = 54.0
 offset_right = 303.0
 offset_bottom = 146.0
 
-[node name="UpHit" type="Button" parent="Scroll"]
-offset_right = 13.0
-offset_bottom = 8.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-
-[node name="DownHit" type="Button" parent="Scroll"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -8.0
-offset_right = 13.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-
 [node name="Count" parent="." instance=ExtResource("num_default")]
 offset_left = 23.0
 offset_top = 151.0

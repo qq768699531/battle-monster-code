@@ -61,8 +61,6 @@ func _ready() -> void:
 	host = get_parent()
 	for index in range(_rows.size()):
 		_rows[index].pressed.connect(_select_row.bind(index))
-	$Panel2/Scroll/UpHit.pressed.connect(_move.bind(-1))
-	$Panel2/Scroll/DownHit.pressed.connect(_move.bind(1))
 
 
 ## 框3 的行数（详情页与测试共用；等价于 `MenuData.transition_parameter_bits + 1`）。

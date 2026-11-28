@@ -38,11 +38,11 @@ func present(paint: Dictionary) -> void:
 func touch_rects(scene: int) -> Array[Rect2i]:
 	var scroll: Control = $MethodScroll if scene == 13 else $InfoScroll
 	if is_inside_tree():
+		var scroll_rect := Rect2i(scroll.get_global_rect())
 		return [Rect2i($LeftHit.get_global_rect()), Rect2i($RightHit.get_global_rect()),
-			Rect2i(scroll.get_node("UpHit").get_global_rect()), Rect2i(scroll.get_node("DownHit").get_global_rect())]
+			scroll_rect, scroll_rect]
 	var rect := UI.control_rect(scroll)
-	return [UI.control_rect($LeftHit), UI.control_rect($RightHit),
-		UI.control_rect(scroll.get_node("UpHit"), rect), UI.control_rect(scroll.get_node("DownHit"), rect)]
+	return [UI.control_rect($LeftHit), UI.control_rect($RightHit), rect, rect]
 
 
 func regions(paint: Dictionary, back: Rect2i) -> Array[Dictionary]:

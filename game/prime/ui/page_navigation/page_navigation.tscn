@@ -91,20 +91,6 @@ custom_minimum_size = Vector2(3, 3)
 color = Color(0.07450980392156863, 0.4, 1.0, 1)
 mouse_filter = 2
 
-[node name="UpHit" type="Control" parent="MethodScroll"]
-offset_left = -13
-offset_top = -5
-offset_right = 27
-offset_bottom = 35
-mouse_filter = 2
-
-[node name="DownHit" type="Control" parent="MethodScroll"]
-offset_left = -13
-offset_top = 104
-offset_right = 27
-offset_bottom = 144
-mouse_filter = 2
-
 [node name="InfoScroll" type="Control" parent="."]
 offset_left = 291
 offset_top = 61
@@ -141,16 +127,3 @@ custom_minimum_size = Vector2(3, 3)
 color = Color(0.07450980392156863, 0.4, 1.0, 1)
 mouse_filter = 2
 
-[node name="UpHit" type="Control" parent="InfoScroll"]
-offset_left = -13
-offset_top = -5
-offset_right = 27
-offset_bottom = 35
-mouse_filter = 2
-
-[node name="DownHit" type="Control" parent="InfoScroll"]
-offset_left = -13
-offset_top = 104
-offset_right = 27
-offset_bottom = 144
-mouse_filter = 2

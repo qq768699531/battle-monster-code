@@ -17,8 +17,6 @@ func _ready() -> void:
 	$Confirm.confirmed.connect(_close_payment)
 	for slot in range($Grid.get_child_count()):
 		$Grid.get_child(slot).pressed.connect(_select_offer.bind(slot))
-	$Scroll/UpHit.pressed.connect(_move.bind(-6))
-	$Scroll/DownHit.pressed.connect(_move.bind(6))
 
 
 ## 付款确认窗开着时按键全归它（原生 `Menu_Network_mKeyPressed` 的组 2 直接转 `Game_Cash_mKeyPressed`）。

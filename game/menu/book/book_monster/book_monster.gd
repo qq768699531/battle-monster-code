@@ -104,8 +104,6 @@ func _ready() -> void:
 		# 格组件（`item_cell` 的呼吸轨）自带一条 0→63 的呼吸，但 `Menu_mon_DrawBookList` 全文没有
 		# `GRP_MODE_BRIGHT`（格框直接走 `Menu_winDrawIcon16`），图鉴格亮度恒定。
 		cell.get_node("Frame/Breath").stop()
-	$Content/Scroll/UpHit.pressed.connect(func(): _step(-Book.MONSTER_COLUMNS, false))
-	$Content/Scroll/DownHit.pressed.connect(func(): _step(Book.MONSTER_COLUMNS, false))
 	$Content/AcceptHit.pressed.connect(_accept)
 	$Content/BackHit.pressed.connect(_back)
 	$Confirm.transition_finished.connect(_confirm_finished)

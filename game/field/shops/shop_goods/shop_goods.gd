@@ -91,8 +91,6 @@ func _ready() -> void:
 	$Content/TabHit0.pressed.connect(_select_tab.bind(0))
 	$Content/TabHit1.pressed.connect(_select_tab.bind(1))
 	$Content/TabHit2.pressed.connect(_select_tab.bind(2))
-	$Content/UpHit.pressed.connect(_scroll_row.bind(-1))
-	$Content/DownHit.pressed.connect(_scroll_row.bind(1))
 	$Select.decided.connect(_decided)
 	$Select.cancelled.connect(_cancelled)
 

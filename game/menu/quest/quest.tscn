@@ -128,26 +128,6 @@ offset_top = 16.0
 offset_right = 209.0
 offset_bottom = 86.0
 
-[node name="UpHit" type="Button" parent="Panel2/Scroll"]
-offset_top = -2.0
-offset_right = 13.0
-offset_bottom = 8.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-
-[node name="DownHit" type="Button" parent="Panel2/Scroll"]
-offset_top = 62.0
-offset_right = 13.0
-offset_bottom = 72.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
-theme_override_styles/focus = SubResource("Empty")
-
 [node name="Rule0" parent="Panel2" instance=ExtResource("2")]
 offset_left = 6.0
 offset_top = 37.0

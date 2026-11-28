@@ -41,8 +41,6 @@ func _ready() -> void:
 	super()
 	for index in range(CELL_COLUMNS * CELL_ROWS):
 		$Content.get_node("Cell%d" % index).pressed.connect(_select_slot.bind(index))
-	$Content/Scroll/UpHit.pressed.connect(func(): _step(-CELL_COLUMNS))
-	$Content/Scroll/DownHit.pressed.connect(func(): _step(CELL_COLUMNS))
 	$Content/BackHit.pressed.connect(_back)
 
 
