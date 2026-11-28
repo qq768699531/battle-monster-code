@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://game/menu/item/item_description/item_description.tscn" id="item_desc"]
 [ext_resource type="PackedScene" path="res://game/menu/screen/scrollbar/scrollbar.tscn" id="scrollbar"]
 [ext_resource type="PackedScene" path="res://engine/ui/number/number_small.tscn" id="num_small"]
+[ext_resource type="PackedScene" path="res://engine/ui/number/number_default.tscn" id="num_default"]
 [ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_filled.tres" id="cell_filled"]
 [ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_filled_focused.tres" id="cell_filled_focused"]
 [ext_resource type="Texture2D" path="res://engine/ui/window_frame/slot_empty.tres" id="cell_empty"]
@@ -234,11 +235,11 @@ offset_top = 119
 offset_right = 203
 offset_bottom = 149
 
-[node name="Count" parent="Content" instance=ExtResource("num_small")]
+[node name="Count" parent="Content" instance=ExtResource("num_default")]
 offset_left = 0
 offset_top = 153
 offset_right = 29
-offset_bottom = 158
+offset_bottom = 160
 mouse_filter = 2
 alignment = 2
 
