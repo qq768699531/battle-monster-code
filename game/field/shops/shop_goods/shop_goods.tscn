@@ -283,8 +283,15 @@ offset_top = 164
 offset_right = 221
 offset_bottom = 223
 
-[node name="Price" parent="Content" instance=ExtResource("money")]
+[node name="BuyPrice" parent="Content" instance=ExtResource("money")]
 offset_left = 158
+offset_top = 210
+offset_right = 218
+offset_bottom = 219
+
+[node name="SellPrice" parent="Content" instance=ExtResource("money")]
+visible = false
+offset_left = 170
 offset_top = 210
 offset_right = 218
 offset_bottom = 219

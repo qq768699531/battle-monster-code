@@ -74,7 +74,6 @@ var _groups: Array[int] = []
 var _first := 0
 @onready var _detail: Control = $Content/Detail
 @onready var _scrollbar: Control = $Content/Scrollbar
-@onready var _scroll_thumb: ColorRect = $Content/Scrollbar/Thumb
 
 
 func _ready() -> void:
@@ -112,10 +111,10 @@ func present(story: Object, assets: Node, next_mode: int = BUY, next_shop_mode: 
 	for source: String in ["common/item_basic.dat", "common/item_skill.dat"]:
 		_names.merge(assets.text_messages(source))
 	$Bounds/Title.text = _text(_title_id())
-	$Content/Price.size = Vector2(60.0 if mode == BUY else 48.0, 9.0)
-	# 原生 `Field_Item_Buy_DrawPrice` 在 `n105 + 149`（`n105 = 窗 x + 9 = 95`，绝对 244）；
-	# `Content` 原点已在窗 x（86），所以相对值是 158。Sell/Food 是 `n105 + 161`（绝对 256）→ 170。
-	$Content/Price.position.x = 158.0 if mode == BUY else 170.0
+	# 买／卖价格牌的两套原生几何都写在场景：买 60×9 @ (158,210)、卖 48×9 @ (170,210)，
+	# 只切可见性，不在代码里改 position／size。
+	$Content/BuyPrice.visible = mode == BUY
+	$Content/SellPrice.visible = mode != BUY
 	_rebuild()
 	_refresh_tabs()
 	show()
@@ -313,7 +312,8 @@ func _refresh() -> void:
 		var explanation := MenuModel.native_item_explanation(row, _text)
 		_detail.present_item(row, 1 if record.type == ItemKind.Kind.EQUIPMENT else 0, _item_name(record),
 			explanation, null, _text)
-	$Content/Price/Number.present(str(_unit_price(record) * maxi(1, quantity)))
+	var price: Control = $Content/BuyPrice if mode == BUY else $Content/SellPrice
+	price.get_node("Number").present(str(_unit_price(record) * maxi(1, quantity)))
 	_refresh_scrollbar()
 
 
@@ -452,20 +452,14 @@ func _decided(count: int) -> void:
 ## 拇指高度 `3*(1-页数) + 轨道`（最小 3），位置按首行在轨道内分页；只有一页时整条隐藏。
 func _refresh_scrollbar() -> void:
 	var pages := maxi(1, visible_rows)
-	var height := 32 * visible_rows - 4
-	_scrollbar.size = Vector2(13, float(height))
 	var shown := pages > 1
 	_scrollbar.visible = shown
 	$Content/UpHit.visible = shown
 	$Content/DownHit.visible = shown
 	if not shown:
 		return
-	var track := height - 20
-	var thumb_height := maxi(3, 3 * (1 - pages) + track)
-	var row := _first / COLUMNS
-	var span := track - thumb_height
-	_scroll_thumb.position.y = 10.0 + (float(row) * float(span) / float(pages - 1))
-	_scroll_thumb.size.y = float(thumb_height)
+	# 滑块几何属于滚动条组件（`scrollbar.set_page`），商店页只给首行与页数，不碰 position／size。
+	_scrollbar.call("set_page", _first / COLUMNS, pages)
 
 
 ## 滚动条上/下箭头：原生 `Menu_Item_DrawScroll` 登记 -1／-2；页内就是游标上下移一行。
