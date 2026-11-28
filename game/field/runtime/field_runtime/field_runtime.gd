@@ -41,11 +41,9 @@ const MonsterAnimation = preload("res://engine/anim/monster_animation/monster_an
 const WorldMapScene = preload("res://game/menu/world_map/world_map.tscn")
 const WorldMap = preload("res://game/menu/world_map/world_map.gd")
 ## `Game_infoInit` 的任务图标帧（原生立即数 `0x94`）。
-const QUEST_ICON_FRAME := 148
 ## `Item_stdAddEx@0x85BE4:73` 的 `JC_fxt2Return(416)`：正文「获得%s%s X %d」
 ## （`common/msg.fxt:416`），三个实参依次是品级颜色码、道具名、数量；记录号在 `Msg.Id.ITEM_OBTAINED`。
 ## `Item_stdGradeINDEX@0x812C8`：品级 0–3 → 行内颜色码（`#C6`–`#C9`），其余品级返回空串。
-const ITEM_GRADE_COLOR_CODES := ["#C6", "#C7", "#C8", "#C9"]
 ## 伪道具（组 23–26）的入手提示文案记录（`Item_datBasic@0x843D8:54-64`）：组 23／25 取
 ## `JC_fxt2Return(413)`「经验值」、组 24／26 取 `(414)`「金币」。正文由 `Item_stdAddEx:56-57`
 ## 套 `JC_fxt2Return(415)` 拼成，`Game_infoInit` 传 `0xFFFFFFFF`，所以**没有图标**。
@@ -56,7 +54,6 @@ const PSEUDO_OBTAINED_LABELS := {
 	ItemKind.Pseudo.MONEY: Msg.Id.MONEY_LABEL,
 }
 ## `Evt_msgSET@0x7CFC8:14` 的 `EX_knlSprintk(s, "#C5")`：任务提示正文的行内颜色码（调色板 5）。
-const MESSAGE_HIGHLIGHT_CODE := "#C5"
 ## 事件指令 21 的文本源（`Evt_stdQUEST@0x7EA90:11` 的 `EFC_fsLoadRES("evt/evtlist.fxt")`）。
 const EVENT_QUEST_TEXT_SOURCE := "evt/evtlist.fxt"
 ## 任务表按 id 从 `field/quest_set/qN/quest.tres` 合并；任务门禁与头顶任务图标共用。
@@ -415,10 +412,7 @@ func _present_item_obtained(item_id: int, count: int, icon_frame: int) -> void:
 	# 书类（`item_skill.dat`）与普通道具（`item_basic.dat`）的名称在不同文本源，按记录键选源。
 	var item_name: String = _assets.text_message(
 		ItemDefinition.name_source(record.name_record), record.name_record)
-	var grade: int = record.grade_index
-	var color: String = ITEM_GRADE_COLOR_CODES[grade] \
-		if grade >= 0 and grade < ITEM_GRADE_COLOR_CODES.size() else ""
-	MessageStack.push_item(item_name, count, icon_frame, color)
+	MessageStack.push_item(item_name, count, icon_frame, int(record.grade_index))
 
 
 ## 任务接取／完成提示（原生 `Game_infoInit(0x94, "#C5"+标题+后缀)`）：事件指令 21

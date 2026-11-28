@@ -23,14 +23,16 @@ func before_each() -> void:
 
 ## 提示的形态是固定的：调用方只给类型和数据，图标／高亮色／格式都由 `message_stack` 拼。
 func test_typed_entries_build_the_fixed_styles() -> void:
-	MessageStack.push_item("宝珠", 3, 12, "#FFFFFF")
+	MessageStack.push_item("宝珠", 3, 12, 1)
 	assert_eq(_stack.pushed.size(), 1, "一条获得提示")
 	assert_eq(int(_stack.pushed[0][0]), 12, "图标帧由调用方给")
 	assert_eq(String(_stack.pushed[0][1]),
-		AssetCatalog.text_message(Msg.SOURCE, Msg.Id.ITEM_OBTAINED) % ["#FFFFFF", "宝珠", 3],
+		AssetCatalog.text_message(Msg.SOURCE, Msg.Id.ITEM_OBTAINED) %
+			[MessageStack.ITEM_GRADE_COLORS[1], "宝珠", 3],
 		"正文按 fxt 416 的固定格式拼")
 
-	MessageStack.push_monster("毛球兽", 153, 1, 2)
+	MessageStack.push_monster("毛球兽", 1, 2, 4)
+	assert_eq(int(_stack.pushed[1][0]), MessageStack.BALL_ICONS[4], "精灵图标按属性查表")
 	assert_eq(String(_stack.pushed[1][1]),
 		MessageStack.GRADE_COLORS[1] +
 		AssetCatalog.text_message(Msg.SOURCE, Msg.Id.NICKNAME_PREFIX + 2) + " " +

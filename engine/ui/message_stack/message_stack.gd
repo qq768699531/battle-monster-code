@@ -38,9 +38,18 @@ const HIGHLIGHT := "#C5"
 const QUEST_ICON := 148
 
 
-## 获得道具：图标由调用方给（物品图标的帧号），名称颜色取道具品级色码。
-static func push_item(item_name: String, count: int, icon_frame: int, color_code: String) -> bool:
-	return say_record_icon(icon_frame, Msg.Id.ITEM_OBTAINED, [color_code, item_name, count])
+## 道具品级的颜色码：`Item_datBasic` 的 `grade_index` 0..3 → `#C6..#C9`。
+const ITEM_GRADE_COLORS := ["#C6", "#C7", "#C8", "#C9"]
+## 精灵属性 → 球图标帧（`Menu_Party_DrawBall:32` 把 `item_mon.dat` 的属性分组喂给图标）。
+const BALL_ICONS := [153, 152, 154, 157, 156, 155]
+
+
+## 获得道具：调用方只给数据（名称／数量／记录里的图标帧／品级号），颜色在这里取。
+static func push_item(item_name: String, count: int, icon_frame: int, grade_index: int) -> bool:
+	var color := ""
+	if grade_index >= 0 and grade_index < ITEM_GRADE_COLORS.size():
+		color = ITEM_GRADE_COLORS[grade_index]
+	return say_record_icon(icon_frame, Msg.Id.ITEM_OBTAINED, [color, item_name, count])
 
 
 ## 获得伪道具（经验／金币）：无图标、无品级色。
@@ -54,9 +63,9 @@ const GRADE_COLORS := ["#CB", "#CA", "#CC", "#CD", "#CE", "#CF"]
 
 
 ## 获得精灵（原生 `Ball_stdAddEx@0x85310`）：品级色码 + 性格名（`Ball_stdNickText`，有才加）
-## + fxt 478「%s获得」，图标取球上的属性帧。
-static func push_monster(name_text: String, icon_frame: int, grade: int,
-		nickname_code: int = 0) -> bool:
+## + fxt 478「%s获得」；图标是球记录的属性帧（`kind_specific_85_bits`），按属性查 `BALL_ICONS`。
+static func push_monster(name_text: String, grade: int, nickname_code: int,
+		attribute_group: int) -> bool:
 	var prefix := ""
 	if grade >= 0 and grade < GRADE_COLORS.size():
 		prefix = GRADE_COLORS[grade]
@@ -64,7 +73,10 @@ static func push_monster(name_text: String, icon_frame: int, grade: int,
 		var nickname := _resolve(Msg.SOURCE, Msg.Id.NICKNAME_PREFIX + nickname_code, [])
 		if not nickname.is_empty():
 			prefix += nickname + " "
-	return notify(icon_frame, prefix + _resolve(Msg.SOURCE, Msg.Id.MONSTER_OBTAINED, [name_text]))
+	var icon := -1
+	if attribute_group >= 0 and attribute_group < BALL_ICONS.size():
+		icon = BALL_ICONS[attribute_group]
+	return notify(icon, prefix + _resolve(Msg.SOURCE, Msg.Id.MONSTER_OBTAINED, [name_text]))
 
 
 ## 任务接取／完成：标题高亮 + 后缀记录（fxt 409「(接受)」／410「(完成)」）。

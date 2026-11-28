@@ -1187,8 +1187,7 @@ func _say_monster_obtained() -> void:
 	if capacity > 0 and monsters is Array and monsters.size() + _captures.size() > capacity:
 		return
 	var species := int(_capture_ball.get("species", 0))
-	var grade := clampi(int(_capture_ball.get("grade", 0)), 0,
-		Battle.CAPTURE_GRADE_COLOR.size() - 1)
+	var grade := int(_capture_ball.get("grade", 0))
 	var nickname := int(_capture_ball.get("nickname", 0))
 	var names: Dictionary = _assets.text_messages("common/item_mon.dat")
 	var name_text := "#%d" % Battle.combat_species(species)
@@ -1196,10 +1195,8 @@ func _say_monster_obtained() -> void:
 		Battle.combat_species(species))
 	if definition != null and not definition.name_record.is_empty():
 		name_text = str(names.get(definition.name_record, name_text))
-	# `Ball_stdAddEx` 的图标帧：属性球图标（`Menu_Party_DrawBall:32` 把同一个字段喂给
-	# `JC_fbmDrawSPRITE`）。球记录的 `attribute` 是 0..5，`menu_ball_icon` 收的是 1..6。
-	var icon: Variant = Menu.menu_ball_icon(int(_capture_ball.get("attribute", 0)) + 1)
-	MessageStack.push_monster(name_text, int(icon) if icon is int else -1, grade, nickname)
+	# 图标与品级色都由 `message_stack` 决定：这里只把球记录里的属性号交出去。
+	MessageStack.push_monster(name_text, grade, nickname, int(_capture_ball.get("attribute", -1)))
 
 
 ## 原生 `Battle_Capture_Action_mPaint`：演出收尾后开 Box2 结果窗（`Menu_win_Box2_DrawOk`），

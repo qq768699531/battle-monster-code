@@ -1140,7 +1140,6 @@ const CAPTURE_RESULT_FRAMES := 28
 const CAPTURE_OBTAINED_FRAME := 21
 ## `Ball_stdGradeINDEX` 的品级 → 行内换色码（原生 0x9C208..0x9C21C 的六个 4 字节串）：
 ## 品级 0 → `#CB`、1 → `#CA`、2..5 → `#CC`..`#CF`；`Ball_stdAddEx` 把它拼在性格名之前。
-const CAPTURE_GRADE_COLOR := ["#CB", "#CA", "#CC", "#CD", "#CE", "#CF"]
 
 ## 结果演出里的 `Param_atkEFFECT` 动作号（`Battle_Capture_Action_mRun` 子状态 2／3 第 0 帧）：
 ## 成功 37、失败 38，都是 `obj/b_effect` 的动作。
