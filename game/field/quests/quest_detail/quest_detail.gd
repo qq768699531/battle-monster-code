@@ -301,13 +301,22 @@ func _open_map() -> void:
 	if data == null:
 		_notice = "世界地图节点表缺失；未打开世界地图。"
 		return
+	# 原生 `Qst_chtDRAW` 的层 1 **只画** `Menu_world_Draw` 一扇窗：详情窗框、标题、正文、页脚
+	# 整段不画。先把地图窗从详情页移到野外父节点、再把详情页整页 `hide()`，然后才让地图
+	# `open()` 抓背景——否则地图的定格帧会把详情窗一起拍进去，看起来就像地图叠在窗上。
+	var field := get_parent()
+	if field != null:
+		_world_map.reparent(field)
+		_world_map.z_index = z_index
+	hide()
 	if not _world_map.open(_assets, data, int(_progress.get("mapId", 0)),
 			_progress.get("warpEnabled", {}), _progress.get("warpPassed", {}),
 			segments, focus_map_id):
+		if field != null:
+			_world_map.reparent(self)
+		show()
 		return
 	_layer = LAYER_WORLD_MAP
-	$Bounds.visible = false
-	$Content.visible = false
 
 
 ## 任务文本资源 page 3 的第一个地图号（`QuestMark.RELATED_PAGE` 与 `Map_worldDRAW`
@@ -331,7 +340,11 @@ func _close_world_map() -> void:
 		return
 	# 层 0 只画 `Menu_win_Box4_DrawWindow`：地图窗同帧退场，逐拍（`Map_worldDRAW` 的镜头折半）也停。
 	_world_map.leave()
+	if _world_map.get_parent() != self:
+		_world_map.reparent(self)
+	_world_map.z_index = 0
 	_layer = LAYER_DETAIL
+	show()
 	open_window()
 
 

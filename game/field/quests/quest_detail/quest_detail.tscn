@@ -156,9 +156,9 @@ tooltip_text = "打开世界地图，定位任务关联地域。"
 text = "世界地图"
 
 [node name="ActionButton" parent="Content" instance=ExtResource("button")]
-offset_left = 179
+offset_left = 167
 offset_top = 169
-offset_right = 228
+offset_right = 216
 offset_bottom = 191
 tooltip_text = "接受这项任务。"
 
