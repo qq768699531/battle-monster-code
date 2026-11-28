@@ -27,6 +27,9 @@ signal completed   ## 制作成功过一次（宿主可刷新 HUD 金钱）
 
 ## 原生列表最短 12 格（`Field_Item_Food_init` 的 `n12 = 12`）。
 const MINIMUM_SLOTS := 12
+const SlotGrade = preload("res://game/menu/party/slot_grade/slot_grade.gd")
+const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
+const ScrollbarScene = preload("res://game/menu/screen/scrollbar/scrollbar.tscn")
 ## `Field_Item_Food_Proc` 的 `Param_moneySET(-100)`：固定 100，与 `item_food.dat` 无关。
 const MONEY_COST := 100
 ## `Field_Item_Food_mKeyPressed` 的 `money_balance <= 0x63` 拒绝（要留够 100）。
@@ -53,6 +56,8 @@ func _ready() -> void:
 		_cell(slot).pressed.connect(_select_slot.bind(slot))
 	$Content/AcceptHit.pressed.connect(craft)
 	$Content/BackHit.pressed.connect(close)
+	$Content/UpHit.pressed.connect(_scroll_row.bind(-1))
+	$Content/DownHit.pressed.connect(_scroll_row.bind(1))
 
 
 ## 原生该页由列表页 `FieldCanvas_SetNext(15)` 直接进入，没有参数。
@@ -184,6 +189,7 @@ func _refresh() -> void:
 	_refresh_cells()
 	_refresh_strip()
 	_refresh_materials()
+	_refresh_scrollbar()
 	$Content/Price/Number.present(str(MONEY_COST))
 
 
@@ -191,22 +197,24 @@ func _refresh_cells() -> void:
 	for slot in range(CELLS):
 		var cell := _cell(slot)
 		var chosen := slot == cursor
-		# 空位也用普通帧（原生 `a6` 是「在条目范围内」，见 `SlotFrame`）。
-		cell.present_frame(SlotFrame.frame_of(cell_frames, true, chosen), chosen)
-		cell.set_grade(null)
-		cell.get_node("QuantityNumber").hide()
-		var icon: Control = cell.get_node("Icon")
+		var frame := SlotFrame.frame_of(cell_frames, true, chosen)
 		if slot >= _entries.size():
-			icon.texture = null
+			cell.present_cell(null, frame, chosen, null, 0)
 			continue
 		var record: ItemDefinition = _entries[slot].product
-		icon.texture = _assets.item_icon(record.icon) if record.icon >= 0 else null
+		var texture: Texture2D = _assets.item_icon(record.icon) if record.icon >= 0 else null
+		cell.present_cell(texture, frame, chosen, SlotGrade.of(record.grade_index, false), 0)
 
 
 ## `Menu_Item_DrawListInfo`：选中名在条左侧、持有金钱在右侧。
 func _refresh_strip() -> void:
 	var entry := _entry()
-	$Content/Name.text = _item_name(entry.get("product")) if not entry.is_empty() else ""
+	# 原生 `Field_Item_DrawList` 的 n6=5（食物）在底部条画的是所选食物的说明文本，
+	# 不是只画名字；名字放在下方 `Menu_Item_DrawInfoFood` 的标题里。
+	var description := ""
+	if not entry.is_empty():
+		description = MenuModel.native_item_explanation(MenuModel.item_row(entry.product), _text)
+	$Content/Name.text = description
 	$Content/Money/Number.present(str(money()))
 
 
@@ -233,8 +241,9 @@ func _refresh_materials() -> void:
 		row.get_node("Icon").texture = _assets.item_icon(material.icon) \
 			if material != null and material.icon >= 0 else null
 		row.get_node("Name").text = _item_name(material) if material != null else ""
-		row.get_node("Count").text = "" if slot >= materials.size() else "%d/%d" % [have, need]
-		row.get_node("Count").color = Color.WHITE if have >= need else INSUFFICIENT_COLOR
+		var count_label: Label = row.get_node("Count")
+		count_label.text = "" if slot >= materials.size() else "%d/%d" % [have, need]
+		count_label.add_theme_color_override("font_color", Color.WHITE if have >= need else INSUFFICIENT_COLOR)
 
 
 func _select_slot(slot: int) -> void:
@@ -256,3 +265,17 @@ func _move(step: int) -> void:
 	cursor = posmod(cursor + step, _slot_count)
 	notice_id = -1
 	_refresh()
+
+
+func _refresh_scrollbar() -> void:
+	var pages := maxi(1, (_entries.size() + COLUMNS - 1) / COLUMNS)
+	var shown := pages > 1
+	$Content/Scrollbar.visible = shown
+	$Content/UpHit.visible = shown
+	$Content/DownHit.visible = shown
+	if shown:
+		$Content/Scrollbar.call("set_page", 0, pages)
+
+
+func _scroll_row(step: int) -> void:
+	_move(step * COLUMNS)
