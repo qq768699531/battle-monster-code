@@ -110,9 +110,9 @@ func present(story: Object, assets: Node, next_mode: int = BUY, next_shop_mode: 
 		_names.merge(assets.text_messages(source))
 	$Bounds/Title.text = _text(_title_id())
 	$Content/Price.size = Vector2(60.0 if mode == BUY else 48.0, 9.0)
-	# 原生 `Field_Item_Buy_DrawPrice` 在窗 x+149、`Sell_DrawPrice` 在窗 x+170；`Content` 已随窗口，
-	# 所以这里写相对窗口的 149／170（绝对 244／256）。
-	$Content/Price.position.x = 149.0 if mode == BUY else 170.0
+	# 原生 `Field_Item_Buy_DrawPrice` 在 `n105 + 149`（`n105 = 窗 x + 9 = 95`，绝对 244）；
+	# `Content` 原点已在窗 x（86），所以相对值是 158。Sell/Food 是 `n105 + 161`（绝对 256）→ 170。
+	$Content/Price.position.x = 158.0 if mode == BUY else 170.0
 	_rebuild()
 	_refresh_tabs()
 	show()

@@ -215,16 +215,16 @@ offset_bottom = 149
 
 [node name="Count" parent="Content" instance=ExtResource("num_small")]
 offset_left = 0
-offset_top = 152
-offset_right = 38
-offset_bottom = 162
+offset_top = 153
+offset_right = 29
+offset_bottom = 158
 mouse_filter = 2
 alignment = 2
 
 [node name="Money" parent="Content" instance=ExtResource("money")]
-offset_left = 126
+offset_left = 133
 offset_top = 153
-offset_right = 218
+offset_right = 225
 offset_bottom = 160
 
 [node name="Scrollbar" parent="Content" instance=ExtResource("scrollbar")]
