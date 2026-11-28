@@ -152,3 +152,11 @@ func test_hiding_the_parent_unregisters_the_window() -> void:
 	assert_true(WindowScript.any_open(), "窗口打开时登记")
 	holder.hide()
 	assert_false(WindowScript.any_open(), "父节点隐藏后窗口退出窗口栈")
+func test_shade_disabled_window_keeps_the_scene_visible() -> void:
+	var window: Control = WindowScene.instantiate()
+	add_child_autofree(window)
+	window.shade_enabled = false
+	window.show()
+	window.open_window()
+	assert_true(WindowScript.any_open(), "不画背景层的窗口仍然登记为窗口，地图保持冻结")
+	assert_false(window.get_node("Shade").visible, "图鉴这类窗口不画不透明模糊遮罩")
