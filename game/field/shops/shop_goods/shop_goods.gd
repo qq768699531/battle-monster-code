@@ -51,6 +51,9 @@ static func sell_bags(shop_mode: int) -> Array[int]:
 ## `Field_Item_Buy_SetList` 的货架表（`script\export_shops.py` 从反编译立即数导出）。
 const Shops = preload("res://game/field/shops/shop_goods/shops.tres")
 const ConfirmLayout = preload("res://engine/ui/confirm_layout/confirm_layout.gd")
+## 原版详情面板（`Menu_Item_DrawInfoEtc`／`Equip`）：`item_description.tscn` 就是这份实现
+## （标题 `[ 名 X 数量 ]`／品级色、说明箭头、4 行属性、换行说明），菜单道具页与商店共用。
+const MenuModel = preload("res://game/menu/screen/menu_model/menu_model.gd")
 
 var mode := BUY
 var shop_mode_code := 0
@@ -64,14 +67,15 @@ var quantity := 1
 var _records: Array[ItemDefinition] = []
 var _groups: Array[int] = []
 var _first := 0
+@onready var _detail: Control = $Content/Detail
 
 
 func _ready() -> void:
 	super()
 	for slot in range(CELLS):
 		_cell(slot).pressed.connect(_select_slot.bind(slot))
-	$Content/AcceptHit.pressed.connect(_open_select)
-	$Content/BackHit.pressed.connect(close)
+	$Content/AcceptHit.pressed.connect(_on_accept_pressed)
+	$Content/BackHit.pressed.connect(_on_back_pressed)
 	$Select.decided.connect(_decided)
 	$Select.cancelled.connect(_cancelled)
 
@@ -97,7 +101,9 @@ func present(story: Object, assets: Node, next_mode: int = BUY, next_shop_mode: 
 	$Content/Accept.configure(assets, 0)
 	$Content/Back.configure(assets, 1)
 	$Content/Price.size = Vector2(60.0 if mode == BUY else 48.0, 9.0)
-	$Content/Price.position.x = 244.0 if mode == BUY else 256.0
+	# 原生 `Field_Item_Buy_DrawPrice` 在窗 x+149、`Sell_DrawPrice` 在窗 x+170；`Content` 已随窗口，
+	# 所以这里写相对窗口的 149／170（绝对 244／256）。
+	$Content/Price.position.x = 149.0 if mode == BUY else 170.0
 	_rebuild()
 	show()
 	open_window()
@@ -279,11 +285,14 @@ func _refresh() -> void:
 	$Content/Money/Number.present(str(money()))
 	var record := _record()
 	$Content/InfoName.text = _item_name(record) if record != null else ""
-	$Content/Detail/Name.text = _item_name(record) if record != null else ""
-	$Content/Detail/Info.text = _detail_text(record)
-	# 静态提示行已退役：货架异常与成交失败都走提示栈（原生 `Game_infoInit`），
-	# 详情面板的 `Notice` 标签不再承载提示文本。
-	$Content/Detail/Notice.text = ""
+	if record == null:
+		_detail.present_item({}, 0, "", "", null, _text)
+	else:
+		var row := MenuModel.item_row(record)
+		row["quantity"] = maxi(1, _owned_count(record.id)) if mode == SELL else 1
+		var explanation := MenuModel.native_item_explanation(row, _text)
+		_detail.present_item(row, 1 if record.type == ItemKind.Kind.EQUIPMENT else 0, _item_name(record),
+			explanation, null, _text)
 	$Content/Price/Number.present(str(_unit_price(record) * maxi(1, quantity)))
 
 
@@ -380,6 +389,22 @@ func _open_select() -> void:
 func _decided(count: int) -> void:
 	quantity = count
 	trade(count)
+
+
+## 页脚 OK／CLR 在数量确认框开着时的归属（原生 `Field_Item_Buy_mKeyPressed` 的子状态：
+## 确认框占着 -5／-16，退出确认框而不是退页）；关框后回到买／卖页自己的入口。
+func _on_accept_pressed() -> void:
+	if $Select.visible:
+		$Select.handle_key("Enter")
+		return
+	_open_select()
+
+
+func _on_back_pressed() -> void:
+	if $Select.visible:
+		$Select.handle_key("Escape")
+		return
+	close()
 
 
 func _cancelled() -> void:

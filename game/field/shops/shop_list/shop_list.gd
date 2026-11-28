@@ -64,6 +64,7 @@ func present(story: Object, assets: Node, next_shop_mode: int = 0,
 	_closing = false
 	$Goods.hide()
 	$Bounds.visible = true
+	$Content.visible = true
 	$Bounds/Title.text = assets.text_message(Msg.SOURCE,
 		Msg.Id.SHOP_ITEMS_TITLE if shop_mode_code == 0 else Msg.Id.SHOP_EQUIPMENT_TITLE)
 	$Content/Accept.configure(assets, 0)
@@ -114,13 +115,17 @@ func _confirm() -> void:
 
 
 func _open_goods(mode: int) -> void:
+	# 原生 `SetNext(ITEM_BUY／SELL)` 是换页：列表页整页不再画，所以连 `Content` 一起收起，
+	# 否则行卡片与页脚 OK／CLR 的命中区会留在买页下面（可见或可点）。
 	$Bounds.visible = false
+	$Content.visible = false
 	$Goods.present(_story, _assets, mode, shop_mode_code)
 
 
 func _close_goods() -> void:
 	$Goods.hide()
 	$Bounds.visible = true
+	$Content.visible = true
 	_render()
 
 
@@ -142,17 +147,17 @@ func _entries() -> Array:
 
 
 ## `(208 − 36) / (条数 + 1)`：2 行 ⇒ 57（83／140）、3 行 ⇒ 43（69／112／155）。
+## `Content` 已设 `content_follows_window`，所以这里的偏移是**相对窗口左上角**的（原生 `rect.x + 55`）。
 func _layout() -> void:
-	var frame := Layout.box4_window_frame(window_size)
 	var spacing := (window_size.y - 36) / (entries.size() + 1) if not entries.is_empty() else 0
 	for index in range(MAX_ROWS):
 		var card := _card(index)
 		card.visible = index < entries.size()
 		if not card.visible:
 			continue
-		card.offset_left = frame.position.x + ROW_OFFSET_X
-		card.offset_right = card.offset_left + ROW_SIZE.x
-		card.offset_top = frame.position.y + ROW_OFFSET_Y + spacing * (index + 1)
+		card.offset_left = ROW_OFFSET_X
+		card.offset_right = ROW_OFFSET_X + ROW_SIZE.x
+		card.offset_top = ROW_OFFSET_Y + spacing * (index + 1)
 		card.offset_bottom = card.offset_top + ROW_SIZE.y
 
 

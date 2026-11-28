@@ -44,9 +44,10 @@ const RULE_HEIGHT := 1
 const CHOICE_SIZE := Vector2i(44, 16)
 ## `Field_Item_DrawSelect:118-133` 的 `n2`：0 丢弃、1 买、2 卖。
 enum ItemSelect { DISCARD = 0, BUY = 1, SELL = 2 }
-## `Field_Item_DrawSelect:60-62` 的常量表（`C.54.10866 + 4 * (n2 + 20)`）：
-## 丢弃 42（只有道具行），买／卖 54（道具行与正文之间多 12 px 价格行）。窗口高再加 `BODY_PADDING`。
-const ITEM_SELECT_BODY := [42, 54, 54]
+## `Field_Item_DrawSelect:60-62` 的常量表（`C.54.10866 + 4 * (n2 + 20)`，二进制实测
+## 0x98A30+80..104 = 48／60／60／2／3／3／2）：丢弃 48、买／卖 60（比丢弃多 12 px 价格行）。
+## 窗口高再加 `BODY_PADDING`（+33）：丢弃 81、买／卖 93。
+const ITEM_SELECT_BODY := [48, 60, 60]
 ## 价格行高：买／卖比丢弃多出的那 12 px（`Field_Item_DrawSelect:121-126` 的 `y_2 + 44`）。
 const ITEM_SELECT_PRICE_ROW := 12
 ## 正文顶：丢弃 `y_2 + 32`、买／卖 `y_2 + 44`（`Field_Item_DrawSelect:117-133`）。
