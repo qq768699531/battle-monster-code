@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=12 format=3]
 [ext_resource type="Texture2D" path="res://game/field/actors/emotion/emotion.webp" id="Sheet_obj_f_emoticon"]
 
 [ext_resource type="Script" path="res://game/field/actors/emotion/emotion.gd" id="1"]
 [ext_resource type="PackedScene" path="res://engine/anim/monster_animation/monster_animation.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_panel/native_panel.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://engine/ui/native_label/native_label.tscn" id="8"]
 
 [sub_resource type="AtlasTexture" id="Atlas_2"]
 atlas = ExtResource("Sheet_obj_f_emoticon")
@@ -47,19 +49,6 @@ tracks/1/keys = {
 "values": [SubResource("Atlas_3"), SubResource("Atlas_4"), SubResource("Atlas_5"), SubResource("Atlas_3"), SubResource("Atlas_4"), SubResource("Atlas_5"), SubResource("Atlas_3"), SubResource("Atlas_4"), SubResource("Atlas_5")]
 }
 
-[sub_resource type="StyleBoxFlat" id="NamePlateBox"]
-bg_color = Color(0.054902, 0.105882, 0.184314, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.811765, 0.8, 0.8, 1)
-corner_radius_top_left = 1
-corner_radius_top_right = 1
-corner_radius_bottom_left = 1
-corner_radius_bottom_right = 1
-anti_aliasing = false
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_emotion"]
 _data = {
 &"talk": SubResource("Animation_talk")
@@ -95,24 +84,32 @@ visible = false
 visible = false
 
 
-[node name="NamePlate" type="Panel" parent="."]
+[node name="NamePlate" parent="." instance=ExtResource("7")]
 visible = false
 offset_left = -50.0
 offset_top = -9.0
 offset_right = 50.0
 offset_bottom = 15.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("NamePlateBox")
+border_width = 3
+border_colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.811765, 0.8, 0.8, 1)
+background_color = Color(0.054902, 0.105882, 0.184314, 1)
 
-[node name="Name" type="Label" parent="NamePlate"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Icon" type="TextureRect" parent="NamePlate"]
+visible = false
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 22.0
+offset_bottom = 20.0
 mouse_filter = 2
-text = ""
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 10
+texture_filter = 1
+
+[node name="Name" parent="NamePlate" instance=ExtResource("8")]
+visible = false
+offset_top = 12.0
+offset_right = 100.0
+offset_bottom = 22.0
 horizontal_alignment = 1
-vertical_alignment = 1
+outline = Color(0, 0, 0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 callback_mode_process = 2

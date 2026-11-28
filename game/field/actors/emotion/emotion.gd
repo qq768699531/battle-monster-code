@@ -16,25 +16,37 @@ extends Node2D
 ## 只有一份：`scripts/data/quest_mark.gd`（HUD 色块也按它选色，生产端同样是 `field_runtime`
 ## 写进 actor 的 `quest_status`）。0 是「无」，1 原生不产出、与 0 一样不画。
 const QuestMark = preload("res://game/field/quests/quest_mark/quest_mark.gd")
+## 名字条的宽度必须按原版点阵字量：`native_label` 用的是这份主题（`UI_THEME`），
+## 不能用控件自己的 `theme`（那是项目主题，字体不同）。
+const UI_THEME = preload("res://engine/ui/native_label/ui_theme.tres")
 
 @onready var _talking: Node2D = $Talking
 @onready var _scripted: Node2D = $Scripted
 @onready var _quest: Node2D = $Quest
 @onready var _animation: AnimationPlayer = $AnimationPlayer
-@onready var _name_plate: Panel = $NamePlate
-@onready var _name_label: Label = $NamePlate/Name
+@onready var _name_plate: Control = $NamePlate
+@onready var _name_icon: TextureRect = $NamePlate/Icon
+@onready var _name_label: Control = $NamePlate/Name
 var _request: Variant = null
 var _quest_action := -1
 var _actor: Dictionary = {}
 var _name_text := ""
 var _name_phase := 0
 var _name_wanted := false
+## NPC 记录第 18 字节（`NpcDefinition.interaction_code`）；`Field_Npc_resGET` 把它写进
+## `out[34]`，`Field_Emoticon_procDraw` 用 `BYTE2(out_bytes[8]) - 1` 取 `ui_battle/frame-015`
+## 的 16×16 图标（商店 3→2、6→5，公会/旅店/飞艇/精灵各一档）。
+var _npc_code := 0
+var _icon_sheet: Texture2D
 
 
 func _ready() -> void:
 	hide()
 	_talking.visible = false
 	_name_plate.visible = false
+	var catalog := get_node_or_null("/root/AssetCatalog")
+	if catalog != null and catalog.has_method("load_sprite"):
+		_icon_sheet = catalog.load_sprite("common/ui_battle/frame-015")
 	_scripted.set_manual(true)
 	_quest.set_manual(true)
 	_scripted.animation_finished.connect(_finish_explicit)
@@ -50,6 +62,8 @@ func clear_layers() -> void:
 	_name_wanted = false
 	_name_phase = 0
 	_name_plate.visible = false
+	_name_icon.visible = false
+	_name_label.visible = false
 	_clear_emote_layers()
 	hide()
 
@@ -65,13 +79,15 @@ func _clear_emote_layers() -> void:
 
 
 func present(actor: Dictionary, speaking: bool, report: Callable, facing := false,
-		name_text := "") -> void:
+		name_text := "", npc_code := 0) -> void:
 	_actor = actor
 	_name_text = name_text
+	_npc_code = npc_code
 	var explicit := actor.get("emotion") != null
 	# 名字条只在「当前面向对象」、且没有显式表情、也没有打开对话时画（消息窗一开，
 	# `Field_Emoticon_procDraw` 走气泡分支；名字条那条分支要求 `EvtRes.dialog.page+216 == 0`）。
-	_set_name_wanted(facing and not speaking and not explicit and not name_text.is_empty())
+	_set_name_wanted(facing and not speaking and not explicit and \
+		(not name_text.is_empty() or npc_code in [1, 2, 3, 4, 5, 6]))
 	_present_layers(actor, speaking, explicit, report)
 	# 原生先画面部表情再画名字条／任务图标：显式表情进行中、该 NPC 正是当前对话对象
 	# （`Field_Basic_Chat` 打开对话时直接把任务码清 0）、或改画名字条时都不画任务图标。
@@ -172,23 +188,53 @@ func _set_name_wanted(wanted: bool) -> void:
 
 
 ## 相位 1／2／−2／−3 → 16 px 高、3／−1 → 12 px、4 → 24 px（`Field_Emoticon_procDraw` 的三种
-## `Menu_win_Box2_Draw` 高度）；相位 1 与 −3 用 alpha 128。
+## `Menu_win_Box2_Draw` 高度）；相位 1 与 −3 用 alpha 128。**名字与图标只在相位 4 出现**：
+## 原生 12/16 px 的两档只调 `Menu_win_Box2_Draw`，文字/图标在 `v24 < 0`（相位 4）分支里。
 func _apply_name_plate() -> void:
-	var shown := _name_phase != 0 and _name_phase > -4 and not _name_text.is_empty()
+	var icon_index := _npc_code - 1 if _npc_code >= 1 and _npc_code <= 6 else -1
+	var shown := _name_phase != 0 and _name_phase > -4 and \
+		(not _name_text.is_empty() or icon_index >= 0)
 	_name_plate.visible = shown
 	if not shown:
+		_name_icon.visible = false
+		_name_label.visible = false
 		return
+	var text_width := 0
+	if not _name_text.is_empty() and UI_THEME.default_font != null:
+		text_width = ceili(UI_THEME.default_font.get_string_size(_name_text,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, UI_THEME.default_font_size).x)
+	var width := maxi(24, text_width + 10 + (20 if icon_index >= 0 else 0))
 	var height := 24 if _name_phase >= 4 else 12 if _name_phase == 3 or _name_phase == -1 else 16
 	var top := -9.0 if height == 24 else -3.0 if height == 12 else -5.0
-	var width := 24
-	var font := _name_label.get_theme_font("font")
-	if font != null:
-		width = maxi(width, ceili(font.get_string_size(_name_text, HORIZONTAL_ALIGNMENT_LEFT,
-			-1, _name_label.get_theme_font_size("font_size")).x) + 10)
-	_name_label.text = _name_text
 	_name_plate.size = Vector2(width, height)
 	_name_plate.position = Vector2(-width / 2.0, top)
+	_name_plate.queue_redraw()
 	_name_plate.modulate.a = 0.5 if _name_phase == 1 or _name_phase == -3 else 1.0
+	var full := _name_phase == 4
+	_name_icon.visible = false
+	_name_label.visible = false
+	if not full:
+		return
+	_name_label.set("text", _name_text)
+	_name_label.size = Vector2(width, 10)
+	_name_label.position = Vector2(10.0 if icon_index >= 0 else 0.0, 12.0)
+	_name_label.visible = true
+	if icon_index >= 0:
+		var texture := _icon_texture(icon_index)
+		_name_icon.texture = texture
+		_name_icon.visible = texture != null
+
+
+## `ui_battle/frame-015` 是 96×16 的 6 帧图标条（16×16/帧）；`load_sprite` 返回的是整条
+## 的 `AtlasTexture`，这里按原版 `BYTE2-1` 再切一帧。
+func _icon_texture(index: int) -> Texture2D:
+	if not _icon_sheet is AtlasTexture:
+		return null
+	var sheet := _icon_sheet as AtlasTexture
+	var atlas := AtlasTexture.new()
+	atlas.atlas = sheet.atlas
+	atlas.region = Rect2(sheet.region.position + Vector2(16 * index, 0), Vector2(16, 16))
+	return atlas
 
 
 func _finish_explicit() -> void:

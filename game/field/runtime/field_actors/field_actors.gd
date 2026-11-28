@@ -469,7 +469,7 @@ func sync(actors: Array, bindings: Array = []) -> void:
 			if id >= 1000:
 				emotion.use_monster_anchor()
 			_actors[id] = {"group": group, "body_node": body, "emotion_node": emotion,
-				"body": {}, "emotion": {}, "actor": actor}
+				"body": {}, "emotion": {}, "actor": actor, "name_text": "", "npc_code": 0}
 			body.animation_finished.connect(_on_body_animation_finished.bind(id))
 		var view: Dictionary = _actors[id]
 		view["actor"] = actor
@@ -479,6 +479,7 @@ func sync(actors: Array, bindings: Array = []) -> void:
 				var prompt_name: Variant = binding.get("name_text")
 				if prompt_name is String and not prompt_name.is_empty():
 					view["name_text"] = prompt_name
+				view["npc_code"] = int(binding.get("interaction_code", 0))
 				break
 		var art := field_artwork(actor, bindings)
 		var request := [art, actor.get("action", 0), actor.get("animationEndMode", 0)]
@@ -517,7 +518,7 @@ func _sync_emotion(view: Dictionary) -> void:
 	var speaking := _dialogue_speaker >= 0 and actor_id < 1000 and \
 		(1 if actor_id == 0 else actor_id) == maxi(1, _dialogue_speaker)
 	view.emotion_node.present(actor, speaking, _limit, actor_id == _facing_id,
-		str(view.get("name_text", "")))
+		str(view.get("name_text", "")), int(view.get("npc_code", 0)))
 	view.emotion = view.emotion_node.drawing()
 
 
