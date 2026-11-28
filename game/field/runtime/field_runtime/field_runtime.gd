@@ -737,7 +737,6 @@ func _begin_encounter(contacted: Dictionary) -> void:
 	# 遇敌转场（0.75 s）期间逐帧预读本场 6 只的 ANI：首次开战的同步加载不再落在 `start()` 里。
 	_queue_battle_animations(story.combat.balls)
 	_encounter = {"stage": "capture", "actor": int(contacted.id)}
-	story.paused = true
 	_clear_walk_input()
 	# 撞怪可能发生在走位中途：丢掉那一步，否则战斗结束后它会接着滑完（角色已是待机动作）。
 	_motions.erase(-1)
@@ -971,8 +970,6 @@ func _drain_effects() -> void:
 
 func _stop(detail: String) -> void:
 	boundary = detail
-	if story != null:
-		story.paused = true
 	MessageStack.say(detail)
 
 
@@ -1382,7 +1379,7 @@ func close_service_page() -> void:
 ## （`FieldCanvas_mRun` 只跑当前页的 `run_callback_address`，弹出框
 ## `Field_Box_mRun` 返回 1 时连那一页也不跑）。
 func _field_paused() -> bool:
-	return not focused or menu_open or book_open or save_open or service_open() or \
+	return not focused or menu_open or book_open or save_open or \
 		not boundary.is_empty() or not _encounter.is_empty()
 
 
@@ -1872,7 +1869,6 @@ func _open_shop(shop_mode: int) -> bool:
 	shop_mode_code = shop_mode
 	service_page = ServicePage.SHOP
 	_clear_walk_input()
-	story.paused = true
 	shop_view.call("present", story, _assets, shop_mode)
 	_refresh()
 	return true
@@ -1991,7 +1987,6 @@ func _open_quest_detail(quest_id: int, context: int) -> bool:
 	quest_view.accepted.connect(_quest_accepted)
 	service_page = ServicePage.QUEST
 	_clear_walk_input()
-	story.paused = true
 	var shown: bool = quest_view.call("present", _assets, table, story.quest_log(), quest_id, context,
 		{}, story.progress, snapshot)
 	if not shown:
@@ -2013,7 +2008,6 @@ func _open_quest_complete(quest_id: int) -> bool:
 	quest_view.finished.connect(_close_quest)
 	service_page = ServicePage.QUEST
 	_clear_walk_input()
-	story.paused = true
 	var shown: bool = quest_view.call("present_quest", _assets, table, story.quest_log(),
 		quest_id, story.progress)
 	if not shown:
@@ -2077,7 +2071,6 @@ func _open_inn() -> bool:
 	inn_view.closed.connect(_close_inn)
 	service_page = ServicePage.INN
 	_clear_walk_input()
-	story.paused = true
 	inn_view.call("present", _assets, story)
 	_refresh()
 	return true
@@ -2118,7 +2111,6 @@ func _open_warp_confirm() -> bool:
 	warp_confirm_view.board_requested.connect(_board_airship)
 	service_page = ServicePage.WARP_CONFIRM
 	_clear_walk_input()
-	story.paused = true
 	warp_confirm_view.call("open", _assets)
 	_refresh()
 	return true
@@ -2283,7 +2275,6 @@ func _open_warp_world() -> bool:
 		return false
 	service_page = ServicePage.WARP_WORLD
 	_clear_walk_input()
-	story.paused = true
 	_refresh()
 	return true
 
@@ -2323,7 +2314,6 @@ func _open_monster_menu(position: int = 0) -> bool:
 	monster_menu_view.call("present", _assets, position)
 	service_page = ServicePage.MONSTER_MENU
 	_clear_walk_input()
-	story.paused = true
 	_refresh()
 	return true
 
@@ -2375,7 +2365,6 @@ func _open_monster_mix() -> bool:
 	monster_mix_view.call("present", story, _assets)
 	service_page = ServicePage.MONSTER_MIX
 	_clear_walk_input()
-	story.paused = true
 	_refresh()
 	return true
 
@@ -2419,7 +2408,6 @@ func _open_monster_enchant() -> bool:
 	monster_enchant_view.call("present", story, _assets)
 	service_page = ServicePage.MONSTER_ENCHANT
 	_clear_walk_input()
-	story.paused = true
 	_refresh()
 	return true
 
@@ -2457,7 +2445,6 @@ func _open_guild_menu(position: int = 0) -> bool:
 	guild_menu_view.closed.connect(_close_guild)
 	service_page = ServicePage.GUILD
 	_clear_walk_input()
-	story.paused = true
 	guild_menu_view.call("present", _assets, position)
 	_refresh()
 	return true
@@ -2575,7 +2562,6 @@ func _start_guild_challenge(constructors: Array) -> void:
 	close_service_page()
 	story.combat = built.battle
 	guild_battle_kind = GuildBattle.KIND_CHALLENGE
-	story.paused = true
 	_open_battle(-2)
 
 
@@ -3084,7 +3070,6 @@ func _open_save() -> void:
 		return
 	save_open = true
 	_clear_walk_input()
-	story.paused = true
 	_save_view.open(_assets.text_messages(Msg.SOURCE), Msg.Id.FIELD_SAVE_IN_PROGRESS, true)
 	_refresh()
 
@@ -3101,7 +3086,6 @@ func _open_save_result(message_id: int) -> void:
 		return
 	save_open = true
 	_clear_walk_input()
-	story.paused = true
 	_save_view.open(_assets.text_messages(Msg.SOURCE), message_id, false)
 	_refresh()
 
@@ -3139,8 +3123,6 @@ func _open_world_map() -> void:
 		world_map_view = null
 		return
 	_clear_walk_input()
-	if story != null:
-		story.paused = true
 	_refresh()
 
 
@@ -3197,7 +3179,6 @@ func _open_book(knowledge: Dictionary = {}) -> bool:
 		return false
 	book_open = true
 	_clear_walk_input()
-	story.paused = true
 	_refresh()
 	return true
 
@@ -3239,8 +3220,6 @@ func _open_menu() -> void:
 	menu_view.bind(story.progress.duplicate(true) if story != null else {}, catalog, quest)
 	menu_open = true
 	menu_view.set_touch_key(_touch_key)
-	if story != null:
-		story.paused = true
 	if catalog == null:
 		_menu_notice("游戏数值目录缺失；菜单没有生成替代数值。")
 	else:
@@ -3277,7 +3256,6 @@ func _menu_mastery_change_requested() -> void:
 		_stop("原流派选择无法显示：%s" % _mastery_view.last_error)
 		return
 	_mastery_item_active = true
-	story.paused = true
 	_refresh()
 
 
@@ -3707,7 +3685,6 @@ func _battle_completed(outcome: Dictionary) -> void:
 func _back_to_title() -> void:
 	_close_battle()
 	story.combat = null
-	story.paused = true
 	_encounter.clear()
 	_battle_id = -1
 	_clear_walk_input()
