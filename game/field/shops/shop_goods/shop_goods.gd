@@ -128,9 +128,16 @@ func handle_key(key: String) -> bool:
 		return true
 	match key:
 		"ArrowLeft":
-			_horizontal(-1)
+			# 卖页网格与菜单道具页一致：左右移一格，上下移一行；袋（页签）由上方页签点击切换。
+			if mode == SELL:
+				_move(-1)
+			else:
+				_horizontal(-1)
 		"ArrowRight":
-			_horizontal(1)
+			if mode == SELL:
+				_move(1)
+			else:
+				_horizontal(1)
 		"ArrowUp":
 			_move(-COLUMNS)
 		"ArrowDown":
