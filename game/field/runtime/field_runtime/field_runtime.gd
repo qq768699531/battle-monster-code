@@ -2136,10 +2136,16 @@ func _close_warp_confirm() -> void:
 func _board_airship() -> void:
 	if story == null or not _pending_warp.is_empty():
 		return
-	var parameter: Dictionary = story.progress["parameter"]
+	var parameter: Variant = story.progress.get("parameter")
+	var player: Variant = story.progress.get("player")
+	if not parameter is Dictionary:
+		return
+	var hero := _actor(0)
+	var fallback_x := int(hero.x) if not hero.is_empty() else 0
+	var fallback_y := int(hero.y) if not hero.is_empty() else 0
 	parameter["warp_saved_map_id"] = int(story.map.get("id", 0))
-	parameter["warp_saved_tile_x"] = int(story.progress.player.x)
-	parameter["warp_saved_tile_y"] = int(story.progress.player.y)
+	parameter["warp_saved_tile_x"] = int(player.get("x", fallback_x)) if player is Dictionary else fallback_x
+	parameter["warp_saved_tile_y"] = int(player.get("y", fallback_y)) if player is Dictionary else fallback_y
 	_begin_pending_warp(AIRSHIP_MAP_ID, AIRSHIP_TILE.x, AIRSHIP_TILE.y)
 
 
@@ -2196,7 +2202,11 @@ func _apply_pending_warp() -> void:
 		_refresh()
 		return
 	if int(story.progress.get("cursor", 0)) <= 0:
-		story.progress.warpPassed[str(target)] = true
+		var passed: Variant = story.progress.get("warpPassed")
+		if not passed is Dictionary:
+			passed = {}
+			story.progress["warpPassed"] = passed
+		passed[str(target)] = true
 	# 换图成功：原生 `Map_warpProc:54` 无条件 `Game_msgInit(1, …)`，目标图就是当前图也弹。
 	_map_name_source = MapNameView.Source.WARP
 	story.after_move(loaded, {"x": tile_x, "y": tile_y}, true)
