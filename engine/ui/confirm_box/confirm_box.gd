@@ -74,6 +74,13 @@ func move_selection(change: int) -> void:
 	_refresh_choices()
 
 
+## 数量阶段（`Field_Item_DrawSelect` 的 n4 = 0）只显示是/否两颗，不接收点击；
+## 否则在数量阶段按到「是」会绕过第二次确认直接成交。
+func set_choices_enabled(enabled: bool) -> void:
+	for button: Button in [_confirm, _yes, _no]:
+		button.disabled = not enabled
+
+
 ## OK／触控确认：确定页直接回报，选择页把当前光标当答案。
 func accept() -> void:
 	if is_transitioning():

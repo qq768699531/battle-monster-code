@@ -134,7 +134,7 @@ func _step_quantity(direction: int) -> void:
 
 
 func _confirm() -> void:
-	if $Window.is_transitioning():
+	if step != 1 or $Window.is_transitioning():
 		return
 	if selected != 0:
 		_close()
@@ -146,8 +146,9 @@ func _confirm() -> void:
 
 
 ## 触控：光标先移过去，光标已在的那颗才算确认（`chosen` 只在确认时发）。
+## 数量阶段（step 0）的是/否键不参与，必须先进第二次确认。
 func _on_confirm_choice(accepted: bool) -> void:
-	if $Window.is_transitioning():
+	if step != 1 or $Window.is_transitioning():
 		return
 	selected = 0 if accepted else 1
 	_step_changed()
@@ -198,6 +199,8 @@ func _render() -> void:
 		$Window.present_neutral($Window.body_text())
 	else:
 		$Window.present_select($Window.body_text(), selected)
+	# 数量阶段只画是/否，不能点；第二次确认才启用。
+	$Window.set_choices_enabled(not choosing)
 	# 原生数量框的提示行是居中；`present_*` 会重造行，所以每次重画后都要再设。
 	$Window.set_body_alignment(1)
 	var plate: Control = get_node_or_null("Window/Content/Price") as Control
