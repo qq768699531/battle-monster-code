@@ -28,6 +28,10 @@ signal close_requested
 signal closed
 
 const MessageStack = preload("res://engine/ui/message_stack/message_stack.gd")
+## 世界地图上的角色小人固定播这个 2 帧动画（`WorldMapCanvas.HERO_MARKER_ANIMATION_ID`）；
+## 飞艇传送页必须复用同一份，不能直接显示主角在野外地图上的站立帧。
+const AniAction = preload("res://engine/anim/ani_action/ani_action.gd")
+const HERO_MARKER_ANIMATION_ID := 1026
 ## Box2 确认框的几何／折行只有 `warp_confirm.gd` 一处实现（WARP1／WARP2 的 `Content` 同构）。
 const WarpConfirmBox = preload("res://game/field/map/warp_confirm/warp_confirm.gd")
 
@@ -101,6 +105,11 @@ var _closing := false
 func _ready() -> void:
 	super()
 	hide()
+	var marker_player: AnimationPlayer = $Content/Map/Marker/AnimationPlayer
+	var marker_clip := AniAction.clip_name(marker_player,
+		AniAction.action_of(HERO_MARKER_ANIMATION_ID))
+	if marker_clip != &"":
+		marker_player.play(marker_clip)
 	_gray_material = _slot(Slot.TOP).get_node("Disabled").material
 	for index in range($Content/Map/Slots.get_child_count()):
 		_slot(index).get_node("Touch").pressed.connect(_press_candidate.bind(index))
