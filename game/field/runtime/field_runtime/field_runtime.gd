@@ -1832,7 +1832,6 @@ func _dispatch_npc_service(npc_id: int) -> void:
 		# 原生 default 分支只问 `Qst_chtMENU`（任务门）就返回，不开任何页面。
 		return
 	var route: Dictionary = SERVICE_ROUTES[code]
-	_freeze_field()
 	var page: ServicePage = route.page
 	var shop_mode := int(route.shop_mode)
 	# 原生交互码 1 走到这里说明 `Qst_chtMENU(id, 1)` 没切页（状态 2 的「可接」在交互码 1 上
@@ -2615,13 +2614,6 @@ func _free_guild_pages() -> void:
 	guild_info_view = null
 	guild_challenge_view = null
 	guild_quest_view = null
-
-
-## 原生 `Field_Basic_Capture` 把地图拷进 scratch image 再切页。本移植没有野外截图缓冲，
-## 冻结的等价做法是停掉整份野外推进（脚本、怪物、镜头都不再前进）。
-func _freeze_field() -> void:
-	if story != null:
-		story.paused = true
 
 
 ## 原生 `Field_Basic_Chat` 按 NPC 记录的 `resource_id` 播 `npc/npcNNNN.cht` 组 0。

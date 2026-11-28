@@ -570,7 +570,6 @@ func reset_hud() -> void:
 	$Hud/TopShade.show()
 	for index in 3:
 		$Hud.get_node("Enemy%d" % index).show()
-	freeze_scene(false)
 
 
 func _hud_exit_nodes() -> Array[Control]:
@@ -588,14 +587,6 @@ func _apply_hud_exit(frame: int) -> void:
 		nodes[index].offset_bottom = rest.x + shift + rest.y
 
 
-## 状态 26 里原生不再重画战斗对象（只 blit 冻结底图），所以进场后停住动画并收掉目标光标。
-func freeze_scene(value: bool) -> void:
-	for index in _actors.size():
-		var monster: Node = _actors[index].get_node("Pose/Monster")
-		monster.set_running(not value)
-	$Cursor.visible = not value
-	$Hits.visible = not value
-	$Effects.visible = not value
 
 
 func _start_transition(expanded: bool) -> void:

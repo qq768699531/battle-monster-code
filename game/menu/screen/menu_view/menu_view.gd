@@ -196,11 +196,7 @@ func _ready() -> void:
 		notice = _native_ui_error
 	_build_frame()
 	_render_content()
-	# 进菜单那一刻定格背景（原生 `Evt_chtMENU` 进菜单前调 `Field_Basic_Capture`）：菜单各页与
-	# 从任务页开出的世界地图都画这一张模糊快照，背景是静止的。
-	var shade := ScreenShade.host_shade(self)
-	if shade != null:
-		shade.freeze()
+	# 背景静止只由 WindowTransition 的 ScreenShade 负责；菜单不再自己 freeze 快照。
 
 
 func bind(progress: Dictionary, catalog: GameplayData, text: Variant) -> void:

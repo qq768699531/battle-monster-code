@@ -591,7 +591,6 @@ func _next() -> void:
 func _begin_victory() -> void:
 	_clear_buttons()
 	$Actions.hide()
-	$Field.freeze_scene(true)
 	$Field.hud_exit_finished.connect(_open_result, CONNECT_ONE_SHOT)
 	$Field.start_hud_exit()
 	if $Field.hud_exited():
@@ -1326,7 +1325,6 @@ func _open_defeat() -> void:
 		return
 	phase = "defeat"
 	_clear_buttons()
-	$Field.freeze_scene(true)
 	$Defeat.show()
 	_show_defeat_page(DefeatPage.ITEM if _revive_available() else DefeatPage.FEE)
 	$Defeat.open_window()
@@ -1412,7 +1410,6 @@ func _defeat_transition_finished(opened: bool) -> void:
 	var after := _defeat_after_close
 	_defeat_after_close = ""
 	if after == "resume":
-		$Field.freeze_scene(false)
 		_next()
 	elif after == "title":
 		# `_finish()` 只接受结果相位（它会再读一次 `battle.result`）。
