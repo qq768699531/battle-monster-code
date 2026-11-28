@@ -183,6 +183,9 @@ var map: Dictionary = {}
 var combat: RefCounted
 var _provider: Object
 var _random: Callable
+## 原生 `MainData.rng_state_bits` 的 LCG 状态（`EFC_mainGetRAND`：state = 214013*state + 2531011，
+## 返回 `(state >> 16) & 0x7fff`）。新档从 `EFC_mainInitialize` 的 memset 0 开始。
+var _rng_state := 0
 var _disposed := false
 var _initialized := false
 var _battle_returned := false
@@ -598,7 +601,12 @@ func _init(provider: Object, state: Dictionary, random: Callable = Callable()) -
 
 
 func _roll(limit: int) -> int:
-	var result := int(_random.call(limit)) if _random.is_valid() else randi_range(0, limit - 1)
+	if _random.is_valid():
+		var injected := int(_random.call(limit))
+		assert(injected >= 0 and injected < limit)
+		return injected
+	_rng_state = (214013 * _rng_state + 2531011) & 0xFFFFFFFF
+	var result := ((_rng_state >> 16) & 0x7FFF) % limit
 	assert(result >= 0 and result < limit)
 	return result
 
